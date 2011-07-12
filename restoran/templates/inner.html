@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>{$page_title}</title>
+<meta name="Keywords" content="{$meta_keywords}">
+<meta name="Description" content="{$meta_description}">
+{foreach from=$css item=css}
+<link rel="stylesheet" type="text/css" href="{$css}">
+{/foreach}
+{foreach from=$js item=js}
+<script src="{$js}" type="text/javascript"></script>
+{/foreach}
+</head>
+
+<body>
+<table class="mtbl" cellspacing="0" cellpadding="0">
+  <tr height="234" bgcolor="eeeff1">
+    <td width="271"><a href="{$base_url}"><img src="{$template_image}logo.png" width="271" height="234"></a></td>
+    <td colspan="2" class="rtbg"><div class="toptel" align="center">{$smarty.const.PHONE1}<br>{$smarty.const.PHONE2}</div></td>
+  </tr>
+  <tr height="36">
+    <td colspan="3" class="gline">Компания "Визит-Центр" является официальным торговым представителем предприятия выпускающего домофоны и сопутствующие изделия марки «ВИЗИТ» </td>
+  </tr>
+  <tr height="100%">
+    <td class="leftside">
+    {include file="../templates/left_menu_block.html"}
+	<br><br>
+	
+	<center><div class="bann" style="margin-bottom:10px;"><br><a href="{$base_url}/insertfiles/price_list.xls">Скачать прайс-лист<br> с нашей продукцией</a></div></center>
+	
+	<img src="{$template_image}clear.png" width="271" height="1"><br>
+	</td>
+    <td class="cat" colspan="2">
+	
+	<div id="grad">{*<a href="#">Главная</a> / <a href="#">Каталог продукции</a> / Запирающий механизм ZX10000*}
+		{if $current_url!=$default_url}
+			{foreach name=nav_loop from=$navigation item=nav}
+				{if $smarty.foreach.nav_loop.last && $smarty.foreach.nav_loop.iteration==1}{$nav.title}
+				{elseif $smarty.foreach.nav_loop.last && $smarty.foreach.nav_loop.iteration>1}
+					 / {$nav.title}
+				{else}
+					{if !$smarty.foreach.nav_loop.first} / {/if}<a href="{$nav.url}">{$nav.title}</a>{/if}
+			{/foreach}
+		{else}
+			{$page_content.name}
+		{/if}
+	</div>
+	
+	
+	{if $content=='' or !$content}
+		{assign var="content" value=""}
+		{fetch file=$template assign="content"}
+	{/if}
+	{eval var=$content}
+	
+		
+		
+	</td>
+  </tr>
+  {include file="../templates/footer_block.html"}
+</table>
+</body>
+</html>
