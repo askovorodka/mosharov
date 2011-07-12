@@ -8,11 +8,11 @@ $sub='';
      );
 */
 $sub[]= array(
-			"name"=>"Рестораны",
+			"name"=>"Рестораны и меню",
 			"link"=>"?mod=shop&action=catalogue"
 	   );
 $sub[]= array(
-			"name"=>"Меню",
+			"name"=>"Блюда",
 			"link"=>"?mod=shop&action=products_list"
 	   );
 

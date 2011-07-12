@@ -47,7 +47,7 @@ $smarty->assign("currency_site",$cur_site);
 $cur_admin=$db->get_single("SELECT kurs,znak FROM fw_currency WHERE id=" . CURRENCY_ADMIN);
 $cur_admin=String::unformat_array($cur_admin);
 
-$navigation[]=array("url" => BASE_URL . "/admin/?mod=shop","title" => 'Магазин');
+$navigation[]=array("url" => BASE_URL . "/admin/?mod=shop","title" => 'Рестораны');
 //UPDATE `fw_products` SET sort_order=id-2 WHERE 1
 if (isset($_GET['action']) && $_GET['action']!='') $action=$_GET['action'];
 else $action='';
@@ -549,31 +549,6 @@ if (isset($_POST['submit_add_product'])) {
 	$guarantie=String::secure_format($_POST['edit_guarantie']);
 	$sale=String::secure_format($_POST['edit_sale']);
 	
-	//св-ва шин/дисков
-	/*$tire_width = $_POST['tire_width'];
-	$tire_height = $_POST['tire_height'];
-	$tire_diameter = $_POST['tire_diameter'];
-	$tire_in = $_POST['tire_in'];
-	$tire_is = $_POST['tire_is'];
-	$tire_usil = $_POST['tire_usil'];
-	$tire_spike = $_POST['tire_spike'];
-	$tire_season = $_POST['tire_season'];
-	$tire_bodytype = $_POST['tire_bodytype'];
-	$tire_sklad = $_POST['tire_sklad'];
-	
-	$disk_width = $_POST['disk_width'];
-	$disk_diameter = $_POST['disk_diameter'];
-	$disk_krep = $_POST['disk_krep'];
-	$disk_pcd = $_POST['disk_pcd'];
-	$disk_pcd2 = $_POST['disk_pcd2'];
-	$disk_et = $_POST['disk_et'];
-	$disk_dia = $_POST['disk_dia'];
-	$disk_color = $_POST['disk_color'];
-	$disk_type = $_POST['disk_type'];
-	$disk_sklad = $_POST['disk_sklad'];*/
-	
-	//$sort_order=$db->get_single("SELECT MAX(sort_order) as max FROM fw_products WHERE parent='$parent'");
-	//$sort_order=$sort_order['max']+1;
 	$sort_order=0;
   	$type=($_POST['edit_type']!='')?intval($_POST['edit_type']):"NULL";
 
@@ -732,44 +707,6 @@ if (isset($_POST['submit_edit_product'])) {
 	{
 		$db->query("INSERT INTO fw_products_files2 (parent,title,file) VALUES " . implode(",", $inserts));
 	}
-	/*print_r($_FILES); exit();
-	if (!empty($_FILES['add_file']['name']) && !empty($_FILES['add_file']['tmp_name']))
-	{
-		
-		$file_name=$_FILES['add_file']['name'];
-		$tmp=$_FILES['add_file']['tmp_name'];
-		$check_file_name=explode(".",$file_name);
-		$ext=strtolower($check_file_name[count($check_file_name)-1]);
-		$new_file_name = md5($file_name . rand(0, strlen($file_name))) . '.' . $ext;
-		//$title = 'Технические характеристики';
-		$title = $_POST['file_title'];
-		$check = true;
-		
-		if (!in_array($ext,array('pdf','doc'))) {
-			$smarty->assign("error","Разрешены файлы форматов pdf и doc");
-			$check=false;
-		}
-		
-		if (filesize($tmp)>10000000) {
-			$smarty->assign("error","Размер файла не должен привышать 10Mb");
-			$check=false;
-		}
-		
-		
-		if ($check) {
-			
-			$result=$db->query("INSERT INTO fw_products_files (parent,title,file) VALUES('".$id."','$title','$new_file_name')");
-			$id=mysql_insert_id();
-			if (move_uploaded_file($tmp, BASE_PATH."/uploaded_files/shop_files/$new_file_name")) {
-				chmod(BASE_PATH."/uploaded_files/shop_files/$new_file_name",0777);
-			}
-			else {
-				$result=$db->query("DELETE FROM fw_products_files WHERE id='".mysql_insert_id()."'");
-				$smarty->assign("error","Файл не был загружен");
-			}
-		}
-		
-	}*/
 	
 
 }
@@ -1263,8 +1200,8 @@ SWITCH (TRUE) {
 
 	CASE ($action=='edit_product' && isset($_GET['id'])):
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Список продуктов');
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=edit_product","title" => 'Редактировать продукт');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Список блюд');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=edit_product","title" => 'Редактировать блюдо');
 
 		$id=$_GET['id'];
 
@@ -1309,7 +1246,7 @@ SWITCH (TRUE) {
 		}
 		$photos_list=$db->get_all("SELECT * FROM fw_products_images WHERE parent='$id' ORDER BY sort_order");
         $types_list=$db->get_all("SELECT * FROM fw_products_types WHERE status='1' ORDER BY name");
-        $files_list=$db->get_all("SELECT * FROM fw_products_files2 where parent='$id'");
+        //$files_list=$db->get_all("SELECT * FROM fw_products_files2 where parent='$id'");
 		//$body_types=$db->get_all("SELECT * FROM fw_body_types ORDER BY name");
 		//$disk_types=$db->get_all("SELECT * FROM fw_disk_types ORDER BY name");
 		
@@ -1318,7 +1255,7 @@ SWITCH (TRUE) {
 		//$smarty->assign('body_types',$body_types);
 		//$smarty->assign('disk_types',$disk_types);
 		$smarty->assign('photos_list',$photos_list);
-		$smarty->assign('files_list',$files_list);
+		//$smarty->assign('files_list',$files_list);
 		$smarty->assign('photos_count',count($photos_list));
 		$smarty->assign('photo_height',PRODUCT_PREVIEW_HEIGHT+10);
 		$smarty->assign("cat_list",$cat_list);
