@@ -61,7 +61,7 @@ $default_modules=$db->get_all("SELECT * FROM fw_modules WHERE default_load='1' A
 $url=Common::get_url($_SERVER['REQUEST_URI'],SCRIPT_FOLDER);
 
 $navigation=array();
-$navigation[]=array("url" => BASE_URL,"title" => 'Главная страница');
+$navigation[]=array("url" => BASE_URL,"title" => 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
 $page_found=false;
 $set_pages_url=false;
 $module_found=false;
@@ -137,15 +137,15 @@ $current_url_pages=$url;
 $current_url=implode("/",$url);
 $smarty->assign("current_url",$current_url);
 
-//новости в блоке справа
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 $news=$db->get_all("SELECT * FROM fw_news WHERE status='1' ORDER BY publish_date DESC " . $limit);
 $smarty->assign("news_list",$news);
 
-//рекомендуем
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 $shop = new Shop($db);
 $smarty->assign('top_product', $shop->getTopProducts(1));
 
-//сессия
+//пїЅпїЅпїЅпїЅпїЅпїЅ
 $session =  new Session($db);
 $session->setSession();
 $smarty->assign('online_users', $session->getOnLine() );
@@ -261,13 +261,13 @@ foreach ($main_menu as $key=>$val)
 }
 $smarty->assign("main_menu",$main_menu);
 
-//левое меню
+//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 $left_menu=$db->get_all("SELECT id,name,url,param_level,param_left,param_right FROM fw_tree WHERE param_level IN ('1') AND in_left_menu='1' and status='1' ORDER BY param_left");
 $left_menu=String::unformat_array($left_menu,'front');
 $smarty->assign("left_menu",$left_menu);
 
 
-//меню каталога
+//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 /*$shop_menu=$db->get_all("
 	SELECT a.id,a.name,a.url,a.image,a.param_level,a.param_right,a.param_left, parent.url as parent_url 
 	FROM fw_catalogue as a
@@ -285,24 +285,24 @@ $shop_menu=$db->get_all("
 
 $smarty->assign("shop_menu",$shop_menu);
 
-//выполняется только на главной
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //if ($current_url == 'home')
 {
-	//шины производители
+	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	/*$tires_manufacturer = $db->get_all("
 		SELECT a.* 
 		FROM `fw_catalogue` as a 
 		left join 
 		fw_catalogue as b on a.param_left > b.param_left and a.param_right < b.param_right 
 		where a.param_level = '2' and a.status = '1' and b.id = " . TIRES_ID);*/
-	//шины ширина
+	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	//$tires_width = $db->get_all("SELECT tire_width FROM fw_products WHERE status = '1' GROUP BY tire_width");
-	//шины высота
+	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	//$tires_height = $db->get_all("SELECT tire_height FROM fw_products WHERE status = '1' GROUP BY tire_height");
-	//шины диаметер
+	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	//$tires_diameter = $db->get_all("SELECT tire_diameter FROM fw_products WHERE status = '1' GROUP BY tire_diameter");
 	
-	//диски производители
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	/*$disk_manufacturer = $db->get_all("
 		SELECT a.* 
 		FROM `fw_catalogue` as a 
@@ -310,17 +310,17 @@ $smarty->assign("shop_menu",$shop_menu);
 		fw_catalogue as b on a.param_left > b.param_left and a.param_right < b.param_right 
 		where a.param_level = '2' and a.status = '1' and b.id = " . DISK_ID);*/
 
-	//диски ширина
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	//$disk_width = $db->get_all("SELECT disk_width FROM fw_products WHERE status = '1' and disk_width > 0 GROUP BY disk_width");
-	//диски диаметер
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	//$disk_diameter = $db->get_all("SELECT disk_diameter FROM fw_products WHERE status = '1' and disk_diameter > 0 GROUP BY disk_diameter");
-	//диски крепеж
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	//$disk_krep = $db->get_all("SELECT disk_krep FROM fw_products WHERE status = '1' and disk_krep > 0 GROUP BY disk_krep");
-	//диски PCD
+	//пїЅпїЅпїЅпїЅпїЅ PCD
 	//$disk_pcd = $db->get_all("SELECT disk_pcd FROM fw_products WHERE status = '1' and disk_pcd > 0 GROUP BY disk_pcd");
-	//диски ET
+	//пїЅпїЅпїЅпїЅпїЅ ET
 	//$disk_et = $db->get_all("SELECT disk_et FROM fw_products WHERE status = '1' and disk_et > 0 GROUP BY disk_et");
-	//диски цвет
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 	//$disk_color = $db->get_all("SELECT disk_color FROM fw_products WHERE status = '1' and disk_color <> '' GROUP BY disk_color");
 	
 	/*$smarty->assign('tires_manufacturer', $tires_manufacturer);
