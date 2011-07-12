@@ -74,7 +74,7 @@ $module_added=false;
 $deny_access=false;
 $switch_off_smarty=false;
 
-$css[] = BASE_URL."/templates/style_01-06-11.css";
+$css[] = BASE_URL."/templates/style.css";
 $css[]=BASE_URL."/templates/jquery.lightbox-0.5.css";
 $js[]=BASE_URL."/javascript/jquery-1.5.min.js";
 $js[]=BASE_URL."/javascript/jquery.lightbox-0.5.js";
@@ -138,17 +138,17 @@ $current_url=implode("/",$url);
 $smarty->assign("current_url",$current_url);
 
 //������� � ����� ������
-$news=$db->get_all("SELECT * FROM fw_news WHERE status='1' ORDER BY publish_date DESC " . $limit);
-$smarty->assign("news_list",$news);
+//$news=$db->get_all("SELECT * FROM fw_news WHERE status='1' ORDER BY publish_date DESC limit 3");
+//$smarty->assign("news_list",$news);
 
 //�����������
-$shop = new Shop($db);
-$smarty->assign('top_product', $shop->getTopProducts(1));
+//$shop = new Shop($db);
+//$smarty->assign('top_product', $shop->getTopProducts(1));
 
 //������
-$session =  new Session($db);
+/*$session =  new Session($db);
 $session->setSession();
-$smarty->assign('online_users', $session->getOnLine() );
+$smarty->assign('online_users', $session->getOnLine() );*/
 
 $smarty->assign("base_url",BASE_URL);
 $smarty->assign("base_path",BASE_PATH);
@@ -262,9 +262,9 @@ foreach ($main_menu as $key=>$val)
 $smarty->assign("main_menu",$main_menu);
 
 //����� ����
-$left_menu=$db->get_all("SELECT id,name,url,param_level,param_left,param_right FROM fw_tree WHERE param_level IN ('1') AND in_left_menu='1' and status='1' ORDER BY param_left");
+/*$left_menu=$db->get_all("SELECT id,name,url,param_level,param_left,param_right FROM fw_tree WHERE param_level IN ('1') AND in_left_menu='1' and status='1' ORDER BY param_left");
 $left_menu=String::unformat_array($left_menu,'front');
-$smarty->assign("left_menu",$left_menu);
+$smarty->assign("left_menu",$left_menu);*/
 
 
 //���� ��������
@@ -277,66 +277,13 @@ $smarty->assign("left_menu",$left_menu);
 	WHERE a.param_level in ('1', '2') AND a.status='1' 
 	ORDER BY a.param_left");
 */
-$shop_menu=$db->get_all("
+/*$shop_menu=$db->get_all("
 	SELECT * 
 	FROM fw_catalogue as a
 	WHERE a.param_level = '1' AND a.status='1' 
 	ORDER BY a.param_left");
 
-$smarty->assign("shop_menu",$shop_menu);
-
-//����������� ������ �� �������
-//if ($current_url == 'home')
-{
-	//���� �������������
-	/*$tires_manufacturer = $db->get_all("
-		SELECT a.* 
-		FROM `fw_catalogue` as a 
-		left join 
-		fw_catalogue as b on a.param_left > b.param_left and a.param_right < b.param_right 
-		where a.param_level = '2' and a.status = '1' and b.id = " . TIRES_ID);*/
-	//���� ������
-	//$tires_width = $db->get_all("SELECT tire_width FROM fw_products WHERE status = '1' GROUP BY tire_width");
-	//���� ������
-	//$tires_height = $db->get_all("SELECT tire_height FROM fw_products WHERE status = '1' GROUP BY tire_height");
-	//���� ��������
-	//$tires_diameter = $db->get_all("SELECT tire_diameter FROM fw_products WHERE status = '1' GROUP BY tire_diameter");
-	
-	//����� �������������
-	/*$disk_manufacturer = $db->get_all("
-		SELECT a.* 
-		FROM `fw_catalogue` as a 
-		left join 
-		fw_catalogue as b on a.param_left > b.param_left and a.param_right < b.param_right 
-		where a.param_level = '2' and a.status = '1' and b.id = " . DISK_ID);*/
-
-	//����� ������
-	//$disk_width = $db->get_all("SELECT disk_width FROM fw_products WHERE status = '1' and disk_width > 0 GROUP BY disk_width");
-	//����� ��������
-	//$disk_diameter = $db->get_all("SELECT disk_diameter FROM fw_products WHERE status = '1' and disk_diameter > 0 GROUP BY disk_diameter");
-	//����� ������
-	//$disk_krep = $db->get_all("SELECT disk_krep FROM fw_products WHERE status = '1' and disk_krep > 0 GROUP BY disk_krep");
-	//����� PCD
-	//$disk_pcd = $db->get_all("SELECT disk_pcd FROM fw_products WHERE status = '1' and disk_pcd > 0 GROUP BY disk_pcd");
-	//����� ET
-	//$disk_et = $db->get_all("SELECT disk_et FROM fw_products WHERE status = '1' and disk_et > 0 GROUP BY disk_et");
-	//����� ����
-	//$disk_color = $db->get_all("SELECT disk_color FROM fw_products WHERE status = '1' and disk_color <> '' GROUP BY disk_color");
-	
-	/*$smarty->assign('tires_manufacturer', $tires_manufacturer);
-	$smarty->assign('tires_width', $tires_width);
-	$smarty->assign('tires_height', $tires_height);
-	$smarty->assign('tires_diameter', $tires_diameter);*/
-	
-	/*$smarty->assign('disk_manufacturer', $disk_manufacturer);
-	$smarty->assign('disk_width', $disk_width);
-	$smarty->assign('disk_diameter', $disk_diameter);
-	$smarty->assign('disk_krep', $disk_krep);
-	$smarty->assign('disk_pcd', $disk_pcd);
-	$smarty->assign('disk_et', $disk_et);
-	$smarty->assign('disk_color', $disk_color);*/
-	
-}
+$smarty->assign("shop_menu",$shop_menu);*/
 
 if (!isset($page_title)) {
   if (isset($node_content['title']) && $node_content['title']!='') $page_title=$node_content['title'];

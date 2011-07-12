@@ -1,3 +1,7 @@
-#Tue Jul 12 14:51:41 MSD 2011
+#Tue Jul 12 17:22:26 MSD 2011
 eclipse.preferences.version=1
+encoding//templates/footer_block.html=cp1251
+encoding//templates/text.html=cp1251
+encoding//templates/top_menu_block.html=cp1251
+encoding//templates/top_news_block.html=cp1251
 encoding/<project>=cp1251

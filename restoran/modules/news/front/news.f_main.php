@@ -16,7 +16,7 @@ if (preg_match("/^\?year=([0-9]{0,4})$/",$url[$n])) {
 
 if (!isset($year) || $_GET['year']=='') {
 	$where="status='1'";
-	$limit="LIMIT ".NEWS_PER_PAGE_FRONT;
+	$limit="LIMIT ".NEWS_PER_PAGE_FRONT_PAGE;
 }
 else {
 	$where="YEAR(FROM_UNIXTIME(publish_date))='".$year."' AND status='1'";

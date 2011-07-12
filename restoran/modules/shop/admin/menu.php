@@ -8,11 +8,11 @@ $sub='';
      );
 */
 $sub[]= array(
-			"name"=>"Êàòåãîğèè",
+			"name"=>"Ğåñòîğàíû",
 			"link"=>"?mod=shop&action=catalogue"
 	   );
 $sub[]= array(
-			"name"=>"Ïğîäóêòû",
+			"name"=>"Ìåíş",
 			"link"=>"?mod=shop&action=products_list"
 	   );
 
@@ -44,7 +44,7 @@ $sub[]= array(
 $main_menu[]=array(
 				"link"=>"?mod=shop",
 				"name"=>"shop",
-				"title"=>"Ìàãàçèí",
+				"title"=>"Ğåñòîğàíû è áàğû",
 				"ico"=>"module_3.gif",
 				"sort"=>"4",
 				"sub"=>$sub
