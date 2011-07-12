@@ -1,0 +1,28 @@
+		<table class="rests" border="0" cellspacing="30" cellpadding="0" align="center">
+		  <tr>
+		  	{foreach from=$shop_menu item=smenu name=smenu_for}
+		  		{if $smarty.foreach.smenu_for.iteration == 1}<td>{/if}
+		  		<img src="{$template_image}star.png" width="20" height="18" align="absmiddle"> <a href="{$base_url}/restorants/{$smenu.url}/">{$smenu.name}</a><br>
+		  		{if $smarty.foreach.smenu_for.iteration%3 == 0 && $smarty.foreach.smenu_for.iteration > 1 && !$smarty.foreach.smenu_for.last}
+		  			</td><td>
+		  		{elseif $smarty.foreach.smenu_for.last}
+		  			</td>
+		  		{/if}
+		  	{/foreach}
+		  	
+			{*<td>
+			<img src="{$template_image}star.png" width="20" height="18" align="absmiddle"> <a href="#">Ресторан «Вега»</a><br>
+			<img src="{$template_image}star.png" width="20" height="18" align="absmiddle"> <a href="#">Ресторан «Измайловский двор»</a><br>
+			<img src="{$template_image}star.png" width="20" height="18" align="absmiddle"> <a href="#">Ресторан «Старый дворик»</a><br>
+			</td>
+			<td>
+			<img src="{$template_image}star.png" width="20" height="18" align="absmiddle"> <a href="#">Банкетный зал «Московский»</a><br>
+			<img src="{$template_image}star.png" width="20" height="18" align="absmiddle"> <a href="#">Кофейня «Вега»</a><br>
+			</td>
+			<td>
+			<img src="{$template_image}star.png" width="20" height="18" align="absmiddle"> <a href="#">Бар «Старый дворик»</a><br>
+			<img src="{$template_image}star.png" width="20" height="18" align="absmiddle"> <a href="#">Лобби-бар «Робин Крузо»</a><br>
+			</td>*}
+			
+		  </tr>
+		</table>

@@ -277,13 +277,13 @@ $smarty->assign("left_menu",$left_menu);*/
 	WHERE a.param_level in ('1', '2') AND a.status='1' 
 	ORDER BY a.param_left");
 */
-/*$shop_menu=$db->get_all("
+$shop_menu=$db->get_all("
 	SELECT * 
 	FROM fw_catalogue as a
 	WHERE a.param_level = '1' AND a.status='1' 
 	ORDER BY a.param_left");
 
-$smarty->assign("shop_menu",$shop_menu);*/
+$smarty->assign("shop_menu",$shop_menu);
 
 if (!isset($page_title)) {
   if (isset($node_content['title']) && $node_content['title']!='') $page_title=$node_content['title'];

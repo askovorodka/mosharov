@@ -14,7 +14,7 @@ parent.location.href = "index.php?mod=shop&action=delete_cat&id=" + delete_id;
 {/literal}
 	<table width=100% class=content_table>
 
-	<tr><th>Название</th>{*<th width=10%>Продуктов</th>*}<th width=10%>Статус</th><th style="width: 120px;">Действия</th></tr>
+	<tr><th>Название</th><th width=10%>Блюд в ресторане</th><th width=10%>Статус</th><th style="width: 120px;">Действия</th></tr>
 
 	{foreach name=tree from=$cat_list item=entry}
 
@@ -29,9 +29,9 @@ parent.location.href = "index.php?mod=shop&action=delete_cat&id=" + delete_id;
 			<td class={$td}_left>
 				{str_repeat str="&nbsp;" num=$entry.param_level mod="4"}<img src=templates/img/tree.gif>{if $entry.param_right-$entry.param_left!=1}<a href=index.php?mod=shop&action=products_list&cat={$entry.id}>{$entry.name}</a>{else}{$entry.name}{/if}{if $entry.properties>0} <small><font color="#666666">(Свойств: {$entry.properties})</font></small>{/if}
 			</td>
-			{*<td class={$td}_middle align=center style="font-size: 11px;">
+			<td class={$td}_middle align=center style="font-size: 11px;">
 				{if $entry.products>0}[ <a href=index.php?mod=shop&action=products_list&cat={$entry.id}><b>{$entry.products}</b></a> ]{/if}
-			</td>*}
+			</td>
 			<td align=center class={$td}_middle>
 			{if $entry.param_level!=0}<a href="?mod=shop&action=change_status&id={$entry.id}" title="Изменить статус"><img src=templates/img/status_{$entry.status}.gif border=0></a>{/if}
 			</td>

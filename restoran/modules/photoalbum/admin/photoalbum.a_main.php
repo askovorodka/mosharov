@@ -152,6 +152,7 @@ if (isset($_POST['submit_add_photo'])) {
 		$filesize=round(filesize($tmp)/1000,2);
 		$result=$db->query("INSERT INTO fw_photoalbum_images(parent,title,link,ext,sort_order,insert_date) VALUES('$parent','$title','$link','$ext','$order','".time()."')");
 		$id=mysql_insert_id();
+		//echo move_uploaded_file($tmp, BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext); exit;
 		if (move_uploaded_file($tmp, BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext)) {
 			chmod(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext, 0644);
 			Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,BASE_PATH.'/'.PHOTOS_FOLDER.'/small-'.$id.'.'.$ext,PREVIEW1_WIDTH,PREVIEW1_HEIGTH);
