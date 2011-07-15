@@ -1,9 +1,10 @@
-#Tue Jul 12 23:21:53 MSD 2011
+#Thu Jul 14 15:19:59 MSD 2011
 eclipse.preferences.version=1
 encoding//modules/photoalbum/admin/templates/photoalbum.a_edit_album.html=cp1251
 encoding//modules/shop/admin/templates/shop.a_edit_product.html=cp1251
 encoding//modules/shop/admin/templates/shop.a_main.html=cp1251
 encoding//modules/shop/admin/templates/shop.a_products_list.html=cp1251
+encoding//modules/shop/front/templates/shop.f_main.html=cp1251
 encoding//templates/footer_block.html=cp1251
 encoding//templates/text.html=cp1251
 encoding//templates/top_menu_block.html=cp1251

@@ -47,6 +47,19 @@ if(document.getElementById(name).style.display!="none") {
 		</select>
 	</td>
 </tr>
+
+<tr>
+	<td width=15% class=td1_left>Прикрепить к ресторану:</td>
+	<td class=td1_right>
+		<select name=edit_category class=field style="width:100%;">
+		{foreach from=$categories item=entry}
+			<option value={$entry.id}{if $entry.id==$rel.cat_id} selected=true{/if}>
+			{$entry.name}</option>
+		{/foreach}
+		</select>
+	</td>
+</tr>
+
 <tr>
 	<td class=td1_left>Имя:</td><td class=td1_right><input type=text name=edit_name class=field style="width:100%;" value="{$album.name}"></td>
 </tr>

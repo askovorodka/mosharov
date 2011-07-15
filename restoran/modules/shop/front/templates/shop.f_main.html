@@ -1,11 +1,90 @@
+    <table class="capttin" cellspacing="0" cellpadding="0">
+	  <tr>
+		<td class="capt1">&nbsp;</td>
+		<td class="capt3"><h2>{if $cat_content.param_level == 0}{$node_content.name}{elseif $cat_content.param_level == 1}{$cat_content.name}{elseif $cat_content.param_level == 2}{$cat_parent_info.name}{/if}</h2></td>
+		<td class="capt2">&nbsp;</td>
+	  </tr>
+	</table>
+
+	{if $cat_content.param_level == 0}
+    <table class="txtin" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="100%">
+        	{foreach from=$folders_list item=folder}
+				<div class="restor"><a href="{$base_url}/restorants/{$folder.full_url}">{$folder.name}<br>
+				<img src="/{$smarty.const.PHOTOS_FOLDER}/medium-{$folder.photo.id}.{$folder.photo.ext}" width="350" height="233"></a><br></div>
+			{/foreach}
+        </td>
+      </tr>
+	</table>
 	
+	{elseif $cat_content.param_level == 1}
+	
+    <table class="txtin" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="lmenu"><img src="{$template_image}clear.png" height="1" width="250"><br>
+        {foreach from=$shop_menu item=smenu}
+        	<a href="{$base_url}/restorants/{$smenu.url}/">{$smenu.name}</a><br>
+        	{if $smenu.id == $cat_content.id}
+        		<div>
+        			{foreach from=$folders_list item=folder}
+        				<a href="{$base_url}/restorants/{$cat_content.url}/{$folder.url}/">{$folder.name}</a><br>
+        			{/foreach}
+        		</div>
+        	{/if}
+        {/foreach}
+        </td>
+        <td width="100%">
+        <h1>{$cat_content.name}</h1>
+        {$cat_content.text}
+         </td>
+      </tr>
+	</table>	
+	
+	{elseif $cat_content.param_level == 2}
+	
+   	<table class="txtin" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="lmenu"><img src="{$template_image}clear.png" height="1" width="250"><br>
+        {foreach from=$shop_menu item=smenu}
+        	<a href="{$base_url}/restorants/{$smenu.url}/">{$smenu.name}</a><br>
+        	{if $smenu.id == $cat_parent_info.id}
+        		<div>
+        		{foreach from=$cat_parent_info.folders_list item=folder}
+        		<a href="{$base_url}/restorants/{$cat_parent_info.url}/{$folder.url}/">{$folder.name}</a><br>
+        		{/foreach}
+        		</div>
+        	{/if}
+        {/foreach}
+        </td>
+        <td width="100%">
+        <h1>{$cat_content.name}</h1>
+        
+        <table class="restmenu" cellspacing="0" cellpadding="0">
+       	{foreach from=$products_list item=product}
+	          <tr>
+	            <td class="ves">{$product.description}</td>
+	            <td><b>{$product.name}</b><br>{$product.small_description}</td>
+	            <td><b>{$product.price} руб.</b></td>
+	          </tr>
+        {/foreach}
+        </table>
+
+        </td>
+      </tr>
+	</table>	
+	
+	
+	{/if}
+
+
 		{*if $parent.id == $smarty.const.TIRES_ID}
 			{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/tires_filter.html"}
 		{elseif $parent.id == $smarty.const.DISK_ID}
 			{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/disk_filter.html"}
 		{/if*}
 
-		<h1>{if $cat_content.param_level == 0}Каталог продукции{else}{$cat_content.name}{/if}</h1>
+		{*<h1>{if $cat_content.param_level == 0}Каталог продукции{else}{$cat_content.name}{/if}</h1>*}
 
 		{*if $cat_content.param_level == 3}
 			{if $parent.id == $smarty.const.TIRES_ID}
@@ -24,7 +103,7 @@
 	        {/if}
         {/if*}
 
-		{if $folders_list}
+		{*if $folders_list}
 			{foreach from=$folders_list item=folder}
 				<h2>{$folder.name|strip_tags}</h2>
 				{if $folder.products}
@@ -53,51 +132,13 @@
 				{/if}
 				
 			{/foreach}
-        {/if}
+        {/if*}
 
-
+{*
 <br><br>
 {if $products_list}
 
 	{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/products_list.html"}
 	
 {/if}
-
-{literal}
-<script type="text/javascript" language="javascript">
-	// <![CDATA[
-	
-	
-	$("A.addToBasket").click(function(){
-		
-		this.response = function(response){
-			$("DIV#loading-layer").hide();
-			$("DIV#basket").removeClass("basketContentHide").addClass("basketContentShow");
-			var floor = response.split(";");
-			$("#basket_number").html(floor[0]);
-			$("#basket_currency").html(floor[1]);
-		};
-		
-		var product_count = parseInt($($($($(this).parent()).prev()).children()).val());
-		var product_id = parseInt($(this).attr("id"));
-		if (product_count && product_count)
-		{
-			var left = $(this).offset().left;
-			var top = $(this).offset().top;
-			$("DIV#loading-layer").css({"top": top, "left" : left-200}).show();
-			
-			$.post('http://' + location.hostname + '/shop/basket/add/', {product_id : product_id, product_count : product_count}, this.response );
-		}
-		return false;
-	});
-	
-		$("INPUT.BasketCountInput").keyup(function(){
-			if (!parseInt($(this).val()))
-				return false;
-			return true;
-		});
-		
-// ]]>
-	</script>
-{/literal}
-
+*}

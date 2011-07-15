@@ -3,7 +3,7 @@
 $sub='';
 	   
 $sub[]= array(
-			"name"=>"Ğàçäåëû ôîòîàëüáîìà",
+			"name"=>"Ğàçäåëû",
 			"link"=>"?mod=photoalbum&action=cat"
 	   );
 	   
@@ -20,7 +20,7 @@ $sub[]= array(
 $main_menu[]=array(
 				"link"=>"?mod=photoalbum",
 				"name"=>"photoalbum",
-				"title"=>"Ôîòîàëüáîì",
+				"title"=>"Ôîòî è âèäåî",
 				"sort"=>"6",
 				"sub"=>$sub
 			);

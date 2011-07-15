@@ -7,6 +7,7 @@ class Shop extends db {
 	{
 		$this->db = &$db;
 	}
+
 	
 	function getTopProducts($limit = 1)
 	{

@@ -960,84 +960,7 @@ SWITCH (TRUE) {
 				$cat_content=$cat_list[$f];
 				$page_found=true;
 				
-				//находим родителя уровня 1
-				/*if (!in_array($cat_content['id'], array(TIRES_ID, DISK_ID)))
-				{
-
-					$parent = $shop->getParent($cat_content);
-					
-				}
-				else 
-				{
-					$parent = $cat_content;
-				}
 				
-				if ($cat_content['param_level'] > 2)
-				{
-					$parent2 = $db->get_single("SELECT id FROM fw_catalogue WHERE param_left < '{$cat_content['param_left']}' and param_right > '{$cat_content['param_right']}' and param_level = '2'");
-				}
-				elseif ($cat_content['param_level'] == 2)
-				{
-					$parent2 = $cat_content;
-				}
-				
-				$smarty->assign('parent', $parent);
-				if (isset($parent2))
-				{
-					$smarty->assign('parent2', $parent2);
-				}*/
-				
-				
-	            //мегу тайтлы
-	            /*$parent_0 = $shop->getParent($cat_content);
-	            if ($parent_0)
-	            {
-	            	if ($parent_0['id'] == DISK_ID)
-	            	{
-	            		// тайлты для дисков
-	            		$title_template = DISK_TITLE_TEMPLATE;
-	            	}
-	            	elseif ($parent_0['id'] == TIRES_ID)
-	            	{
-	            		//тайтлы для шин
-	            		$title_template = TIRES_TITLE_TEMPLATE;
-	            	}
-	            	
-	            	$title_template = str_replace("{name}", $cat_content['title'], $title_template);
-	            	
-	            	//if ( preg_match_all( '/\[([^\]]*)\]/', $title_template, $matches ) )
-	            	if ( preg_match_all( '/\[([^\]]*)\]/', $title_template, $matches ) )
-	            	{
-						if (is_array($matches))
-						{
-							foreach ($matches as $key=>$val)
-							{
-								foreach ($matches[$key] as $key2=>$val2)
-								{
-									//почему-то повторяется два раза данные паттерн поэтому делаю еще одно условия
-									if (preg_match("/\[(.*)\]/", $matches[$key][$key2], $str) )
-									{
-										if (isset($str[1]))
-										{
-											$array = explode("|", $str[1]);
-											$random = rand(0, count($array)-1);
-											$word = $array[$random];
-											$title_template = str_replace($matches[$key][$key2], $word, $title_template);
-										}
-									}
-								}
-							}
-						}
-	            	}
-
-	            	//echo $title_template;
-
-	            }*/
-				
-				
-				
-				/*if ($cat_content['title']!='') $page_title=$cat_content['title'];
-				else if ($cat_content['name']!='/') $page_title=$cat_content['name'];*/
 				
 				if (isset($title_template)) $page_title=$title_template;
 				else if ($cat_content['name']!='/') $page_title=$cat_content['name'];
@@ -1065,7 +988,6 @@ SWITCH (TRUE) {
 				//$smarty->assign("current_page",$pager['current_page']);
 				//$smarty->assign("pages",$pager['pages']);
 
-
 		
 		$cat_children_ids = array();
 		for ($c=0;$c<count($cat_list);$c++) {
@@ -1084,6 +1006,17 @@ SWITCH (TRUE) {
 				else
 				{
 					$cat_list[$c]['parent_id'] = $cat_content['id'];
+					$photoalbum = $db->get_single("select photoalbum_id from fw_photo_categories where cat_id = '{$cat_list[$c]['id']}' ");
+					//если есть прикрепленный альбом к категории
+					if (!empty($photoalbum['photoalbum_id']))
+					{
+						//вытаскивает главную фотку из альбома
+						$photo = $db->get_single("select * from fw_photoalbum_images where parent='{$photoalbum['photoalbum_id']}' and hit='1' limit 1");
+						if (!empty($photo))
+						{
+							$cat_list[$c]['photo'] = $photo;
+						}
+					}
 					$folders_list[]=$cat_list[$c];
 				}
 			}
@@ -1091,13 +1024,14 @@ SWITCH (TRUE) {
 			
 			if ($cat_list[$c]['param_left'] < $cat_content['param_left'] && $cat_list[$c]['param_right'] > $cat_content['param_right'] && $cat_list[$c]['param_level'] == $cat_content['param_level']-1) {
 				$cat_parent_info = $cat_list[$c];
+				$cat_parent_info['folders_list'] = $shop->getChildrenCategor($cat_parent_info, $cat_parent_info['param_level']+1);
 				$smarty->assign('cat_parent_info', $cat_parent_info);
 			}
 		}
 
 		if (isset($folders_list)) {
           $done=0;
-          for ($c=0;$c<count($folders_list);$c++) {
+          /*for ($c=0;$c<count($folders_list);$c++) {
 
           	$folders_list[$c]['products'] = $shop->getProductsByCategory($folders_list[$c]['id']);
           	
@@ -1109,54 +1043,8 @@ SWITCH (TRUE) {
           		}
           	}
           	
-            /*for ($d=0;$d<count($cat_list);$d++) {
-              if ($cat_list[$d]['param_left']>$folders_list[$c]['param_left'] && $cat_list[$d]['param_right']<$folders_list[$c]['param_right'] && $cat_list[$d]['param_level']==($folders_list[$c]['param_level']+1)) {
-              	
-   				if (isset($type)){
-   					$item2=array();
-   					$item2=$db->get_single("SELECT count(id) as count FROM fw_cats_types_relations WHERE cat_id='".(int)$cat_list[$d]['id']."' AND type_id='".$type."'");
-                	if (intval($item2['count'])>0)
-                		$folders_list[$c]['subfolders'][]=$cat_list[$d];
-        		}
-        		else
-        			$folders_list[$c]['subfolders'][]=$cat_list[$d];
-        		
-                $done++;
-                if ($done==8) break;
-              }
-            }*/
-
-            
-            
-            
-            
-          	//находим св-ва продукции категории
-			/*if ($cat_parent_info['id'] == DISK_ID)
-			{
-				$folders_list[$c]['properties'] = $shop->getProductsPropertiesDisk($folders_list[$c]['id']);
-			}
-			elseif ($cat_parent_info['id'] == TIRES_ID)
-			{
-				$folders_list[$c]['properties'] = $shop->getProductsPropertiesTires($folders_list[$c]['id']);
-			}*/
-
-			/*if ($cat_parent_info['param_level'] == 0)
-			{
-				$children_folders = $shop->getChildrenCategor($folders_list[$c], 3);
-				if ($children_folders)
-				{
-					$ids = array();
-					foreach ($children_folders as $val)
-					{
-						$ids[] = $val['id'];
-					}
-					$folders_list[$c]['properties'] = $shop->getProductsProperties($ids);
-				}
-				
-			}*/
-          	
-
-          }
+             
+          }*/
           $smarty->assign("folders_list",$folders_list);
         }
 

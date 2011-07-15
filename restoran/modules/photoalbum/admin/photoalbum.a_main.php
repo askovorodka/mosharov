@@ -79,11 +79,19 @@ if (isset($_POST['submit_add_album'])) {
 	$description=String::secure_format($_POST['edit_description']);
 	$meta_keywords=String::secure_format($_POST['edit_meta_keywords']);
 	$meta_description=String::secure_format($_POST['edit_meta_description']);
+	$cat_id = $_POST['edit_category'];
 	
 	if ($name=='') $name='Новый альбом';
 	
 	$db->query("INSERT INTO fw_photoalbums(parent,name,title,description,meta_description,meta_keywords,switch_comments,insert_date) VALUES('$parent','$name','$title','$description','$meta_description','$meta_keywords','$switch_comments','".time()."')");
-	header("Location: ?mod=photoalbum&action=edit_album&id=".mysql_insert_id());
+	$id = mysql_insert_id();
+	
+	if (!empty($cat_id))
+	{
+		$db->query("insert into fw_photo_categories (photoalbum_id, cat_id) values('{$id}', '{$cat_id}')");
+	}
+	
+	header("Location: ?mod=photoalbum&action=edit_album&id=".$id);
 }
 
 if (isset($_POST['submit_edit_album'])) {
@@ -97,11 +105,21 @@ if (isset($_POST['submit_edit_album'])) {
 	$meta_keywords=String::secure_format($_POST['edit_meta_keywords']);
 	$meta_description=String::secure_format($_POST['edit_meta_description']);
 	$status=$_POST['edit_status'];
+	$cat_id = $_POST['edit_category'];
+	
+	
 	
 	if (isset($_POST['edit_comments'])) $switch_comments='1';
 	else $switch_comments='0';
 	
 	$id=$_GET['id'];
+	
+	$db->query("delete from fw_photo_categories where photoalbum_id = " . $id);
+	
+	if (!empty($cat_id))
+	{
+		$db->query("insert into fw_photo_categories (photoalbum_id, cat_id) values('{$id}', '{$cat_id}')");
+	}
 	
 	$db->query("UPDATE fw_photoalbums SET parent='$parent',name='$name',title='$title',description='$description',meta_description='$meta_description',meta_keywords='$meta_keywords',switch_comments='$switch_comments',status='$status' WHERE id='$id'");
 }
@@ -468,6 +486,7 @@ SWITCH (TRUE) {
 		
 		$cat_list=Common::get_nodes_list($cat_list);
 
+		$smarty->assign("categories",$db->get_all("select * from fw_catalogue where status='1' and param_level='1' order by param_level"));
 		$smarty->assign("cat_list",$cat_list);
 		$smarty->assign("mode","add");
 		$smarty->assign("cat",@$_GET['cat']);
@@ -490,10 +509,14 @@ SWITCH (TRUE) {
 		$photos_list=String::unformat_array($photos_list);
 		$photos_count=count($photos_list);
 		
+		$rel = $db->get_single("select * from fw_photo_categories where photoalbum_id='{$id}' ");
+		
 		$smarty->assign("photos_height",PREVIEW1_HEIGTH+10);
 		$smarty->assign('photos_list',$photos_list);
 		$smarty->assign('photos_count',$photos_count);
 		$smarty->assign("cat_list",$cat_list);
+		$smarty->assign("rel",$rel);
+		$smarty->assign("categories",$db->get_all("select * from fw_catalogue where status='1' and param_level='1' order by param_level"));
 		$smarty->assign("album",$album);
 		$smarty->assign("mode","edit");
 		$template='photoalbum.a_edit_album.html';
