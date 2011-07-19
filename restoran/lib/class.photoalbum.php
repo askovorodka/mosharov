@@ -1,6 +1,16 @@
 <?php
-class Photoalbum{
+class Photoalbum extends db{
 
+	public $db = null;
+	private $array = array();
+	public $result = array();
+	
+	function __construct($db)
+	{
+		$this->db = &$db;
+		//parent::__construct();
+	}
+	
 	function pregReplace($content,$base_path,$photos_folder,$photos_per_page_up){
 
 			if (preg_match_all('/{photoalbum\sid="\d{1,2}"}/',$content,$matches))
@@ -60,6 +70,59 @@ class Photoalbum{
 		return $output;
 		
 	}
+
+
+	function getAlbumIdByCategory($cat_id)
+	{
+		$this->result = $this->db->get_all("select fw_photo_categories.photoalbum_id 
+		from fw_photo_categories
+		left join fw_photoalbums on fw_photo_categories.photoalbum_id = fw_photoalbums.id 
+		where fw_photoalbums.album_type = 'photo' and 
+		fw_photo_categories.cat_id = '".intval($cat_id)."' and fw_photoalbums.status = '1'");
+		if ($this->result && count($this->result) > 0)
+		{
+			foreach ($this->result as $row)
+			{
+				$this->array[] = $row['photoalbum_id'];
+			}
+			return $this->array;
+		}
+		else
+			return null;
+	}
+
+
+	/**
+	 * 
+	 * Ќаходим фотки по категории (ресторану)
+	 * @param int $cat_id
+	 * @author andrey.s
+	 */
+	function getPhotosByCategory($cat_id, $limit = null)
+	{
+		if (!empty($limit))
+		{
+			$limit = " limit " . intval($limit);
+		}
+
+		$album = $this->getAlbumIdByCategory($cat_id);
+		
+		if (empty($album))
+			return false;
+		
+		$this->result = $this->db->get_all("select * from fw_photoalbum_images where parent in (".implode(",", $album).")" . $limit);
+
+		if ($this->result && count($this->result) > 0)
+		{
+			return $this->result;
+		}
+		else
+		{
+			return null;
+		}
+		
+	}
+	
 
 }
 

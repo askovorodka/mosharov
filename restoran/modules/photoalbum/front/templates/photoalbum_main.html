@@ -26,7 +26,7 @@
 <table width=100% cellspacing=1 cellpadding=3>
 {foreach from=$albums_list item=album}
 <tr>
-<td width=5%><a href={$current_url}/album_{$album.id}><img src={$base_url}/{$photos_folder}/small-{$album.image} border=0></a></td>
+<td width=5%><a href={$base_url}/{$current_url}/album_{$album.id}><img src={$base_url}/{$photos_folder}/small-{$album.image} border=0></a></td>
 <td valign=top>
 <a href={$current_url}/album_{$album.id}>{$album.name}</a> <small>(סמחהאם {$album.insert_date|date_format:"%d.%m.%Y ג %T"})</small><br>
 װמעמדנאפטי ג אכüבמלו: <b>{$album.photos}</b>

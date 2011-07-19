@@ -268,7 +268,11 @@ h2 {
 	float:left;
 	width:380px;
 }
-.gallery img, .restor img {
+.gallery_small img
+{
+	margin-right:20px;
+}
+.gallery img, .restor img, .gallery_small img {
 	border:4px solid white;
 	margin-bottom:20px;
 }

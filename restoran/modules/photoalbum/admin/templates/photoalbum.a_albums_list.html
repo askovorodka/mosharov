@@ -46,7 +46,7 @@ if(document.getElementById(name).style.display!="none") {
 
 	<tr>
 	<th>Альбом</th>
-	<th width=10%>Фотографий</th>
+	<th width=10%>Файлов</th>
 	<th width=8%>Статус <a href="?mod=photoalbum&action=albums_list&cat={$cat}&sort=status&order=asc&page={$current_page}" class=img_link><img src=templates/img/cat_up.gif border=0></a>&nbsp;<a href="?mod=photoalbum&action=albums_list&cat={$cat}&sort=status&order=desc&search={$search}&page={$current_page}" class=img_link><img src=templates/img/cat_down.gif border=0></a></th>
 	<th width=10%>Действия</th>
 	</tr>
@@ -104,7 +104,7 @@ if(document.getElementById(name).style.display!="none") {
 
 
 <br>
-<div class="add_but" style="float: left;" onClick="location.href='?mod=photoalbum&action=add_album{if $cat}&cat={$cat}{/if}'"><div><a href="?mod=photoalbum&action=add_album{if $cat}&cat={$cat}{/if}">добавить фотоальбом</a></div></div>
+<div class="add_but" style="float: left;" onClick="location.href='?mod=photoalbum&action=add_album{if $cat}&cat={$cat}{/if}'"><div><a href="?mod=photoalbum&action=add_album{if $cat}&cat={$cat}{/if}">добавить альбом</a></div></div>
 
 {if $total_pages>1}
 <br><br>

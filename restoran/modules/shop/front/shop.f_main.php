@@ -967,8 +967,13 @@ SWITCH (TRUE) {
 				if ($cat_content['meta_keywords']!='') $meta_keywords=$cat_content['meta_keywords'];
 				if ($cat_content['meta_description']!='') $meta_description=$cat_content['meta_description'];
 				
-				/*$photo = new Photoalbum();
-				$cat_content['text']= $photo->pregReplace($cat_content['text'],BASE_PATH,PHOTOS_FOLDER,PHOTOS_PER_PAGE_SUP);
+			
+				$photo = new Photoalbum($db);
+				$photos = $photo->getPhotosByCategory($cat_content['id'], 3);
+				if (!empty($photos))
+					$smarty->assign('photos', $photos);
+				
+				/*$cat_content['text']= $photo->pregReplace($cat_content['text'],BASE_PATH,PHOTOS_FOLDER,PHOTOS_PER_PAGE_SUP);
 				
 				$table = new Table();
 				$cat_content['text'] = $table->pregReplace($cat_content['text'],BASE_PATH);
@@ -1006,7 +1011,10 @@ SWITCH (TRUE) {
 				else
 				{
 					$cat_list[$c]['parent_id'] = $cat_content['id'];
-					$photoalbum = $db->get_single("select photoalbum_id from fw_photo_categories where cat_id = '{$cat_list[$c]['id']}' ");
+					$photoalbum = $db->get_single("select fw_photo_categories.photoalbum_id 
+					from fw_photo_categories 
+					left join fw_photoalbums on fw_photo_categories.photoalbum_id = fw_photoalbums.id 
+					where fw_photo_categories.cat_id = '{$cat_list[$c]['id']}' ");
 					//если есть прикрепленный альбом к категории
 					if (!empty($photoalbum['photoalbum_id']))
 					{

@@ -80,10 +80,12 @@ if (isset($_POST['submit_add_album'])) {
 	$meta_keywords=String::secure_format($_POST['edit_meta_keywords']);
 	$meta_description=String::secure_format($_POST['edit_meta_description']);
 	$cat_id = $_POST['edit_category'];
+	$album_type = $_POST['edit_album_type'];
 	
 	if ($name=='') $name='Новый альбом';
 	
-	$db->query("INSERT INTO fw_photoalbums(parent,name,title,description,meta_description,meta_keywords,switch_comments,insert_date) VALUES('$parent','$name','$title','$description','$meta_description','$meta_keywords','$switch_comments','".time()."')");
+	$db->query("INSERT INTO fw_photoalbums(parent,name,title,description,meta_description,meta_keywords,switch_comments,insert_date, album_type) 
+	VALUES('$parent','$name','$title','$description','$meta_description','$meta_keywords','$switch_comments','".time()."', '{$album_type}')");
 	$id = mysql_insert_id();
 	
 	if (!empty($cat_id))
@@ -106,7 +108,7 @@ if (isset($_POST['submit_edit_album'])) {
 	$meta_description=String::secure_format($_POST['edit_meta_description']);
 	$status=$_POST['edit_status'];
 	$cat_id = $_POST['edit_category'];
-	
+	$album_type = $_POST['edit_album_type'];
 	
 	
 	if (isset($_POST['edit_comments'])) $switch_comments='1';
@@ -121,7 +123,7 @@ if (isset($_POST['submit_edit_album'])) {
 		$db->query("insert into fw_photo_categories (photoalbum_id, cat_id) values('{$id}', '{$cat_id}')");
 	}
 	
-	$db->query("UPDATE fw_photoalbums SET parent='$parent',name='$name',title='$title',description='$description',meta_description='$meta_description',meta_keywords='$meta_keywords',switch_comments='$switch_comments',status='$status' WHERE id='$id'");
+	$db->query("UPDATE fw_photoalbums SET parent='$parent',name='$name',title='$title',description='$description',meta_description='$meta_description',meta_keywords='$meta_keywords',switch_comments='$switch_comments',status='$status', album_type='{$album_type}' WHERE id='$id'");
 }
 
 if (isset($_POST['submit_add_photo'])) {
@@ -139,25 +141,43 @@ if (isset($_POST['submit_add_photo'])) {
 	$trusted_formats=explode(",",ALLOWED_FORMATS);
 	
 	$output=Image::image_details($_FILES['add_new_photo']['tmp_name']);
-
+	
 	$check_file_name=explode(".",$file_name);
 	$ext=$check_file_name[count($check_file_name)-1];
 	
-	if (!in_array($output['format'],$trusted_formats)) {
-		$smarty->assign("error","Разрешены картинки форматов ".ALLOWED_FORMATS);
+	if (in_array($ext, array('flv','avi', 'mpg', 'mpeg4')))
+	{
+		$filetype = 'video';
+	}
+	else
+	{
+		$filetype='photo';
+	}
+	//echo ($_FILES['add_new_photo']['size'] / 1024);
+	if (!in_array($ext,$trusted_formats)) {
+		$smarty->assign("error","Разрешены файлы форматов ".ALLOWED_FORMATS);
 		$check=false;
 	}
+	if ($check)
+		echo 1;
 	
-	list($max_width,$max_height)=explode("x",PHOTO_MAX_SIZE);
+	//$filesize = intval($_FILES['add_new_photo']['size'] / 1024);
 	
+	if (!in_array($ext, array('flv','avi', 'mpg', 'mpeg4')))
+		list($max_width,$max_height)=explode("x",PHOTO_MAX_SIZE);
 	
-	if ($output['width']>$max_width or $output['height']>$max_height) {
-		$resize_main=true;
+	$resize_main=false;
+	if ($filetype == 'photo')
+	{
+		if ($output['width']>$max_width or $output['height']>$max_height) {
+			$resize_main=true;
+		}
 	}
-	else $resize_main=false; 
-
+	 
+	//echo filesize($tmp)<PHOTO_MAX_FILESIZE*1000;
+	
 	if (filesize($tmp)>PHOTO_MAX_FILESIZE*1000) {
-		$smarty->assign("error","Размер фотографии не должен привышать ".PHOTO_MAX_FILESIZE."Кб");
+		$smarty->assign("error","Размер файла не должен привышать ".PHOTO_MAX_FILESIZE."Кб");
 		$check=false;
 	}
 
@@ -173,14 +193,17 @@ if (isset($_POST['submit_add_photo'])) {
 		//echo move_uploaded_file($tmp, BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext); exit;
 		if (move_uploaded_file($tmp, BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext)) {
 			chmod(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext, 0644);
-			Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,BASE_PATH.'/'.PHOTOS_FOLDER.'/small-'.$id.'.'.$ext,PREVIEW1_WIDTH,PREVIEW1_HEIGTH);
-			if ($output['width']>PREVIEW2_WIDTH or $output['height']>PREVIEW2_HEIGHT) Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,BASE_PATH.'/'.PHOTOS_FOLDER.'/medium-'.$id.'.'.$ext,PREVIEW2_WIDTH,PREVIEW2_HEIGTH);
-			if ($resize_main) Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,$max_width,$max_height);
-			$smarty->assign("message","Фотография успешно добавлена");
+			if ($filetype == 'photo')
+			{
+				Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,BASE_PATH.'/'.PHOTOS_FOLDER.'/small-'.$id.'.'.$ext,PREVIEW1_WIDTH,PREVIEW1_HEIGTH);
+				if ($output['width']>PREVIEW2_WIDTH or $output['height']>PREVIEW2_HEIGHT) Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,BASE_PATH.'/'.PHOTOS_FOLDER.'/medium-'.$id.'.'.$ext,PREVIEW2_WIDTH,PREVIEW2_HEIGTH);
+				if ($resize_main) Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,$max_width,$max_height);
+			}
+			$smarty->assign("message","Файл успешно загружен");
 		}
 		else {
 			$result=$db->query("DELETE FROM fw_photoalbum_images WHERE id='".mysql_insert_id()."'");
-			$smarty->assign("error","Фотография не была загружена!");
+			$smarty->assign("error","Файл не загружен!");
 		}
 		
 		$location=$_SERVER['HTTP_REFERER'];
@@ -507,6 +530,17 @@ SWITCH (TRUE) {
 		
 		$photos_list=$db->get_all("SELECT * FROM fw_photoalbum_images WHERE parent='$id' ORDER BY sort_order");
 		$photos_list=String::unformat_array($photos_list);
+		foreach ($photos_list as $key=>$val)
+		{
+			if (in_array(strtolower($photos_list[$key]['ext']), array('flv', 'avi', 'mpg', 'mpeg4')))
+			{
+				$photos_list[$key]['filetype'] = 'video';
+			}
+			else
+			{
+				$photos_list[$key]['filetype'] = 'photo';
+			}
+		}
 		$photos_count=count($photos_list);
 		
 		$rel = $db->get_single("select * from fw_photo_categories where photoalbum_id='{$id}' ");

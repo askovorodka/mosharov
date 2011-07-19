@@ -8,7 +8,7 @@ $sub[]= array(
 	   );
 	   
  $sub[]= array(
-			"name"=>"Àכüבמלû פמעמדנאפטי",
+			"name"=>"Àכüבמלû פמעמדנאפטי ט גטהומ",
 			"link"=>"?mod=photoalbum&action=albums_list"
 	   );
 

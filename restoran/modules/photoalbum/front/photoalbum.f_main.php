@@ -249,10 +249,11 @@ SWITCH (TRUE) {
 				$cat_content=$cat_list[$f];
 				$page_found=true;
 				$photoalbum_cat_list=array();
-
+				
 				for ($i=0;$i<sizeof($cat_list);$i++) {
 					if ($cat_list[$i]['param_left']>$cat_content['param_left'] && $cat_list[$i]['param_right']<$cat_content['param_right'] && $cat_list[$i]['param_level']==$cat_content['param_level']+1) $photoalbum_cat_list[]=$cat_list[$i];
 				}
+				
 				
 				for ($i=0;$i<sizeof($photoalbum_cat_list);$i++) {
 					for ($c=0;$c<sizeof($cat_list);$c++) {

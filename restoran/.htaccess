@@ -1,11 +1,14 @@
 #php_value session.use_only_cookies 1
 php_value session.use_trans_sid 0
 
+php_value upload_max_filesize 30M
+php_value post_max_size 30M
+
 RewriteEngine on
 Options +FollowSymlinks
 RewriteBase /
 
-#RewriteRule     ^(.*)/video/(.*)$			/video/$2	[L]
+RewriteRule     ^(.*)/video/(.*)$			/uploaded_files/photos/$2	[L]
 #RewriteRule     ^(.*)/insertfiles/(.*)$	/insertfiles/$2	[L]
 
 RewriteCond 	%{REQUEST_FILENAME} !-f

@@ -374,5 +374,7 @@ class Common {
 		
 		return $text;
 	}
+	
+	
 }
 ?>

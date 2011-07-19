@@ -1,6 +1,10 @@
 <?php
 ob_start();
 
+//error_reporting(E_ALL);
+//ini_set('display_errors','On');
+
+
 /*
 header("Content-Type: text/html; charset=windows-1251");
 print_r($_SERVER['DOCUMENT_ROOT']);
@@ -34,6 +38,7 @@ require_once 'lib/class.array.php';
 require_once 'lib/captchaZDR.php';
 require_once 'lib/class.session.php';
 require_once 'modules/shop/front/class.shop.php';
+require_once 'lib/class.photoalbum.php';
 
 $_SESSION['db_connections'] = 0;
 
@@ -46,6 +51,7 @@ $smarty->cache_dir = 'lib/smarty/cache/';
 
 /* ------------ ������������ � ���� ������ -------------- */
 $db=new db(DB_NAME, DB_HOST, DB_USER, DB_PASS);
+//$photo = new Photoalbum($db);
 
 
 

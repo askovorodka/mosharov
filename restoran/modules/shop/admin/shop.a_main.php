@@ -124,11 +124,9 @@ if (isset($_POST['submit_import']))
 if (isset($_POST['action']) && $_POST['action']=="resort_order") {
 	if (isset($_POST['product']) && isset($_POST['product_prev']) && isset($_POST['parent_cat'])) {
 
-
 		foreach ($_POST['product'] as $key=>$val){
    			$db->query("UPDATE fw_products SET sort_order='$val' WHERE id='$key'");
 		}
-
 
 	}
 

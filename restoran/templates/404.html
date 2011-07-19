@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
-<title>Странице не найдена</title>
+<title>{$page_title}</title>
 <meta name="Keywords" content="{$meta_keywords}">
 <meta name="Description" content="{$meta_description}">
 {foreach from=$css item=css}
@@ -14,36 +14,45 @@
 
 </head>
 <body>
-<table class="mtbl" cellspacing="0" cellpadding="0">
-  <tr height="234">
-    <td width="271"><a href="{$base_url}"><img src="{$template_image}logo.png" width="271" height="234"></a></td>
-    <td colspan="2" class="rtbg"><div class="toptel" align="center">{$smarty.const.PHONE1}<br>{$smarty.const.PHONE2}</div></td>
+<table class="mtbl" cellspacing="0" cellpadding="0" align="center">
+  <tr>
+    <td class="toptr"><div class="logo"><a href="{$base_url}"><img src="{$template_image}logo.jpg" width="201" height="131"></a></div>
+	<table class="logotbl" cellspacing="0" cellpadding="0">
+	  <tr>
+		<td class="langru">на русском</td>
+		<td class="langen"><a href="#">in english</a></td>
+	  </tr>
+	</table></td>
   </tr>
-  <tr height="36">
-    <td colspan="3" class="gline">{$smarty.const.HEADER_TITLE}</td>
+  <tr>
+    <td class="sectr">
+    <div id="toping"></div>
+    	{include file="../templates/top_menu_block.html"}
+	<!--- PICT ROTATION --->
+		<img src="{$template_image}main.jpg" width="1200" height="532" hspace="0" vspace="0"><br>
+	<!--- /PICT ROTATION --->
+	<table class="captt" cellspacing="0" cellpadding="0">
+	  <tr>
+		<td class="capt1">&nbsp;</td>
+		<td class="capt3"><h2>Новости и акции</h2></td>
+		<td class="capt2">&nbsp;</td>
+	  </tr>
+	</table>
+	</td>
+  </tr>
+  <tr>
+    <td>
+    {include file="../templates/top_news_block.html"}
+	</td>
   </tr>
   <tr height="100%">
-    <td class="leftside">
-    {include file="../templates/left_menu_block.html"}
-	<br><br>
-	<center><div class="bann"><br><a href="{$base_url}/insertfiles/price_list_2011_3k.xls">Скачать прайс-лист<br> с нашей продукцией</a></div></center>
-	<img src="{$template_image}clear.png" width="271" height="1"><br>
-	</td>
     <td class="txt">
-    
-		<center>Запрашиваемая вами страница не найдена.</center>    
-    
+		<center>Запрашиваемая страница не найдена.</center>
 	</td>
-	
-    <td class="rightside"><img src="{$template_image}clear.png" width="231" height="1"><br>
-    
-	<a href="{$base_url}/news/" id="news">Новости и акции</a><br><br>
-	
-	{foreach from=$news_list item=news name=news}
-		<span class="ndate">{$news.publish_date|date_format:"%d.%m.%Y"}</span><br>
-		<a href="{$base_url}/news/archive/{$news.id}/">{$news.title|strip_tags}</a><br><br>
-	{/foreach}
-	
+  </tr>
+  <tr>
+    <td class="bline">
+    {include file="../templates/top_products_block.html"}
 	</td>
   </tr>
   {include file="../templates/footer_block.html"}

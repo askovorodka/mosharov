@@ -37,6 +37,11 @@
         <td width="100%">
         <h1>{$cat_content.name}</h1>
         {$cat_content.text}
+        
+        {if $photos}
+        	{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/photos_gallery.html"}
+        {/if}
+        
          </td>
       </tr>
 	</table>	
