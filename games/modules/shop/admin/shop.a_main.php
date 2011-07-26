@@ -58,7 +58,7 @@ else $action='';
 /*------------------------- ВЫПОЛНЯЕМ РАЗЛИЧНЫЕ ДЕЙСТВИЯ ---------------------*/
 
 //импорт прайс-листов
-if (isset($_POST['submit_import']))
+/*if (isset($_POST['submit_import']))
 {
 	//require_once('../lib/class.import.php');
 	//require_once('../lib/class.string.php');
@@ -119,7 +119,7 @@ if (isset($_POST['submit_import']))
 	}
 	
 }
-
+*/
 
 if (isset($_POST['action']) && $_POST['action']=="resort_order") {
 	if (isset($_POST['product']) && isset($_POST['product_prev']) && isset($_POST['parent_cat'])) {
@@ -541,12 +541,12 @@ if (isset($_POST['submit_add_product'])) {
 	$name=String::secure_format($_POST['edit_name']);
 	$title=String::secure_format($_POST['edit_title']);
 	$site_url=$_POST['edit_site_url'];
-	$small_description=String::secure_format($_POST['edit_small_description']);
-	$description=String::secure_format($_POST['edit_description']);
+	//$small_description=String::secure_format($_POST['edit_small_description']);
+	//$description=String::secure_format($_POST['edit_description']);
 	$price=String::secure_format($_POST['edit_price']);
 	$price1=String::secure_format($_POST['edit_price1']);
-	$price2=String::secure_format($_POST['edit_price2']);
-	$guarantie=String::secure_format($_POST['edit_guarantie']);
+	//$price2=String::secure_format($_POST['edit_price2']);
+	//$guarantie=String::secure_format($_POST['edit_guarantie']);
 	$sale=String::secure_format($_POST['edit_sale']);
 	
 	//св-ва шин/дисков
@@ -585,8 +585,8 @@ if (isset($_POST['submit_add_product'])) {
 		(
 		
 		article,parent,name,
-		title,site_url,small_description,
-		description,price,price2,price3,insert_date,
+		title,site_url,
+		price,price2,insert_date,
 		sale,sort_order,product_type) 
 		
 		VALUES(
@@ -595,9 +595,7 @@ if (isset($_POST['submit_add_product'])) {
 			'$name',
 			'$title',
 			'$site_url',
-			'$small_description',
-			'$description',
-			'$price','$price1','$price2',
+			'$price','$price1',
 			'".time()."',
 			'$sale',
 			'$sort_order',
@@ -620,11 +618,11 @@ if (isset($_POST['submit_edit_product'])) {
 	$meta_keywords=String::secure_format($_POST['edit_meta_keywords']);
 	$meta_description=String::secure_format($_POST['edit_meta_description']);
 	$site_url=$_POST['edit_site_url'];
-	$small_description=String::secure_format($_POST['edit_small_description']);
-	$description=String::secure_format($_POST['edit_description']);
+	//$small_description=String::secure_format($_POST['edit_small_description']);
+	//$description=String::secure_format($_POST['edit_description']);
 	$price=String::secure_format($_POST['edit_price']);
 	$price2=String::secure_format($_POST['edit_price2']);
-	$price3=String::secure_format($_POST['edit_price3']);
+	//$price3=String::secure_format($_POST['edit_price3']);
 	$sale=String::secure_format($_POST['edit_sale']);
 	$guarantie=String::secure_format($_POST['edit_guarantie']);
 	$status=$_POST['edit_status'];
@@ -649,9 +647,8 @@ if (isset($_POST['submit_edit_product'])) {
 			meta_description='$meta_description',
 			meta_keywords='$meta_keywords',
 			site_url='$site_url',
-			small_description='$small_description',
-			description='$description',
-			price='$price',price2='$price2',price3='$price3',
+			price='$price',
+			price2='$price2',
 			sale='$sale',
 			status='$status',
 			hit='$hit' 
@@ -659,16 +656,16 @@ if (isset($_POST['submit_edit_product'])) {
 	
 
 	//редактируем файлы описания
-	if (isset($_POST['edit_file_title']))
+	/*if (isset($_POST['edit_file_title']))
 	{
 		foreach ($_POST['edit_file_title'] as $key=>$val)
 		{
 			$db->query("UPDATE fw_products_files SET title = '{$val}' WHERE id = '{$key}'");
 		}
-	}
+	}*/
 	
 	//удаление файлов
-	if (isset($_POST['del_file']))
+	/*if (isset($_POST['del_file']))
 	{
 		foreach ($_POST['del_file'] as $key=>$val)
 		{
@@ -682,10 +679,10 @@ if (isset($_POST['submit_edit_product'])) {
 			}
 			$db->query("DELETE FROM fw_products_files2 WHERE id = '{$key}'");
 		}
-	}
+	}*/
 	
 	//грузим файл описания
-	$inserts = array();
+	/*$inserts = array();
 	foreach ($_FILES['add_file']['tmp_name'] as $key=>$val)
 	{
 		
@@ -726,12 +723,12 @@ if (isset($_POST['submit_edit_product'])) {
 		}
 		
 		
-	}
+	}*/
 	
-	if (count($inserts))
+	/*if (count($inserts))
 	{
 		$db->query("INSERT INTO fw_products_files2 (parent,title,file) VALUES " . implode(",", $inserts));
-	}
+	}*/
 	/*print_r($_FILES); exit();
 	if (!empty($_FILES['add_file']['name']) && !empty($_FILES['add_file']['tmp_name']))
 	{

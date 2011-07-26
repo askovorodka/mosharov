@@ -75,12 +75,12 @@ $deny_access=false;
 $switch_off_smarty=false;
 
 $css[] = BASE_URL."/templates/style.css";
-//$css[]=BASE_URL."/templates/jquery.lightbox-0.5.css";
-//$js[]=BASE_URL."/javascript/jquery-1.5.min.js";
-//$js[]=BASE_URL."/javascript/jquery.lightbox-0.5.js";
-//$js[]=BASE_URL."/javascript/jquery.validate.min.js";
-//$js[]=BASE_URL."/javascript/jquery.center.js";
-$js[]=BASE_URL."/javascript/tools.js";
+$css[]=BASE_URL."/templates/jquery.lightbox-0.5.css";
+$js[]=BASE_URL."/javascript/jquery-1.5.min.js";
+$js[]=BASE_URL."/javascript/jquery.lightbox-0.5.js";
+$js[]=BASE_URL."/javascript/jquery.validate.min.js";
+$js[]=BASE_URL."/javascript/jquery.center.js";
+$js[]=BASE_URL."/javascript/tools_26-07-11.js";
 //$js[]=BASE_URL."/javascript/tools.js";
 
 /* ------------- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ -------------- */
@@ -138,17 +138,17 @@ $current_url=implode("/",$url);
 $smarty->assign("current_url",$current_url);
 
 //новости в блоке справа
-$news=$db->get_all("SELECT * FROM fw_news WHERE status='1' ORDER BY publish_date DESC " . $limit);
-$smarty->assign("news_list",$news);
+//$news=$db->get_all("SELECT * FROM fw_news WHERE status='1' ORDER BY publish_date DESC " . $limit);
+//$smarty->assign("news_list",$news);
 
 //рекомендуем
-$shop = new Shop($db);
-$smarty->assign('top_product', $shop->getTopProducts(1));
+//$shop = new Shop($db);
+//$smarty->assign('top_product', $shop->getTopProducts(1));
 
 //сессия
-$session =  new Session($db);
-$session->setSession();
-$smarty->assign('online_users', $session->getOnLine() );
+//$session =  new Session($db);
+//$session->setSession();
+//$smarty->assign('online_users', $session->getOnLine() );
 
 $smarty->assign("base_url",BASE_URL);
 $smarty->assign("base_path",BASE_PATH);

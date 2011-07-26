@@ -1,6 +1,10 @@
 
 $(document).ready( function(){
 
+	$(function() {
+		$('a.gallery').lightBox({fixedNavigation:true});
+	});
+
 	$("a.CatalogImages").click(function(){
 		var src = $(this).attr("image");
 		if ($.trim(src) == "") return false;

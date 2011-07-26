@@ -45,7 +45,7 @@ if(document.getElementById(name).style.display!="none") {
 {/literal}
 
 
-<form action="" method=post name=edit_product onSubmit="return check_form();"  enctype="multipart/form-data">
+<form action="" method=post name=edit_product enctype="multipart/form-data">
 <input type=hidden name=id value={$product.id}>
 <center>
 {if $error}<font color=red><b>{$error}</b></font><br><br>{/if}
@@ -69,129 +69,7 @@ if(document.getElementById(name).style.display!="none") {
 <tr>
 	<td class=td1_left>Имя:</td><td class=td1_right><input type=text name=edit_name class=field style="width:100%;" value="{$product.name}"></td>
 </tr>
-{*
-<tr>
-	<td class=td1_left>Гарантия:</td><td class=td1_right><input type=text name=edit_guarantie class=field style="width:100%;" value="{$product.guarantie}"></td>
-</tr>
-*}
-{*<tr>
-  <td class=td1_left>Производитель:</td>
-  <td class=td1_right>
-  <select name=edit_type style="width:100%;" class=field>
-    <option value="" {if $product.product_type==''}selected{/if}></option>
-    {foreach from=$types_list item=entry}
-      <option value={$entry.id}{if $entry.id==$product.product_type} selected=true{/if}>{$entry.name}</option>
-    {/foreach}
-  </select>  </td>
-</tr>
-*}
-<tr>
-	<td class=td1_single valign=top colspan="2">
-		<p>Краткое описание:</p>
-<input type=hidden name=edit_small_description value="">
-{if $editor_style!='html'}
-{literal}
-<script language="JavaScript">
-				var small_description = new InnovaEditor("small_description");
-
-					small_description.btnStyles=true;
-
-					small_description.width="100%";
-					small_description.height="200";
-
-					small_description.css="style.css";
-					small_description.cmdAssetManager="modalDialogShow('{/literal}{$base_url}/{literal}javascript/editor/assetmanager/assetmanager.php?lang=russian',640,465)";
-
-					small_description.features=["FullScreen","Search",
-						"Cut","Copy","Paste","PasteWord","PasteText","|","Undo","Redo","|",
-						"ForeColor","BackColor","|","Bookmark","Hyperlink",
-						"XHTMLSource","Numbering","Bullets","|","Indent","Outdent","|","Image","|",
-						"Table","Guidelines","Absolute","|","Characters","Line",
-						"Clean","ClearAll","BRK",
-						"Paragraph","FontSize","|",
-						"Bold","Italic",
-						"Underline","Strikethrough","|","Superscript","Subscript","|",
-						"JustifyLeft","JustifyCenter","JustifyRight","JustifyFull","|","Tables","Photo","Mail"];
-
-
-					small_description.RENDER('{/literal}{$product.small_description|replace:"\r\n":""}{literal}');
-</script>
-{/literal}
-{else}
-
-<div class=tag_box>
-<a href="add_tag" onclick="return insert_tag(document.edit_product.small_description,'<b>','</b>')" class=tag_button><b>B</b></a>
-<a href="add_tag" onclick="return insert_tag(document.edit_product.small_description,'<i>','</i>')" class=tag_button><i>I</i></a>
-<a href="add_tag" onclick="return insert_tag(document.edit_product.small_description,'<u>','</u>')" class=tag_button><u>U</u></a>
-<a href="add_tag" onclick="return insert_tag(document.edit_product.small_description,'<img src=>','</img>')" class=tag_button>IMG</a>
-<a href="add_tag" onclick="return insert_tag(document.edit_product.small_description,'<a href=>','</a>')" class=tag_button>URL</a>
-<a href="add_tag" onclick="return insert_tag(document.edit_product.small_description,'<br>','')" class=tag_button>BR</a></div>
-
-<textarea id=small_description class=field style="width:100%" rows=20>{$product.small_description|replace:"\r\n":""}</textarea>
-
-{/if}	</td>
-</tr>
-<tr>
-	<td class=td1_single valign=top colspan="2">
-	<p>Полное описание:</p>
-<input type=hidden name=edit_description value="">
-{if $editor_style!='html'}
-{literal}
-<script language="JavaScript">
-				var description = new InnovaEditor("description");
-
-					description.btnStyles=true;
-
-					description.width="100%";
-					description.height="200";
-
-					description.css="style.css";
-					description.cmdAssetManager="modalDialogShow('{/literal}{$base_url}/{literal}javascript/editor/assetmanager/assetmanager.php?lang=russian',640,465)";
-
-					description.features=["FullScreen","Search",
-						"Cut","Copy","Paste","PasteWord","PasteText","|","Undo","Redo","|",
-						"ForeColor","BackColor","|","Bookmark","Hyperlink",
-						"XHTMLSource","Numbering","Bullets","|","Indent","Outdent","|","Image","|",
-						"Table","Guidelines","Absolute","|","Characters","Line",
-						"Clean","ClearAll","BRK",
-						"Paragraph","FontSize","|",
-						"Bold","Italic",
-						"Underline","Strikethrough","|","Superscript","Subscript","|",
-						"JustifyLeft","JustifyCenter","JustifyRight","JustifyFull","|","Tables","Photo","Mail"];
-
-
-					description.RENDER('{/literal}{$product.description|replace:"\r\n":""}{literal}');
-</script>
-{/literal}
-{else}
-
-<div class=tag_box>
-<a href="add_tag" onclick="return insert_tag(document.edit_product.description,'<b>','</b>')" class=tag_button><b>B</b></a>
-<a href="add_tag" onclick="return insert_tag(document.edit_product.description,'<i>','</i>')" class=tag_button><i>I</i></a>
-<a href="add_tag" onclick="return insert_tag(document.edit_product.description,'<u>','</u>')" class=tag_button><u>U</u></a>
-<a href="add_tag" onclick="return insert_tag(document.edit_product.description,'<img src=>','</img>')" class=tag_button>IMG</a>
-<a href="add_tag" onclick="return insert_tag(document.edit_product.description,'<a href=>','</a>')" class=tag_button>URL</a>
-<a href="add_tag" onclick="return insert_tag(document.edit_product.sdescription,'<br>','')" class=tag_button>BR</a></div>
-
-<textarea id=description class=field style="width:100%" rows=20>{$product.description|replace:"\r\n":""}</textarea>
-
-{/if}	</td>
-</tr>
 {if $mode=='edit'}
-{*<tr>
-  <td class=td1_left>Артикул:</td>
-  <td class=td1_right>
-  
-  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td width="35%"><input type=text name=edit_article class=field style="width:200px;" value="{$product.article}"></td>
-    <td width="15%" nowrap align="right">&nbsp;<label for="hit">Хит</label>:&nbsp;&nbsp;</td>
-    <td width="50%"><input type=checkbox name=edit_hit {if $product.hit=='1'}checked{/if} id="hit"></td>
-  </tr>
-</table>
-
-  </td>
-</tr>*}
 <tr>
   <td class=td1_left style="border-bottom: none;">Статус:</td>
   <td class=td1_right style="border-bottom: none;">
@@ -218,26 +96,15 @@ if(document.getElementById(name).style.display!="none") {
 </tr>
 
 <tr>
-  <td class=td1_left style="border-bottom: none;">Цена2:</td>
+  <td class=td1_left style="border-bottom: none;">Размер:</td>
   <td class=td1_right style="border-bottom: none;">
-  <input type=text name=edit_price2 class=field style="width:200px;" value="{$product.price2}">&nbsp;&nbsp;{$currency_admin.znak}
+  <input type=text name=edit_price2 class=field style="width:200px;" value="{$product.price2}">
   </td>
 </tr>
-
-<tr>
-  <td class=td1_left style="border-bottom: none;">Цена3:</td>
-  <td class=td1_right style="border-bottom: none;">
-  <input type=text name=edit_price3 class=field style="width:200px;" value="{$product.price3}">&nbsp;&nbsp;{$currency_admin.znak}
-  </td>
-</tr>
-
-{include file="`$smarty.const.BASE_PATH`/modules/shop/admin/templates/shop.a_files_product.html"}
 
 {/if}
 </table>
 
-{*include file="`$smarty.const.BASE_PATH`/modules/shop/admin/templates/shop.a_tire_properties.html"*}
-{*include file="`$smarty.const.BASE_PATH`/modules/shop/admin/templates/shop.a_disk_properties.html"*}
 
 <table width=100% class=content_table>
 	<tr>

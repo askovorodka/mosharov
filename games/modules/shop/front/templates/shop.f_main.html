@@ -24,36 +24,31 @@
 	        {/if}
         {/if*}
 
-		{if $folders_list}
+		{*if $folders_list}
 			{foreach from=$folders_list item=folder}
-				<h2>{$folder.name|strip_tags}</h2>
 				{if $folder.products}
-					<table class="cattbl" cellspacing="1" cellpadding="10">
-					  <tr class="topcattd">
-					    <td>Фото</td>
-					    <td>Модель</td>
-					    <td>Описание модели</td>
-					    <td>Цена&nbsp;1</td>
-					    <td>Цена&nbsp;2</td>
-					    <td>Цена&nbsp;3</td>
-					  </tr>
+					<table class="catalog" cellspacing="0" cellpadding="0" align="center">
 					  
 					  {foreach from=$folder.products item=product name=foreach1}
-					  <tr {if $smarty.foreach.foreach1.iteration%2 == 0}class="catgray"{/if}>
-					    <td><a href="{$base_url}/catalog{$product.full_url}">
-					    {if $product.image}<img src="/uploaded_files/shop_images/resized-{$product.image}.{$product.ext}">{else}нет фото{/if}</a></td>
-					    <td><a href="{$base_url}/catalog{$product.full_url}">{$product.name}</a></td>
-					    <td class="catprop">{$product.small_description}</td>
-					    <td>{$product.price|format_number}</td>
-					    <td>{$product.price2|format_number}</td>
-					    <td>{$product.price3|format_number}</td>
-					  </tr>
+						
+						<td><a href="#" title="Заяц мягкий">{$product.name}</a>
+							<br><a href="#" title="Заяц мягкий"><img src="img/pict.jpg" width="132" height="174" alt="Заяц мягкий"></a>
+							<br>{$product.price2}<br>
+							<table id="prs" cellspacing="0" cellpadding="0" align="center">
+							<tr height="24">
+								<td id="pricep"><img src="img/p_left.jpg" width="9" height="24"><br></td>
+								<td id="price">{$product.price|format_price}&nbsp;<span id="pricer">руб.</span></td>
+								<td id="pricep"><img src="img/p_right.jpg" width="9" height="24"><br></td>
+							</tr>
+							</table>
+						</td>
+
 					  {/foreach}
 					</table>
 				{/if}
 				
 			{/foreach}
-        {/if}
+        {/if*}
 
 
 <br><br>
