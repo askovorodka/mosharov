@@ -1,4 +1,4 @@
-#Thu Jun 30 17:46:18 MSD 2011
+#Tue Jul 26 11:52:09 MSD 2011
 eclipse.preferences.version=1
 encoding//admin/templates/main.html=cp1251
 encoding//lib/class.import.php=UTF-8
@@ -43,7 +43,5 @@ encoding//modules/shop/front/templates/yandex_market.html=cp1251
 encoding//modules/site_map/front/templates/site_map_main.html=cp1251
 encoding//modules/tree/admin/templates/tree.a_edit.html=cp1251
 encoding//modules/tree/admin/templates/tree.a_main.html=cp1251
-encoding//templates/basket.html=cp1251
 encoding//templates/footer_block.html=cp1251
-encoding//templates/left_menu_block.html=cp1251
 encoding/<project>=cp1251
