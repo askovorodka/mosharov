@@ -1,7 +1,7 @@
 <?php
 
-//error_reporting(E_ALL);
-//ini_set('display_errors','On');
+error_reporting(E_ALL);
+ini_set('display_errors','On');
 
 require_once '../lib/class.tree.php';
 require_once '../lib/class.image.php';
@@ -803,9 +803,9 @@ if (isset($_POST['submit_add_photo'])) {
 		$id=mysql_insert_id();
 		if (move_uploaded_file($tmp, BASE_PATH."/uploaded_files/shop_images/$id.$ext")) {
 			chmod(BASE_PATH."/uploaded_files/shop_images/$id.$ext",0644);
-			Image::image_resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext",BASE_PATH."/uploaded_files/shop_images/resized-$id.$ext",PRODUCT_PREVIEW_WIDTH,PRODUCT_PREVIEW_HEIGHT);
-			Image::image_resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext",BASE_PATH."/uploaded_files/shop_images/medium-$id.$ext",PRODUCT_MEDIUM_WIDTH,PRODUCT_MEDIUM_HEIGHT);
-			Image::image_resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext",BASE_PATH."/uploaded_files/shop_images/big-$id.$ext",PRODUCT_BIG_WIDTH,PRODUCT_BIG_HEIGHT);
+			Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/resized-$id.$ext", PRODUCT_PREVIEW_WIDTH,PRODUCT_PREVIEW_HEIGHT, false, "#FFFFFF");
+			Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/medium-$id.$ext", PRODUCT_MEDIUM_WIDTH,PRODUCT_MEDIUM_HEIGHT, false, "#FFFFFF");
+			Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/big-$id.$ext", PRODUCT_BIG_WIDTH,PRODUCT_BIG_HEIGHT, false, "#FFFFFF");
 		}
 		else {
 			$result=$db->query("DELETE FROM fw_products_images WHERE id='".mysql_insert_id()."'");

@@ -80,7 +80,7 @@ $js[]=BASE_URL."/javascript/jquery-1.5.min.js";
 $js[]=BASE_URL."/javascript/jquery.lightbox-0.5.js";
 $js[]=BASE_URL."/javascript/jquery.validate.min.js";
 $js[]=BASE_URL."/javascript/jquery.center.js";
-$js[]=BASE_URL."/javascript/tools_26-07-11.js";
+$js[]=BASE_URL."/javascript/tools_26-07-11-2.js";
 //$js[]=BASE_URL."/javascript/tools.js";
 
 /* ------------- ��������� �������� ������ -------------- */
