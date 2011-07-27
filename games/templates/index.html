@@ -26,7 +26,7 @@
 
       {foreach from=$main_menu item=menu}
 			<td id="{if $current_url == $menu.url}ils{else}nls{/if}">&nbsp;</td>
-			<td id="{if $current_url == $menu.url}ilnk{else}nlnk{/if}"><a href="{$base_url}/{$menu.url}/" title="{$menu.name}">{$menu.name}</a></td>
+			<td id="{if $current_url == $menu.url}ilnk{else}nlnk{/if}"><a href="{$base_url}/{if $menu.url != 'home'}{$menu.url}/{/if}" title="{$menu.name}">{$menu.name}</a></td>
 			<td id="{if $current_url == $menu.url}irs{else}nrs{/if}">&nbsp;</td>
       {/foreach}
 
