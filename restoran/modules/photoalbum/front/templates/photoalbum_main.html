@@ -1,4 +1,31 @@
-{if $cat_list}
+    <table class="capttin" cellspacing="0" cellpadding="0">
+	  <tr>
+		<td class="capt1">&nbsp;</td>
+		<td class="capt3"><h2>{if $cat_content.param_level == 0}{$node_content.name}{elseif $cat_content.param_level == 1}{$cat_content.name}{elseif $cat_content.param_level == 2}{$cat_parent_info.name}{/if}</h2></td>
+		<td class="capt2">&nbsp;</td>
+	  </tr>
+	</table>
+
+
+
+{if $albums}
+    <table class="txtin" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="100%">
+
+			<div class="gallery_small">
+				{foreach from=$albums item=album}
+					<a href="/gallery/{$album.url}/album_{$album.id}/" style="float:left;">
+					<img src="/{$smarty.const.PHOTOS_FOLDER}/small-{$album.photos.id}.{$album.photos.ext}" width="251" height="150">
+					</a>
+				{/foreach}
+			</div>
+		</td>
+	</tr>
+</table>
+{/if}
+
+{*if $cat_list}
 <b>Подразделы:</b>
 <table width={if $count_cat=='1'}{/if}33{if $count_cat=='2'}66{/if}{if $count_cat>2}100{/if}% cellspacing=1 cellpadding=3>
 {assign var="i" value=0}
@@ -19,7 +46,7 @@
 <br>
 <small>[n] - количество альбомов в разделе</small>
 <br><br>
-{/if}
+{/if*}
 
 {if $albums_list}
 <b>Фотоальбомы:</b><br><br>

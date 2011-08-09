@@ -91,6 +91,32 @@ class Photoalbum extends db{
 			return null;
 	}
 
+	function getAlbumByCategory($cat_id)
+	{
+		$this->result = $this->db->get_single("select fw_photoalbums.*, fw_photoalbum_cat.url 
+		from fw_photo_categories
+		left join fw_photoalbums on fw_photo_categories.photoalbum_id = fw_photoalbums.id
+		left join fw_photoalbum_cat on fw_photoalbums.parent = fw_photoalbum_cat.id 
+		where fw_photoalbums.album_type = 'photo' and 
+		fw_photo_categories.cat_id = '".intval($cat_id)."' and fw_photoalbums.status = '1' limit 1");
+		if ($this->result && count($this->result) > 0)
+		{
+			return $this->result;
+		}
+		else
+			return null;
+	}
+	
+	function get_photos_by_album($album_id, $hit = false)
+	{
+		if ($hit)
+			$hit = " and hit = '1' ";
+
+		$this->result = $this->db->get_single("select * from fw_photoalbum_images where parent = '{$album_id}' " . $hit);
+		return $this->result;
+		
+	}
+	
 
 	/**
 	 * 
@@ -98,19 +124,29 @@ class Photoalbum extends db{
 	 * @param int $cat_id
 	 * @author andrey.s
 	 */
-	function getPhotosByCategory($cat_id, $limit = null)
+	function getPhotosByCategory($cat_id, $limit = null, $hit = null)
 	{
 		if (!empty($limit))
 		{
 			$limit = " limit " . intval($limit);
 		}
+		
+		if ($hit)
+		{
+			$hit = " and hit = '1' ";
+		}
+		
 
 		$album = $this->getAlbumIdByCategory($cat_id);
 		
 		if (empty($album))
 			return false;
 		
-		$this->result = $this->db->get_all("select * from fw_photoalbum_images where parent in (".implode(",", $album).")" . $limit);
+		$this->result = $this->db->get_all("
+			select * from 
+			fw_photoalbum_images 
+			where parent in (".implode(",", $album).")" . $hit . $limit);
+					
 
 		if ($this->result && count($this->result) > 0)
 		{
@@ -121,6 +157,21 @@ class Photoalbum extends db{
 			return null;
 		}
 		
+	}
+	
+	/**
+	 * Находим все альбомы
+	 */
+	function getPhotoalbums()
+	{
+		$this->result = $this->db->get_all("select fw_photoalbums.*, fw_photoalbum_cat.url from
+		fw_photoalbums 
+		left join fw_photoalbum_cat on fw_photoalbums.parent = fw_photoalbum_cat.id
+		where fw_photoalbums.status = '1' and fw_photoalbum_cat.status = '1' and fw_photoalbums.album_type = 'photo' ");
+		if ($this->result)
+			return $this->result;
+		else
+			return null;
 	}
 	
 

@@ -1,5 +1,5 @@
 <div class="gallery_small">
 	{foreach from=$photos item=photo}
-		<a href="" style="float:left;"><img src="/{$smarty.const.PHOTOS_FOLDER}/small-{$photo.id}.{$photo.ext}" width="251" height="150"></a>
+		<a href="/gallery/{$album.url}/album_{$album.id}/" style="float:left;"><img src="/{$smarty.const.PHOTOS_FOLDER}/small-{$photo.id}.{$photo.ext}" width="251" height="150"></a>
 	{/foreach}
 </div>

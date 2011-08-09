@@ -3,12 +3,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors','On');
 
-//$_SESSION['fw_basket']=array();
-
 if ($switch_default=='on' or $main_module=='on') {
-
-	//$js[]=BASE_URL.'/javascript/thickbox-3.1.js';
-	//$js[]=BASE_URL.'/lib/JsHttpRequest/Js.js';
 
 	$basket_number=0;
 	$basket_total=0;
@@ -17,7 +12,6 @@ if ($switch_default=='on' or $main_module=='on') {
 		$basket_total+=@$_SESSION['fw_basket'][$i]['price']*@$_SESSION['fw_basket'][$i]['number'];
 	}
 	$smarty->assign("basket_number",$basket_number);
-	//$smarty->assign("basket_total",sprintf("%.2f",$basket_total));
 	$smarty->assign("basket_total",$basket_total);
 	$smarty->assign("currency",DEFAULT_CURRENCY);
 
@@ -25,14 +19,11 @@ if ($switch_default=='on' or $main_module=='on') {
 if  ($main_module=='on')
 {
 
-//$css[]=BASE_URL.'/templates/thickbox.css';
-
 require_once 'lib/class.mail.php';
 require_once 'lib/class.image.php';
 require_once 'lib/class.photoalbum.php';
 require_once 'lib/class.table.php';
 require_once 'lib/class.form.php';
-//require_once 'modules/shop/front/class.shop.php';
 
 $navigation[]=array("url" => $module_url,"title" => $node_content['name']);
 $smarty->assign("module_url",BASE_URL.'/'.$module_url);
@@ -40,7 +31,6 @@ $smarty->assign("module_url",BASE_URL.'/'.$module_url);
 $cabinet_url=$db->get_single("SELECT url FROM fw_tree WHERE module='cabinet'");
 $smarty->assign("cabinet_url",$cabinet_url['url']);
 
-//$cl=$db->get_all("SELECT *,(SELECT COUNT(*) FROM fw_products WHERE parent=c.id AND status='1') AS products FROM fw_catalogue c WHERE c.status='1' ORDER BY param_left ");
 $cl=$db->get_all("SELECT * FROM fw_catalogue c WHERE c.status='1' ORDER BY param_left ");
 
 
@@ -52,24 +42,6 @@ if (preg_match("/^page_[0-9]+$/",$url[$n])) {
 	$n=count($url)-1;
 }
 else $page=1;
-
-/*
-if (preg_match("/sort=([a-z]+)$/i",$url[$n])) {
-	list(,$page)=explode("_",$url[$n]);
-	$url=array_values($url);
-	unset($url[$n]);
-	unset($current_url_pages[count($current_url_pages)-1]);
-	$n=count($url)-1;
-}
-
-if (preg_match("/order=([a-z]+)$/i",$url[$n])) {
-	list(,$page)=explode("_",$url[$n]);
-	$url=array_values($url);
-	unset($url[$n]);
-	unset($current_url_pages[count($current_url_pages)-1]);
-	$n=count($url)-1;
-}
-*/
 
 if (preg_match("/\?type=([0-9a-z]+)$/",$url[$n],$type)) {
   $type = $type[1];
@@ -98,7 +70,6 @@ $smarty->assign("currency_site2",$cur_site2);
 
 $shop = new Shop($db);
 
-//print_r($url);
 /*-----------------РАЗЛИЧНЫЕ ДЕЙСТВИЯ-----------------*/
 
 
@@ -130,22 +101,6 @@ if (isset($_POST['submit_comment'])) {
 	}
 
 	
-	/*if (isset($_POST['rating'])) {
-
-		$rating=$_POST['rating'];
-
-		$check_rating=explode(",",$_COOKIE['fw_rating']);
-		if (!in_array($id,$check_rating)) {
-
-			$db->query("UPDATE fw_products SET rating=rating+$rating WHERE id='$id'");
-
-			if (!@isset($_COOKIE['fw_rating']) or $_COOKIE['fw_rating']=='') $cookie_content=$id;
-			else $cookie_content=$_COOKIE['fw_rating'].','.$id;
-
-			setcookie('fw_rating',$cookie_content,time()+315360000,'/','');
-		}
-	}*/
-
 	$location=@$_SERVER['HTTP_REFERER'];
 	header("Location: $location");
 	die();
@@ -186,26 +141,15 @@ SWITCH (TRUE) {
 	CASE ($url[$n]=='index.xml' && count($url)==2):
 		
 		ini_set('memory_limit', '300M');
-		/*
-		$cat_list=$db->get_all("SELECT c.*, 
-		(SELECT id FROM fw_catalogue WHERE 
-		c.param_left>param_left AND c.param_level-param_level=1 ORDER BY param_left DESC LIMIT 1) as parent 
-		FROM fw_catalogue as c WHERE c.status='1' ORDER BY c.param_left");
-		*/
 		
 		$cat_list=$db->get_all("SELECT c.* FROM fw_catalogue as c WHERE c.status='1' ORDER BY c.param_left");
 		
-		//$cat_list=Common::get_nodes_list($cat_list);
-		
-		//$products_list = $db->get_all("SELECT *,(select image from fw_catalogue where id = p.parent) as image FROM fw_products AS p WHERE p.status='1' and (tire_sklad > 3 or disk_sklad > 3)");
 		$products_list = $db->get_all("
 			SELECT *, c.image FROM 
 			fw_products AS p 
 			LEFT JOIN fw_catalogue as c on p.parent = c.id
 			WHERE p.status='1' and (p.tire_sklad > 3 or p.disk_sklad > 3)");
 		
-		//echo 123;
-		///o 123; exit();
 		
 		header("Content-type: text/xml; charset=Windows-1251");
 		
@@ -213,9 +157,7 @@ SWITCH (TRUE) {
 
 			for ($a=0;$a<count($products_list);$a++) {
 				for ($a1=0;$a1<count($cat_list);$a1++) {
-					//$cat_list[$a1]['parent'] = $shop->getParent($cat_list[$a1], ($cat_list[$a1]['param_level']-1));
 					if ($products_list[$a]['parent']==$cat_list[$a1]['id']) {
-						//$products_list[$a]['full_url']=$cat_list[$a1]['full_url'];
 						$products_list[$a]['full_url']=$shop->getFullUrlProduct($products_list[$a]['id']);
 					}
 				}
@@ -297,7 +239,6 @@ SWITCH (TRUE) {
 		$page_found=true;
 		$navigation[]=array("url" => 'basket',"title" => 'Моя корзина');
 		$navigation[]=array("url" => 'step1',"title" => 'Регистрация и авторизация');
-		//$js[] = BASE_URL.'/javascript/jquery.validate.min.js';
 		$template='basket_step1.html';
 
 	BREAK;
@@ -463,20 +404,6 @@ SWITCH (TRUE) {
 		$page_found=true;
 		$navigation[]=array("url" => 'basket',"title" => 'Моя корзина');
 
-		//print_r($_SESSION['fw_basket']);
-		/*$sess = &$_SESSION['fw_basket'];
-		if (count($sess)>0)
-			foreach ($sess as $key=>$val){
-				if (intval($sess[$key]['id'])>0){
-					$image = $db->get_single("SELECT id as image, ext FROM fw_products_images WHERE parent='".$sess[$key]['id']."' ORDER BY id DESC LIMIT 0,1");
-					if (strlen(trim($image['image']))>1 && strlen(trim($image['ext']))>1){
-						$sess[$key]['image'] = $image['image'];
-						$sess[$key]['ext'] = $image['ext'];
-					}
-
-				}
-			}
-		*/
 		
 		if (isset($_POST['basket_remove']))
 		{
@@ -768,9 +695,6 @@ SWITCH (TRUE) {
 			$order = "desc";
 		}
 		
-		//echo $current_url;
-		//$current_url = preg_replace("/&sort=([a-z]+)/i","",$current_url);
-		//$current_url = preg_replace("/&order=([a-z]+)/i","",$current_url);
 		
 		$products = $shop->search($where, $pager, $sort, $order);
 		
@@ -808,11 +732,8 @@ SWITCH (TRUE) {
 		if (isset($_GET['page']) && $_GET['page']!='') $page=$_GET['page'];
 		else $page=1;
 		
-		//$result=$db->query("SELECT COUNT(*) FROM fw_products WHERE name LIKE '%$search%' AND status='1' and (tire_sklad = 1 or disk_sklad = 1)");
-		//$pager=Common::pager($result,SEARCH_RESULTS_PER_PAGE,$page);
 
 		$search_results=$db->get_all("SELECT fw_products.*, fw_catalogue.image FROM fw_products left join fw_catalogue on fw_products.parent = fw_catalogue.id WHERE fw_products.name LIKE '%$search%' AND fw_products.status='1' ");
-		//echo "SELECT * FROM fw_products WHERE name LIKE '%$search%' AND status='1' and (tire_sklad > 0 or disk_sklad > 0) ";
 
 		if ($search_results)
 		{
@@ -832,17 +753,6 @@ SWITCH (TRUE) {
 			}
 		}
 		
-		/*
-		$cat_list=Common::get_nodes_list($cl);
-		for ($a=0;$a<count($search_results);$a++) {
-			for ($a1=0;$a1<count($cat_list);$a1++) {
-				if ($search_results[$a]['parent']==$cat_list[$a1]['id']) {
-					$search_results[$a]['full_url']=$cat_list[$a1]['full_url'];
-					$search_results[$a]['price']=number_format(($search_results[$a]['price'] * $cur_admin['kurs'])/$cur_site['kurs'],2);
-				}
-			}
-		}
-		*/
 
 		$smarty->assign("search_string",$search);
 
@@ -877,21 +787,6 @@ SWITCH (TRUE) {
 		if (isset($_GET['page']) or isset($_GET['order'])) {
 
 			if (isset($_GET['page'])) $page=$_GET['page'];
-
-			/*if (isset($_GET['order'])) {
-				list($order,$dir)=explode("-",$_GET['order']);
-				$dir=str_replace("/","",$dir);
-				$smarty->assign("current_dir",$dir);
-				foreach ($dirs as $k=>$v) {
-					if ($k==$order && $dir=='asc') $dirs[$k]='desc';
-					else if ($k==$order && $dir=='desc') $dirs[$k]='asc';
-				}
-
-				$order='ORDER BY '.$order.' '.$dir;
-				$smarty->assign("order",$_GET['order']);
-			}
-			else $order='ORDER BY sort_order ASC';*/
-
 
 			if (isset($_GET['sort']))
 			{
@@ -973,25 +868,15 @@ SWITCH (TRUE) {
 				if (!empty($photos))
 					$smarty->assign('photos', $photos);
 				
-				/*$cat_content['text']= $photo->pregReplace($cat_content['text'],BASE_PATH,PHOTOS_FOLDER,PHOTOS_PER_PAGE_SUP);
+				//$album_id = $photo->getAlbumByCategory($cat_content['id']);
+				$album = $photo->getAlbumByCategory($cat_content['id']);
 				
-				$table = new Table();
-				$cat_content['text'] = $table->pregReplace($cat_content['text'],BASE_PATH);
-
-				$form = new Form();
-				$cat_content['text'] = $form->pregReplace($cat_content['text'],BASE_PATH);
-				*/
+				if (isset($album))
+					$smarty->assign("album",$album);
 				
 				$text=$cat_content['text'];
 				$smarty->assign("text",$text);
 				$smarty->assign('cat_content', $cat_content);
-
-				//$result=$db->query("SELECT COUNT(*) FROM fw_products WHERE parent='".$cat_content['id']."' $where $order ");
-				//$pager=Common::pager($result,PRODUCTS_PER_PAGE_FRONT,$page);
-
-				//$smarty->assign("total_pages",$pager['total_pages']);
-				//$smarty->assign("current_page",$pager['current_page']);
-				//$smarty->assign("pages",$pager['pages']);
 
 		
 		$cat_children_ids = array();
@@ -1010,11 +895,14 @@ SWITCH (TRUE) {
 				}
 				else
 				{
+
 					$cat_list[$c]['parent_id'] = $cat_content['id'];
-					$photoalbum = $db->get_single("select fw_photo_categories.photoalbum_id 
+					$photoalbum = $db->get_single("select fw_photo_categories.photoalbum_id, fw_photoalbum_cat.url 
 					from fw_photo_categories 
-					left join fw_photoalbums on fw_photo_categories.photoalbum_id = fw_photoalbums.id 
+					left join fw_photoalbums on fw_photo_categories.photoalbum_id = fw_photoalbums.id
+					left join fw_photoalbum_cat on fw_photoalbums.parent = fw_photoalbum_cat.id 
 					where fw_photo_categories.cat_id = '{$cat_list[$c]['id']}' ");
+
 					//если есть прикрепленный альбом к категории
 					if (!empty($photoalbum['photoalbum_id']))
 					{
@@ -1026,10 +914,10 @@ SWITCH (TRUE) {
 						}
 					}
 					$folders_list[]=$cat_list[$c];
+
 				}
 			}
 			//определяем родительскую категорию каталога
-			
 			if ($cat_list[$c]['param_left'] < $cat_content['param_left'] && $cat_list[$c]['param_right'] > $cat_content['param_right'] && $cat_list[$c]['param_level'] == $cat_content['param_level']-1) {
 				$cat_parent_info = $cat_list[$c];
 				$cat_parent_info['folders_list'] = $shop->getChildrenCategor($cat_parent_info, $cat_parent_info['param_level']+1);
@@ -1039,24 +927,10 @@ SWITCH (TRUE) {
 
 		if (isset($folders_list)) {
           $done=0;
-          /*for ($c=0;$c<count($folders_list);$c++) {
-
-          	$folders_list[$c]['products'] = $shop->getProductsByCategory($folders_list[$c]['id']);
-          	
-          	if (isset($folders_list[$c]['products']))
-          	{
-          		foreach ($folders_list[$c]['products'] as $key=>$val)
-          		{
-          			$folders_list[$c]['products'][$key]['full_url'] = $shop->getFullUrlProduct($folders_list[$c]['products'][$key]['id']);
-          		}
-          	}
-          	
-             
-          }*/
           $smarty->assign("folders_list",$folders_list);
         }
 
-        
+
 				$products_list=$db->get_all("
 				SELECT *,
 						(SELECT id FROM fw_products_images i WHERE i.parent=p.id ORDER BY sort_order ASC LIMIT 1) AS image,
@@ -1082,7 +956,7 @@ SWITCH (TRUE) {
 						p.status='1' $where
 						$order "
 				);
-				
+
 
 				foreach ($products_list as $v => $key) {
 						$tmp=explode("##|##",$key['properties']);
@@ -1122,70 +996,14 @@ SWITCH (TRUE) {
 			}
 		}
 
+
 		if (!$page_found) {
 
 			if (preg_match("/^([0-9]+)$/",$url[$n])) {
 
-				/*$product_content=$db->get_single("
-				SELECT *,
-						(SELECT
-							GROUP_CONCAT(CONCAT_WS('||#||',
-								cp.id,
-								cp.name,
-								cp.type,
-								cp.elements,
-								cp.status,
-								(SELECT value FROM fw_products_properties AS pp WHERE pp.product_id = p.id AND pp.property_id = cr.property_id LIMIT 1)
-							) ORDER BY cr.sort_order SEPARATOR '##|##')
-						FROM fw_catalogue_relations AS cr
-						LEFT JOIN fw_catalogue_properties AS cp ON cp.id=cr.property_id
-						WHERE cr.cat_id = p.parent) as properties
-					FROM fw_products AS p
-					WHERE id='".$url[$n]."' AND status='1'"
-				);*/
 				
 				$product_content = $shop->getProductInfo( intval($url[$n]) );
 				
-				//берем картинку из категории продукта
-				/*$category = $shop->getCategory($product_content['parent']);
-				if ($category)
-				{
-					if (@file_exists(SHOP_IMAGE . $category['image']))
-					{	
-						$product_content['image'] = SHOP_IMAGE . $category['image'];
-					}
-				}*/
-				/*
-				if ($product_content && !empty($product_content['tire_bodytype']))
-				{
-					$smarty->assign('product_body',$shop->getBodyById($product_content['tire_bodytype']));
-				}
-
-				if (!empty($product_content['disk_type']))
-				{
-					$smarty->assign('disk_type',$shop->getDiskType($product_content['disk_type']));
-				}
-				*/
-				
-				//$prev_product = $db->get_single("SELECT id FROM fw_products WHERE parent='".$product_content['parent']."' AND sort_order=(SELECT MAX(sort_order) FROM fw_products WHERE parent='".$product_content['parent']."' AND sort_order < '".$product_content['sort_order']."') LIMIT 0,1");
-				//$next_product = $db->get_single("SELECT id FROM fw_products WHERE parent='".$product_content['parent']."' AND sort_order=(SELECT MIN(sort_order) FROM fw_products WHERE parent='".$product_content['parent']."' AND sort_order > '".$product_content['sort_order']."') LIMIT 0,1");
-				/*if (strlen(trim($prev_product['id']))>0)
-					$smarty->assign("prev_product",$prev_product['id']);
-				if (strlen(trim($next_product['id']))>0)
-					$smarty->assign("next_product",$next_product['id']);*/
-
-					
-					//свойства продукта by andrey.s 14.07.2009 0:22
-					//$query = "SELECT b.name, a.value FROM fw_products_properties as a INNER JOIN fw_catalogue_properties as b ON a.property_id = b.id WHERE a.product_id = '{$product_content['id']}' ";
-					
-					/*$properties = $db->get_all($query);
-					$product_content['properties'] = array();
-					if ($properties)
-					{
-						$product_content['properties'] = $properties;
-					}*/
-					
-
 				if ($product_content['id']!='') {
 					for ($f=0;$f<count($cat_list);$f++) {
 						
@@ -1207,55 +1025,8 @@ SWITCH (TRUE) {
 							
 							$page_found=true;
 							
-							//передаем в шаблон инфу о родительской категории для левого меню
-							//$smarty->assign('cat_parent_info', array("id", $product_content['parent']));
-
-							
-							/*$parent1 = $shop->getParent($cat_parent_info);
-							if ($parent1)
-							{
-				            	if ($parent1['id'] == DISK_ID)
-				            	{
-				            		// тайлты для дисков
-				            		$title_template = DISK_TITLE_TEMPLATE;
-				            	}
-				            	elseif ($parent1['id'] == TIRES_ID)
-				            	{
-				            		//тайтлы для шин
-				            		$title_template = TIRES_TITLE_TEMPLATE;
-				            	}
-				            	
-				            	$title_template = str_replace("{name}", $product_content['name'], $title_template);
-				            	
-				            	//if ( preg_match_all( '/\[([^\]]*)\]/', $title_template, $matches ) )
-				            	if ( preg_match_all( '/\[([^\]]*)\]/', $title_template, $matches ) )
-				            	{
-									if (is_array($matches))
-									{
-										foreach ($matches as $key=>$val)
-										{
-											foreach ($matches[$key] as $key2=>$val2)
-											{
-												//почему-то повторяется два раза данные паттерн поэтому делаю еще одно условия
-												if (preg_match("/\[(.*)\]/", $matches[$key][$key2], $str) )
-												{
-													if (isset($str[1]))
-													{
-														$array = explode("|", $str[1]);
-														$random = rand(0, count($array)-1);
-														$word = $array[$random];
-														$title_template = str_replace($matches[$key][$key2], $word, $title_template);
-													}
-												}
-											}
-										}
-									}
-				            	}
-							}*/
-							
 							
 							if ($product_content['title']!='') $page_title=$product_content['title'];
-							//if ($title_template) $page_title=$title_template;
 							else $page_title= 'Продукция ' . $product_content['name'];
 
 							if ($product_content['meta_keywords']!='') 
@@ -1268,59 +1039,13 @@ SWITCH (TRUE) {
 							else 
 								$meta_description=$page_title;
 							
-                            //$price = $product_content['price'];
-                            //$product_content['price']=number_format(($product_content['price'] * $cur_admin['kurs'])/$cur_site['kurs'],2);
-							//$product_content['price2']=number_format(($price * $cur_admin['kurs'])/$cur_site2['kurs'],2);
-
-  			// ----парсинг контекта для вставки фотоальбома, таблицы и формы -- //
-			
-			/*$photo = new Photoalbum();
-			$product_content['description']= $photo->pregReplace($product_content['description'],BASE_PATH,PHOTOS_FOLDER,PHOTOS_PER_PAGE_SUP);
-				
-			$table = new Table();
-			$product_content['description'] = $table->pregReplace($product_content['description'],BASE_PATH);
-
-			$form = new Form();
-			$product_content['description'] = $form->pregReplace($product_content['description'],BASE_PATH);*/
-
-			// ---- конец парсинга контекта для вставки фотоальбома, таблицы и формы -- //
 							
 							$smarty->assign("product",$product_content);
 							
-							/*if ($product_content['additional_products']!='') {
-
-								$additional_products=$db->get_all("SELECT * FROM fw_products WHERE id IN (".$product_content['additional_products'].")");
-
-								for ($a=0;$a<count($additional_products);$a++) {
-									for ($a1=0;$a1<count($cat_list);$a1++) {
-										if ($additional_products[$a]['parent']==$cat_list[$a1]['id']) {
-											$additional_products[$a]['full_url']=$cat_list[$a1]['full_url'];
-										}
-									}
-								}
-
-								$smarty->assign("additional_products",$additional_products);
-							}*/
 
 							$photo = $db->get_single("SELECT * FROM fw_products_images WHERE parent='".$product_content['id']."' limit 1 ");
 							$smarty->assign('photo', $photo);
 
-							$files = $db->get_all("SELECT * FROM fw_products_files2 WHERE parent='".$product_content['id']."' ");
-							$smarty->assign('files', $files);
-							
-
-							/*if (count($photos_list)>0){
-								for ($i=0; $i<count($photos_list); $i++){
-									if (trim($photos_list[$i]['ext'])!="" && is_file(BASE_PATH . "/uploaded_files/shop_images/".$photos_list[$i]['id'].".".$photos_list[$i]['ext'])){
-										$size=getimagesize(BASE_PATH . "/uploaded_files/shop_images/".$photos_list[$i]['id'].".".$photos_list[$i]['ext']);
-										$photos_list[$i]['width']=$size[0];
-										$photos_list[$i]['height']=$size[1];
-									}
-								}
-							}*/
-
-
-							//$smarty->assign("photos_list",$photos_list);
 
 							if (PRODUCT_RATING=='on' or PRODUCT_COMMENTS=='on') {
 								$this_module=$db->get_single("SELECT priv FROM fw_modules WHERE name='shop' LIMIT 1");
@@ -1343,23 +1068,6 @@ SWITCH (TRUE) {
 								$smarty->assign("rating","on");
 							}
 
-							/*if (PRODUCT_COMMENTS=='on') {
-
-								$result=$db->query("SELECT COUNT(*) FROM fw_products_comments WHERE product_id='".$product_content['id']."'");
-								$pager=Common::pager($result,PRODUCT_COMMENTS_PER_PAGE,$page);
-
-								$smarty->assign("total_pages",$pager['total_pages']);
-								$smarty->assign("current_page",$pager['current_page']);
-								$smarty->assign("pages",$pager['pages']);
-
-								$comments_list=$db->get_all("SELECT *,
-																	(SELECT name FROM fw_users WHERE id=c.author) AS author
-																	 FROM fw_products_comments c WHERE c.product_id='".$product_content['id']."' ORDER BY insert_date DESC LIMIT ".$pager['limit']);
-
-								$smarty->assign("comments_list",$comments_list);
-
-								$smarty->assign("comments","on");
-							}*/
 
 							if ($cat_list[$f]['full_title']!='/') {
 								$nav_titles=explode("/",$cat_list[$f]['full_title']);
@@ -1373,23 +1081,8 @@ SWITCH (TRUE) {
 							$navigation[]=array("url" => $product_content['id'],"title" => $product_content['name']);
 
 
-		unset($url[$n]);
-		/*for ($f=0;$f<count($cat_list);$f++) {
-			$url_to_check=implode("/",$url).'/';
-			if ($cat_list[$f]['full_url']==$url_to_check) {
-				$cat_content=$cat_list[$f];
-				$smarty->assign("url1",preg_replace("/\d{1,4}$/","",$current_url));
-				$page_found=true;
-
-				if ($cat_content['title']!='') $page_title=$cat_content['title'];
-				else if ($cat_content['name']!='/') $page_title=$cat_content['name'];
-				if ($cat_content['meta_keywords']!='') $meta_keywords=$cat_content['meta_keywords'];
-				if ($cat_content['meta_description']!='') $meta_description=$cat_content['meta_description'];
-		}
-		}*/
+							unset($url[$n]);
 		
-							//$meta_keywords=html_entity_decode($product_content['dictionary']);
-							//$meta_description=html_entity_decode($product_content['dictionary']);
 							$template='product_details.html';
 						}
 					}

@@ -6,6 +6,9 @@ $css[]=BASE_URL.'/modules/photoalbum/front/templates/photoalbum.css';
 $smarty->assign("photos_folder",PHOTOS_FOLDER);
 $smarty->assign("photoalbum_mode",PHOTOALBUM_MODE);
 
+require_once 'lib/class.photoalbum.php';
+$photo = new Photoalbum($db);
+
 if (($switch_default=='on' or $switch_support=='on') && $main_module!='on') {
 	
 	$smarty->register_function("photoalbum", "show_photoalbum");
@@ -234,7 +237,7 @@ SWITCH (TRUE) {
 	DEFAULT:
 	
 		$cat_list=Common::get_nodes_list($cl);
-
+		
 		unset($url[0]);
 
 		if (isset($_GET['page'])) {
@@ -277,7 +280,28 @@ SWITCH (TRUE) {
 				$smarty->assign("current_page",$pager['current_page']);
 				$smarty->assign("pages",$pager['pages']);
 					
-				$albums_list=$db->get_all("SELECT *,(SELECT CONCAT(id,'.',ext) FROM fw_photoalbum_images WHERE parent=a.id ORDER BY sort_order LIMIT 1) AS image,(SELECT COUNT(*) FROM fw_photoalbum_images WHERE parent=a.id) AS photos FROM fw_photoalbums a WHERE a.parent='".$cat_content['id']."' AND status='1' ORDER BY insert_date DESC LIMIT ".$pager['limit']);
+				$albums_list=$db->get_all("
+					SELECT *,
+						(SELECT CONCAT(id,'.',ext) 
+						FROM fw_photoalbum_images 
+						WHERE parent=a.id ORDER BY sort_order LIMIT 1) AS image,
+						(SELECT COUNT(*) FROM fw_photoalbum_images WHERE parent=a.id) AS photos 
+						FROM fw_photoalbums a 
+						WHERE a.parent='".$cat_content['id']."' AND status='1' 
+						ORDER BY insert_date DESC LIMIT ".$pager['limit']);
+				
+				
+				//находим все фотоальбомы
+				$albums = $photo->getPhotoalbums();
+				if ($albums)
+				{
+					foreach ($albums as $key=>$val)
+					{
+						$albums[$key]['photos'] = $photo->get_photos_by_album($val['id'], true);
+					}
+				}
+				$smarty->assign('albums', $albums);
+				
 				
 				if ($cat_list[$f]['full_title']!='/') {
 					$nav_titles=explode("/",$cat_list[$f]['full_title']);

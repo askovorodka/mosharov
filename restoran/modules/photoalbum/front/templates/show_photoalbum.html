@@ -1,42 +1,22 @@
-<h1>{$album.name}</h1>
-<br>
-Всего фотографий: {$total_photos}
-<br>
-{$album.description}
-<br><br>
-<center>
-<table border="0" width={if $total_photos==1}30{/if}{if $total_photos==2}60{/if}{if $total_photos>2}90{/if}% cellspacing=0 cellpadding=0>
-<tr>
-{assign var="i" value=0}
-{foreach from=$photos_list item=photo name=tp}
-{if $i==3}{assign var="i" value=0}</tr><tr>{/if}
 
+    <table class="capttin" cellspacing="0" cellpadding="0">
+	  <tr>
+		<td class="capt1">&nbsp;</td>
+		<td class="capt3"><h2>{$album.name}</h2></td>
+		<td class="capt2">&nbsp;</td>
+	  </tr>
+	</table>
 
-<td align=center style="padding : 6px 0px;">
+    <table class="txtin" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="100%">
 
-<a href={if $photo.link!=''}{$photo.link}{else}"javascript: popup('{$base_url}/{$photos_folder}/{$photo.id}.{$photo.ext}','{$photo.width}','{$photo.height}')"{/if}><img src={$base_url}/{$photos_folder}/small-{$photo.id}.{$photo.ext} border=0 alt="{$photo.title|replace:'"':''}"></a>
+			<div class="gallery_small">
 
-</td>
-
-
-{math equation="x + y" x=$i y=1 assign="i"}
-{/foreach}
-</tr>
-</table>
-
-{if $total_pages!=1}
-<br>
-
-Страница: <a href="{$current_url}/?page=1"><<</a>
-
-{section name=p loop=$pages}
-	{if $pages[p]==$current_page}
-	{$pages[p]}
-	{else}
-	<a href="{$current_url}/?page={$pages[p]}">{$pages[p]}</a>
-	{/if}
-{/section}
-
-<a href="{$current_url}/?page={$total_pages}">>></a>
-</center>
-{/if}
+				{foreach from=$photos_list item=photo name=tp}
+					<a href={if $photo.link!=''}{$photo.link}{else}"javascript: popup('{$base_url}/{$photos_folder}/{$photo.id}.{$photo.ext}','{$photo.width}','{$photo.height}')"{/if}><img src={$base_url}/{$photos_folder}/small-{$photo.id}.{$photo.ext} border=0 alt="{$photo.title|replace:'"':''}"></a>
+				{/foreach}
+			</div>
+		</td>
+	</tr>
+	</table>
