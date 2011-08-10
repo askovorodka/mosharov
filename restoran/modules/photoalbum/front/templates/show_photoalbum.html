@@ -10,9 +10,7 @@
     <table class="txtin" cellspacing="0" cellpadding="0">
       <tr>
         <td width="100%">
-
 			<div class="gallery_small">
-
 				{foreach from=$photos_list item=photo name=tp}
 					<a href={if $photo.link!=''}{$photo.link}{else}"javascript: popup('{$base_url}/{$photos_folder}/{$photo.id}.{$photo.ext}','{$photo.width}','{$photo.height}')"{/if}><img src={$base_url}/{$photos_folder}/small-{$photo.id}.{$photo.ext} border=0 alt="{$photo.title|replace:'"':''}"></a>
 				{/foreach}
