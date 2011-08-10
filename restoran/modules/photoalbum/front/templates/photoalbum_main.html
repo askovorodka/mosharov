@@ -8,18 +8,37 @@
 
 
 
-{if $albums}
+{if $albums || $videos}
     <table class="txtin" cellspacing="0" cellpadding="0">
       <tr>
+        <td class="lmenu"><img src="{$template_image}clear.png" height="1" width="250"><br>
+        {foreach from=$gallery_menu item=gmenu}
+        	<a href="{$base_url}/gallery/{$gmenu.url}/album_{$gmenu.id}/">{$gmenu.name}</a><br>
+        {/foreach}
+        </td>
+      
         <td width="100%">
 
-			<div class="gallery_small">
+			
 				{foreach from=$albums item=album}
-					<a href="/gallery/{$album.url}/album_{$album.id}/" style="float:left;">
+				<div class="gallery">
+					<a href="/gallery/{$album.url}/album_{$album.id}/" style="float:left;">{$album.name}<br>
 					<img src="/{$smarty.const.PHOTOS_FOLDER}/small-{$album.photos.id}.{$album.photos.ext}" width="251" height="150">
 					</a>
+				</div>
 				{/foreach}
-			</div>
+			
+				{*<div style="clear:both; height:30px;">&nbsp;</div>*}
+			
+				{foreach from=$videos item=video}
+				<div class="gallery">
+				<a href="/gallery/{$video.url}/album_{$video.id}/" style="float:left;">{$video.name}<br>
+					<img src="http://images.metacafe.com/thumb/386357/2767198/4/catalog_top_item5/0/teach_magic_be_magician_money_magic.jpg" style="width: 251px; height:150px;" alt="Metacafe" />
+				</a>
+				</div>
+				{/foreach}
+			
+			
 		</td>
 	</tr>
 </table>

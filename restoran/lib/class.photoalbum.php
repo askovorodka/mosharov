@@ -118,6 +118,16 @@ class Photoalbum extends db{
 	}
 	
 
+	function get_video_by_gallery($album_id, $hit = false)
+	{
+		if ($hit)
+			$hit = " and hit = '1' ";
+
+		$this->result = $this->db->get_single("select * from fw_photoalbum_images where parent = '{$album_id}' " . $hit);
+		return $this->result;
+		
+	}
+	
 	/**
 	 * 
 	 * Находим фотки по категории (ресторану)
@@ -174,7 +184,21 @@ class Photoalbum extends db{
 			return null;
 	}
 	
-
+	/**
+	 * Находим все видеогалереи
+	 */
+	function getVideoGalleries()
+	{
+		$this->result = $this->db->get_all("select fw_photoalbums.*, fw_photoalbum_cat.url from
+		fw_photoalbums 
+		left join fw_photoalbum_cat on fw_photoalbums.parent = fw_photoalbum_cat.id
+		where fw_photoalbums.status = '1' and fw_photoalbum_cat.status = '1' and fw_photoalbums.album_type = 'video' ");
+		if ($this->result)
+			return $this->result;
+		else
+			return null;
+	}
+	
 }
 
 ?>

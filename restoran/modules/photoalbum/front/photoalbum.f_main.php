@@ -65,12 +65,15 @@ $cl=$db->get_all("SELECT *,(SELECT COUNT(*) FROM fw_photoalbums WHERE parent=c.i
 
 $this_module=$db->get_single("SELECT priv FROM fw_modules WHERE name='guestbook' LIMIT 1");
 
-	
 if (@$_SESSION['fw_user']['priv']<=$this_module['priv']) {
 	$smarty->assign("show_admin_menu","true");
 	$is_admin=true;
 }
 else $is_admin=false;
+
+$gallery_menu = $db->get_all("select fw_photoalbums.*, fw_photoalbum_cat.url from fw_photoalbums left join fw_photoalbum_cat on fw_photoalbums.parent = fw_photoalbum_cat.id where fw_photoalbums.status='1' and fw_photoalbum_cat.status='1'");
+
+$smarty->assign('gallery_menu', $gallery_menu);
 
 /*-----------------ÐÀÇËÈ×ÍÛÅ ÄÅÉÑÒÂÈß-----------------*/
 
@@ -103,7 +106,7 @@ else $page=1;
 SWITCH (TRUE) {
 	
 	CASE ((preg_match("/^album_([0-9]+)$/",$url[$n])) || (@preg_match("/^album_([0-9]+)$/",$url[$n-1]) && preg_match("/^\?page=([0-9]+)$/",$url[$n]))):
-	
+		
 		$cat_list=Common::get_nodes_list($cl);
 		unset($url[0]);
 		
@@ -166,7 +169,7 @@ SWITCH (TRUE) {
 	BREAK;
 	
 	CASE (@preg_match("/^album_([0-9]+)$/",$url[$n-1]) && preg_match("/^([0-9]+)$/",$url[$n])):
-
+		
 		$cat_list=Common::get_nodes_list($cl);
 		unset($url[0]);
 	
@@ -301,6 +304,17 @@ SWITCH (TRUE) {
 					}
 				}
 				$smarty->assign('albums', $albums);
+				
+				//íàõîäèì âñå âèäåîãàëåðåè
+				$videogallery = $photo->getVideoGalleries();
+				if ($videogallery)
+				{
+					foreach ($videogallery as $key=>$val)
+					{
+						$videogallery[$key]['file'] = $photo->get_video_by_gallery($val['id'], true);
+					}
+				}
+				$smarty->assign('videos', $videogallery);
 				
 				
 				if ($cat_list[$f]['full_title']!='/') {

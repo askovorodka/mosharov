@@ -82,12 +82,17 @@ $switch_off_smarty=false;
 
 $css[] = BASE_URL."/templates/style.css";
 $css[]=BASE_URL."/templates/jquery.lightbox-0.5.css";
+$css[] = BASE_URL."/video/css/videobox.css";
+
 $js[]=BASE_URL."/javascript/jquery-1.5.min.js";
 $js[]=BASE_URL."/javascript/jquery.lightbox-0.5.js";
 $js[]=BASE_URL."/javascript/jquery.validate.min.js";
 $js[]=BASE_URL."/javascript/jquery.center.js";
 $js[]=BASE_URL."/javascript/tools_01-06-11.js";
-//$js[]=BASE_URL."/javascript/tools.js";
+$js[]=BASE_URL."/video/js/mootools.js";
+$js[]=BASE_URL."/video/js/swfobject.js";
+$js[]=BASE_URL."/video/js/videobox.js";
+
 
 /* ------------- ��������� �������� ������ -------------- */
 if (SMARTY_DEBUGGING_SITE=='true') $smarty->debugging = true;

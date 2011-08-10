@@ -154,8 +154,8 @@ if(document.getElementById(name).style.display!="none") {
 <div id="photo_{$entry.id}" style="display: none; height: 160px;" class="ten">
 {*<a href="javascript:makeSiteLink('inpURL_{$entry.sort_order}');document.getElementById('link_{$entry.id}').value=1; void(0);" title="Установить ссылку" class="ten" style="text-decoration: underline;">cсылка</a>:<br>
 <input type=text id=inpURL_{$entry.sort_order} name=edit_link[{$entry.id}] style="width:100%;"  class="field ten" value="{$entry.link}" onchange="document.getElementById('link_{$entry.id}').value=1;">*}
-<div class="ten" style="padding-top: 4px;">краткое описание:<br></div>
-<textarea class="field ten" style="width:100%; height: 40px;" name=edit_title[{$entry.id}] onchange="document.getElementById('title_{$entry.id}').value=1;">{$entry.title}</textarea>
+{*<div class="ten" style="padding-top: 4px;">краткое описание:<br></div>
+<textarea class="field ten" style="width:100%; height: 40px;" name=edit_title[{$entry.id}] onchange="document.getElementById('title_{$entry.id}').value=1;">{$entry.title}</textarea>*}
 <div class="ten" style="padding-top: 4px;">описание:<br></div>
 <textarea  class="field ten" style="width:100%; height: 70px" name=edit_description[{$entry.id}] onchange="document.getElementById('description_{$entry.id}').value=1;">{$entry.description}</textarea>
 </div>
@@ -170,6 +170,7 @@ if(document.getElementById(name).style.display!="none") {
 		<param name="movie" value="/uflvplayer_500x375.swf" />
 		<param name="FlashVars" value="way={$base_url}/{$photos_folder}/{$entry.id}.{$entry.ext}&amp;swf={$base_url}/uflvplayer_500x375.swf&amp;w=200&amp;h=200&amp;pic=http://&amp;autoplay=0&amp;tools=2&amp;skin=noneblack&amp;volume=70&amp;q=&amp;comment=Ваша подпись" />
 		</object>
+		
 	{else}    
     	<img src={$base_url}/{$photos_folder}/small-{$entry.id}.{$entry.ext} border="0" width="100" height="100" alt="">
     {/if}

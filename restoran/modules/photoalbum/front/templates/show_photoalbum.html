@@ -1,4 +1,3 @@
-
     <table class="capttin" cellspacing="0" cellpadding="0">
 	  <tr>
 		<td class="capt1">&nbsp;</td>
@@ -9,10 +8,27 @@
 
     <table class="txtin" cellspacing="0" cellpadding="0">
       <tr>
+        
+        <td class="lmenu"><img src="{$template_image}clear.png" height="1" width="250"><br>
+        {foreach from=$gallery_menu item=gmenu}
+        	{if $album.id == $gmenu.id}
+        		<span>{$gmenu.name}</span><br>
+        	{else}
+        	<a href="{$base_url}/gallery/{$gmenu.url}/album_{$gmenu.id}/">{$gmenu.name}</a><br>
+        	{/if}
+        {/foreach}
+        </td>
+      
         <td width="100%">
 			<div class="gallery_small">
 				{foreach from=$photos_list item=photo name=tp}
-					<a href={if $photo.link!=''}{$photo.link}{else}"javascript: popup('{$base_url}/{$photos_folder}/{$photo.id}.{$photo.ext}','{$photo.width}','{$photo.height}')"{/if}><img src={$base_url}/{$photos_folder}/small-{$photo.id}.{$photo.ext} border=0 alt="{$photo.title|replace:'"':''}"></a>
+					{if $album.album_type=='photo'}
+						<a href="{$base_url}/{$photos_folder}/{$photo.id}.{$photo.ext}" class="gallery"><img src={$base_url}/{$photos_folder}/small-{$photo.id}.{$photo.ext} border=0 alt="{$photo.title|replace:'"':''}"></a>
+					{elseif $album.album_type == 'video'}
+	<a href="/uploaded_files/photos/{$photo.id}.{$photo.ext}" rel="vidbox" title="{$photo.description}">
+		<img src="http://images.metacafe.com/thumb/386357/2767198/4/catalog_top_item5/0/teach_magic_be_magician_money_magic.jpg" style="width: 130px;" alt="Metacafe" />
+	</a>
+					{/if}
 				{/foreach}
 			</div>
 		</td>

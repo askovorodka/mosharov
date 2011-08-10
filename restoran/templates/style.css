@@ -237,6 +237,16 @@ h2 {
 	text-decoration:underline;
 	line-height:28px;
 }
+
+.lmenu span {
+	color:#d5d52c;
+	font-size:18px;
+	font-family:"Times New Roman", Times, serif;
+	text-shadow: 1px 1px #111111;
+	text-decoration:none;
+	line-height:28px;
+}
+
 .lmenu a:hover {
 	text-decoration:none;
 	color:#d5d52c;
@@ -261,6 +271,8 @@ h2 {
 	display:inline;
 	float:left;
 	width:270px;
+	
+	white-space:nowrap;
 }
 .restor {
 	text-align:left;
