@@ -57,7 +57,6 @@ $db=new db(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 
 define ('CAPTCHA_SALT', 'kjhfgkjhfsdkjghskjd hkjfdnkmbn ,msdnbskjh'); 
 
-
 /* -------- ������ ������������ � ������ ����� ---------- */
 
 Common::load_config('front');
@@ -89,10 +88,9 @@ $js[]=BASE_URL."/javascript/jquery.lightbox-0.5.js";
 $js[]=BASE_URL."/javascript/jquery.validate.min.js";
 $js[]=BASE_URL."/javascript/jquery.center.js";
 $js[]=BASE_URL."/javascript/tools_01-06-11.js";
-$js[]=BASE_URL."/video/js/mootools.js";
-$js[]=BASE_URL."/video/js/swfobject.js";
-$js[]=BASE_URL."/video/js/videobox.js";
-
+//$js[]=BASE_URL."/video/js/mootools.js";
+//$js[]=BASE_URL."/video/js/swfobject.js";
+//$js[]=BASE_URL."/video/js/videobox.js";
 
 /* ------------- ��������� �������� ������ -------------- */
 if (SMARTY_DEBUGGING_SITE=='true') $smarty->debugging = true;

@@ -19,18 +19,18 @@
         {/foreach}
         </td>
       
-        <td width="100%">
-			<div class="gallery_small">
-				{foreach from=$photos_list item=photo name=tp}
-					{if $album.album_type=='photo'}
-						<a href="{$base_url}/{$photos_folder}/{$photo.id}.{$photo.ext}" class="gallery"><img src={$base_url}/{$photos_folder}/small-{$photo.id}.{$photo.ext} border=0 alt="{$photo.title|replace:'"':''}"></a>
-					{elseif $album.album_type == 'video'}
+    <td width="100%">
+	<div class="gallery_small">
+	{foreach from=$photos_list item=photo name=tp}
+	{if $album.album_type=='photo'}
+		<a title="{$photo.descroption|strip_tags}" href="{$base_url}/{$photos_folder}/{$photo.id}.{$photo.ext}" class="gallery"><img src={$base_url}/{$photos_folder}/small-{$photo.id}.{$photo.ext} border=0 alt="{$photo.title|replace:'"':''}"></a>
+	{elseif $album.album_type == 'video'}
 	<a href="/uploaded_files/photos/{$photo.id}.{$photo.ext}" rel="vidbox" title="{$photo.description}">
-		<img src="http://images.metacafe.com/thumb/386357/2767198/4/catalog_top_item5/0/teach_magic_be_magician_money_magic.jpg" style="width: 130px;" alt="Metacafe" />
-	</a>
-					{/if}
-				{/foreach}
-			</div>
-		</td>
+	{$photo.description}<br>
+	<img src="/templates/img/video.jpg" width="233" height="150" /></a>
+	{/if}
+	{/foreach}
+	</div>
+	</td>
 	</tr>
 	</table>

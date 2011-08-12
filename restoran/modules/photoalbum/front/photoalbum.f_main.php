@@ -9,6 +9,7 @@ $smarty->assign("photoalbum_mode",PHOTOALBUM_MODE);
 require_once 'lib/class.photoalbum.php';
 $photo = new Photoalbum($db);
 
+
 if (($switch_default=='on' or $switch_support=='on') && $main_module!='on') {
 	
 	$smarty->register_function("photoalbum", "show_photoalbum");
@@ -126,6 +127,13 @@ SWITCH (TRUE) {
 		
 		$album=$db->get_single("SELECT *,(SELECT COUNT(*) FROM fw_photoalbum_images WHERE parent='$album_id') AS count FROM fw_photoalbums WHERE id='$album_id' AND status='1'");
 		
+		if ($album['album_type'] == 'video')
+		{
+			$js[]=BASE_URL."/video/js/mootools.js";
+			$js[]=BASE_URL."/video/js/swfobject.js";
+			$js[]=BASE_URL."/video/js/videobox.js";
+		}
+		
 		for ($f=0;$f<count($cat_list);$f++) {
 			$url_to_check=implode("/",$url).'/';
 			if ($cat_list[$f]['full_url']==$url_to_check && $cat_list[$f]['id']==$album['parent']) {
@@ -140,7 +148,7 @@ SWITCH (TRUE) {
 					$photos_list[$i]['width']=$output['width']+20;
 					$photos_list[$i]['height']=$output['height']+20;
 				}
-
+				
 				if ($cat_list[$f]['full_title']!='/') {
 					$nav_titles=explode("/",$cat_list[$f]['full_title']);
 					$nav_urls=explode("/",$cat_list[$f]['full_url']);
@@ -151,7 +159,7 @@ SWITCH (TRUE) {
 					}
 				}
 				$navigation[]=array("url" => $album['id'],"title" => $album['name']);
-
+				
 				$smarty->assign("total_pages",$pager['total_pages']);
 				$smarty->assign("current_page",$pager['current_page']);
 				$smarty->assign("pages",$pager['pages']);

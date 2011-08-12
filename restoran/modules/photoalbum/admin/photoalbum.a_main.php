@@ -133,7 +133,7 @@ if (isset($_POST['submit_add_photo'])) {
 	$check=true;
 	
 	$parent=$_POST['parent'];
-	$title=String::secure_format($_POST['add_photo_title']);
+	$description=String::secure_format($_POST['add_photo_title']);
 	$link=String::secure_format($_POST['add_photo_link']);
 	$file_name=$_FILES['add_new_photo']['name'];
 	$tmp=$_FILES['add_new_photo']['tmp_name'];
@@ -188,16 +188,18 @@ if (isset($_POST['submit_add_photo'])) {
 		else $order=$order['s_order'];
 
 		$filesize=round(filesize($tmp)/1000,2);
-		$result=$db->query("INSERT INTO fw_photoalbum_images(parent,title,link,ext,sort_order,insert_date) VALUES('$parent','$title','$link','$ext','$order','".time()."')");
+		$result=$db->query("INSERT INTO fw_photoalbum_images(parent,description,link,ext,sort_order,insert_date) VALUES('$parent','$description','$link','$ext','$order','".time()."')");
 		$id=mysql_insert_id();
 		//echo move_uploaded_file($tmp, BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext); exit;
 		if (move_uploaded_file($tmp, BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext)) {
 			chmod(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext, 0644);
 			if ($filetype == 'photo')
 			{
-				Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,BASE_PATH.'/'.PHOTOS_FOLDER.'/small-'.$id.'.'.$ext,PREVIEW1_WIDTH,PREVIEW1_HEIGTH);
-				if ($output['width']>PREVIEW2_WIDTH or $output['height']>PREVIEW2_HEIGHT) Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,BASE_PATH.'/'.PHOTOS_FOLDER.'/medium-'.$id.'.'.$ext,PREVIEW2_WIDTH,PREVIEW2_HEIGTH);
-				if ($resize_main) Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,$max_width,$max_height);
+				//Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,BASE_PATH.'/'.PHOTOS_FOLDER.'/small-'.$id.'.'.$ext,PREVIEW1_WIDTH,PREVIEW1_HEIGTH);
+				//if ($output['width']>PREVIEW2_WIDTH or $output['height']>PREVIEW2_HEIGHT) Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,BASE_PATH.'/'.PHOTOS_FOLDER.'/medium-'.$id.'.'.$ext,PREVIEW2_WIDTH,PREVIEW2_HEIGTH);
+				//if ($resize_main) Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,$max_width,$max_height);
+				Image::resize(BASE_PATH."/uploaded_files/photos/$id.$ext", BASE_PATH."/uploaded_files/photos/small-$id.$ext", PREVIEW1_WIDTH,PREVIEW1_HEIGTH, true, "#32321d");
+				Image::resize(BASE_PATH."/uploaded_files/photos/$id.$ext", BASE_PATH."/uploaded_files/photos/medium-$id.$ext", PREVIEW2_WIDTH,PREVIEW2_HEIGTH, true, "#32321d");
 			}
 			$smarty->assign("message","Файл успешно загружен");
 		}

@@ -16,10 +16,10 @@
         	<a href="{$base_url}/gallery/{$gmenu.url}/album_{$gmenu.id}/">{$gmenu.name}</a><br>
         {/foreach}
         </td>
-      
+
         <td width="100%">
 
-			
+
 				{foreach from=$albums item=album}
 				<div class="gallery">
 					<a href="/gallery/{$album.url}/album_{$album.id}/" style="float:left;">{$album.name}<br>
@@ -27,45 +27,21 @@
 					</a>
 				</div>
 				{/foreach}
-			
-				{*<div style="clear:both; height:30px;">&nbsp;</div>*}
-			
+
 				{foreach from=$videos item=video}
 				<div class="gallery">
 				<a href="/gallery/{$video.url}/album_{$video.id}/" style="float:left;">{$video.name}<br>
-					<img src="http://images.metacafe.com/thumb/386357/2767198/4/catalog_top_item5/0/teach_magic_be_magician_money_magic.jpg" style="width: 251px; height:150px;" alt="Metacafe" />
+					<img src="/templates/img/video.jpg" style="width: 251px; height:150px;" />
 				</a>
 				</div>
 				{/foreach}
-			
-			
+
+
 		</td>
 	</tr>
 </table>
 {/if}
 
-{*if $cat_list}
-<b>Подразделы:</b>
-<table width={if $count_cat=='1'}{/if}33{if $count_cat=='2'}66{/if}{if $count_cat>2}100{/if}% cellspacing=1 cellpadding=3>
-{assign var="i" value=0}
-{foreach from=$cat_list item=cat}
-{if $i==3}{assign var="i" value=0}</tr><tr>{/if}
-<td valign=top>
-• <a href={$module_url}/{if $cat.name=='/'}{else}{$cat.full_url}{/if}>{if $cat.name=='/'}Основной{else}{$cat.name}{/if}</a> {if $cat.albums>0}<small>[{$cat.albums}]</small>{/if}
-{if $cat.subcat}
-<br>
-{foreach from=$cat.subcat item=subcat}
-{str_repeat str="&nbsp;" num=$subcat.param_level mod="4"}<img src={$templates_url}/img/tree.gif><a href={$module_url}/{$subcat.full_url}>{$subcat.name}</a><br>
-{/foreach}
-{/if}
-</td>
-{math equation="x + y" x=$i y=1 assign="i"}
-{/foreach}
-</table>
-<br>
-<small>[n] - количество альбомов в разделе</small>
-<br><br>
-{/if*}
 
 {if $albums_list}
 <b>Фотоальбомы:</b><br><br>
@@ -92,7 +68,7 @@
 	<a href="{$current_url}/?page={$pages[p]}">{$pages[p]}</a>
 	{/if}
 {/section}
-	
+
 <a href="{$current_url}/?page={$total_pages}">>></a>
 </center>
 {/if}
