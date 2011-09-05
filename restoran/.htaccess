@@ -20,8 +20,10 @@ RewriteRule     ^(.*)/insertfiles/(.*)$		/insertfiles/$2	[L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-
-
 #RewriteRule [^\.xml][^\/]$ %{REQUEST_URI}/ [R,L]
 RewriteRule ^(.*)$ /index.php [L,QSA]
 #RewriteRule ^(.*).xml$ /index.php [L,QSA]
+
+#RewriteCond %{HTTP_HOST} ^eng\.(.*?)$
+#RewriteCond %{REQUEST_URI} !/eng/
+#RewriteRule ^(.*)$ /index.php [L,QSA]
