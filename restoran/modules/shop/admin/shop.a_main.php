@@ -60,9 +60,6 @@ else $action='';
 //импорт прайс-листов
 if (isset($_POST['submit_import']))
 {
-	//require_once('../lib/class.import.php');
-	//require_once('../lib/class.string.php');
-	
 	$string = new String();
 	
 	if ($_FILES['import_file']['name']!='') {
@@ -898,24 +895,6 @@ if ($action=='delete_from_order' && isset($_GET['product_id'])  &&  (isset($_GET
 	$product_id=$_GET['product_id'];
 	$order_id=$_GET['order_id'];
 
-	/*$order=$db->get_single("SELECT products FROM fw_orders WHERE id='$order_id'");
-	$product=$db->get_single("SELECT price FROM fw_products WHERE id='$product_id'");
-
-	$products_list=explode(",",$order['products']);
-
-	for ($i=0;$i<count($products_list);$i++) {
-		list($id,$number)=explode("|",$products_list[$i]);
-		if ($id==$product_id) {
-			$price=$number*$product['price'];
-			unset($products_list[$i]);
-		}
-	}
-
-	$products_list=implode(",",$products_list);
-
-	$db->query("UPDATE fw_orders SET products='$products_list', total_price=total_price-$price WHERE id='$order_id'");
-	*/
-	
 	$db->query("DELETE FROM fw_orders_products WHERE order_id='$order_id' AND product_id='$product_id'");
 	
 	$location=$_SERVER['HTTP_REFERER'];
@@ -1244,16 +1223,10 @@ SWITCH (TRUE) {
 		}
 		$photos_list=$db->get_all("SELECT * FROM fw_products_images WHERE parent='$id' ORDER BY sort_order");
         $types_list=$db->get_all("SELECT * FROM fw_products_types WHERE status='1' ORDER BY name");
-        //$files_list=$db->get_all("SELECT * FROM fw_products_files2 where parent='$id'");
-		//$body_types=$db->get_all("SELECT * FROM fw_body_types ORDER BY name");
-		//$disk_types=$db->get_all("SELECT * FROM fw_disk_types ORDER BY name");
 		
 		$smarty->assign("currency_admin",$cur_admin);
 		$smarty->assign('types_list',$types_list);
-		//$smarty->assign('body_types',$body_types);
-		//$smarty->assign('disk_types',$disk_types);
 		$smarty->assign('photos_list',$photos_list);
-		//$smarty->assign('files_list',$files_list);
 		$smarty->assign('photos_count',count($photos_list));
 		$smarty->assign('photo_height',PRODUCT_PREVIEW_HEIGHT+10);
 		$smarty->assign("cat_list",$cat_list);
@@ -1315,9 +1288,6 @@ SWITCH (TRUE) {
 		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=orders","title" => 'Список заказов');
 
 		$id=$_GET['id'];
-
-		//$order=$db->get_single("SELECT * FROM fw_orders WHERE id='$id'");
-		//$order=String::unformat_array($order);
 
 		$total_summ = $db->get_single("SELECT SUM(price) FROM fw_products WHERE id IN (SELECT product_id FROM fw_orders_products WHERE order_id='$id')");
 
@@ -1447,51 +1417,19 @@ SWITCH (TRUE) {
 			$id_list='';
 			$total_price='';
 
-			//$order=$db->get_single("SELECT products FROM fw_orders WHERE id='$order_id'");
 			$order=$db->get_single("SELECT id FROM fw_orders_products WHERE order_id='$order_id' AND product_id='$product_id'");
 
 			if (trim($order['id'])!="") {
-
-				/*$products=explode(",",$order['products']);
-				for ($i=0;$i<count($products);$i++) {
-
-					list($id,$number)=explode("|",$products[$i]);
-					$id_list.=$id.',';
-					if ($id==$product_id) {
-						$number++;
-						$products[$i]=$id.'|'.$number;
-						$product_found=true;
-					}
-				}*/
 				$product_found=true;
 			}
 			if (!$product_found) {
-				/*$products[]=$product_id.'|1';
-				$product=$db->get_single("SELECT price FROM fw_products WHERE id='$product_id'");
-				$total_price=$product['price'];*/
 				$db->query("INSERT fw_orders_products (order_id,product_id,product_count) VALUES ('$order_id','$product_id',1)");
 				
 			}
 			else {
-
-				/*$id_list=substr($id_list,0,-1);
-
-				$products_for_total=$db->get_all("SELECT id,price FROM fw_products WHERE id IN ($id_list)");
-
-				for ($i=0;$i<count($products_for_total);$i++) {
-					for ($p=0;$p<count($products);$p++) {
-						list($id,$number)=explode("|",$products[$p]);
-						if ($products_for_total[$i]['id']==$id) {
-							$total_price=$total_price+($number*$products_for_total[$i]['price']);
-						}
-					}
-				}*/
 				$db->query("UPDATE fw_orders_products SET product_count=product_count+1 WHERE order_id='$order_id' AND product_id='$product_id'");
 
 			}
-			/*$products=implode(",",$products);
-
-			$db->query("UPDATE fw_orders SET products='$products', total_price='$total_price' WHERE id='$order_id'");*/
 			$_SESSION['fw_product_added']='1';
 			$location=$_SERVER['HTTP_REFERER'];
 			header("Location: $location");
