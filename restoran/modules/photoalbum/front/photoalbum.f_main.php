@@ -159,6 +159,7 @@ SWITCH (TRUE) {
 					}
 				}
 				$navigation[]=array("url" => $album['id'],"title" => $album['name']);
+				$page_title = $album['name']; 
 				
 				$smarty->assign("total_pages",$pager['total_pages']);
 				$smarty->assign("current_page",$pager['current_page']);
