@@ -784,7 +784,7 @@ SWITCH (TRUE) {
 		if (!isset($page)) $page=1;
 		$dirs=array("price"=>"desc","insert_date"=>"desc","name"=>"desc");
 
-		if (isset($_GET['page']) or isset($_GET['order'])) {
+		/*if (isset($_GET['page']) or isset($_GET['order'])) {
 
 			if (isset($_GET['page'])) $page=$_GET['page'];
 
@@ -844,7 +844,7 @@ SWITCH (TRUE) {
 			
 			unset($url[$n]);
 			unset($current_url_pages[count($current_url_pages)-1]);
-		}
+		}*/
 		$smarty->assign("dir",$dirs);
 
 		for ($f=0;$f<count($cat_list);$f++) {
@@ -991,6 +991,12 @@ SWITCH (TRUE) {
 				
 				$smarty->assign("cat_list",$cat_list);
 				
+				if (!$page_title)
+				{
+					//title для верхнего уровня каталога
+					$page_title = $node_content['name'];
+				}
+				
 				$template='shop.f_main.html';
 				break;
 			}
@@ -1024,7 +1030,6 @@ SWITCH (TRUE) {
 							}
 							
 							$page_found=true;
-							
 							
 							if ($product_content['title']!='') $page_title=$product_content['title'];
 							else $page_title= 'Продукция ' . $product_content['name'];

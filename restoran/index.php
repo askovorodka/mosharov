@@ -66,7 +66,7 @@ $default_modules=$db->get_all("SELECT * FROM fw_modules WHERE default_load='1' A
 $url=Common::get_url($_SERVER['REQUEST_URI'],SCRIPT_FOLDER);
 
 $navigation=array();
-$navigation[]=array("url" => BASE_URL,"title" => 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
+$navigation[]=array("url" => BASE_URL,"title" => 'Главная страница');
 $page_found=false;
 $set_pages_url=false;
 $module_found=false;
@@ -263,6 +263,8 @@ if (!isset($meta_keywords)) {
   $meta_keywords=isset($node_content['meta_keywords']) ? $node_content['meta_keywords'] : '';
 }
 
+
+$page_title = $page_title . " - " . $_SERVER['SERVER_NAME'];
 $smarty->assign("page_title",@$page_title);
 $smarty->assign("meta_keywords",@$meta_keywords);
 $smarty->assign("meta_description",@$meta_description);
@@ -343,7 +345,7 @@ else {
 
   $db->query("REPLACE INTO fw_urls (url_from,url_to) VALUES('".@$_SERVER['HTTP_REFERER']."','".BASE_URL.$_SERVER['REQUEST_URI']."')");
 
-  $smarty->assign("page_title","пїЅпїЅпїЅпїЅпїЅпїЅ 404. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+  $smarty->assign("page_title", "Ошибка 404. Запрашиваемая страница не найдена - " . $_SERVER['SERVER_NAME']);
   require_once (BASE_PATH.'/modules/site_map/front/site_map.f_main.php');
   header("HTTP/1.0 404 Not Found");
 }
