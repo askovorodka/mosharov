@@ -277,6 +277,7 @@ if (isset($_POST['submit_add_node'])) {
   $label=String::secure_format($_POST['edit_node_label']);
   if (!empty($_POST['edit_node_title'])) $title=String::secure_format($_POST['edit_node_title']);else $title="";
   $module=String::secure_format($_POST['edit_node_module']);
+  $language_version=String::secure_format($_POST['edit_language_version']);
   $status=1;
   $menu=1;
   $left_menu=0;
@@ -328,7 +329,8 @@ if (isset($_POST['submit_add_node'])) {
 		"access_users"=>$access_users,
 		"in_menu"=>$menu,
 		"in_left_menu"=>$left_menu,
-		"show_documents_number"=>DOCUMENTS_ON_PAGE));
+		"show_documents_number"=>DOCUMENTS_ON_PAGE,
+		"language_version" => $language_version));
 	
     if ($module=='page') header("Location: index.php?mod=tree&action=edit&id=".mysql_insert_id());
     else header("Location: index.php?mod=tree");
@@ -362,6 +364,7 @@ if (isset($_POST['submit_edit_node'])) {
   $show_documents_number=intval($_POST['edit_node_show_documents_number']);
   $show_documents_orderby=intval($_POST['edit_node_show_documents_orderby']);
   $documents_template=String::secure_format($_POST['edit_node_documents_template']);
+  $language_version=String::secure_format($_POST['edit_language_version']);
 
   $access_to=$_POST['access_to'];
 
@@ -480,7 +483,8 @@ if (isset($_POST['submit_edit_node'])) {
         show_nodes='$show_nodes',
         show_documents='$show_documents',
         show_documents_number='$show_documents_number',
-        show_documents_orderby='$show_documents_orderby'
+        show_documents_orderby='$show_documents_orderby',
+        language_version='$language_version'
       WHERE
         id='$id'
     ");

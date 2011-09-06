@@ -258,17 +258,30 @@ $capt->base_path = BASE_PATH;
   }
 
 /* -------------- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ -------------- */
-$main_menu=$db->get_all("SELECT id,name,url,param_level,param_left,param_right FROM fw_tree WHERE param_level IN ('1') AND in_menu='1' and status='1' ORDER BY param_left");
+$main_menu=$db->get_all("SELECT id,name,url,param_level,param_left,param_right FROM fw_tree WHERE param_level IN ('1') AND in_menu='1' and status='1' and language_version = 'RUS' ORDER BY param_left");
 $main_menu=String::unformat_array($main_menu,'front');
-foreach ($main_menu as $key=>$val)
+/*foreach ($main_menu as $key=>$val)
 {
-	$submenu = $db->get_all("SELECT id,name,url,param_level FROM fw_tree WHERE param_left BETWEEN '{$val['param_left']}' AND '{$val['param_right']}' AND param_level = '" . ($val['param_level'] + 1) . "' AND in_menu = '1' ORDER BY param_left");
+	$submenu = $db->get_all("SELECT id,name,url,param_level FROM fw_tree WHERE param_left BETWEEN '{$val['param_left']}' AND '{$val['param_right']}' AND param_level = '" . ($val['param_level'] + 1) . "' AND in_menu = '1' and status='1' ORDER BY param_left");
 	if (isset($submenu) && count($submenu) > 0)
 	{
 		$main_menu[$key]['submenu'] = $submenu;
 	}
-}
+}*/
 $smarty->assign("main_menu",$main_menu);
+
+//английская версия
+$eng_menu=$db->get_all("SELECT id,name,url,param_level,param_left,param_right FROM fw_tree WHERE param_level IN ('1') AND in_menu='1' and status='1' and language_version = 'ENG' ORDER BY param_left");
+$eng_menu=String::unformat_array($eng_menu,'front');
+/*foreach ($eng_menu as $key=>$val)
+{
+	$submenu = $db->get_all("SELECT id,name,url,param_level FROM fw_tree WHERE param_left BETWEEN '{$val['param_left']}' AND '{$val['param_right']}' AND param_level = '" . ($val['param_level'] + 1) . "' AND in_menu = '1' and status='1' ORDER BY param_left");
+	if (isset($submenu) && count($submenu) > 0)
+	{
+		$eng_menu[$key]['submenu'] = $submenu;
+	}
+}*/
+$smarty->assign("eng_menu",$eng_menu);
 
 //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 /*$left_menu=$db->get_all("SELECT id,name,url,param_level,param_left,param_right FROM fw_tree WHERE param_level IN ('1') AND in_left_menu='1' and status='1' ORDER BY param_left");
@@ -368,7 +381,6 @@ if (isset($page) or $set_pages_url) {
   
   $smarty->assign("current_url",$current_url);
 }
-
 
 /* ---------------- пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ ---------------- */
 
