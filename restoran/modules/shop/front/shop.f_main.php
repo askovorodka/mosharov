@@ -732,7 +732,6 @@ SWITCH (TRUE) {
 		if (isset($_GET['page']) && $_GET['page']!='') $page=$_GET['page'];
 		else $page=1;
 		
-
 		$search_results=$db->get_all("SELECT fw_products.*, fw_catalogue.image FROM fw_products left join fw_catalogue on fw_products.parent = fw_catalogue.id WHERE fw_products.name LIKE '%$search%' AND fw_products.status='1' ");
 
 		if ($search_results)
@@ -752,12 +751,9 @@ SWITCH (TRUE) {
 				}
 			}
 		}
-		
 
 		$smarty->assign("search_string",$search);
-
 		$smarty->assign("search_results",$search_results);
-
 		$smarty->assign("total_pages",$pager['total_pages']);
 		$smarty->assign("current_page",$pager['current_page']);
 		$smarty->assign("pages",$pager['pages']);
