@@ -125,6 +125,9 @@ else $module_url=$url[0];
 
 //else $module_url=$url[$n];
 
+$background_images = $db->get_all("select * from fw_background_images");
+$smarty->assign('background_images', $background_images);
+
 $node=$db->get_single("
     SELECT
       id,param_left ,param_right,param_level,url,text,title,image,meta_keywords,meta_description,module,support_modules,

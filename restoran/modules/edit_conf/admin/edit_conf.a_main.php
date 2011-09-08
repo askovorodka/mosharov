@@ -1,7 +1,41 @@
 <?php
 
+require_once '../lib/class.image.php';
+
 if (isset($_GET['action'])) $action=$_GET['action'];
 else $action='';
+
+
+if (isset($_POST['submit_add_background_image']))
+{
+	
+	if (isset($_FILES['background_image']))
+	{
+		$file_name=$_FILES['background_image']['name'];
+		$tmp=$_FILES['background_image']['tmp_name'];
+		$output=Image::image_details($tmp);
+		$check_file_name=explode(".",$file_name);
+		$ext=$check_file_name[count($check_file_name)-1];
+		$db->query("insert into fw_background_images (image) values(null)");
+		$id = mysql_insert_id();
+		$image = '/uploaded_files/background_images/'.$id.'.'.$ext;
+		$image_small = '/uploaded_files/background_images/'.$id.'s.'.$ext;
+		if ($id)
+		{
+			if (move_uploaded_file($tmp, BASE_PATH.$image))
+			{
+				chmod($image, 0644);
+				Image::resize(BASE_PATH.$image, BASE_PATH.$image, 1200,532, true, "#FFFFFF");
+				Image::resize(BASE_PATH.$image, BASE_PATH.$image_small, 100,100, false, "#FFFFFF");
+				$db->query("update fw_background_images set image='{$image}', small_image='{$image_small}' where id='{$id}'");
+			}
+		}
+	}
+	
+	$location=$_SERVER['HTTP_REFERER'];
+	header("Location: $location");
+	
+}
 
 
 if (isset($_POST['submit_add_mail_template'])){
@@ -19,6 +53,7 @@ if (isset($_POST['submit_add_mail_template'])){
 		header("Location: ?mod=edit_conf&action=mails");
 	}
 }
+
 
 if (isset($_POST['submit_edit_mail_template'])){
 	Common::check_priv("$priv");
@@ -95,14 +130,43 @@ if ($action=='delete_template') {
 	header("Location: ?mod=edit_conf&action=templates");
 }
 
+if ($action=='delete_background_image')
+{
+	
+	if (!empty($_GET['id']))
+	{
+		$image = $db->get_single("select * from fw_background_images where id='{$_GET['id']}'");
+		if ($image)
+		{
+			@unlink(BASE_PATH.$image['image']);
+			@unlink(BASE_PATH.$image['small_image']);
+			$db->query("delete from fw_background_images where id='{$_GET['id']}'");
+		}
+	}
+	
+	header("Location: ?mod=edit_conf&action=background_images");
+	
+}
+
+
 SWITCH (TRUE) {
 
+	
+	CASE ($action=='background_images'):
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=edit_conf&action=background_images","title" => 'Фоновые изображения');
+		$images_list=$db->get_all("SELECT * FROM fw_background_images");
+		$smarty->assign("images_list",$images_list);
+		$template='edit_conf.a_background_images.html';
+	BREAK;
+	
+	
 	CASE ($action=='mails'):
 		$navigation[]=array("url" => BASE_URL."/admin/?mod=edit_conf&action=mails","title" => 'Доступные шаблоны писем');
 		$mails_list=$db->get_all("SELECT * FROM fw_mails_templates");
 		$smarty->assign("mails_list",$mails_list);
 		$template='edit_conf.a_mails_templates.html';
 	BREAK;
+	
 	
 	CASE ($action=='templates'):
 

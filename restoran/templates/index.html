@@ -27,9 +27,22 @@
   <tr>
     <td class="sectr">
     <div id="toping"></div>
-    	{include file="../templates/top_menu_block.html"}
+   	{include file="../templates/top_menu_block.html"}
 	<!--- PICT ROTATION --->
-		<img src="{$template_image}main.jpg" width="1200" height="532" hspace="0" vspace="0"><br>
+
+	<div id="rotator" style="display:none;">
+		<ul>
+			{foreach from=$background_images item=b_image name="rotate"}
+				<li{if $smarty.foreach.rotate.first} class="show"{/if}>{$b_image.image}</li>
+			{/foreach}
+		</ul>
+	</div>
+
+	<div class="main_image" style="position:relative;">
+		<img id="main_image" src="{$template_image}main.jpg" width="1200" height="532" hspace="0" vspace="0" style="z-index:10; position:absolute;">
+	</div>
+
+	<br>
 	<!--- /PICT ROTATION --->
 	<table class="captt" cellspacing="0" cellpadding="0">
 	  <tr>

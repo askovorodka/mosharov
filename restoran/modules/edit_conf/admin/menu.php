@@ -8,6 +8,11 @@ $sub[]= array(
 	   );
 
 $sub[]= array(
+			"name"=>"Фоновые изображения",
+			"link"=>"?mod=edit_conf&action=background_images"
+	   );
+	   
+$sub[]= array(
 			"name"=>"Доступные шаблоны",
 			"link"=>"?mod=edit_conf&action=templates"
 	   );

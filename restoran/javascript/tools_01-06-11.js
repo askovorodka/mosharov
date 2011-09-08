@@ -1,6 +1,21 @@
 
+function rotate()
+{
+	var current = ($('div#rotator ul li.show')?  $('div#rotator ul li.show') : $('div#rotator ul li:first'));
+	var next = ((current.next().length) ? ((current.next().hasClass('show')) ? $('div#rotator ul li:first') :current.next()) : $('div#rotator ul li:first'));
+	next.addClass('show');
+	current.removeClass('show');
+	//$("img#main_image").fadeOut("fast").attr("src",next.html()).fadeIn("fast");
+	$("<img>").attr({"src": next.html(), "id" : "main_image2"}).css({"z-index":0,"position":"absolute"}).insertBefore($("img#main_image"));
+	$("img#main_image").fadeOut("fast");
+	$("img#main_image").remove();
+	$("img#main_image2").css("z-index",10).attr("id","main_image");
+}
+
 $(document).ready( function(){
 
+	setInterval('rotate()',5000);
+	
 	$(function() {
 		$('a.gallery').lightBox({fixedNavigation:true});
 	});
