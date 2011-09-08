@@ -30,17 +30,17 @@
    	{include file="../templates/top_menu_block.html"}
 	<!--- PICT ROTATION --->
 
-	<div id="rotator" style="display:none;">
+	<div id="rotator">
 		<ul>
 			{foreach from=$background_images item=b_image name="rotate"}
-				<li{if $smarty.foreach.rotate.first} class="show"{/if}>{$b_image.image}</li>
+				<li{if $smarty.foreach.rotate.first} class="show"{/if}><img src="{$b_image.image}"></li>
 			{/foreach}
 		</ul>
 	</div>
 
-	<div class="main_image" style="position:relative;">
+	{*<div class="main_image" style="position:relative;">
 		<img id="main_image" src="{$template_image}main.jpg" width="1200" height="532" hspace="0" vspace="0" style="z-index:10; position:absolute;">
-	</div>
+	</div>*}
 
 	<br>
 	<!--- /PICT ROTATION --->

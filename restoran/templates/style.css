@@ -1,3 +1,7 @@
+#rotator	{position:relative;width:1200px; height:532px; padding:0px; margin:0px; z-index:10;}
+#rotator ul {margin:0px; padding:0px;}
+#rotator ul li	{position:absolute; float:left; list-style:none; margin:0px;padding:0px; z-index:10;}
+#rotator ul li.show	{z-index:10;}
 body {
 	margin:0px;
 	padding:0px;
@@ -95,6 +99,7 @@ h2 {
 	position:absolute;
 	z-index:10;
 	background:center top url(img/main_top.png) no-repeat;
+	z-index:50;
 }
 .mentbl {
 	width:1200px;
@@ -137,15 +142,16 @@ h2 {
 	border:0px;
 	z-index:5;
 	position:absolute;
-	margin-top:-19px;
+	margin-top:-37px;
 	margin-left:20px;
+	z-index:50;
 }
 .capttin {
 	height:40px;
 	border:0px;
-	z-index:5;
+	z-index:50;
 	position:absolute;
-	margin-top:-22px;
+	margin-top:-38px;
 	margin-left:20px;
 }
 .capt1 {
