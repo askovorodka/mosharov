@@ -1,10 +1,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
-<title></title>
-<meta name="description" content="" />
-<meta name="keywords" content="" />
-<link rel="stylesheet" type="text/css" href="/templates/style.css">
+<title>{$page_title}</title>
+<meta name="Keywords" content="{$meta_keywords}">
+<meta name="Description" content="{$meta_description}">
+{foreach from=$css item=css}
+<link rel="stylesheet" type="text/css" href="{$css}">
+{/foreach}
+{foreach from=$js item=js}
+<script src="{$js}" type="text/javascript"></script>
+{/foreach}
 </head>
 <body>
 <table class="mtbl" align="center">
@@ -13,18 +18,7 @@
   </tr>
   <tr>
     <td class="tmenu">
-    <table class="menu" align="center">
-      <tr>
-        <td class="menus"><img src="{$template_image}tmenu_l.gif" width="17" height="46"></td>
-        <td><a href="#" title="Главная">Главная</a></td>
-        <td><a href="#" title="О компании">О компании</a></td>
-        <td><a href="#" title="Проекты домов">Проекты домов</a></td>
-        <td><a href="#" title="Цены">Цены</a></td>
-        <td><a href="#" title="Материалы">Материалы</a></td>
-        <td><a href="#" title="Контакты">Контакты</a></td>
-        <td class="menus"><img src="{$template_image}tmenu_r.gif" width="17" height="46"></td>
-      </tr>
-    </table>
+    {include file="../templates/top_menu_block.tpl"}
     </td>
   </tr>
   <tr>

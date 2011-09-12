@@ -74,7 +74,7 @@ $module_added=false;
 $deny_access=false;
 $switch_off_smarty=false;
 
-$css[] = BASE_URL."/templates/style_01-06-11.css";
+$css[] = BASE_URL."/templates/style.css";
 $css[]=BASE_URL."/templates/jquery.lightbox-0.5.css";
 $js[]=BASE_URL."/javascript/jquery-1.5.min.js";
 $js[]=BASE_URL."/javascript/jquery.lightbox-0.5.js";

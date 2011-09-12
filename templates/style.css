@@ -39,12 +39,12 @@ h2 {
 .toper {
 	height:379px;
 	padding:0px;
-	background:right top url(/img/phone.gif) no-repeat;
+	background:right top url(/templates/img/phone.gif) no-repeat;
 }
 .toperin {
 	height:108px;
 	padding:0px;
-	background:right top url(/img/phone_in.gif) no-repeat;
+	background:right top url(/templates/img/phone_in.gif) no-repeat;
 }
 .cln {
 	clear: both;
@@ -53,7 +53,7 @@ h2 {
 .big {
 	width:1200px;
 	height:271px;
-	background:center url(/img/main.jpg) no-repeat;
+	background:center url(/templates/img/main.jpg) no-repeat;
 }
 .tmenu {
 	height:17px;
