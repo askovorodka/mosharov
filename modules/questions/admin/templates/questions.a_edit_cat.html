@@ -1,0 +1,109 @@
+{literal}
+<script language=JavaScript src='{/literal}{$base_url}/{literal}javascript/editor/scripts/language/russian/editor_lang.js'></script>
+<script language=JavaScript src='{/literal}{$base_url}/{literal}javascript/editor/scripts{/literal}/{$editor_mode}{literal}'></script>
+
+<SCRIPT language=JavaScript>
+function swith_all(obj) {
+  for(i=0; i<obj.elements.length; i++) {
+    if (obj.elements[i].type=="checkbox" && obj.elements[i].id.indexOf("for_switch")!=-1) {
+      obj.elements[i].checked=true;
+    }
+  }
+}
+
+function show(name)
+{
+if(document.getElementById(name).style.display!="none") {
+    document.getElementById(name).style.display="none";
+  }
+  else {
+    document.getElementById(name).style.display="";
+  }
+}
+
+function form_check() {
+	document.edit_cat.txt_val.value = name1.getHTMLBody();
+
+  if (document.edit_cat.edit_cat_url.value=='') {
+
+    alert("Заполните пожалуйста обязательные поля");
+
+    return false;
+
+  }
+
+  else {
+
+    document.edit_cat.edit_cat_text.value = cat_text.getHTMLBody();
+
+    return true;
+
+  }
+}
+</SCRIPT>
+{/literal}
+
+{if $error_message}<center><font color=red><b>{$error_message}</b></font></center><br><br>{/if}
+
+<form action="index.php?mod=news&action={if $mode=='add'}insert_kat{else}update_kat{/if}&{if $mode=='add'}parent={$parent}{else}id={$smarty.get.id}{/if}" name=edit_cat method=post enctype="multipart/form-data" onSubmit="return form_check();">
+{if $mode=='edit'}
+
+	<input type=hidden name=id value={$item.id}>
+
+{/if}
+
+<input type=hidden name=old_parent value={$parent}>
+
+<table width=100% class=content_table>
+  <tr><th>{if $mode=='edit_kat'}Редактировать категорию новостей{else}Добавить категорию новостей{/if}</th></tr>
+</table>
+
+<table width=100% class=content_table>
+
+  <tr class=table_content>
+    <td class=td1_left><b>Название:</b></td>
+    <td class=td1_right><input type=text name=kat_name style="width:100%;" class=field value="{$item.name}"></td>
+  </tr>
+  <tr class=table_content>
+    <td class=td1_left><b><font color=red><small>*</small></font>URL:</b></td>
+    <td class=td1_right><input type=text name=kat_url style="width:100%;" class=field value="{$item.url}"></td>
+  </tr>
+  <tr>
+    <td class=td1_left><b>Заголовок страницы:</b></td>
+    <td class=td1_right><input type=text name=kat_title style="width:100%;" class=field value="{$item.title}">
+  </tr>
+
+  <tr>
+    <td width=15% class=td1_left><b>Статус:</b></td>
+    <td class=td1_right>
+    <select name=kat_status style="width:50%;" class=field>
+      <option value="1" {if $item.status=='1'}selected=true{/if}>Активный</option>
+      <option value="0" {if $item.status=='0'}selected=true{/if}>Ждёт</option>
+    </select>
+    </td>
+  </tr>
+
+  <tr>
+
+  	<td class=td1_left colspan=2><b>Описание категории:</b></td></tr>
+
+  <tr><td class=td1_right colspan=2><input type='hidden' name='txt_val' value=''>
+
+  		{html_editor name='name1' value=$item.text type='wisywyg' width=150 height=300}
+
+  	</td>
+
+  </tr>
+
+  </table>
+
+
+<br>
+
+
+
+
+<br>
+<center><input type=submit name={if $mode=='add'}submit_add_cat value="Добавить раздел"{else}submit_edit_cat value="Сохранить изменения"{/if}></center>
+</form>
+
