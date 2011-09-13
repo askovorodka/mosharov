@@ -61,7 +61,7 @@ $default_modules=$db->get_all("SELECT * FROM fw_modules WHERE default_load='1' A
 $url=Common::get_url($_SERVER['REQUEST_URI'],SCRIPT_FOLDER);
 
 $navigation=array();
-$navigation[]=array("url" => BASE_URL,"title" => 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
+$navigation[]=array("url" => BASE_URL,"title" => 'Главная страница');
 $page_found=false;
 $set_pages_url=false;
 $module_found=false;
@@ -284,59 +284,6 @@ $shop_menu=$db->get_all("
 	ORDER BY a.param_left");
 
 $smarty->assign("shop_menu",$shop_menu);
-
-//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
-//if ($current_url == 'home')
-{
-	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
-	/*$tires_manufacturer = $db->get_all("
-		SELECT a.* 
-		FROM `fw_catalogue` as a 
-		left join 
-		fw_catalogue as b on a.param_left > b.param_left and a.param_right < b.param_right 
-		where a.param_level = '2' and a.status = '1' and b.id = " . TIRES_ID);*/
-	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
-	//$tires_width = $db->get_all("SELECT tire_width FROM fw_products WHERE status = '1' GROUP BY tire_width");
-	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
-	//$tires_height = $db->get_all("SELECT tire_height FROM fw_products WHERE status = '1' GROUP BY tire_height");
-	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
-	//$tires_diameter = $db->get_all("SELECT tire_diameter FROM fw_products WHERE status = '1' GROUP BY tire_diameter");
-	
-	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
-	/*$disk_manufacturer = $db->get_all("
-		SELECT a.* 
-		FROM `fw_catalogue` as a 
-		left join 
-		fw_catalogue as b on a.param_left > b.param_left and a.param_right < b.param_right 
-		where a.param_level = '2' and a.status = '1' and b.id = " . DISK_ID);*/
-
-	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
-	//$disk_width = $db->get_all("SELECT disk_width FROM fw_products WHERE status = '1' and disk_width > 0 GROUP BY disk_width");
-	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
-	//$disk_diameter = $db->get_all("SELECT disk_diameter FROM fw_products WHERE status = '1' and disk_diameter > 0 GROUP BY disk_diameter");
-	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
-	//$disk_krep = $db->get_all("SELECT disk_krep FROM fw_products WHERE status = '1' and disk_krep > 0 GROUP BY disk_krep");
-	//пїЅпїЅпїЅпїЅпїЅ PCD
-	//$disk_pcd = $db->get_all("SELECT disk_pcd FROM fw_products WHERE status = '1' and disk_pcd > 0 GROUP BY disk_pcd");
-	//пїЅпїЅпїЅпїЅпїЅ ET
-	//$disk_et = $db->get_all("SELECT disk_et FROM fw_products WHERE status = '1' and disk_et > 0 GROUP BY disk_et");
-	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
-	//$disk_color = $db->get_all("SELECT disk_color FROM fw_products WHERE status = '1' and disk_color <> '' GROUP BY disk_color");
-	
-	/*$smarty->assign('tires_manufacturer', $tires_manufacturer);
-	$smarty->assign('tires_width', $tires_width);
-	$smarty->assign('tires_height', $tires_height);
-	$smarty->assign('tires_diameter', $tires_diameter);*/
-	
-	/*$smarty->assign('disk_manufacturer', $disk_manufacturer);
-	$smarty->assign('disk_width', $disk_width);
-	$smarty->assign('disk_diameter', $disk_diameter);
-	$smarty->assign('disk_krep', $disk_krep);
-	$smarty->assign('disk_pcd', $disk_pcd);
-	$smarty->assign('disk_et', $disk_et);
-	$smarty->assign('disk_color', $disk_color);*/
-	
-}
 
 if (!isset($page_title)) {
   if (isset($node_content['title']) && $node_content['title']!='') $page_title=$node_content['title'];

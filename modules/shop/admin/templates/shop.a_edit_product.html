@@ -7,12 +7,10 @@ function check_form() {
 	{/literal}
 	{if $editor_style!='html'}
 	{literal}
-		document.edit_product.edit_small_description.value = small_description.getHTMLBody();
 		document.edit_product.edit_description.value = description.getHTMLBody();
 	{/literal}
 	{else}
 	{literal}
-		document.edit_product.edit_small_description.value = document.getElementById('small_description').value;
 		document.edit_product.edit_description.value = document.getElementById('description').value;
 	{/literal}
 	{/if}
@@ -51,7 +49,7 @@ if(document.getElementById(name).style.display!="none") {
 {if $error}<font color=red><b>{$error}</b></font><br><br>{/if}
 <table width=100% class=content_table>
 <tr>
-<th>{if $mode=='edit'}Редактировать продукт{else}Добавить продукт{/if}</th>
+<th>{if $mode=='edit'}Редактировать проект{else}Добавить проект{/if}</th>
 </tr>
 </table>
 
@@ -85,6 +83,7 @@ if(document.getElementById(name).style.display!="none") {
   </select>  </td>
 </tr>
 *}
+{*
 <tr>
 	<td class=td1_single valign=top colspan="2">
 		<p>Краткое описание:</p>
@@ -131,6 +130,7 @@ if(document.getElementById(name).style.display!="none") {
 
 {/if}	</td>
 </tr>
+*}
 <tr>
 	<td class=td1_single valign=top colspan="2">
 	<p>Полное описание:</p>
@@ -209,29 +209,15 @@ if(document.getElementById(name).style.display!="none") {
 
   </td>
 </tr>
-
+{*
 <tr>
   <td class=td1_left style="border-bottom: none;">Цена:</td>
   <td class=td1_right style="border-bottom: none;">
   <input type=text name=edit_price class=field style="width:200px;" value="{$product.price}">&nbsp;&nbsp;{$currency_admin.znak}
   </td>
 </tr>
-
-<tr>
-  <td class=td1_left style="border-bottom: none;">Цена2:</td>
-  <td class=td1_right style="border-bottom: none;">
-  <input type=text name=edit_price2 class=field style="width:200px;" value="{$product.price2}">&nbsp;&nbsp;{$currency_admin.znak}
-  </td>
-</tr>
-
-<tr>
-  <td class=td1_left style="border-bottom: none;">Цена3:</td>
-  <td class=td1_right style="border-bottom: none;">
-  <input type=text name=edit_price3 class=field style="width:200px;" value="{$product.price3}">&nbsp;&nbsp;{$currency_admin.znak}
-  </td>
-</tr>
-
-{include file="`$smarty.const.BASE_PATH`/modules/shop/admin/templates/shop.a_files_product.html"}
+*}
+{*include file="`$smarty.const.BASE_PATH`/modules/shop/admin/templates/shop.a_files_product.html"*}
 
 {/if}
 </table>
@@ -334,7 +320,7 @@ if(document.getElementById(name).style.display!="none") {
 
 
 <br><br>
-<center><input type=submit name={if $mode=='edit'}submit_edit_product value="Сохранить изменения"{else}submit_add_product value="Добавить продукт"{/if} class=button></center>
+<center><input type=submit name={if $mode=='edit'}submit_edit_product value="Сохранить изменения"{else}submit_add_product value="Добавить проект"{/if} class=button></center>
 </form>
 
 
@@ -343,7 +329,7 @@ if(document.getElementById(name).style.display!="none") {
 <br><br>
 <table width=100% cellspacing=1 cellpadding=3 class=content_table>
 <tr>
-<th>Фотоальбом продукта</th>
+<th>Фотоальбом проекта</th>
 </tr>
 </table>
 
@@ -414,7 +400,7 @@ if(document.getElementById(name).style.display!="none") {
 <input type=hidden name=parent value={$product.id}>
 <table width=100%  class=content_table>
 <tr>
-<th colspan="2">Добавить картинку в фотоальбом продукта</th></tr>
+<th colspan="2">Добавить картинку в фотоальбом проекта</th></tr>
 <tr>
 <td width=20% class=td1_left>Подпись к картинке:</td><td class=td1_right><textarea name="add_photo_title" class="field" style="width: 450px; height: 60px;">{$photo_title}</textarea></td>
 </tr>

@@ -12,7 +12,7 @@ $sub[]= array(
 			"link"=>"?mod=shop&action=catalogue"
 	   );
 $sub[]= array(
-			"name"=>"Продукты",
+			"name"=>"Проекты",
 			"link"=>"?mod=shop&action=products_list"
 	   );
 
@@ -44,7 +44,7 @@ $sub[]= array(
 $main_menu[]=array(
 				"link"=>"?mod=shop",
 				"name"=>"shop",
-				"title"=>"Магазин",
+				"title"=>"Каталог",
 				"ico"=>"module_3.gif",
 				"sort"=>"4",
 				"sub"=>$sub

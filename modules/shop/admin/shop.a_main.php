@@ -47,7 +47,7 @@ $smarty->assign("currency_site",$cur_site);
 $cur_admin=$db->get_single("SELECT kurs,znak FROM fw_currency WHERE id=" . CURRENCY_ADMIN);
 $cur_admin=String::unformat_array($cur_admin);
 
-$navigation[]=array("url" => BASE_URL . "/admin/?mod=shop","title" => 'Магазин');
+$navigation[]=array("url" => BASE_URL . "/admin/?mod=shop","title" => 'Каталог');
 //UPDATE `fw_products` SET sort_order=id-2 WHERE 1
 if (isset($_GET['action']) && $_GET['action']!='') $action=$_GET['action'];
 else $action='';
@@ -99,7 +99,6 @@ if (isset($_POST['submit_import']))
 				die();
 			}
 			
-
 			//получаем данные в массив
 			$import->read($csvfile);
 			if ($_POST['type'] == 'tires')
@@ -414,14 +413,12 @@ if (isset($_POST['submit_add_cat'])) {
 			
 		if (@$file_name!='') {
 			$id=mysql_insert_id();
-			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext)) {
-				chmod(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext, 0644);
-				$details = Image::image_details(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext);
+			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/categor_images/'.$id.'.'.$ext)) {
+				@chmod(BASE_PATH.'/uploaded_files/categor_images/'.$id.'.'.$ext, 0644);
+				$details = Image::image_details(BASE_PATH.'/uploaded_files/categor_images/'.$id.'.'.$ext);
 				//превьюшка
-				Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext,BASE_PATH.'/images/cat-'.$id.'.'.$ext,215,236);
-				Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext,BASE_PATH.'/images/pcat-'.$id.'.'.$ext,139,100);
-				Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext,BASE_PATH.'/images/bcat-'.$id.'.'.$ext,$details['width'],$details['height']);
-				unlink(BASE_PATH.'/uploaded_files/shop_images/'.'-'.$id.'.'.$ext);
+				Image::resize(BASE_PATH."/uploaded_files/categor_images/$id.$ext", BASE_PATH."/uploaded_files/categor_images/small-$id.$ext", 240,162, true, "#ffffff");
+				@unlink(BASE_PATH.'/uploaded_files/categor_images/'.$id.'.'.$ext);
 				$result=$db->query("UPDATE fw_catalogue SET image='cat-".$id.".$ext' WHERE id='".mysql_insert_id()."'");
 			}
 		}
@@ -495,21 +492,18 @@ if (isset($_POST['submit_edit_cat'])) {
 			$check=false;
 		}
 	}
-
+	//echo BASE_PATH.'/uploaded_files/categor_images/'.$id.'.'.$ext;
 	if ($check || $id=="1") {
 
 		if (@$file_name!='') {
-			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext)) {
-				chmod(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext, 0644);
-				$details = Image::image_details(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext);
-				//print_r($details); exit();
-				$image_name='-'.$id.'.'.$ext;
-				Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/'.$image_name,BASE_PATH.'/uploaded_files/shop_images/cat'.$image_name,215,236);
-				Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/'.$image_name,BASE_PATH.'/uploaded_files/shop_images/pcat'.$image_name,139,100);
-				Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/'.$image_name,BASE_PATH.'/uploaded_files/shop_images/bcat'.$image_name,$details['width'],$details['height']);
-				unlink(BASE_PATH.'/uploaded_files/shop_images/'.'-'.$id.'.'.$ext);
+			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/categor_images/'.$id.'.'.$ext)) {
+				@chmod(BASE_PATH.'/uploaded_files/categor_images/'.$id.'.'.$ext, 0777);
+				$details = Image::image_details(BASE_PATH.'/uploaded_files/categor_images/'.$id.'.'.$ext);
+				$image_name = $id.'.'.$ext;
+				Image::resize(BASE_PATH."/uploaded_files/categor_images/$id.$ext", BASE_PATH."/uploaded_files/categor_images/small-$id.$ext", 240,162, true, "#ffffff");
+				//@unlink(BASE_PATH.'/uploaded_files/categor_images/'.$id.'.'.$ext);
 			}
-			$image='cat-'.$id.'.'.$ext;
+			$image=$id.'.'.$ext;
 		}
 		else $image=$_POST['old_image'];
 
@@ -541,11 +535,11 @@ if (isset($_POST['submit_add_product'])) {
 	$name=String::secure_format($_POST['edit_name']);
 	$title=String::secure_format($_POST['edit_title']);
 	$site_url=$_POST['edit_site_url'];
-	$small_description=String::secure_format($_POST['edit_small_description']);
+	//$small_description=String::secure_format($_POST['edit_small_description']);
 	$description=String::secure_format($_POST['edit_description']);
 	$price=String::secure_format($_POST['edit_price']);
-	$price1=String::secure_format($_POST['edit_price1']);
-	$price2=String::secure_format($_POST['edit_price2']);
+	//$price1=String::secure_format($_POST['edit_price1']);
+	//$price2=String::secure_format($_POST['edit_price2']);
 	$guarantie=String::secure_format($_POST['edit_guarantie']);
 	$sale=String::secure_format($_POST['edit_sale']);
 	
@@ -585,8 +579,8 @@ if (isset($_POST['submit_add_product'])) {
 		(
 		
 		article,parent,name,
-		title,site_url,small_description,
-		description,price,price2,price3,insert_date,
+		title,site_url,
+		description,price,insert_date,
 		sale,sort_order,product_type) 
 		
 		VALUES(
@@ -595,9 +589,8 @@ if (isset($_POST['submit_add_product'])) {
 			'$name',
 			'$title',
 			'$site_url',
-			'$small_description',
 			'$description',
-			'$price','$price1','$price2',
+			'$price',
 			'".time()."',
 			'$sale',
 			'$sort_order',
@@ -606,7 +599,7 @@ if (isset($_POST['submit_add_product'])) {
 		)");
 	
 	header("Location: ?mod=shop&action=edit_product&id=".mysql_insert_id());
-	
+
 }
 
 if (isset($_POST['submit_edit_product'])) {
@@ -620,11 +613,11 @@ if (isset($_POST['submit_edit_product'])) {
 	$meta_keywords=String::secure_format($_POST['edit_meta_keywords']);
 	$meta_description=String::secure_format($_POST['edit_meta_description']);
 	$site_url=$_POST['edit_site_url'];
-	$small_description=String::secure_format($_POST['edit_small_description']);
+	//$small_description=String::secure_format($_POST['edit_small_description']);
 	$description=String::secure_format($_POST['edit_description']);
 	$price=String::secure_format($_POST['edit_price']);
-	$price2=String::secure_format($_POST['edit_price2']);
-	$price3=String::secure_format($_POST['edit_price3']);
+	//$price2=String::secure_format($_POST['edit_price2']);
+	//$price3=String::secure_format($_POST['edit_price3']);
 	$sale=String::secure_format($_POST['edit_sale']);
 	$guarantie=String::secure_format($_POST['edit_guarantie']);
 	$status=$_POST['edit_status'];
@@ -649,128 +642,12 @@ if (isset($_POST['submit_edit_product'])) {
 			meta_description='$meta_description',
 			meta_keywords='$meta_keywords',
 			site_url='$site_url',
-			small_description='$small_description',
 			description='$description',
-			price='$price',price2='$price2',price3='$price3',
+			price='$price',
 			sale='$sale',
 			status='$status',
 			hit='$hit' 
 		WHERE id='$id'");
-	
-
-	//редактируем файлы описания
-	if (isset($_POST['edit_file_title']))
-	{
-		foreach ($_POST['edit_file_title'] as $key=>$val)
-		{
-			$db->query("UPDATE fw_products_files SET title = '{$val}' WHERE id = '{$key}'");
-		}
-	}
-	
-	//удаление файлов
-	if (isset($_POST['del_file']))
-	{
-		foreach ($_POST['del_file'] as $key=>$val)
-		{
-			$filename = $db->get_single("select * from fw_products_files where id='{$key}'");
-			if (isset($filename['file']))
-			{
-				if (@file_exists(BASE_PATH."/uploaded_files/shop_files/" . $filename['parent'] . '/' . $filename['file']))
-				{
-					@unlink(BASE_PATH."/uploaded_files/shop_files/" . $filename['parent'] . '/' . $filename['file']);
-				}
-			}
-			$db->query("DELETE FROM fw_products_files2 WHERE id = '{$key}'");
-		}
-	}
-	
-	//грузим файл описания
-	$inserts = array();
-	foreach ($_FILES['add_file']['tmp_name'] as $key=>$val)
-	{
-		
-		$file_name=$_FILES['add_file']['name'][$key];
-		
-		//$tmp=$_FILES['add_file']['tmp_name'][$key];
-		$tmp=$val;
-		$check_file_name=explode(".",$file_name);
-		$ext=strtolower($check_file_name[count($check_file_name)-1]);
-		$new_file_name = md5($file_name . rand(0, strlen($file_name))) . '.' . $ext;
-		//$title = 'Технические характеристики';
-		$title = $_POST['file_title'][$key];
-		$check = true;
-		
-		if (!in_array($ext,array('pdf','doc', 'zip', 'rar'))) {
-			$smarty->assign("error","Разрешены файлы форматов pdf, doc, zip и rar");
-			$check=false;
-		}
-		
-		if (filesize($tmp)>10000000) {
-			$smarty->assign("error","Размер файла не должен привышать 10Mb");
-			$check=false;
-		}
-		
-		
-		if ($check) {
-			
-			if (!is_dir(ROOT . 'uploaded_files/shop_files/' . $id))
-			{
-				@mkdir(ROOT . 'uploaded_files/shop_files/' . $id);
-				@chmod(ROOT . 'uploaded_files/shop_files/' . $id, 0777);
-			}
-			
-			if (move_uploaded_file($tmp, BASE_PATH."/uploaded_files/shop_files/{$id}/{$new_file_name}")) {
-				$inserts[] = "('".$id."','$title','$new_file_name')";
-				@chmod(BASE_PATH."/uploaded_files/shop_files/{$id}/$new_file_name}",0777);
-			}
-		}
-		
-		
-	}
-	
-	if (count($inserts))
-	{
-		$db->query("INSERT INTO fw_products_files2 (parent,title,file) VALUES " . implode(",", $inserts));
-	}
-	/*print_r($_FILES); exit();
-	if (!empty($_FILES['add_file']['name']) && !empty($_FILES['add_file']['tmp_name']))
-	{
-		
-		$file_name=$_FILES['add_file']['name'];
-		$tmp=$_FILES['add_file']['tmp_name'];
-		$check_file_name=explode(".",$file_name);
-		$ext=strtolower($check_file_name[count($check_file_name)-1]);
-		$new_file_name = md5($file_name . rand(0, strlen($file_name))) . '.' . $ext;
-		//$title = 'Технические характеристики';
-		$title = $_POST['file_title'];
-		$check = true;
-		
-		if (!in_array($ext,array('pdf','doc'))) {
-			$smarty->assign("error","Разрешены файлы форматов pdf и doc");
-			$check=false;
-		}
-		
-		if (filesize($tmp)>10000000) {
-			$smarty->assign("error","Размер файла не должен привышать 10Mb");
-			$check=false;
-		}
-		
-		
-		if ($check) {
-			
-			$result=$db->query("INSERT INTO fw_products_files (parent,title,file) VALUES('".$id."','$title','$new_file_name')");
-			$id=mysql_insert_id();
-			if (move_uploaded_file($tmp, BASE_PATH."/uploaded_files/shop_files/$new_file_name")) {
-				chmod(BASE_PATH."/uploaded_files/shop_files/$new_file_name",0777);
-			}
-			else {
-				$result=$db->query("DELETE FROM fw_products_files WHERE id='".mysql_insert_id()."'");
-				$smarty->assign("error","Файл не был загружен");
-			}
-		}
-		
-	}*/
-	
 
 }
 
@@ -805,10 +682,12 @@ if (isset($_POST['submit_add_photo'])) {
 		$result=$db->query("INSERT INTO fw_products_images(parent,title,ext,sort_order) VALUES('".$_POST['parent']."','$title','$ext','".$order."')");
 		$id=mysql_insert_id();
 		if (move_uploaded_file($tmp, BASE_PATH."/uploaded_files/shop_images/$id.$ext")) {
-			chmod(BASE_PATH."/uploaded_files/shop_images/$id.$ext",0644);
-			Image::image_resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext",BASE_PATH."/uploaded_files/shop_images/resized-$id.$ext",PRODUCT_PREVIEW_WIDTH,PRODUCT_PREVIEW_HEIGHT);
-			Image::image_resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext",BASE_PATH."/uploaded_files/shop_images/medium-$id.$ext",PRODUCT_MEDIUM_WIDTH,PRODUCT_MEDIUM_HEIGHT);
-			Image::image_resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext",BASE_PATH."/uploaded_files/shop_images/big-$id.$ext",PRODUCT_BIG_WIDTH,PRODUCT_BIG_HEIGHT);
+			@chmod(BASE_PATH."/uploaded_files/shop_images/$id.$ext",0777);
+			Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/small-$id.$ext", PRODUCT_PREVIEW_WIDTH,PRODUCT_PREVIEW_HEIGHT, true, "#ffffff");
+			Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/medium-$id.$ext", PRODUCT_MEDIUM_WIDTH,PRODUCT_MEDIUM_HEIGHT, true, "#ffffff");
+			//Image::image_resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext",BASE_PATH."/uploaded_files/shop_images/resized-$id.$ext",PRODUCT_PREVIEW_WIDTH,PRODUCT_PREVIEW_HEIGHT);
+			//Image::image_resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext",BASE_PATH."/uploaded_files/shop_images/medium-$id.$ext",PRODUCT_MEDIUM_WIDTH,PRODUCT_MEDIUM_HEIGHT);
+			//Image::image_resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext",BASE_PATH."/uploaded_files/shop_images/big-$id.$ext",PRODUCT_BIG_WIDTH,PRODUCT_BIG_HEIGHT);
 		}
 		else {
 			$result=$db->query("DELETE FROM fw_products_images WHERE id='".mysql_insert_id()."'");
@@ -1155,7 +1034,7 @@ SWITCH (TRUE) {
 
 	CASE ($action=='products_list'):
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Товары');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Проекты');
 
 
 		if (isset($_GET['page']) && $_GET['page']!='') 
@@ -1244,8 +1123,8 @@ SWITCH (TRUE) {
 
 	CASE ($action=='add_product'):
 		
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Продукты');
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=add_product","title" => 'Добавить продукт');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Проекты');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=add_product","title" => 'Добавить проект');
 
 		$cat_list=Common::get_nodes_list($cat_list);
         $types_list=$db->get_all("SELECT * FROM fw_products_types WHERE status='1' ORDER BY name");
@@ -1263,8 +1142,8 @@ SWITCH (TRUE) {
 
 	CASE ($action=='edit_product' && isset($_GET['id'])):
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Список продуктов');
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=edit_product","title" => 'Редактировать продукт');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Список проектов');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=edit_product","title" => 'Редактировать проект');
 
 		$id=$_GET['id'];
 
