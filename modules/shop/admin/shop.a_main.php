@@ -535,39 +535,11 @@ if (isset($_POST['submit_add_product'])) {
 	$name=String::secure_format($_POST['edit_name']);
 	$title=String::secure_format($_POST['edit_title']);
 	$site_url=$_POST['edit_site_url'];
-	//$small_description=String::secure_format($_POST['edit_small_description']);
 	$description=String::secure_format($_POST['edit_description']);
 	$price=String::secure_format($_POST['edit_price']);
-	//$price1=String::secure_format($_POST['edit_price1']);
-	//$price2=String::secure_format($_POST['edit_price2']);
 	$guarantie=String::secure_format($_POST['edit_guarantie']);
 	$sale=String::secure_format($_POST['edit_sale']);
 	
-	//св-ва шин/дисков
-	/*$tire_width = $_POST['tire_width'];
-	$tire_height = $_POST['tire_height'];
-	$tire_diameter = $_POST['tire_diameter'];
-	$tire_in = $_POST['tire_in'];
-	$tire_is = $_POST['tire_is'];
-	$tire_usil = $_POST['tire_usil'];
-	$tire_spike = $_POST['tire_spike'];
-	$tire_season = $_POST['tire_season'];
-	$tire_bodytype = $_POST['tire_bodytype'];
-	$tire_sklad = $_POST['tire_sklad'];
-	
-	$disk_width = $_POST['disk_width'];
-	$disk_diameter = $_POST['disk_diameter'];
-	$disk_krep = $_POST['disk_krep'];
-	$disk_pcd = $_POST['disk_pcd'];
-	$disk_pcd2 = $_POST['disk_pcd2'];
-	$disk_et = $_POST['disk_et'];
-	$disk_dia = $_POST['disk_dia'];
-	$disk_color = $_POST['disk_color'];
-	$disk_type = $_POST['disk_type'];
-	$disk_sklad = $_POST['disk_sklad'];*/
-	
-	//$sort_order=$db->get_single("SELECT MAX(sort_order) as max FROM fw_products WHERE parent='$parent'");
-	//$sort_order=$sort_order['max']+1;
 	$sort_order=0;
   	$type=($_POST['edit_type']!='')?intval($_POST['edit_type']):"NULL";
 
@@ -613,11 +585,8 @@ if (isset($_POST['submit_edit_product'])) {
 	$meta_keywords=String::secure_format($_POST['edit_meta_keywords']);
 	$meta_description=String::secure_format($_POST['edit_meta_description']);
 	$site_url=$_POST['edit_site_url'];
-	//$small_description=String::secure_format($_POST['edit_small_description']);
 	$description=String::secure_format($_POST['edit_description']);
 	$price=String::secure_format($_POST['edit_price']);
-	//$price2=String::secure_format($_POST['edit_price2']);
-	//$price3=String::secure_format($_POST['edit_price3']);
 	$sale=String::secure_format($_POST['edit_sale']);
 	$guarantie=String::secure_format($_POST['edit_guarantie']);
 	$status=$_POST['edit_status'];

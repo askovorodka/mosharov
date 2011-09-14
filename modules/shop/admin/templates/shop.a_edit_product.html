@@ -67,70 +67,6 @@ if(document.getElementById(name).style.display!="none") {
 <tr>
 	<td class=td1_left>Имя:</td><td class=td1_right><input type=text name=edit_name class=field style="width:100%;" value="{$product.name}"></td>
 </tr>
-{*
-<tr>
-	<td class=td1_left>Гарантия:</td><td class=td1_right><input type=text name=edit_guarantie class=field style="width:100%;" value="{$product.guarantie}"></td>
-</tr>
-*}
-{*<tr>
-  <td class=td1_left>Производитель:</td>
-  <td class=td1_right>
-  <select name=edit_type style="width:100%;" class=field>
-    <option value="" {if $product.product_type==''}selected{/if}></option>
-    {foreach from=$types_list item=entry}
-      <option value={$entry.id}{if $entry.id==$product.product_type} selected=true{/if}>{$entry.name}</option>
-    {/foreach}
-  </select>  </td>
-</tr>
-*}
-{*
-<tr>
-	<td class=td1_single valign=top colspan="2">
-		<p>Краткое описание:</p>
-<input type=hidden name=edit_small_description value="">
-{if $editor_style!='html'}
-{literal}
-<script language="JavaScript">
-				var small_description = new InnovaEditor("small_description");
-
-					small_description.btnStyles=true;
-
-					small_description.width="100%";
-					small_description.height="200";
-
-					small_description.css="style.css";
-					small_description.cmdAssetManager="modalDialogShow('{/literal}{$base_url}/{literal}javascript/editor/assetmanager/assetmanager.php?lang=russian',640,465)";
-
-					small_description.features=["FullScreen","Search",
-						"Cut","Copy","Paste","PasteWord","PasteText","|","Undo","Redo","|",
-						"ForeColor","BackColor","|","Bookmark","Hyperlink",
-						"XHTMLSource","Numbering","Bullets","|","Indent","Outdent","|","Image","|",
-						"Table","Guidelines","Absolute","|","Characters","Line",
-						"Clean","ClearAll","BRK",
-						"Paragraph","FontSize","|",
-						"Bold","Italic",
-						"Underline","Strikethrough","|","Superscript","Subscript","|",
-						"JustifyLeft","JustifyCenter","JustifyRight","JustifyFull","|","Tables","Photo","Mail"];
-
-
-					small_description.RENDER('{/literal}{$product.small_description|replace:"\r\n":""}{literal}');
-</script>
-{/literal}
-{else}
-
-<div class=tag_box>
-<a href="add_tag" onclick="return insert_tag(document.edit_product.small_description,'<b>','</b>')" class=tag_button><b>B</b></a>
-<a href="add_tag" onclick="return insert_tag(document.edit_product.small_description,'<i>','</i>')" class=tag_button><i>I</i></a>
-<a href="add_tag" onclick="return insert_tag(document.edit_product.small_description,'<u>','</u>')" class=tag_button><u>U</u></a>
-<a href="add_tag" onclick="return insert_tag(document.edit_product.small_description,'<img src=>','</img>')" class=tag_button>IMG</a>
-<a href="add_tag" onclick="return insert_tag(document.edit_product.small_description,'<a href=>','</a>')" class=tag_button>URL</a>
-<a href="add_tag" onclick="return insert_tag(document.edit_product.small_description,'<br>','')" class=tag_button>BR</a></div>
-
-<textarea id=small_description class=field style="width:100%" rows=20>{$product.small_description|replace:"\r\n":""}</textarea>
-
-{/if}	</td>
-</tr>
-*}
 <tr>
 	<td class=td1_single valign=top colspan="2">
 	<p>Полное описание:</p>
@@ -209,21 +145,9 @@ if(document.getElementById(name).style.display!="none") {
 
   </td>
 </tr>
-{*
-<tr>
-  <td class=td1_left style="border-bottom: none;">Цена:</td>
-  <td class=td1_right style="border-bottom: none;">
-  <input type=text name=edit_price class=field style="width:200px;" value="{$product.price}">&nbsp;&nbsp;{$currency_admin.znak}
-  </td>
-</tr>
-*}
-{*include file="`$smarty.const.BASE_PATH`/modules/shop/admin/templates/shop.a_files_product.html"*}
 
 {/if}
 </table>
-
-{*include file="`$smarty.const.BASE_PATH`/modules/shop/admin/templates/shop.a_tire_properties.html"*}
-{*include file="`$smarty.const.BASE_PATH`/modules/shop/admin/templates/shop.a_disk_properties.html"*}
 
 <table width=100% class=content_table>
 	<tr>
@@ -287,37 +211,6 @@ if(document.getElementById(name).style.display!="none") {
 {/if}
 
 
-{*if $mode=='edit'}
-<table width=100% class=content_table>
-	<tr>
-		<th bgcolor=#99CCFF onClick="show('soput', this);" class="button plus" style="border-bottom: none; text-align: left; padding-left: 30px;"><b>Сопутствующие товары ({foreach from=$additional_products item=entry name=kl}{/foreach}{$smarty.foreach.kl.total})</b></th>
-	</tr>
- </table>
-    <div id="soput" style="display: none;">
-<table width=100% class=content_table>
-	{if $additional_products}
-    {foreach from=$additional_products item=entry}
-    {if $col==1}
-	{assign var="td" value="td1"}
-	{assign var="col" value=0}
-	{else}
-	{assign var="td" value="td2"}
-	{assign var="col" value=1}
-	{/if}
-    <tr>
-	<td class={$td}_left width="75%"><a href=index.php?mod=shop&action=edit_product&id={$entry.id}>{$entry.name}</a></td>
-    <td class="{$td}_middle" width="15%%"><font color=red><b>{$entry.price} {$currency}</b></font></td>
-	<td class="{$td}_right" align="center"><a href=index.php?mod=shop&action=delete_additional_product&id={$entry.id}&from={$product.id}><img src=templates/img/ico_delete.gif border=0></a></td></tr>
-	{/foreach}
-    {/if}
-    <tr>
-	<td class=td1_left><img src="templates/img/tree.gif" style="margin-left: 5px;">
-    <a href=# onclick="window.open('index.php?mod=shop&action=mini_catalogue&product_id={$product.id}','winscript','height=500,width=500,toolbar=yes,resizable=yes,scrollbars=yes,,menubar=no' ); return false" style="color: red;">Добавить сопутствующий товар</a>
-	</td><td class=td1_middle>&nbsp;</td><td class=td1_right>&nbsp;</td></tr>
-	</table>
-</div>
-{/if*}
-
 
 <br><br>
 <center><input type=submit name={if $mode=='edit'}submit_edit_product value="Сохранить изменения"{else}submit_add_product value="Добавить проект"{/if} class=button></center>
@@ -362,7 +255,7 @@ if(document.getElementById(name).style.display!="none") {
 
 <table width="100%" style="height: 120px;" border="0" cellspacing="0" cellpadding="0" id="nav_photo_{$entry.id}">
   <tr>
-    <td align="center"><img src=../uploaded_files/shop_images/resized-{$entry.id}.{$entry.ext} border="0" width="100" height="100" alt=""></td>
+    <td align="center"><img src=../uploaded_files/shop_images/small-{$entry.id}.{$entry.ext} border="0" alt=""></td>
   </tr>
 </table>
 

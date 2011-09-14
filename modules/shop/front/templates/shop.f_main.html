@@ -1,59 +1,17 @@
 	
-		{*if $parent.id == $smarty.const.TIRES_ID}
-			{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/tires_filter.html"}
-		{elseif $parent.id == $smarty.const.DISK_ID}
-			{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/disk_filter.html"}
-		{/if*}
 
 		<h1>{if $cat_content.param_level == 0}Каталог продукции{else}{$cat_content.name}{/if}</h1>
 
-		{*if $cat_content.param_level == 3}
-			{if $parent.id == $smarty.const.TIRES_ID}
-				{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/single_tire.html"}
-			{elseif $parent.id == $smarty.const.DISK_ID}
-				{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/single_disk.html"}
+		<div class="proj"><div class="projin">
+		{foreach from=$categories item=cat name=iter_cat}
+			{if $cat_content.id == $cat.id}
+			{$cat.name|strip_tags}
+			{else}
+			<a href="{$base_url}/catalog/{$cat.url}/" title="{$cat.name|strip_tags}">{$cat.name|strip_tags}</a>
 			{/if}
-        {/if*}
-
-
-		{*if $folders_list}
-			{if $cat_content.param_level < 2}
-				{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/catalog1.html"}
-			{elseif $cat_content.param_level == 2}
-				{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/catalog2.html"}
-	        {/if}
-        {/if*}
-
-		{if $folders_list}
-			{foreach from=$folders_list item=folder}
-				<h2>{$folder.name|strip_tags}</h2>
-				{if $folder.products}
-					<table class="cattbl" cellspacing="1" cellpadding="10">
-					  <tr class="topcattd">
-					    <td>Фото</td>
-					    <td>Модель</td>
-					    <td>Описание модели</td>
-					    <td>Цена&nbsp;1</td>
-					    <td>Цена&nbsp;2</td>
-					    <td>Цена&nbsp;3</td>
-					  </tr>
-					  
-					  {foreach from=$folder.products item=product name=foreach1}
-					  <tr {if $smarty.foreach.foreach1.iteration%2 == 0}class="catgray"{/if}>
-					    <td><a href="{$base_url}/catalog{$product.full_url}">
-					    {if $product.image}<img src="/uploaded_files/shop_images/resized-{$product.image}.{$product.ext}">{else}нет фото{/if}</a></td>
-					    <td><a href="{$base_url}/catalog{$product.full_url}">{$product.name}</a></td>
-					    <td class="catprop">{$product.small_description}</td>
-					    <td>{$product.price|format_number}</td>
-					    <td>{$product.price2|format_number}</td>
-					    <td>{$product.price3|format_number}</td>
-					  </tr>
-					  {/foreach}
-					</table>
-				{/if}
-				
-			{/foreach}
-        {/if}
+			{if !$smarty.foreach.iter_cat.last}<span class="vert">|</span>{/if}
+		{/foreach}
+		</div></div>
 
 
 <br><br>

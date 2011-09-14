@@ -1,24 +1,16 @@
-				{if $products_list}
-					<table class="cattbl" cellspacing="1" cellpadding="10">
-					  <tr class="topcattd">
-					    <td>Фото</td>
-					    <td>Модель</td>
-					    <td>Описание модели</td>
-					    <td>Цена&nbsp;1</td>
-					    <td>Цена&nbsp;2</td>
-					    <td>Цена&nbsp;3</td>
-					  </tr>
-					  
-					  {foreach from=$products_list item=product name=foreach1}
-					  <tr {if $smarty.foreach.foreach1.iteration%2 == 0}class="catgray"{/if}>
-					    <td><a href="{$base_url}/catalog{$product.full_url}">{if $product.image}<img src="/uploaded_files/shop_images/resized-{$product.image}.{$product.ext}">{else}нет фото{/if}</a></td>
-					    <td><a href="{$base_url}/catalog{$product.full_url}">{$product.name}</a></td>
-					    <td class="catprop">{$product.small_description}</td>
-					    <td>{$product.price|format_number}</td>
-					    <td>{$product.price2|format_number}</td>
-					    <td>{$product.price3|format_number}</td>
-					  </tr>
-					  {/foreach}
-					</table>
-				{/if}
+{if $products_list}
 
+    <table class="cattbl">
+    	{foreach from=$products_list item=product name=prod_iter}
+    		{if !$smarty.foreach.prod_iter.first && $smarty.foreach.prod_iter.iteration%5==0}
+    		</tr><tr>
+    		{elseif $smarty.foreach.prod_iter.first}<tr>
+    		{/if}
+    		<td><a href="{$base_url}/catalog{$product.full_url}">{$product.name|strip_tags}</a><br>
+    		<a href="{$base_url}/catalog{$product.full_url}"><img src="/uploaded_files/shop_images/medium-{$product.image}.{$product.ext}" width="203" height="136"></a></td>
+    		{if $smarty.foreach.prod_iter.last}</tr>{/if}
+    		
+    	{/foreach}
+    </table>
+
+{/if}
