@@ -171,7 +171,7 @@ class Shop extends db {
 		}
 	}
 	
-	function getChildrenCategor($categor, $param_level = null)
+	function getChildrenCategor($categor, $param_level = null, $limit = null)
 	{
 		if (isset($param_level))
 		{
@@ -181,8 +181,14 @@ class Shop extends db {
 		{
 			$where = "";
 		}
-		$result = $this->db->get_all("SELECT * FROM fw_catalogue WHERE param_left BETWEEN '{$categor['param_left']}' 
-					and '{$categor['param_right']}' and status = '1' " . $where);
+		
+		if ($limit)
+			$limit = " limit " . $limit;
+		
+		$order = " order by param_left ";
+			
+		$result = $this->db->get_all("SELECT * FROM fw_catalogue WHERE param_left BETWEEN '{$categor['param_left']}' and '{$categor['param_right']}' and status = '1' " . $where . $order . $limit);
+		
 		if ($result)
 		{
 			return $result;

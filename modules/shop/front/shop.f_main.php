@@ -130,22 +130,6 @@ if (isset($_POST['submit_comment'])) {
 	}
 
 	
-	/*if (isset($_POST['rating'])) {
-
-		$rating=$_POST['rating'];
-
-		$check_rating=explode(",",$_COOKIE['fw_rating']);
-		if (!in_array($id,$check_rating)) {
-
-			$db->query("UPDATE fw_products SET rating=rating+$rating WHERE id='$id'");
-
-			if (!@isset($_COOKIE['fw_rating']) or $_COOKIE['fw_rating']=='') $cookie_content=$id;
-			else $cookie_content=$_COOKIE['fw_rating'].','.$id;
-
-			setcookie('fw_rating',$cookie_content,time()+315360000,'/','');
-		}
-	}*/
-
 	$location=@$_SERVER['HTTP_REFERER'];
 	header("Location: $location");
 	die();
@@ -186,26 +170,15 @@ SWITCH (TRUE) {
 	CASE ($url[$n]=='index.xml' && count($url)==2):
 		
 		ini_set('memory_limit', '300M');
-		/*
-		$cat_list=$db->get_all("SELECT c.*, 
-		(SELECT id FROM fw_catalogue WHERE 
-		c.param_left>param_left AND c.param_level-param_level=1 ORDER BY param_left DESC LIMIT 1) as parent 
-		FROM fw_catalogue as c WHERE c.status='1' ORDER BY c.param_left");
-		*/
 		
 		$cat_list=$db->get_all("SELECT c.* FROM fw_catalogue as c WHERE c.status='1' ORDER BY c.param_left");
 		
-		//$cat_list=Common::get_nodes_list($cat_list);
 		
-		//$products_list = $db->get_all("SELECT *,(select image from fw_catalogue where id = p.parent) as image FROM fw_products AS p WHERE p.status='1' and (tire_sklad > 3 or disk_sklad > 3)");
 		$products_list = $db->get_all("
 			SELECT *, c.image FROM 
 			fw_products AS p 
 			LEFT JOIN fw_catalogue as c on p.parent = c.id
 			WHERE p.status='1' and (p.tire_sklad > 3 or p.disk_sklad > 3)");
-		
-		//echo 123;
-		///o 123; exit();
 		
 		header("Content-type: text/xml; charset=Windows-1251");
 		
@@ -463,20 +436,6 @@ SWITCH (TRUE) {
 		$page_found=true;
 		$navigation[]=array("url" => 'basket',"title" => 'Моя корзина');
 
-		//print_r($_SESSION['fw_basket']);
-		/*$sess = &$_SESSION['fw_basket'];
-		if (count($sess)>0)
-			foreach ($sess as $key=>$val){
-				if (intval($sess[$key]['id'])>0){
-					$image = $db->get_single("SELECT id as image, ext FROM fw_products_images WHERE parent='".$sess[$key]['id']."' ORDER BY id DESC LIMIT 0,1");
-					if (strlen(trim($image['image']))>1 && strlen(trim($image['ext']))>1){
-						$sess[$key]['image'] = $image['image'];
-						$sess[$key]['ext'] = $image['ext'];
-					}
-
-				}
-			}
-		*/
 		
 		if (isset($_POST['basket_remove']))
 		{
@@ -768,9 +727,6 @@ SWITCH (TRUE) {
 			$order = "desc";
 		}
 		
-		//echo $current_url;
-		//$current_url = preg_replace("/&sort=([a-z]+)/i","",$current_url);
-		//$current_url = preg_replace("/&order=([a-z]+)/i","",$current_url);
 		
 		$products = $shop->search($where, $pager, $sort, $order);
 		
@@ -832,17 +788,6 @@ SWITCH (TRUE) {
 			}
 		}
 		
-		/*
-		$cat_list=Common::get_nodes_list($cl);
-		for ($a=0;$a<count($search_results);$a++) {
-			for ($a1=0;$a1<count($cat_list);$a1++) {
-				if ($search_results[$a]['parent']==$cat_list[$a1]['id']) {
-					$search_results[$a]['full_url']=$cat_list[$a1]['full_url'];
-					$search_results[$a]['price']=number_format(($search_results[$a]['price'] * $cur_admin['kurs'])/$cur_site['kurs'],2);
-				}
-			}
-		}
-		*/
 
 		$smarty->assign("search_string",$search);
 
@@ -887,8 +832,6 @@ SWITCH (TRUE) {
 				$cat_content=$cat_list[$f];
 				$page_found=true;
 				
-				
-				
 				if (isset($title_template)) $page_title=$title_template;
 				else if ($cat_content['name']!='/') $page_title=$cat_content['name'];
 				if ($cat_content['meta_keywords']!='') $meta_keywords=$cat_content['meta_keywords'];
@@ -898,6 +841,16 @@ SWITCH (TRUE) {
 				$smarty->assign("text",$text);
 				$smarty->assign('cat_content', $cat_content);
 
+				//если попадаем в корень, то переводим на первый подраздел
+				if ($cat_content['param_level'] == 0)
+				{
+					$cat = $shop->getChildrenCategor($cat_content, 1, 1);
+					if ($cat)
+					{
+						header("Location: http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']. $cat[0]['url'].'/');
+						die();
+					}
+				}
 
 		
 		$cat_children_ids = array();
@@ -1058,12 +1011,10 @@ SWITCH (TRUE) {
 
 							$smarty->assign("product",$product_content);
 							
-							$photo = $db->get_single("SELECT * FROM fw_products_images WHERE parent='".$product_content['id']."' limit 1 ");
-							$smarty->assign('photo', $photo);
-
-							$files = $db->get_all("SELECT * FROM fw_products_files2 WHERE parent='".$product_content['id']."' ");
-							$smarty->assign('files', $files);
+							$photos = $db->get_all("SELECT * FROM fw_products_images WHERE parent='".$product_content['id']."' order by sort_order asc");
+							$smarty->assign('photos', $photos);
 							
+
 
 							if (PRODUCT_RATING=='on' or PRODUCT_COMMENTS=='on') {
 								$this_module=$db->get_single("SELECT priv FROM fw_modules WHERE name='shop' LIMIT 1");
@@ -1079,7 +1030,6 @@ SWITCH (TRUE) {
 							}
 
 							if (PRODUCT_RATING=='on') {
-
 								$check_rating=explode(",",@$_COOKIE['fw_rating']);
 								if (in_array($product_content['id'],$check_rating)) $smarty->assign("rating_done","true");
 
