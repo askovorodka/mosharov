@@ -32,7 +32,7 @@ function confirm_delete(delete_id) {
 
 <table width=100% class="content_table">
 <tr>
-<th>Список новостей</th><th width=20%>Дата</th><th width=5%>Статус</th><th width=10%>Действия</th>
+<th>Список новостей</th><th width=20%>Дата</th><th width=5%>Статус</th><th width=5%>Язык</th><th width=10%>Действия</th>
 </tr>
 {foreach from=$news_list item=news name=ns}
 {if $col==1}
@@ -43,7 +43,11 @@ function confirm_delete(delete_id) {
 {assign var="col" value=1}
 {/if}
 <tr onmouseover="flatlinkOver(this)" {if $smarty.foreach.ns.iteration%2==1}onmouseout="flatlinkOut(this)"{else}onmouseout="flatlinkOut1(this)"{/if}>
-<td class={$td}_left style="padding-bottom: 20px;" valign="top"><a href=?mod=news&action=edit&id={$news.id}><b>{$news.title|strip_tags}</b></a><br><div style="font-size: 11px; padding: 0 20px 0 0;">{$news.small_text|strip_tags|truncate:200}</div></td><td class={$td}_middle align="center" style="font-size: 11px;"><B>{$news.publish_date|date_format:"%d"}&nbsp;{$news.publish_date|date_format:"%B"}&nbsp;{$news.publish_date|date_format:"%Y"}</B><br>{$news.publish_date|date_format:"%T"}</td><td class={$td}_middle align="center">{if $news.param_level!='0'}<a href="?mod=news{if $smarty.get.year!=""}&year={$smarty.get.year}{/if}&action=change_status&id={$news.id}" title="Изменить статус"><img src=templates/img/status_{$news.status}.gif border=0></a>{/if}</td><td class={$td}_right align="center"><a href="javascript:confirm_delete('{$news.id}');" class=img_link onmouseover="ddrivetip('Удалить новость')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a><a href=?mod=news&action=edit&id={$news.id} class=img_link onmouseover="ddrivetip('Редактировать новость')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a></td>
+<td class={$td}_left style="padding-bottom: 20px;" valign="top"><a href=?mod=news&action=edit&id={$news.id}><b>{$news.title|strip_tags}</b></a><br><div style="font-size: 11px; padding: 0 20px 0 0;">{$news.small_text|strip_tags|truncate:200}</div></td>
+<td class={$td}_middle align="center" style="font-size: 11px;"><B>{$news.publish_date|date_format:"%d"}&nbsp;{$news.publish_date|date_format:"%B"}&nbsp;{$news.publish_date|date_format:"%Y"}</B><br>{$news.publish_date|date_format:"%T"}</td>
+<td class={$td}_middle align="center">{if $news.param_level!='0'}<a href="?mod=news{if $smarty.get.year!=""}&year={$smarty.get.year}{/if}&action=change_status&id={$news.id}" title="Изменить статус"><img src=templates/img/status_{$news.status}.gif border=0></a>{/if}</td>
+<td class={$td}_middle align="center">{$news.lang}</td>
+<td class={$td}_right align="center"><a href="javascript:confirm_delete('{$news.id}');" class=img_link onmouseover="ddrivetip('Удалить новость')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a><a href=?mod=news&action=edit&id={$news.id} class=img_link onmouseover="ddrivetip('Редактировать новость')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a></td>
 </tr>
 {/foreach}
 </table>

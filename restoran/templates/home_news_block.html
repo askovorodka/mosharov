@@ -1,5 +1,5 @@
 <div class="news">
-	{foreach from=$news_list item=news name=news}
+	{foreach from=$news_list_rus item=news name=news}
 	<span class="date">{$news.publish_date|date_format:"%d.%m.%Y"}</span><br>
 	<a href="{$base_url}/news/archive/{$news.id}/">{$news.title|strip_tags}</a>
 	{if !$smarty.foreach.news.last}<br><br>{/if}

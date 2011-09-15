@@ -15,11 +15,11 @@ if (preg_match("/^\?year=([0-9]{0,4})$/",$url[$n])) {
 }
 
 if (!isset($year) || $_GET['year']=='') {
-	$where="status='1'";
+	$where=" and status='1'";
 	$limit="LIMIT ".NEWS_PER_PAGE_FRONT_PAGE;
 }
 else {
-	$where="YEAR(FROM_UNIXTIME(publish_date))='".$year."' AND status='1'";
+	$where=" and YEAR(FROM_UNIXTIME(publish_date))='".$year."' AND status='1'";
 	$limit="";
 	$smarty->assign("year", $year);
 }
@@ -28,8 +28,12 @@ $limit_all="LIMIT ".NEWS_PER_PAGE_FRONT_ARCHIVE;
 
 if ($switch_default=='on' or $switch_support=='on' or $main_module=='on') {
 	
-	$news=$db->get_all("SELECT * FROM fw_news WHERE ".$where." ORDER BY publish_date DESC " . $limit);
-	$smarty->assign("news_list",$news);
+	$news=$db->get_all("SELECT * FROM fw_news WHERE lang='RUS' ".$where." ORDER BY publish_date DESC " . $limit);
+	$smarty->assign("news_list_rus",$news);
+	
+	$news_eng=$db->get_all("SELECT * FROM fw_news WHERE  lang='ENG' ".$where." ORDER BY publish_date DESC " . $limit);
+	$smarty->assign("news_list_eng",$news_eng);
+	
 	/*$ne2=$db->get_all("SELECT * FROM fw_news WHERE ".$where." ORDER BY publish_date DESC ".$limit);
 	$smarty->assign("news_list",$ne);
 	$smarty->assign("news_list_support",$ne2);

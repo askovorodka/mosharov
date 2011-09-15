@@ -19,7 +19,7 @@
 	<table class="logotbl" cellspacing="0" cellpadding="0">
 	  <tr>
 		<td class="langru">на русском</td>
-		<td class="langen"><a href="#">in english</a></td>
+		<td class="langen"><a href="/eng/">in english</a></td>
 	  </tr>
 	</table></td>
   </tr>
@@ -27,7 +27,15 @@
     <td class="sectrin"><div id="toping"></div>
 		{include file="../templates/top_menu_block.html"}	
 		<!--- PICT ROTATION --->
-		<img src="{$template_image}main.jpg" width="1200" height="532" hspace="0" vspace="0"><br>
+		<div id="rotator">
+			<ul>
+				{foreach from=$background_images item=b_image name="rotate"}
+					<li{if $smarty.foreach.rotate.first} class="show"{/if}><img src="{$b_image.image}"></li>
+				{/foreach}
+			</ul>
+		</div>
+		
+		{*<img src="{$template_image}main.jpg" width="1200" height="532" hspace="0" vspace="0">*}<br>
 	<!--- /PICT ROTATION --->
 	</td>
   </tr>

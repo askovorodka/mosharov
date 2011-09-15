@@ -38,6 +38,15 @@ h2 {
 	padding:0px 20px;
 	white-space:nowrap;
 }
+h3 {
+	font-family:Tahoma, arial, verdana;
+	font-size:20px;
+	color:#d5d52c;
+	font-weight:normal;
+	line-height:24px;
+	padding:0px;
+	margin:0px;
+}
 .mtbl {
 	width:1200px;
 	height:100%;
@@ -106,7 +115,7 @@ h2 {
 	height:48px;
 	border:0px;
 	position:absolute;
-	z-index:10;
+	z-index:11;
 	margin-top:30px;
 }
 .mentbl td {
@@ -206,6 +215,8 @@ h2 {
 	background:#32321d top url(img/text_font.jpg) repeat-x;
 	border:1px solid #635015;
 	width:1200px;
+	z-index:0;
+	margin-top:-16px;
 }
 .txtin td {
 	padding:40px 20px 20px 20px;

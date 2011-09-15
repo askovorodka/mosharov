@@ -1,9 +1,9 @@
 <?php
 ob_start();
 
+
 //error_reporting(E_ALL);
 //ini_set('display_errors','On');
-
 
 /*
 header("Content-Type: text/html; charset=windows-1251");
@@ -267,7 +267,7 @@ if (!isset($meta_keywords)) {
 }
 
 
-$page_title = $page_title . " - " . $_SERVER['SERVER_NAME'];
+//$page_title = $page_title . " - " . $_SERVER['SERVER_NAME'];
 $smarty->assign("page_title",@$page_title);
 $smarty->assign("meta_keywords",@$meta_keywords);
 $smarty->assign("meta_description",@$meta_description);

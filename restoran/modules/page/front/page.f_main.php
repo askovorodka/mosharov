@@ -60,6 +60,9 @@ for ($f=0;$f<count($all_pages);$f++) {
 			}
 
 			$page_content=$main_page_content;
+			/*$title = $db->get_single("select title from fw_tree where id='{$page_content['id']}'");
+			if (!empty($title))
+				$smarty->assign('page_content_title', $title['title']);*/
 
 			$main_template=$page_content['template'];
 

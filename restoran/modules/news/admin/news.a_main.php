@@ -39,6 +39,7 @@ if (isset($_POST['submit_add_news'])) {
 	$title=String::secure_format($_POST['edit_news_title']);
 	$small_text=String::secure_format($_POST['edit_news_small_text']);
 	$text=String::secure_format($_POST['edit_news_text']);
+	$lang=String::secure_format($_POST['lang']);
 	$status="1";
 	
 	if ($_FILES['edit_news_image']['name']!='') {
@@ -63,7 +64,7 @@ if (isset($_POST['submit_add_news'])) {
 	
 	if ($check) {
 	
-		$result=$db->query("INSERT INTO fw_news (title,small_text,text,status,publish_date) VALUES('$title','$small_text','$text','$status','".time()."')");
+		$result=$db->query("INSERT INTO fw_news (title,small_text,text,status,publish_date, lang) VALUES('$title','$small_text','$text','$status','".time()."', '{$lang}')");
 		if ($result) { 
 			$smarty->assign("success_message","Новость успешно добавлена!");
 			if (@$file_name!='') {
@@ -107,6 +108,7 @@ if (isset($_POST['submit_edit_news'])) {
 	$small_text=String::secure_format($_POST['edit_news_small_text']);
 	$text=String::secure_format($_POST['edit_news_text']);
 	$status=String::secure_format($_POST['edit_news_status']);
+	$lang=String::secure_format($_POST['lang']);
 	
 	$time=mktime($_POST['edit_news_date_hour'],$_POST['edit_news_date_minutes'],0,$_POST['edit_news_date_month'],$_POST['edit_news_date_day'],$_POST['edit_news_date_year']);
 
@@ -146,7 +148,7 @@ if (isset($_POST['submit_edit_news'])) {
 			$image='';
 			unlink(BASE_PATH.'/uploaded_files/news/'.$_POST['old_image']);
 		}
-		$result=$db->query("UPDATE fw_news SET title='$title',small_text='$small_text',text='$text',status='$status',publish_date='$time',image='$image' WHERE id='$id'");
+		$result=$db->query("UPDATE fw_news SET lang='{$lang}', title='$title',small_text='$small_text',text='$text',status='$status',publish_date='$time',image='$image' WHERE id='$id'");
 	}
 }
 

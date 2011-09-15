@@ -113,6 +113,11 @@ class Photoalbum extends db{
 			$hit = " and hit = '1' ";
 
 		$this->result = $this->db->get_single("select * from fw_photoalbum_images where parent = '{$album_id}' " . $hit);
+
+		//если нет отмеченных хит то вытаскиваем первую
+		if (count($this->result) && $hit)
+			$this->result = $this->db->get_single("select * from fw_photoalbum_images where parent = '{$album_id}' order by sort_order asc limit 1 ");
+		
 		return $this->result;
 		
 	}

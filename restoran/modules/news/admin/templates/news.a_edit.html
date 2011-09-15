@@ -44,6 +44,12 @@ function check_form() {
 <tr>
 <td width=20% class=td1_left>&nbsp;&nbsp;Заголовок:</td><td class=td1_right><input type=text name=edit_news_title style="width:100%" value="{$news.title}" class=field></td>
 </tr>
+
+  <tr>
+    <td class=td1_left>Языковая версия:</td>
+    <td class=td1_right><select name="lang"><option {if $news.lang=='RUS'}selected{/if} value="RUS">Русский<option {if $news.lang=='ENG'}selected{/if} value="ENG">Английский</select></td>
+  </tr>
+
 <tr>
 <td class=td1_single colspan=2>
 

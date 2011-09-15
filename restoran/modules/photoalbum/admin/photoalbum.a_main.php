@@ -25,6 +25,15 @@ $smarty->assign("photos_folder",PHOTOS_FOLDER);
 if (isset($_GET['action']) && $_GET['action']!='') $action=$_GET['action'];
 else $action='';
 
+
+/*$photos = $db->get_all("select * from fw_photoalbum_images where ext='jpg'");
+foreach ($photos as $photo)
+{
+	echo Image::resize(BASE_PATH."/uploaded_files/photos/{$photo['id']}.{$photo['ext']}", BASE_PATH."/uploaded_files/photos/big-{$photo['id']}.{$photo['ext']}", 800,600, true, "#32321d");
+	//echo file_exists(BASE_PATH."/uploaded_files/photos/{$photo['id']}.{$photo['ext']}")."<br>";
+}*/
+
+
 /*--------------------------- ÂÍÓÒÐÅÍÍÈÅ ÔÓÍÊÖÈÈ ÌÎÄÓËß ----------------------*/
 
 
@@ -200,6 +209,7 @@ if (isset($_POST['submit_add_photo'])) {
 				//if ($resize_main) Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,$max_width,$max_height);
 				Image::resize(BASE_PATH."/uploaded_files/photos/$id.$ext", BASE_PATH."/uploaded_files/photos/small-$id.$ext", PREVIEW1_WIDTH,PREVIEW1_HEIGTH, true, "#32321d");
 				Image::resize(BASE_PATH."/uploaded_files/photos/$id.$ext", BASE_PATH."/uploaded_files/photos/medium-$id.$ext", PREVIEW2_WIDTH,PREVIEW2_HEIGTH, true, "#32321d");
+				Image::resize(BASE_PATH."/uploaded_files/photos/$id.$ext", BASE_PATH."/uploaded_files/photos/big-$id.$ext", PREVIEW3_WIDTH,PREVIEW3_HEIGTH, true, "#32321d");
 			}
 			$smarty->assign("message","Ôàéë óñïåøíî çàãðóæåí");
 		}
@@ -447,15 +457,15 @@ if ($action=='delete_previews') {
 	
 	Common::check_priv("$priv");
 	
-	foreach (glob(BASE_PATH."/".PHOTOS_FOLDER."/medium-*.*") as $filename) {
+	foreach (glob(BASE_PATH."/uploaded_files/photos/medium-*.*") as $filename) {
 	   unlink ($filename);
 	}
 	
-	foreach (glob(BASE_PATH."/".PHOTOS_FOLDER."/small-*.*") as $filename) {
+	foreach (glob(BASE_PATH."/uploaded_files/photos/small-*.*") as $filename) {
 	   unlink ($filename);
 	}
 	
-	foreach (glob(BASE_PATH."/".PHOTOS_FOLDER."/*.*") as $filename) {
+	foreach (glob(BASE_PATH."/uploaded_files/photos/*.*") as $filename) {
 		
 		$file=$filename;
 	   
@@ -466,8 +476,11 @@ if ($action=='delete_previews') {
 			
 			$output=Image::image_details($file);
 			
-			Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$filename,BASE_PATH.'/'.PHOTOS_FOLDER.'/small-'.$filename,PREVIEW1_WIDTH,PREVIEW1_HEIGTH);
-			if ($output['width']>PREVIEW2_WIDTH or $output['height']>PREVIEW2_HEIGHT) Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$filename,BASE_PATH.'/'.PHOTOS_FOLDER.'/medium-'.$filename,PREVIEW2_WIDTH,PREVIEW2_HEIGTH);
+			Image::resize(BASE_PATH."/uploaded_files/photos/$filename", BASE_PATH."/uploaded_files/photos/small-$filename", PREVIEW1_WIDTH,PREVIEW1_HEIGTH, true, "#32321d");
+			Image::resize(BASE_PATH."/uploaded_files/photos/$filename", BASE_PATH."/uploaded_files/photos/medium-$filename", PREVIEW2_WIDTH,PREVIEW2_HEIGTH, true, "#32321d");
+			Image::resize(BASE_PATH."/uploaded_files/photos/$filename", BASE_PATH."/uploaded_files/photos/big-$filename", PREVIEW3_WIDTH,PREVIEW3_HEIGTH, true, "#32321d");
+			//Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$filename,BASE_PATH.'/'.PHOTOS_FOLDER.'/small-'.$filename,PREVIEW1_WIDTH,PREVIEW1_HEIGTH);
+			//if ($output['width']>PREVIEW2_WIDTH or $output['height']>PREVIEW2_HEIGHT) Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$filename,BASE_PATH.'/'.PHOTOS_FOLDER.'/medium-'.$filename,PREVIEW2_WIDTH,PREVIEW2_HEIGTH);
 		}
 	}
 
