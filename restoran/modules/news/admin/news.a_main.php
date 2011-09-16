@@ -69,17 +69,18 @@ if (isset($_POST['submit_add_news'])) {
 			$smarty->assign("success_message","Новость успешно добавлена!");
 			if (@$file_name!='') {
 				$id=mysql_insert_id();
-				if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/news/'.$id.'.'.$ext)) {
-					chmod(BASE_PATH.'/uploaded_files/news/'.$id.'.'.$ext, 0644);
-					Image::image_resize(BASE_PATH.'/uploaded_files/news/'.$id.'.'.$ext,BASE_PATH.'/uploaded_files/news/resized-'.$id.'.'.$ext,NEWS_IMAGE_WIDTH,NEWS_IMAGE_WIDTH);
-					unlink(BASE_PATH.'/uploaded_files/news/'.$id.'.'.$ext);
-					$result=$db->query("UPDATE fw_news SET image='resized-".$id.".$ext' WHERE id='".mysql_insert_id()."'");
+				$image_name = md5($id . rand(1,1000)).".".$ext;
+				if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/news/'.$image_name)) {
+					chmod(BASE_PATH.'/uploaded_files/news/'.$image_name, 0644);
+					Image::image_resize(BASE_PATH.'/uploaded_files/news/'.$image_name, BASE_PATH.'/uploaded_files/news/resized-'.$image_name,NEWS_IMAGE_WIDTH,NEWS_IMAGE_WIDTH);
+					unlink(BASE_PATH.'/uploaded_files/news/'.$image_name);
+					$result=$db->query("UPDATE fw_news SET image='resized-{$image_name}' WHERE id='".mysql_insert_id()."'");
 				}
 			}
 		}
 	}
 	
-header("Location: index.php?mod=news&action=edit&id=".mysql_insert_id());
+header("Location: index.php?mod=news&action=edit&id=".$id);
 die();
 	
 }
@@ -134,13 +135,15 @@ if (isset($_POST['submit_edit_news'])) {
 	
 	if ($check) {
 		$smarty->assign("success_message","Новость успешно отредактирована!");
-		if (@$file_name!='') {
-			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/news/'.$id.'.'.$ext)) {
-				chmod(BASE_PATH.'/uploaded_files/news/'.$id.'.'.$ext,0644);
-				Image::image_resize(BASE_PATH.'/uploaded_files/news/'.$id.'.'.$ext,BASE_PATH.'/uploaded_files/news/resized-'.$id.'.'.$ext,NEWS_IMAGE_WIDTH,NEWS_IMAGE_WIDTH);
-				unlink(BASE_PATH.'/uploaded_files/news/'.$id.'.'.$ext);
+		if (@$file_name!='')
+		{
+			$image_name = md5($id . rand(1,1000)).'.'.$ext;
+			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/news/'.$image_name)) {
+				chmod(BASE_PATH.'/uploaded_files/news/'.$image_name,0644);
+				Image::image_resize(BASE_PATH.'/uploaded_files/news/'.$image_name,BASE_PATH.'/uploaded_files/news/resized-'.$image_name,NEWS_IMAGE_WIDTH,NEWS_IMAGE_WIDTH);
+				unlink(BASE_PATH.'/uploaded_files/news/'.$image_name);
 			}
-			$image='resized-'.$id.'.'.$ext;
+			$image='resized-'.$image_name;
 		}
 		else $image=$_POST['old_image'];
 		
