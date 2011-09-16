@@ -287,7 +287,7 @@ SWITCH (TRUE) {
 				
 				$result=$db->query("SELECT COUNT(*) FROM fw_photoalbums WHERE parent='".$cat_content['id']."' AND status='1'");
 				$pager=Common::pager($result,ALBUMS_PER_PAGE,$page);
-		
+				
 				$smarty->assign("total_pages",$pager['total_pages']);
 				$smarty->assign("current_page",$pager['current_page']);
 				$smarty->assign("pages",$pager['pages']);
@@ -302,29 +302,61 @@ SWITCH (TRUE) {
 						WHERE a.parent='".$cat_content['id']."' AND status='1' 
 						ORDER BY insert_date DESC LIMIT ".$pager['limit']);
 				
-				
+				//echo $cat_content['param_level'];
 				//находим все фотоальбомы
-				$albums = $photo->getPhotoalbums();
-				if ($albums)
+				if ($cat_content['param_level'] == 0)
 				{
-					foreach ($albums as $key=>$val)
+					$albums = $photo->getPhotoalbums();
+					if ($albums)
 					{
-						$albums[$key]['photos'] = $photo->get_photos_by_album($val['id'], true);
+						foreach ($albums as $key=>$val)
+						{
+							$albums[$key]['photos'] = $photo->get_photos_by_album($val['id'], true);
+						}
+					}
+					$smarty->assign('albums', $albums);
+				
+					//находим все видеогалереи
+					$videogallery = $photo->getVideoGalleries();
+					if ($videogallery)
+					{
+						foreach ($videogallery as $key=>$val)
+						{
+							$videogallery[$key]['file'] = $photo->get_video_by_gallery($val['id'], true);
+						}
+					}
+					$smarty->assign('videos', $videogallery);
+				}
+				
+				
+				
+				if ($cat_content['param_level'] == 1)
+				{
+					if ($url[$n] == "restorants")
+					{
+						$albums = $photo->getPhotoalbums();
+						if ($albums)
+						{
+							foreach ($albums as $key=>$val)
+							{
+								$albums[$key]['photos'] = $photo->get_photos_by_album($val['id'], true);
+							}
+						}
+						$smarty->assign('albums', $albums);
+					}
+					elseif ($url[$n] == "videogallery")
+					{
+						$videogallery = $photo->getVideoGalleries();
+						if ($videogallery)
+						{
+							foreach ($videogallery as $key=>$val)
+							{
+								$videogallery[$key]['file'] = $photo->get_video_by_gallery($val['id'], true);
+							}
+						}
+						$smarty->assign('videos', $videogallery);
 					}
 				}
-				$smarty->assign('albums', $albums);
-				
-				//находим все видеогалереи
-				$videogallery = $photo->getVideoGalleries();
-				if ($videogallery)
-				{
-					foreach ($videogallery as $key=>$val)
-					{
-						$videogallery[$key]['file'] = $photo->get_video_by_gallery($val['id'], true);
-					}
-				}
-				$smarty->assign('videos', $videogallery);
-				
 				
 				if ($cat_list[$f]['full_title']!='/') {
 					$nav_titles=explode("/",$cat_list[$f]['full_title']);
@@ -339,8 +371,13 @@ SWITCH (TRUE) {
 				$template='photoalbum_main.html';
 				break;
 			}
+			
+			
 		}
 
+		
+		
+		
 }
 
 }
