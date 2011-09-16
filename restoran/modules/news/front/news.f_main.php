@@ -50,7 +50,7 @@ SWITCH (TRUE) {
 	
 		$page_found=true;
 		
-		$news_list=$db->get_all("SELECT * FROM fw_news WHERE status='1' ORDER BY publish_date DESC LIMIT ".NEWS_PER_PAGE_FRONT);
+		$news_list=$db->get_all("SELECT * FROM fw_news WHERE status='1' and lang='RUS' ORDER BY publish_date DESC LIMIT ".NEWS_PER_PAGE_FRONT);
 		
 		$smarty->assign("news_list",$news_list);
 		$template='news_list.html';
@@ -91,27 +91,19 @@ SWITCH (TRUE) {
 		
 		if ($result['id']>0) {
 			
-  			// ----парсинг контекта для вставки фотоальбома, таблицы и формы -- //
-			
-			$photo = new Photoalbum();
-			$result['text'] = $photo->pregReplace($result['text'],BASE_PATH,PHOTOS_FOLDER,PHOTOS_PER_PAGE_SUP);
-				
-			$table = new Table();
-			$result['text'] = $table->pregReplace($result['text'],BASE_PATH);
-
-			$form = new Form();
-			$result['text'] = $form->pregReplace($result['text'],BASE_PATH);
-
-			// ---- конец парсинга контекта для вставки фотоальбома, таблицы и формы -- //
-			
 			$page_found=true;
+			//смотрим версию языка
+			if ($result['lang'] == 'ENG')
+			{
+				$main_template = "text_eng.html";
+				$node_content['name'] = 'News and Special Offers';
+			}
 			
 			$navigation[]=array("url" => $result['title'],"title" => $result['title']);
-
 			$page_title=$node_content['name'].' - '.$result['title'];
-			
 			$smarty->assign("single_news",$result);
 			$template='show_single_news.html';
+			
 		}
 		
 	BREAK;

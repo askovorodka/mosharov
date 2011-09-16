@@ -780,67 +780,6 @@ SWITCH (TRUE) {
 		if (!isset($page)) $page=1;
 		$dirs=array("price"=>"desc","insert_date"=>"desc","name"=>"desc");
 
-		/*if (isset($_GET['page']) or isset($_GET['order'])) {
-
-			if (isset($_GET['page'])) $page=$_GET['page'];
-
-			if (isset($_GET['sort']))
-			{
-				
-				switch ($_GET['sort'])
-				{
-					case 'name':
-						$order = "order by name ";
-					break;
-					case 'article':
-						$order = "order by article ";
-					break;
-					case 'price':
-						$order = "order by price ";
-					break;
-					case 'tire_is':
-						$order = "order by tire_is ";
-					break;
-					case 'tire_width':
-						$order = "order by tire_width ";
-					break;
-					case 'tire_in':
-						$order = "order by tire_in ";
-					break;
-					case 'disk_width':
-						$order = "order by disk_width ";
-					break;
-					case 'disk_diameter':
-						$order = "order by disk_diameter ";
-					break;
-					case 'disk_krep':
-						$order = "order by disk_krep ";
-					break;
-					case 'disk_pcd':
-						$order = "order by disk_pcd ";
-					break;
-					
-					default:
-						$order = "order by sort_order ";
-					break;
-				}
-				
-				$smarty->assign('sort', $_GET['sort']);
-				$smarty->assign('order', $_GET['order']);
-				if ($_GET['order'] == 'asc')
-				{
-					$order .= " asc";
-				}
-				if ($_GET['order'] == 'desc')
-				{
-					$order .= " desc";
-				}
-				
-			}
-			
-			unset($url[$n]);
-			unset($current_url_pages[count($current_url_pages)-1]);
-		}*/
 		$smarty->assign("dir",$dirs);
 
 		for ($f=0;$f<count($cat_list);$f++) {
@@ -851,20 +790,17 @@ SWITCH (TRUE) {
 				$cat_content=$cat_list[$f];
 				$page_found=true;
 				
-				
-				
 				if (isset($title_template)) $page_title=$title_template;
 				else if ($cat_content['name']!='/') $page_title=$cat_content['name'];
 				if ($cat_content['meta_keywords']!='') $meta_keywords=$cat_content['meta_keywords'];
 				if ($cat_content['meta_description']!='') $meta_description=$cat_content['meta_description'];
 				
-			
+				
 				$photo = new Photoalbum($db);
 				$photos = $photo->getPhotosByCategory($cat_content['id'], 3);
 				if (!empty($photos))
 					$smarty->assign('photos', $photos);
 				
-				//$album_id = $photo->getAlbumByCategory($cat_content['id']);
 				$album = $photo->getAlbumByCategory($cat_content['id']);
 				
 				if (isset($album))
@@ -873,7 +809,7 @@ SWITCH (TRUE) {
 				$text=$cat_content['text'];
 				$smarty->assign("text",$text);
 				$smarty->assign('cat_content', $cat_content);
-
+		
 		
 		$cat_children_ids = array();
 		for ($c=0;$c<count($cat_list);$c++) {
@@ -907,6 +843,15 @@ SWITCH (TRUE) {
 						if (!empty($photo))
 						{
 							$cat_list[$c]['photo'] = $photo;
+						}
+						//инече вытаскиваем первую по сортировке
+						else
+						{
+							$photo = $db->get_single("select * from fw_photoalbum_images where parent='{$photoalbum['photoalbum_id']}' order by sort_order asc limit 1");
+							if (!empty($photo))
+							{
+								$cat_list[$c]['photo'] = $photo;
+							}
 						}
 					}
 					$folders_list[]=$cat_list[$c];

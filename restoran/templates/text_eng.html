@@ -35,19 +35,34 @@
 			</ul>
 		</div>
 		
-		{*<img src="{$template_image}main.jpg" width="1200" height="532" hspace="0" vspace="0">*}<br>
-		<!--- /PICT ROTATION --->
+		<br>
+	<!--- /PICT ROTATION --->
 	</td>
   </tr>
   <tr height="100%">
     <td>
-
+    <table class="capttin" cellspacing="0" cellpadding="0">
+	  <tr>
+		<td class="capt1">&nbsp;</td>
+		<td class="capt3"><h2>News and Special Offers</h2></td>
+		<td class="capt2">&nbsp;</td>
+	  </tr>
+	</table>
+    
+    <table class="txtin" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="100%">
+        
 		{if $content=='' or !$content}
 			{assign var="content" value=""}
 			{fetch file=$template assign="content"}
 		{/if}
 		{eval var=$content}
-    
+        
+        </td>
+      </tr>
+	</table>
+	
 	</td>
   </tr>
   <tr>
@@ -55,6 +70,7 @@
 		
 	</td>
   </tr>
+	
 	{include file="../templates/footer_eng_block.html"}
   
 </table>

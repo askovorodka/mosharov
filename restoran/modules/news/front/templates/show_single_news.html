@@ -1,22 +1,3 @@
 <h1>{$single_news.title}</h1>
 
 {$single_news.text}
-
-{*
-<table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom : 18px;">
-<tr>
-<td width="480"><h1>Новости</h1></td><td width="61"><select style="width : 57px; font-size : 11px;"><option>2007</option></select></td><td width="98"><select style="width : 92px; font-size : 11px;"><option>Январь</option></select></td><td><input type="image" src="templates/img/select.gif" /></td>
-</tr>
-</table>
-
-<table width="100%" cellspacing="0" cellpadding="0" border="0">
-<tr valign="top"><td colspan="2"><h2>{$single_news.title}</h2></td></tr>
-<tr valign="top"><td height="23" colspan="2"><h6>| {$single_news.publish_date|date_format:"%d.%m.%Y"}</h6></td></tr>
-<tr valign="top">{if $single_news.image!=''}<td height="1" style="padding-right : 10px;"><img src="{$base_url}/uploaded_files/news/{$single_news.image}" /></td><td width="100%" height="1">{$single_news.text}</td>{else}<td height="1" colspan="2">
-
-{$single_news.text}
-
-</td>{/if}</tr>
-<tr><td colspan="2" align="center" style="padding-top : 37px;"><a href="javascript:history.go(-1);">Вернуться в раздел</a></td></tr>
-</table>
-*}

@@ -332,6 +332,7 @@ if (isset($page) or $set_pages_url) {
 
 /* ---------------- ������ ������ ������ ---------------- */
 
+
 if (!$switch_off_smarty){
   if (isset($template_mode) && $template_mode=='single') $smarty_display=$template;
   else {
@@ -342,6 +343,8 @@ if (!$switch_off_smarty){
     $smarty_display=$main_template;
   }
 }
+
+//echo $main_template;
 
 if ($page_found) header("HTTP/1.0 200 OK");
 else {

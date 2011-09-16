@@ -25,14 +25,14 @@ $smarty->assign("photos_folder",PHOTOS_FOLDER);
 if (isset($_GET['action']) && $_GET['action']!='') $action=$_GET['action'];
 else $action='';
 
-
-/*$photos = $db->get_all("select * from fw_photoalbum_images where ext='jpg'");
+/*
+$photos = $db->get_all("select * from fw_photoalbum_images where ext='jpg'");
 foreach ($photos as $photo)
 {
 	echo Image::resize(BASE_PATH."/uploaded_files/photos/{$photo['id']}.{$photo['ext']}", BASE_PATH."/uploaded_files/photos/big-{$photo['id']}.{$photo['ext']}", 800,600, true, "#32321d");
 	//echo file_exists(BASE_PATH."/uploaded_files/photos/{$photo['id']}.{$photo['ext']}")."<br>";
-}*/
-
+}
+*/
 
 /*--------------------------- ВНУТРЕННИЕ ФУНКЦИИ МОДУЛЯ ----------------------*/
 
@@ -162,7 +162,7 @@ if (isset($_POST['submit_add_photo'])) {
 	{
 		$filetype='photo';
 	}
-	//echo ($_FILES['add_new_photo']['size'] / 1024);
+
 	if (!in_array($ext,$trusted_formats)) {
 		$smarty->assign("error","Разрешены файлы форматов ".ALLOWED_FORMATS);
 		$check=false;
@@ -170,7 +170,6 @@ if (isset($_POST['submit_add_photo'])) {
 	if ($check)
 		echo 1;
 	
-	//$filesize = intval($_FILES['add_new_photo']['size'] / 1024);
 	
 	if (!in_array($ext, array('flv','avi', 'mpg', 'mpeg4')))
 		list($max_width,$max_height)=explode("x",PHOTO_MAX_SIZE);
@@ -183,7 +182,7 @@ if (isset($_POST['submit_add_photo'])) {
 		}
 	}
 	 
-	//echo filesize($tmp)<PHOTO_MAX_FILESIZE*1000;
+	
 	
 	if (filesize($tmp)>PHOTO_MAX_FILESIZE*1000) {
 		$smarty->assign("error","Размер файла не должен привышать ".PHOTO_MAX_FILESIZE."Кб");
@@ -199,17 +198,14 @@ if (isset($_POST['submit_add_photo'])) {
 		$filesize=round(filesize($tmp)/1000,2);
 		$result=$db->query("INSERT INTO fw_photoalbum_images(parent,description,link,ext,sort_order,insert_date) VALUES('$parent','$description','$link','$ext','$order','".time()."')");
 		$id=mysql_insert_id();
-		//echo move_uploaded_file($tmp, BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext); exit;
+		
 		if (move_uploaded_file($tmp, BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext)) {
 			chmod(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext, 0644);
 			if ($filetype == 'photo')
 			{
-				//Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,BASE_PATH.'/'.PHOTOS_FOLDER.'/small-'.$id.'.'.$ext,PREVIEW1_WIDTH,PREVIEW1_HEIGTH);
-				//if ($output['width']>PREVIEW2_WIDTH or $output['height']>PREVIEW2_HEIGHT) Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,BASE_PATH.'/'.PHOTOS_FOLDER.'/medium-'.$id.'.'.$ext,PREVIEW2_WIDTH,PREVIEW2_HEIGTH);
-				//if ($resize_main) Image::image_resize(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext,$max_width,$max_height);
 				Image::resize(BASE_PATH."/uploaded_files/photos/$id.$ext", BASE_PATH."/uploaded_files/photos/small-$id.$ext", PREVIEW1_WIDTH,PREVIEW1_HEIGTH, true, "#32321d");
 				Image::resize(BASE_PATH."/uploaded_files/photos/$id.$ext", BASE_PATH."/uploaded_files/photos/medium-$id.$ext", PREVIEW2_WIDTH,PREVIEW2_HEIGTH, true, "#32321d");
-				Image::resize(BASE_PATH."/uploaded_files/photos/$id.$ext", BASE_PATH."/uploaded_files/photos/big-$id.$ext", PREVIEW3_WIDTH,PREVIEW3_HEIGTH, true, "#32321d");
+				Image::resize(BASE_PATH."/uploaded_files/photos/$id.$ext", BASE_PATH."/uploaded_files/photos/big-$id.$ext", 800,600, false, "#32321d");
 			}
 			$smarty->assign("message","Файл успешно загружен");
 		}
@@ -248,11 +244,10 @@ if (isset($_POST['submit_save_photos'])) {
 		header("Location: $location");
 	}
 	
+	$album_id=intval($_GET["id"]);
+	$db->query("UPDATE fw_photoalbum_images SET hit='0' WHERE parent='".$album_id."'");
 	if (isset($_POST['edit_hit'])) {
-	
-		$album_id=intval($_GET["id"]);
-		
-		$db->query("UPDATE fw_photoalbum_images SET hit='0' WHERE parent='".$album_id."'",1);
+		//$db->query("UPDATE fw_photoalbum_images SET hit='0' WHERE parent='".$album_id."'",1);
 		$db->query("UPDATE fw_photoalbum_images SET hit='1' WHERE id IN (".implode(",", $_POST['edit_hit']).")",1);
 	}
 	
