@@ -13,9 +13,9 @@ $photo = new Photoalbum($db);
 if (($switch_default=='on' or $switch_support=='on') && $main_module!='on') {
 	
 	$smarty->register_function("photoalbum", "show_photoalbum");
-
+	
 	function show_photoalbum ($params) {
-
+		
 		global $db;
 		global $smarty;
 		$res = $db->get_single("SELECT url FROM fw_tree WHERE module='photoalbum' LIMIT 1");
@@ -42,7 +42,7 @@ if (($switch_default=='on' or $switch_support=='on') && $main_module!='on') {
 			}
 			
 			$album_url=$support_url.$album_url.'album_'.$album_id;
-
+			
 			$smarty->assign("album_url",$album_url);
 		}
 		
@@ -72,24 +72,21 @@ if (@$_SESSION['fw_user']['priv']<=$this_module['priv']) {
 }
 else $is_admin=false;
 
-$gallery_menu = $db->get_all("select fw_photoalbums.*, fw_photoalbum_cat.url from fw_photoalbums left join fw_photoalbum_cat on fw_photoalbums.parent = fw_photoalbum_cat.id where fw_photoalbums.status='1' and fw_photoalbum_cat.status='1'");
-
-$smarty->assign('gallery_menu', $gallery_menu);
 
 /*-----------------ÐÀÇËÈ×ÍÛÅ ÄÅÉÑÒÂÈß-----------------*/
 
 if (isset($_POST['submit_new_comment'])) {
 	
 	$check=true;
-
+	
 	$author=String::secure_user_input($_POST['nm_name']);
 	$photo_id=$_POST['photo_id'];
 	
 	$text=String::secure_user_input($_POST['nm_text']);
 	$text=Common::strip_forum_tags($text);
-		
+	
 	$db->query("INSERT INTO fw_photoalbum_comments(author,comment,insert_date,photo_id) VALUES('$author','$text','".time()."','$photo_id')");
-		
+	
 	$location=$_SERVER['HTTP_REFERER'];
 	header("Location: $location");
 }
@@ -126,6 +123,16 @@ SWITCH (TRUE) {
 		
 		
 		$album=$db->get_single("SELECT *,(SELECT COUNT(*) FROM fw_photoalbum_images WHERE parent='$album_id') AS count FROM fw_photoalbums WHERE id='$album_id' AND status='1'");
+		
+		
+		$gallery_menu = $db->get_all("
+			select 
+			fw_photoalbums.*, fw_photoalbum_cat.url 
+			from fw_photoalbums left join fw_photoalbum_cat on fw_photoalbums.parent = fw_photoalbum_cat.id 
+			where fw_photoalbums.status='1' and fw_photoalbum_cat.status='1' and fw_photoalbums.parent='{$album['parent']}' ");
+		
+		$smarty->assign('gallery_menu', $gallery_menu);
+		
 		
 		if ($album['album_type'] == 'video')
 		{
@@ -226,7 +233,7 @@ SWITCH (TRUE) {
 					
 					$result=$db->query("SELECT COUNT(*) FROM fw_photoalbum_comments WHERE photo_id='".$current_photo['id']."'");
 					$pager=Common::pager($result,PHOTOALBUM_COMMENTS_PER_PAGE,$page);
-			
+					
 					$smarty->assign("total_pages",$pager['total_pages']);
 					$smarty->assign("current_page",$pager['current_page']);
 					$smarty->assign("pages",$pager['pages']);
@@ -291,7 +298,7 @@ SWITCH (TRUE) {
 				$smarty->assign("total_pages",$pager['total_pages']);
 				$smarty->assign("current_page",$pager['current_page']);
 				$smarty->assign("pages",$pager['pages']);
-					
+				
 				$albums_list=$db->get_all("
 					SELECT *,
 						(SELECT CONCAT(id,'.',ext) 
@@ -327,7 +334,6 @@ SWITCH (TRUE) {
 					}
 					$smarty->assign('videos', $videogallery);
 				}
-				
 				
 				
 				if ($cat_content['param_level'] == 1)
@@ -368,6 +374,18 @@ SWITCH (TRUE) {
 					}
 				}
 				$smarty->assign("albums_list",$albums_list);
+				
+				
+				$gallery_menu = $db->get_all("
+					select 
+					fw_photoalbums.*, fw_photoalbum_cat.url 
+					from fw_photoalbums left join fw_photoalbum_cat on fw_photoalbums.parent = fw_photoalbum_cat.id 
+					where fw_photoalbums.status='1' and fw_photoalbum_cat.status='1' and fw_photoalbums.parent='{$cat_content['id']}' ");
+				
+				$smarty->assign('gallery_menu', $gallery_menu);
+				
+				
+				$smarty->assign('cat_content', $cat_content);
 				$template='photoalbum_main.html';
 				break;
 			}

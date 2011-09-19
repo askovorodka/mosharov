@@ -12,9 +12,14 @@
     <table class="txtin" cellspacing="0" cellpadding="0">
       <tr>
         <td class="lmenu"><img src="{$template_image}clear.png" height="1" width="250"><br>
-        {foreach from=$gallery_menu item=gmenu}
-        	<a href="{$base_url}/gallery/{$gmenu.url}/album_{$gmenu.id}/">{$gmenu.name}</a><br>
-        {/foreach}
+        {if $cat_content.param_level == 0}
+        	<a href="{$base_url}/gallery/restorants/">Фото</a><br>
+        	<a href="{$base_url}/gallery/videogallery/">Видео</a><br>
+        {elseif $cat_content.param_level > 0}
+	        {foreach from=$gallery_menu item=gmenu}
+	        	<a href="{$base_url}/gallery/{$gmenu.url}/album_{$gmenu.id}/">{$gmenu.name}</a><br>
+	        {/foreach}
+        {/if}
         </td>
 
         <td width="100%">
