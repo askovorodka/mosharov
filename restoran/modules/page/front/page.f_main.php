@@ -27,8 +27,6 @@ $all_pages=$db->get_all("
 
 $all_pages=Common::get_nodes_list($all_pages);
 
-//echo count($all_pages);
-
 if (preg_match("/^page_[0-9]+$/",$url[$n])) {
 	list(,$page)=explode("_",$url[$n]);
 	$url=array_values($url);
@@ -60,9 +58,6 @@ for ($f=0;$f<count($all_pages);$f++) {
 			}
 
 			$page_content=$main_page_content;
-			/*$title = $db->get_single("select title from fw_tree where id='{$page_content['id']}'");
-			if (!empty($title))
-				$smarty->assign('page_content_title', $title['title']);*/
 
 			$main_template=$page_content['template'];
 
@@ -101,38 +96,49 @@ for ($f=0;$f<count($all_pages);$f++) {
 
 				if (count($documents_list)) {
 					$smarty->assign("documents_list",$documents_list);
-
 					if (is_file($templates_path."/".$main_page_content['documents_template']))
 						$documents_template=$main_page_content['documents_template'];
 					else
 						$documents_template="documents_list.html";
-
 					$sl=$smarty->fetch($templates_path."/".$documents_template);
 					$smarty->assign("documents",$sl);
 				}
 			}
 
 			if ($page_content['show_nodes']=="1") {
-				for ($c=0;$c<count($all_pages);$c++) if ($all_pages[$c]['param_left']>$main_page_content['param_left'] && $all_pages[$c]['param_right']<$main_page_content['param_right'] && $all_pages[$c]['param_level']==($main_page_content['param_level']+1) && $all_pages[$c]['in_menu']=='1') $subpages_list[]=$all_pages[$c];
+				for ($c=0;$c<count($all_pages);$c++) 
+					if ($all_pages[$c]['param_left']>$main_page_content['param_left'] && 
+						$all_pages[$c]['param_right']<$main_page_content['param_right'] && 
+						$all_pages[$c]['param_level']==($main_page_content['param_level']+1) && 
+						$all_pages[$c]['in_menu']=='1') 
+							$subpages_list[]=$all_pages[$c];
+					elseif ($all_pages[$c]['param_level']==$main_page_content['param_level'] && 
+						$all_pages[$c]['in_menu']=='1')
+							$pages_list[]=$all_pages[$c];
+				
 				if (isset($subpages_list) && count($subpages_list)>0) {
 					$smarty->assign("subpages_list",$subpages_list);
 					$sl=$smarty->fetch($templates_path.'/subpages_list.html');
 					$smarty->assign("subpages",$sl);
-
 				}
+				
+				if (isset($pages_list) && count($pages_list)>0) {
+					$smarty->assign("pages_list",$pages_list);
+					$sl=$smarty->fetch($templates_path.'/subpages_list.html');
+					$smarty->assign("subpages",$sl);
+				}
+				
 			}
 
 			if (!isset($select_item)) {
 
 				$page_found=true;
-
 				if ($page_content['title']!='') $page_title=$page_content['title'];
 				else $page_title=$page_content['name'];
 				if ($page_content['meta_keywords']!='') $meta_keywords=$page_content['meta_keywords'];
 				if ($page_content['meta_description']!='') $meta_description=$page_content['meta_description'];
+                $smarty->assign("content",$main_page_content['elements']);
 
-
-                        $smarty->assign("content",$main_page_content['elements']);
 			}
 			else {
 				$document=$db->get_single("SELECT * FROM fw_documents WHERE id='".$select_item."' AND status='1'");

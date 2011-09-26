@@ -2,20 +2,20 @@
 
 $sub='';
 
-$sub[]= array(
+/*$sub[]= array(
 			"name"=>"Ãğóïïû ïîëüçîâàòåëåé",
 			"link"=>"?mod=users&action=groups"
 	   );
-
+*/
 $sub[]= array(
 			"name"=>"Ñïèñîê ïîëüçîâàòåëåé",
 			"link"=>"?mod=users"
 	   );
-$sub[]= array(
+/*$sub[]= array(
 			"name"=>"Äîáàâèòü ïîëüçîâàòåëÿ",
 			"link"=>"?mod=users&action=add_user"
 	   );
-
+*/
 $main_menu[]=array(
 				"link"=>"?mod=users",
 				"name"=>"users",

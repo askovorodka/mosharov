@@ -62,6 +62,7 @@ if(document.getElementById(name).style.display!="none") {
 	<td width=15% class=td1_left>Прикрепить к ресторану:</td>
 	<td class=td1_right>
 		<select name=edit_category class=field style="width:100%;">
+		<option value=""></option>
 		{foreach from=$categories item=entry}
 			<option value={$entry.id}{if $entry.id==$rel.cat_id} selected=true{/if}>
 			{$entry.name}</option>
