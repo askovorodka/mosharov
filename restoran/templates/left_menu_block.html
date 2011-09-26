@@ -1,0 +1,11 @@
+{foreach from=$main_menu item=item name=main_menu}
+	<a href="{$base_url}/{$item.url|urlencode}/" class="llink{if $node_content.id == $item.id} active{/if}">{$item.name}</a>
+	{if $item.id == 302}
+		<div class="llinks">
+			{foreach from=$shop_menu item=item1 name=shop_menu}
+				<a {if $cat_content.id == $item1.id}style="text-decoration:underline;"{/if} href="{$base_url}/{$item.url|urlencode}/{$item1.url}/">{$item1.name}</a><br>
+			{/foreach}
+		</div>
+	{/if}
+{/foreach}
+<a href="http://forum.domofon.ru/" class="llink">Форум</a>

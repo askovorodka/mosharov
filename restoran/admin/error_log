@@ -240,3 +240,9 @@
 [09-рту-2007 19:13:45] PHP Warning:  Invalid argument supplied for foreach() in /home/pixonru2/public_html/varsstrap/modules/shop/admin/shop.a_main.php on line 374
 [09-рту-2007 19:14:49] PHP Notice:  Undefined index:  edit_properties in /home/pixonru2/public_html/varsstrap/modules/shop/admin/shop.a_main.php on line 373
 [09-рту-2007 19:14:49] PHP Warning:  Invalid argument supplied for foreach() in /home/pixonru2/public_html/varsstrap/modules/shop/admin/shop.a_main.php on line 374
+[19-Sep-2011 19:37:00] PHP Notice:  Undefined index:  add_photo_link in /home/rvegar61/public_html/modules/photoalbum/admin/photoalbum.a_main.php on line 146
+[20-Sep-2011 12:10:49] PHP Notice:  Undefined index:  edit_node_left_menu in /home/rvegar61/public_html/modules/tree/admin/tree.a_main.php on line 358
+[20-Sep-2011 12:11:42] PHP Notice:  Undefined index:  edit_node_left_menu in /home/rvegar61/public_html/modules/tree/admin/tree.a_main.php on line 358
+[23-Sep-2011 14:48:52] PHP Notice:  Undefined index:  edit_node_left_menu in /home/rvegar61/public_html/modules/tree/admin/tree.a_main.php on line 358
+[23-Sep-2011 14:50:53] PHP Notice:  Undefined index:  edit_node_left_menu in /home/rvegar61/public_html/modules/tree/admin/tree.a_main.php on line 358
+[23-Sep-2011 14:55:59] PHP Notice:  Undefined variable: switch_comments in /home/rvegar61/public_html/modules/photoalbum/admin/photoalbum.a_main.php on line 97

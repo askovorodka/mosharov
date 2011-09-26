@@ -1,8 +1,8 @@
 <?php
 
   define("DB_HOST","localhost");
-  define("DB_NAME","restoran");
-  define("DB_USER","demo");
+  define("DB_NAME","rvegar61_rvega");
+  define("DB_USER","rvegar61_rvega");
   define("DB_PASS","gthtgenmt");
 
   define("ROOT", dirname(__FILE__) . "/../");

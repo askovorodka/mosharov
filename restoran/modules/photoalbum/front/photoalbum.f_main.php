@@ -130,7 +130,7 @@ SWITCH (TRUE) {
 			fw_photoalbums.*, fw_photoalbum_cat.url 
 			from fw_photoalbums left join fw_photoalbum_cat on fw_photoalbums.parent = fw_photoalbum_cat.id 
 			where fw_photoalbums.status='1' and fw_photoalbum_cat.status='1' and fw_photoalbums.parent='{$album['parent']}' ");
-		
+				
 		$smarty->assign('gallery_menu', $gallery_menu);
 		
 		
