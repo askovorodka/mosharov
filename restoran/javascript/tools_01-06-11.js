@@ -27,7 +27,7 @@ $(document).ready( function(){
 	
 	$('div#rotator ul li:first').css({opacity: 1.0});
 	
-	setInterval('rotate()',10000);
+	setInterval('rotate()',5000);
 	
 	$(function() {
 		$('a.gallery').lightBox({fixedNavigation:true});

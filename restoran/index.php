@@ -220,20 +220,17 @@ $capt->base_path = BASE_PATH;
 
   /* -------------- пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ-------------- */
 
-  foreach ($modules_to_load as $k=>$v) {
+foreach ($modules_to_load as $k=>$v) {
     $switch_default = isset($v['switch_default']) ? $v['switch_default'] : 'off' ;
     $switch_support = isset($v['switch_support']) ? $v['switch_support'] : 'off' ;
     $support_url = isset($v['support_url']) ? $v['support_url'] : '' ;
     $main_module = isset($v['main_module']) ? $v['main_module'] : 'off' ;
-
     require_once ($v['file']);
-
     if ($switch_support=='on' or $switch_default=='on') {
       $support_template=$smarty->fetch(BASE_PATH.'/modules/'.$v['name'].'/front/templates/'.$v['name'].'_support.html');
       $smarty->assign($v['name'],$support_template);
     }
-
-  }
+}
 
 /* -------------- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ -------------- */
 $main_menu=$db->get_all("SELECT id,name,url,param_level,param_left,param_right FROM fw_tree WHERE param_level IN ('1') AND in_menu='1' and status='1' and language_version = 'RUS' ORDER BY param_left");
@@ -243,6 +240,8 @@ $smarty->assign("main_menu",$main_menu);
 //английская версия
 $eng_menu=$db->get_all("SELECT id,name,url,param_level,param_left,param_right FROM fw_tree WHERE param_level IN ('1') AND in_menu='1' and status='1' and language_version = 'ENG' ORDER BY param_left");
 $eng_menu=String::unformat_array($eng_menu,'front');
+//хак для англ.версии делаем ссылку на галлерею
+$eng_menu[] = array('name' => 'Gallery', 'url' => 'gallery');
 $smarty->assign("eng_menu",$eng_menu);
 
 $shop_menu=$db->get_all("

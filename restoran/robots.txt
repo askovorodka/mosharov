@@ -1,0 +1,16 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /advantages/
+Disallow: /basket/
+Disallow: /bitrix/
+Disallow: /download-files/
+Disallow: /faq/
+Disallow: /order/
+Disallow: /search/
+Disallow: /test/
+Disallow: /upload/
+Disallow: *?
+Crawl-delay: 2
+
+
+Sitemap: http://www.rvega.ru/sitemap.xml

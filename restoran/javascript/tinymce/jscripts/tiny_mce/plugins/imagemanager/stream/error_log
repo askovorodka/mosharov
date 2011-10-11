@@ -1,0 +1,1 @@
+[23-Sep-2011 14:47:50] PHP Fatal error:  Allowed memory size of 16777216 bytes exhausted (tried to allocate 14016 bytes) in /home/rvegar61/public_html/javascript/tinymce/jscripts/tiny_mce/plugins/imagemanager/classes/ImageManager/Utils/MCImageToolsGD.php on line 372

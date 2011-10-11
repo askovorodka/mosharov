@@ -105,16 +105,50 @@ for ($f=0;$f<count($all_pages);$f++) {
 				}
 			}
 
+
+
 			if ($page_content['show_nodes']=="1") {
 				for ($c=0;$c<count($all_pages);$c++) 
+				{
 					if ($all_pages[$c]['param_left']>$main_page_content['param_left'] && 
 						$all_pages[$c]['param_right']<$main_page_content['param_right'] && 
 						$all_pages[$c]['param_level']==($main_page_content['param_level']+1) && 
 						$all_pages[$c]['in_menu']=='1') 
 							$subpages_list[]=$all_pages[$c];
-					elseif ($all_pages[$c]['param_level']==$main_page_content['param_level'] && 
+					elseif ($all_pages[$c]['param_level'] == $main_page_content['param_level'] && 
 						$all_pages[$c]['in_menu']=='1')
-							$pages_list[]=$all_pages[$c];
+							if ($all_pages[$c]['language_version'] == $main_page_content['language_version'])
+								$pages_list[]=$all_pages[$c];
+
+					//определяем родительскую категорию
+					if ($all_pages[$c]['param_left'] < $main_page_content['param_left'] 
+					&& $all_pages[$c]['param_right'] > $main_page_content['param_right']
+					&& $all_pages[$c]['param_level'] == ($main_page_content['param_level']-1))
+					{
+						$parent_c = $all_pages[$c];
+					}
+					
+				}
+				
+				
+				if (!empty($parent_c))
+				{
+					//echo "select * from fw_tree where param_left between {$parent_c['param_left']} and {$parent_c['param_right']} and param_level = {$parent_c['param_right']}+1 and status='1' order by param_left";
+					$pages_list = $db->get_all("select tree.*
+					from fw_tree as tree
+					where tree.param_left between {$parent_c['param_left']} and {$parent_c['param_right']} 
+					and tree.param_level = {$parent_c['param_level']}+1 and tree.status='1' order by tree.param_left");
+					
+					if ($pages_list)
+					{
+						foreach ($pages_list as $key=>$val)
+						{
+							$pages_list[$key]['full_url'] = $parent_c['url'].'/'.$pages_list[$key]['url'].'/';
+						}
+					}
+					
+				}
+				
 				
 				if (isset($subpages_list) && count($subpages_list)>0) {
 					$smarty->assign("subpages_list",$subpages_list);
@@ -127,7 +161,7 @@ for ($f=0;$f<count($all_pages);$f++) {
 					$sl=$smarty->fetch($templates_path.'/subpages_list.html');
 					$smarty->assign("subpages",$sl);
 				}
-				
+
 			}
 
 			if (!isset($select_item)) {
@@ -156,7 +190,7 @@ for ($f=0;$f<count($all_pages);$f++) {
 					$photo = new Photoalbum();
 					$document['description']= $photo->pregReplace($document['description'],BASE_PATH,PHOTOS_FOLDER,PHOTOS_PER_PAGE_SUP);
 					$document['small_description']= $photo->pregReplace($document['small_description'],BASE_PATH,PHOTOS_FOLDER,PHOTOS_PER_PAGE_SUP);
-				
+
 					$table = new Table();
 					$document['description'] = $table->pregReplace($document['description'],BASE_PATH);
 					$document['small_description'] = $table->pregReplace($document['small_description'],BASE_PATH);
