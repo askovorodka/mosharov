@@ -14,7 +14,7 @@
 <body>
 <table class="mtbl" align="center">
   <tr>
-    <td class="toper"><img src="{$template_image}logo.gif" width="261" height="108"><div class="cln"></div><div class="big"></div></td>
+    <td class="toper"><a href="/"><img src="{$template_image}logo.gif" width="261" height="108"></a><div class="cln"></div><div class="big"></div></td>
   </tr>
   <tr>
     <td class="tmenu">
@@ -22,7 +22,7 @@
     </td>
   </tr>
   <tr>
-    <td>
+    <td style="vertical-align:top;">
     <div class="left">
     <div class="leftmenu"><img src="{$template_image}lmenu_t.gif" width="261" height="18">
     	{include file="../templates/left_menu_block.tpl"}
@@ -30,19 +30,16 @@
     	<br><br>
     </div>
     <div class="cont">
-
 	    {if $current_url == $default_url}
 	    	{include file="../templates/top_catalog_block.html"}
 	    {else}
 	    	{include file="../templates/breadcrumbs_block.html"}
 	    {/if}
-
 		{if $content=='' or !$content}
 			{assign var="content" value=""}
 			{fetch file=$template assign="content"}
 		{/if}
 		{eval var=$content}
-
     </div>
     </td>
   </tr>

@@ -142,9 +142,10 @@ for ($f=0;$f<count($all_pages);$f++) {
 					if ($document['meta_keywords']!='') $meta_keywords=$document['meta_keywords'];
 					if ($document['meta_description']!='') $meta_description=$document['meta_description'];
 
-					$navigation[]=array("url" => "item_".$document['id'],"title" => trim($document['name']));
+					//$navigation[]=array("url" => "item_".$document['id'],"title" => trim($document['name']));
+					$navigation[]=array("url" => "item_".$document['id'],"title" => trim($document['title']));
 
-					$photo = new Photoalbum();
+					/*$photo = new Photoalbum();
 					$document['description']= $photo->pregReplace($document['description'],BASE_PATH,PHOTOS_FOLDER,PHOTOS_PER_PAGE_SUP);
 					$document['small_description']= $photo->pregReplace($document['small_description'],BASE_PATH,PHOTOS_FOLDER,PHOTOS_PER_PAGE_SUP);
 				
@@ -155,7 +156,7 @@ for ($f=0;$f<count($all_pages);$f++) {
 					$form = new Form();
 					$document['description'] = $form->pregReplace($document['description'],BASE_PATH);
 					$document['small_description'] = $form->pregReplace($document['small_description'],BASE_PATH);
-
+					*/
 					$smarty->assign("document",$document);
 					$smarty->assign("content",$smarty->fetch($templates_path."/document_elements.html"));
 				}

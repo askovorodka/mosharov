@@ -154,7 +154,7 @@ if (isset($_POST['submit_add_document'])) {
   $parent=intval($_POST['edit_document_parent']);
   $name=String::secure_format($_POST['edit_document_name']);
   $title=String::secure_format($_POST['edit_document_title']);
-  $small_description=String::secure_format($_POST['edit_small_description']);
+  //$small_description=String::secure_format($_POST['edit_small_description']);
   $description=String::secure_format($_POST['edit_description']);
   $status=intval($_POST['edit_document_status']);
   $keywords=String::secure_format($_POST['edit_document_keywords']);
@@ -169,7 +169,6 @@ if (isset($_POST['submit_add_document'])) {
         fw_documents (
           parent,
           name,
-          small_description,
           description,
           title,
           meta_keywords,
@@ -181,7 +180,6 @@ if (isset($_POST['submit_add_document'])) {
         VALUES (
           '".$parent."',
           '".$name."',
-          '".$small_description."',
           '".$description."',
           '".$title."',
           '".$keywords."',
@@ -206,7 +204,7 @@ if (isset($_POST['submit_edit_document'])) {
   $parent=intval($_POST['edit_document_parent']);
   $name=String::secure_format($_POST['edit_document_name']);
   $title=String::secure_format($_POST['edit_document_title']);
-  $small_description=String::secure_format($_POST['edit_small_description']);
+  //$small_description=String::secure_format($_POST['edit_small_description']);
   $description=String::secure_format($_POST['edit_description']);
   $status=intval($_POST['edit_document_status']);
   $keywords=String::secure_format($_POST['edit_document_keywords']);
@@ -250,7 +248,6 @@ if (isset($_POST['submit_edit_document'])) {
       SET
         parent='".$parent."',
         name='".$name."',
-        small_description='".$small_description."',
         description='".$description."',
         title='".$title."',
         meta_keywords='".$keywords."',

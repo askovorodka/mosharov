@@ -133,6 +133,14 @@ if ($node['id']!='') {
   $module_found=true;
 }
 
+
+//документы
+$documents = $db->get_all("
+	select fw_documents.*, fw_tree.url 
+	from fw_documents left join fw_tree on fw_documents.parent=fw_tree.id 
+	where fw_documents.status='1' order by fw_documents.sort_order asc");
+$smarty->assign('documents', $documents);
+
 $current_url_pages=$url;
 $current_url=implode("/",$url);
 $smarty->assign("current_url",$current_url);
@@ -379,7 +387,7 @@ else {
 
   $db->query("REPLACE INTO fw_urls (url_from,url_to) VALUES('".@$_SERVER['HTTP_REFERER']."','".BASE_URL.$_SERVER['REQUEST_URI']."')");
 
-  $smarty->assign("page_title","пїЅпїЅпїЅпїЅпїЅпїЅ 404. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+  $smarty->assign("page_title","Ошибка 404. Запрашиваемая страница не найдена.");
   require_once (BASE_PATH.'/modules/site_map/front/site_map.f_main.php');
   header("HTTP/1.0 404 Not Found");
 }
