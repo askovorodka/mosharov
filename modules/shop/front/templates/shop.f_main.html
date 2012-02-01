@@ -1,0 +1,98 @@
+	
+		{*if $parent.id == $smarty.const.TIRES_ID}
+			{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/tires_filter.html"}
+		{elseif $parent.id == $smarty.const.DISK_ID}
+			{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/disk_filter.html"}
+		{/if*}
+
+		<h1>{if $cat_content.param_level == 0}Каталог продукции{else}{$cat_content.name}{/if}</h1>
+
+		{*if $cat_content.param_level == 3}
+			{if $parent.id == $smarty.const.TIRES_ID}
+				{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/single_tire.html"}
+			{elseif $parent.id == $smarty.const.DISK_ID}
+				{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/single_disk.html"}
+			{/if}
+        {/if*}
+
+
+		{*if $folders_list}
+			{if $cat_content.param_level < 2}
+				{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/catalog1.html"}
+			{elseif $cat_content.param_level == 2}
+				{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/catalog2.html"}
+	        {/if}
+        {/if*}
+
+		{*if $folders_list}
+			{foreach from=$folders_list item=folder}
+				{if $folder.products}
+					<table class="catalog" cellspacing="0" cellpadding="0" align="center">
+					  
+					  {foreach from=$folder.products item=product name=foreach1}
+						
+						<td><a href="#" title="Заяц мягкий">{$product.name}</a>
+							<br><a href="#" title="Заяц мягкий"><img src="img/pict.jpg" width="132" height="174" alt="Заяц мягкий"></a>
+							<br>{$product.price2}<br>
+							<table id="prs" cellspacing="0" cellpadding="0" align="center">
+							<tr height="24">
+								<td id="pricep"><img src="img/p_left.jpg" width="9" height="24"><br></td>
+								<td id="price">{$product.price|format_price}&nbsp;<span id="pricer">руб.</span></td>
+								<td id="pricep"><img src="img/p_right.jpg" width="9" height="24"><br></td>
+							</tr>
+							</table>
+						</td>
+
+					  {/foreach}
+					</table>
+				{/if}
+				
+			{/foreach}
+        {/if*}
+
+
+<br><br>
+{if $products_list}
+
+	{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/products_list.html"}
+	
+{/if}
+
+{literal}
+<script type="text/javascript" language="javascript">
+	// <![CDATA[
+	
+	
+	$("A.addToBasket").click(function(){
+		
+		this.response = function(response){
+			$("DIV#loading-layer").hide();
+			$("DIV#basket").removeClass("basketContentHide").addClass("basketContentShow");
+			var floor = response.split(";");
+			$("#basket_number").html(floor[0]);
+			$("#basket_currency").html(floor[1]);
+		};
+		
+		var product_count = parseInt($($($($(this).parent()).prev()).children()).val());
+		var product_id = parseInt($(this).attr("id"));
+		if (product_count && product_count)
+		{
+			var left = $(this).offset().left;
+			var top = $(this).offset().top;
+			$("DIV#loading-layer").css({"top": top, "left" : left-200}).show();
+			
+			$.post('http://' + location.hostname + '/shop/basket/add/', {product_id : product_id, product_count : product_count}, this.response );
+		}
+		return false;
+	});
+	
+		$("INPUT.BasketCountInput").keyup(function(){
+			if (!parseInt($(this).val()))
+				return false;
+			return true;
+		});
+		
+// ]]>
+	</script>
+{/literal}
+

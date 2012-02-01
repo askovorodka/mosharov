@@ -1,0 +1,68 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>{$page_title}</title>
+<meta name="Keywords" content="{$meta_keywords}">
+<meta name="Description" content="{$meta_description}">
+{foreach from=$css item=css}
+<link rel="stylesheet" type="text/css" href="{$css}">
+{/foreach}
+
+{foreach from=$js item=js}
+<script src="{$js}" type="text/javascript"></script>
+{/foreach}
+</head>
+<body>
+<table class="mtbl" cellspacing="0" cellpadding="0" align="center">
+  <tr height="253">
+  	<td colspan="3" id="toper"><img src="{$template_image}main.png" width="549" height="253"><div><img src="{$template_image}t_font.png" width="250" height="118" id="bearbot"><div></td>
+  </tr>
+  <tr>
+    <td id="tlt"></td>
+    <td id="tt">
+    <!---- ZAKLADKI ---->
+    <table class="zaklt" cellspacing="0" cellpadding="0" align="left">
+      <tr>
+
+      {foreach from=$main_menu item=menu}
+			<td id="{if $current_url == $menu.url}ils{else}nls{/if}">&nbsp;</td>
+			<td id="{if $current_url == $menu.url}ilnk{else}nlnk{/if}"><a href="{$base_url}/{if $menu.url != 'home'}{$menu.url}/{/if}" title="{$menu.name}">{$menu.name}</a></td>
+			<td id="{if $current_url == $menu.url}irs{else}nrs{/if}">&nbsp;</td>
+      {/foreach}
+
+      {foreach from=$shop_menu item=shop}
+        <td id="{if $cat_content.id == $shop.id}ils{else}nls{/if}">&nbsp;</td>
+        <td id="{if $cat_content.id == $shop.id}ilnk{else}nlnk{/if}"><a href="{$base_url}/catalog/{$shop.url}/" title="{$shop.name}">{$shop.name}</a></td>
+        <td id="{if $cat_content.id == $shop.id}irs{else}nrs{/if}">&nbsp;</td>
+      {/foreach}
+
+      </tr>
+    </table>
+    <!---- ZAKLADKI ---->
+    </td>
+    <td id="trt"></td>
+  </tr>
+  <tr height="100%">
+    <td id="tl"></td>
+    <td id="tblinn">
+
+		{if $content=='' or !$content}
+			{assign var="content" value=""}
+			{fetch file=$template assign="content"}
+		{/if}
+		{eval var=$content}
+
+    </td>
+    <td id="tr"></td>
+  </tr>
+  <tr>
+    <td id="tlb"></td>
+    <td id="tb">&nbsp;</td>
+    <td id="trb"></td>
+  </tr>
+  <tr height="100">
+  	<td colspan="3" id="bottom"><a href="mailto:vlasov641@yandex.ru" title="vlasov641@yandex.ru"><img src="{$template_image}email.png" width="377" height="66" alt="vlasov641@yandex.ru" id="bmail"></a></td>
+  </tr>
+</table>
+</body>
+</html>

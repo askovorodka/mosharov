@@ -1,0 +1,58 @@
+Профиль пользователя {$info.login}
+
+<br><br>
+
+<table width=50% cellpadding="3" cellspacing="1">
+	<tr>
+		<td width=25% align=right>
+			Имя:
+		</td>
+		
+		<td align=left>
+			<b>{$info.name}</b>
+		</td>
+	</tr>
+	
+	<tr>
+		<td align=right>
+			Город:
+		</td>
+		
+		<td align=left>
+			<b>{$info.place}</b>
+		</td>
+	</tr>
+	
+		<tr>
+		<td align=right>
+			Род занятий:
+		</td>
+		
+		<td align=left>
+			<b>{$info.work}</b>
+		</td>
+	</tr>
+	
+		<tr>
+		<td align=right>
+			Сайт:
+		</td>
+		
+		<td align=left>
+			<b><a href={$info.site} target="_blank">{$info.site}<a></b>
+		</td>
+	</tr>
+	
+		<tr>
+		<td align=right valign=top nowrap>
+			Коротко о себе, интересы:
+		</td>
+		
+		<td align=left>
+			<b>{$info.about|nl2br}</b>
+		</td>
+	</tr>
+</table>
+
+<br><br>
+<a href={$base_url}/forum>Вернуться в форум</a> | <a href={$base_url}/cabinet/info/{$info.id}/albums>Фотоальбомы пользователя</a>

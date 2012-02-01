@@ -1,0 +1,27 @@
+{if $products_list}
+					<table class="catalog" cellspacing="0" cellpadding="0" align="center">
+					
+					{foreach from=$products_list item=product name=foreach1}
+						{if $smarty.foreach.foreach1.iteration == 1}<tr>{/if}
+						<td><a class="gallery1" href="/uploaded_files/shop_images/big-{$product.image}.{$product.ext}" title="{$product.name}">{$product.name}</a>
+							<br><div><a class="gallery2" href="/uploaded_files/shop_images/big-{$product.image}.{$product.ext}" title="{$product.name}">{if $product.image}<img src="/uploaded_files/shop_images/resized-{$product.image}.{$product.ext}">{else}нет фото{/if}</a></div>
+							<br>{$product.price2}<br>
+							<table id="prs" cellspacing="0" cellpadding="0" align="center">
+							<tr height="24">
+								<td id="pricep"><img src="{$template_image}p_left.jpg" width="9" height="24"><br></td>
+								<td id="price">{$product.price|format_price}&nbsp;<span id="pricer">руб.</span></td>
+								<td id="pricep"><img src="{$template_image}p_right.jpg" width="9" height="24"><br></td>
+							</tr>
+							</table>
+						</td>
+						
+				  		{if $smarty.foreach.foreach1.iteration%5 == 0 && $smarty.foreach.foreach1.iteration > 1 && !$smarty.foreach.foreach1.last}
+				  			</tr><tr>
+				  		{elseif $smarty.foreach.foreach1.last}
+				  			</tr>
+				  		{/if}
+						
+					{/foreach}
+					
+					</table>
+{/if}
