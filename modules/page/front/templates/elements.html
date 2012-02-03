@@ -1,4 +1,6 @@
+<div class="cont">
+<div class="contt">
 <h1>{$page_content.name|strip_tags|stripslashes}</h1>
-{if $page_content}
-	<p>{eval var=$page_content.text|stripslashes}</p>
-{/if}
+{if $page_content}{eval var=$page_content.text|stripslashes}{/if}
+</div>
+</div>

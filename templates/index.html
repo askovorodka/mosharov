@@ -42,6 +42,14 @@
 {include file="../templates/left_catalog_menu.html"}
 </td>
 <td class="righter">
+		
+		{if $content=='' or !$content}
+			{assign var="content" value=""}
+			{fetch file=$template assign="content"}
+		{/if}
+		{eval var=$content}
+
+{*
 <div class="filter">
 <div class="filterinput">
 	<div class="filterpadd">
@@ -190,6 +198,7 @@
 </tr>
 </table>
 <!--- /CATS --->
+
 <div class="cont">
 <div class="contt">
 <h1>Заголовок страницы</h1>
@@ -197,6 +206,8 @@
 <p>Дед Толстого по матери, екатерининский генерал, Николай Сергеевич Волконский, имел некоторое сходство с суровым ригористом — старым князем Болконским в «Войне и мире». Мать Льва Николаевича, похожая в некоторых отношениях на изображённую в «Войне и мире» княжну Марью, владела замечательным даром рассказа.</p><br>
 </div>
 </div>
+
+*}
 </td>
 </tr>
 </table>
