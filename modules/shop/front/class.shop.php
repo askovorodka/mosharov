@@ -141,20 +141,20 @@ class Shop extends db {
 		return $url . '/';
 	}
 	
-	function getFullUrlCategory($id)
+	function getFullUrlCategory($id, $module_name = "")
 	{
 		$category = self::getCategory($id);
 		$url = "";
 		if ($category)
 		{
 			$url = $category['url'];
-			for ($i = $category['param_level']; $i > 0; $i--)
+			for ($i = $category['param_level']; $i > 1; $i--)
 			{
 				$category = self::getParent($category, $category['param_level']-1 );
 				$url = $category['url'] . '/' . $url;
 			}
 		}
-		return $url . '/';
+		return ($module_name) ? $module_name . "/" .$url : $url;
 		
 	}
 	

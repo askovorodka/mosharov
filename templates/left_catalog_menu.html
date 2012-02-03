@@ -1,0 +1,20 @@
+<div class="lmenubody">
+	{foreach from=$shop_menu item=categor}
+		<div class="lmenuc"><img src="/uploaded_files/shop_images/{$categor.image}"><a title="{$categor.name}" href="{$base_url}/{$categor.full_url}/">{$categor.name}</a></div>
+	{/foreach}
+	{*
+    <div class="lmenuc"><img src="{$template_image}icon_books.png"><a href="#">Книги</a></div>
+    <div class="lmenuc"><img src="{$template_image}icon_prazdnik.png"><a href="#">Праздники</a></div>
+    <div class="lmenuc"><img src="{$template_image}icon_houses.png"><a href="#">Игровые домики, детская техника</a></div>
+    <div class="lmenuc"><img src="{$template_image}icon_kollect.png"><a href="#">Игровые и коллекционные фигурки</a></div>
+    <div class="lmenuc"><img src="{$template_image}icon_games.png"><a href="#">Игры</a></div>
+    <div class="lmenuc"><img src="{$template_image}icon_dolls.png"><a href="#">Куклы</a></div>
+    <div class="lmenuc"><img src="{$template_image}icon_transport.png"><a href="#">Транспорт</a></div>
+    <div class="lmenuc"><img src="{$template_image}icon_katanie.png"><a href="#">Транспорт для катания</a></div>
+    <div class="lmenuc"><img src="{$template_image}icon_music.png"><a href="#">Музыкальные инструменты</a></div>
+    <div class="lmenuc"><img src="{$template_image}icon_soft.png"><a href="#">Мягкие игрушки</a></div>
+    <div class="lmenuc"><img src="{$template_image}icon_konstructor.png"><a href="#">Конструкторы</a></div>
+    <div class="lmenuc"><img src="{$template_image}icon_puzzle.png"><a href="#">Настольные игры, пазлы</a></div>
+    <div class="lmenuc"><img src="{$template_image}icon_radio.png"><a href="#">Радиоуправляемые модели</a></div>
+    *}
+</div>

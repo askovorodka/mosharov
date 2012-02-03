@@ -454,11 +454,17 @@ if (isset($_POST['submit_edit_cat'])) {
 	else 
 		$show_in_menu = 0;
 		
-	$properties = $_POST['edit_cat_properties'];
+	if (isset($_POST['edit_cat_properties']))
+		$properties = $_POST['edit_cat_properties'];
+	else
+		$properties = "";
 
 	$db->query("DELETE FROM fw_catalogue_relations WHERE cat_id='$id'");
-	foreach($properties as $k) {
-		$db->query("INSERT INTO fw_catalogue_relations (cat_id,property_id,sort_order) VALUES('$id', '$k','".intval($_POST['edit_cat_properties_sort_order'][$k])."')");
+	if (!empty($properties))
+	{
+		foreach($properties as $k) {
+			$db->query("INSERT INTO fw_catalogue_relations (cat_id,property_id,sort_order) VALUES('$id', '$k','".intval($_POST['edit_cat_properties_sort_order'][$k])."')");
+		}
 	}
 
 	if ($name=='') $name="Новая безымянная категория";
@@ -499,17 +505,18 @@ if (isset($_POST['submit_edit_cat'])) {
 	if ($check || $id=="1") {
 
 		if (@$file_name!='') {
-			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext)) {
-				chmod(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext, 0644);
-				$details = Image::image_details(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext);
+			$image='icon-'.$id.'.'.$ext;
+			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/shop_images/'.$image)) {
+				chmod(BASE_PATH.'/uploaded_files/shop_images/'.$image, 0644);
+				$details = Image::image_details(BASE_PATH.'/uploaded_files/shop_images/'.$image);
 				//print_r($details); exit();
-				$image_name='-'.$id.'.'.$ext;
-				Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/'.$image_name,BASE_PATH.'/uploaded_files/shop_images/cat'.$image_name,215,236);
-				Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/'.$image_name,BASE_PATH.'/uploaded_files/shop_images/pcat'.$image_name,139,100);
-				Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/'.$image_name,BASE_PATH.'/uploaded_files/shop_images/bcat'.$image_name,$details['width'],$details['height']);
-				unlink(BASE_PATH.'/uploaded_files/shop_images/'.'-'.$id.'.'.$ext);
+				//$image_name='icon-'.$id.'.'.$ext;
+				//Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/'.$image_name,BASE_PATH.'/uploaded_files/shop_images/cat'.$image_name,215,236);
+				//Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/'.$image_name,BASE_PATH.'/uploaded_files/shop_images/pcat'.$image_name,139,100);
+				//Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/'.$image_name,BASE_PATH.'/uploaded_files/shop_images/bcat'.$image_name,$details['width'],$details['height']);
+				//unlink(BASE_PATH.'/uploaded_files/shop_images/icon-'.$id.'.'.$ext);
 			}
-			$image='cat-'.$id.'.'.$ext;
+			
 		}
 		else $image=$_POST['old_image'];
 
@@ -517,7 +524,7 @@ if (isset($_POST['submit_edit_cat'])) {
 			$image='';
 			unlink(BASE_PATH.'/uploaded_files/shop_images/'.$_POST['old_image']);
 		}
-		$db->query("UPDATE fw_catalogue SET name='$name',image='$image',title='$title',text='$text',url='$url',status='$status',meta_keywords='$keywords',meta_description='$description', show_in_menu = '{$show_in_menu}' WHERE id='$id'");
+		$db->query("UPDATE fw_catalogue SET name='$name',image='$image',title='$title',text='$text',url='$url',status='$status',meta_keywords='$keywords',meta_description='$description' WHERE id='$id'");
 
 		if ($parent!=$old_parent) {
 			$a=array(array('from' => $id,'to' => $parent));

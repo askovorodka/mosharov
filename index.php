@@ -47,7 +47,8 @@ $smarty->cache_dir = 'lib/smarty/cache/';
 /* ------------ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ -------------- */
 $db=new db(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 
-
+//вспомогательный класс для каталога товаров
+$shop = new Shop($db);
 
 define ('CAPTCHA_SALT', 'kjhfgkjhfsdkjghskjd hkjfdnkmbn ,msdnbskjh'); 
 
@@ -141,8 +142,6 @@ $smarty->assign("current_url",$current_url);
 //$news=$db->get_all("SELECT * FROM fw_news WHERE status='1' ORDER BY publish_date DESC " . $limit);
 //$smarty->assign("news_list",$news);
 
-//рекомендуем
-//$shop = new Shop($db);
 //$smarty->assign('top_product', $shop->getTopProducts(1));
 
 //сессия
@@ -261,12 +260,6 @@ foreach ($main_menu as $key=>$val)
 }
 $smarty->assign("main_menu",$main_menu);
 
-//левое меню
-$left_menu=$db->get_all("SELECT id,name,url,param_level,param_left,param_right FROM fw_tree WHERE param_level IN ('1') AND in_left_menu='1' and status='1' ORDER BY param_left");
-$left_menu=String::unformat_array($left_menu,'front');
-$smarty->assign("left_menu",$left_menu);
-
-
 //меню каталога
 /*$shop_menu=$db->get_all("
 	SELECT a.id,a.name,a.url,a.image,a.param_level,a.param_right,a.param_left, parent.url as parent_url 
@@ -277,66 +270,21 @@ $smarty->assign("left_menu",$left_menu);
 	WHERE a.param_level in ('1', '2') AND a.status='1' 
 	ORDER BY a.param_left");
 */
+
 $shop_menu=$db->get_all("
 	SELECT * 
 	FROM fw_catalogue as a
-	WHERE a.param_level = '1' AND a.status='1' 
+	WHERE a.param_level in ('1','2') AND a.status='1' 
 	ORDER BY a.param_left");
+//добавляем в массив полный путь до категории
+if ($shop_menu)
+{
+	foreach ($shop_menu as $key=>$val)
+		$shop_menu[$key]['full_url'] = $shop->getFullUrlCategory($val['id'], "catalog");
+}
 
 $smarty->assign("shop_menu",$shop_menu);
 
-//выполняется только на главной
-//if ($current_url == 'home')
-{
-	//шины производители
-	/*$tires_manufacturer = $db->get_all("
-		SELECT a.* 
-		FROM `fw_catalogue` as a 
-		left join 
-		fw_catalogue as b on a.param_left > b.param_left and a.param_right < b.param_right 
-		where a.param_level = '2' and a.status = '1' and b.id = " . TIRES_ID);*/
-	//шины ширина
-	//$tires_width = $db->get_all("SELECT tire_width FROM fw_products WHERE status = '1' GROUP BY tire_width");
-	//шины высота
-	//$tires_height = $db->get_all("SELECT tire_height FROM fw_products WHERE status = '1' GROUP BY tire_height");
-	//шины диаметер
-	//$tires_diameter = $db->get_all("SELECT tire_diameter FROM fw_products WHERE status = '1' GROUP BY tire_diameter");
-	
-	//диски производители
-	/*$disk_manufacturer = $db->get_all("
-		SELECT a.* 
-		FROM `fw_catalogue` as a 
-		left join 
-		fw_catalogue as b on a.param_left > b.param_left and a.param_right < b.param_right 
-		where a.param_level = '2' and a.status = '1' and b.id = " . DISK_ID);*/
-
-	//диски ширина
-	//$disk_width = $db->get_all("SELECT disk_width FROM fw_products WHERE status = '1' and disk_width > 0 GROUP BY disk_width");
-	//диски диаметер
-	//$disk_diameter = $db->get_all("SELECT disk_diameter FROM fw_products WHERE status = '1' and disk_diameter > 0 GROUP BY disk_diameter");
-	//диски крепеж
-	//$disk_krep = $db->get_all("SELECT disk_krep FROM fw_products WHERE status = '1' and disk_krep > 0 GROUP BY disk_krep");
-	//диски PCD
-	//$disk_pcd = $db->get_all("SELECT disk_pcd FROM fw_products WHERE status = '1' and disk_pcd > 0 GROUP BY disk_pcd");
-	//диски ET
-	//$disk_et = $db->get_all("SELECT disk_et FROM fw_products WHERE status = '1' and disk_et > 0 GROUP BY disk_et");
-	//диски цвет
-	//$disk_color = $db->get_all("SELECT disk_color FROM fw_products WHERE status = '1' and disk_color <> '' GROUP BY disk_color");
-	
-	/*$smarty->assign('tires_manufacturer', $tires_manufacturer);
-	$smarty->assign('tires_width', $tires_width);
-	$smarty->assign('tires_height', $tires_height);
-	$smarty->assign('tires_diameter', $tires_diameter);*/
-	
-	/*$smarty->assign('disk_manufacturer', $disk_manufacturer);
-	$smarty->assign('disk_width', $disk_width);
-	$smarty->assign('disk_diameter', $disk_diameter);
-	$smarty->assign('disk_krep', $disk_krep);
-	$smarty->assign('disk_pcd', $disk_pcd);
-	$smarty->assign('disk_et', $disk_et);
-	$smarty->assign('disk_color', $disk_color);*/
-	
-}
 
 if (!isset($page_title)) {
   if (isset($node_content['title']) && $node_content['title']!='') $page_title=$node_content['title'];
