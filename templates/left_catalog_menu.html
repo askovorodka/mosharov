@@ -1,6 +1,6 @@
 <div class="lmenubody">
 	{foreach from=$shop_menu item=categor}
-		<div class="lmenuc">
+		<div class="lmenuc{if $cat_content.id == $categor.id}o{/if}">
 		<img src="/uploaded_files/shop_images/{$categor.image}">
 		<a title="{$categor.name}" href="{$base_url}/{$categor.full_url}/">{$categor.name|strip_tags}</a>
 		{if $cat_content.id == $categor.id}

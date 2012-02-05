@@ -1068,7 +1068,7 @@ SWITCH (TRUE) {
 
 		
 		$cat_children_ids = array();
-		/*for ($c=0;$c<count($cat_list);$c++) {
+		for ($c=0;$c<count($cat_list);$c++) {
 			//определяем дочернии категории каталога
 			if ($cat_list[$c]['param_left']>$cat_content['param_left'] && $cat_list[$c]['param_right']<$cat_content['param_right'] && $cat_list[$c]['param_level']==($cat_content['param_level'])+1) {
 				$cat_children_ids[] = $cat_list[$c]['id'];
@@ -1093,7 +1093,7 @@ SWITCH (TRUE) {
 				$cat_parent_info = $cat_list[$c];
 				$smarty->assign('cat_parent_info', $cat_parent_info);
 			}
-		}*/
+		}
 
 		if (isset($folders_list)) {
           $done=0;
