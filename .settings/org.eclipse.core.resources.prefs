@@ -1,4 +1,4 @@
-#Tue Jul 26 11:52:09 MSD 2011
+#Sun Feb 05 22:23:26 MSK 2012
 eclipse.preferences.version=1
 encoding//admin/templates/main.html=cp1251
 encoding//lib/class.import.php=UTF-8
@@ -20,28 +20,15 @@ encoding//modules/shop/admin/templates/shop.a_order_details.html=cp1251
 encoding//modules/shop/admin/templates/shop.a_products_list.html=cp1251
 encoding//modules/shop/front/templates/basket.html=cp1251
 encoding//modules/shop/front/templates/basket_final.html=cp1251
-encoding//modules/shop/front/templates/catalog1.html=cp1251
-encoding//modules/shop/front/templates/catalog2.html=cp1251
 encoding//modules/shop/front/templates/comments.html=cp1251
-encoding//modules/shop/front/templates/disk_filter.html=cp1251
-encoding//modules/shop/front/templates/disk_products.htm=cp1251
-encoding//modules/shop/front/templates/disk_products.html=cp1251
-encoding//modules/shop/front/templates/disk_single.html=cp1251
 encoding//modules/shop/front/templates/product_details.html=cp1251
 encoding//modules/shop/front/templates/products_list.html=cp1251
-encoding//modules/shop/front/templates/search_products.html=cp1251
-encoding//modules/shop/front/templates/search_result_disk.html=cp1251
-encoding//modules/shop/front/templates/search_result_tire.html=cp1251
-encoding//modules/shop/front/templates/search_results.html=cp1251
+encoding//modules/shop/front/templates/shop.f_catalog_1.html=cp1251
 encoding//modules/shop/front/templates/shop.f_main.html=cp1251
-encoding//modules/shop/front/templates/single_disk.html=cp1251
-encoding//modules/shop/front/templates/single_tire.html=cp1251
-encoding//modules/shop/front/templates/tire_products.html=cp1251
-encoding//modules/shop/front/templates/tires_filter.html=cp1251
-encoding//modules/shop/front/templates/tires_single.html=cp1251
-encoding//modules/shop/front/templates/yandex_market.html=cp1251
 encoding//modules/site_map/front/templates/site_map_main.html=cp1251
 encoding//modules/tree/admin/templates/tree.a_edit.html=cp1251
 encoding//modules/tree/admin/templates/tree.a_main.html=cp1251
+encoding//templates/filter_green.html=cp1251
 encoding//templates/footer_block.html=cp1251
+encoding//templates/left_catalog_menu.html=cp1251
 encoding/<project>=cp1251

@@ -274,13 +274,19 @@ $smarty->assign("main_menu",$main_menu);
 $shop_menu=$db->get_all("
 	SELECT * 
 	FROM fw_catalogue as a
-	WHERE a.param_level in ('1','2') AND a.status='1' 
+	WHERE a.param_level = '1' AND a.status='1' 
 	ORDER BY a.param_left");
 //добавляем в массив полный путь до категории
 if ($shop_menu)
 {
 	foreach ($shop_menu as $key=>$val)
+	{
 		$shop_menu[$key]['full_url'] = $shop->getFullUrlCategory($val['id'], "catalog");
+		$shop_menu[$key]['children'] = $shop->getChildrenCategor($val, 2);
+		if ($shop_menu[$key]['children'])
+			foreach ($shop_menu[$key]['children'] as $key2=>$val2)
+				$shop_menu[$key]['children'][$key2]['full_url'] = $shop->getFullUrlCategory($val2['id'], "catalog");
+	}
 }
 
 $smarty->assign("shop_menu",$shop_menu);

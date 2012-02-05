@@ -414,15 +414,16 @@ if (isset($_POST['submit_add_cat'])) {
 			
 		if (@$file_name!='') {
 			$id=mysql_insert_id();
-			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext)) {
-				chmod(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext, 0644);
-				$details = Image::image_details(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext);
+			$image = 'icon-'.$id.'.'.$ext;
+			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/shop_images/'.$image)) {
+				chmod(BASE_PATH.'/uploaded_files/shop_images/'.$image, 0644);
+				$details = Image::image_details(BASE_PATH.'/uploaded_files/shop_images/'.$image);
 				//превьюшка
-				Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext,BASE_PATH.'/images/cat-'.$id.'.'.$ext,215,236);
-				Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext,BASE_PATH.'/images/pcat-'.$id.'.'.$ext,139,100);
-				Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext,BASE_PATH.'/images/bcat-'.$id.'.'.$ext,$details['width'],$details['height']);
-				unlink(BASE_PATH.'/uploaded_files/shop_images/'.'-'.$id.'.'.$ext);
-				$result=$db->query("UPDATE fw_catalogue SET image='cat-".$id.".$ext' WHERE id='".mysql_insert_id()."'");
+				//Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext,BASE_PATH.'/images/cat-'.$id.'.'.$ext,215,236);
+				//Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext,BASE_PATH.'/images/pcat-'.$id.'.'.$ext,139,100);
+				//Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext,BASE_PATH.'/images/bcat-'.$id.'.'.$ext,$details['width'],$details['height']);
+				//unlink(BASE_PATH.'/uploaded_files/shop_images/'.'-'.$id.'.'.$ext);
+				$result=$db->query("UPDATE fw_catalogue SET image='". $image ."' WHERE id='". $id ."'");
 			}
 		}
 
