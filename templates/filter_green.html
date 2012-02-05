@@ -1,0 +1,49 @@
+<form action="{$DOMAIN}/catalog/products_search/" method="get">
+<div class="filter">
+<div class="filterinput">
+	<div class="filterpadd">
+	Возраст:
+	<select class="filterselect" name="age">
+    <option selected value="-">Любой</option>
+    <option value="0,1">0-1 год</option>
+    <option value="1,2,3">1-3 года</option>
+    <option value="3,4,5">3-6 лет</option>
+    <option value="6,7,8,9">6-9 лет</option>
+    <option value="9,10,11,12">9-12 лет</option>
+    <option value="12">12+ лет</option>
+	</select>
+    <div class="filtercheck"><div class="filterch">Мальчик</div> <input type="checkbox" name="sex" value="boy"></div>
+    <div class="filtercheck"><div class="filterch">Девочка</div> <input type="checkbox" name="sex" value="girl"></div>
+    </div>
+</div>
+<div class="filterinputc">
+	<div class="filterpaddc">
+	Категория:
+	<select class="filterselect" name="category">
+    <option selected>Все категории</option>
+    <option>Деревянные игрушки</option>
+    <option>Книги</option>
+    <option>&nbsp;&nbsp;- Развивающие</option>
+    <option>&nbsp;&nbsp;- Раскраски</option>
+    <option>Праздники</option>
+    <option>Игровые домики, детская техника</option>
+	</select>
+    </div>
+    <div class="filterpaddcb">
+    Бренд:
+	<select class="filterselect" name="manufactury">
+    <option selected>Все бренды</option>
+    <option>Chicco</option>
+    <option>Erica</option>
+    <option>Barbie</option>
+	</select>
+    </div>
+</div>
+<div class="filterinputr">
+	<div class="filterpadr">
+	Цена:&nbsp; <span class="filtertext">от <input type="text" name="price_start"> до <input type="text" name="parice_end"></span>
+    </div>
+</div>
+<input type="image" class="filterbut" src="{$template_image}filter_button.png" value="Искать игрушки">
+</div>
+</form>

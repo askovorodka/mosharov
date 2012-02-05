@@ -1,0 +1,45 @@
+
+{include file="`$smarty.const.TPL_PATH`filter_green.html"}
+
+<div class="cat">
+<div class="contt">
+{include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
+<h1>{$cat_content.name|strip_tags}</h1>
+	{if $folders_list}
+		<table class="cats">
+		{foreach from=$folders_list item=folder name=for1}
+			<td><div class="catitem"><a href="#" title="Машинки">{$folder.name}</a>
+			<br><img src="img/toy_special.jpg" alt="Машинки">
+			<div class="cato"><span class="catcap">Возраст:</span> 
+			<span class="catcapt">от 6 мес.</span>
+			<br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
+		{/foreach}
+		</table>
+	{/if}
+	{*<table class="cats"><tr>
+    	<td><div class="catitem"><a href="#" title="Машинки">Машинки</a><br><img src="img/toy_special.jpg" alt="Машинки"><div class="cato"><span class="catcap">Возраст:</span> <span class="catcapt">от 6 мес.</span><br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
+        <td><div class="catitem"><a href="#" title="Машинки">Машинки</a><br><img src="img/toy_special.jpg" alt="Машинки"><div class="cato"><span class="catcap">Возраст:</span> <span class="catcapt">от 6 мес.</span><br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
+        <td><div class="catitem"><a href="#" title="Машинки">Машинки</a><br><img src="img/toy_special.jpg" alt="Машинки"><div class="cato"><span class="catcap">Возраст:</span> <span class="catcapt">от 6 мес.</span><br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
+        <td class="catsl"><div class="catitem"><a href="#" title="Машинки">Машинки</a><br><img src="img/toy_special.jpg" alt="Машинки"><div class="cato"><span class="catcap">Возраст:</span> <span class="catcapt">от 6 мес.</span><br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
+	</tr>
+	<tr><td colspan="4" class="catnone"></td></tr>
+	<tr>
+        <td><div class="catitem"><a href="#" title="Машинки">Машинки</a><br><img src="img/toy_special.jpg" alt="Машинки"><div class="cato"><span class="catcap">Возраст:</span> <span class="catcapt">от 6 мес.</span><br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
+        <td><div class="catitem"><a href="#" title="Машинки">Машинки</a><br><img src="img/toy_special.jpg" alt="Машинки"><div class="cato"><span class="catcap">Возраст:</span> <span class="catcapt">от 6 мес.</span><br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
+        <td><div class="catitem"><a href="#" title="Машинки">Машинки</a><br><img src="img/toy_special.jpg" alt="Машинки"><div class="cato"><span class="catcap">Возраст:</span> <span class="catcapt">от 6 мес.</span><br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
+        <td class="catsl"><div class="catitem"><a href="#" title="Машинки">Машинки</a><br><img src="img/toy_special.jpg" alt="Машинки"><div class="cato"><span class="catcap">Возраст:</span> <span class="catcapt">от 6 мес.</span><br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
+	</tr>
+	<tr><td colspan="4" class="catnone"></td></tr>
+	<tr>
+        <td><div class="catitem"><a href="#" title="Машинки">Машинки</a><br><img src="img/toy_special.jpg" alt="Машинки"><div class="cato"><span class="catcap">Возраст:</span> <span class="catcapt">от 6 мес.</span><br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
+       <td><div class="catitem"><a href="#" title="Машинки">Машинки</a><br><img src="img/toy_special.jpg" alt="Машинки"><div class="cato"><span class="catcap">Возраст:</span> <span class="catcapt">от 6 мес.</span><br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
+</tr></table>*}
+<br>
+</div>
+</div>
+<!--- /CAT --->
+<div class="catt">
+<div class="contt">
+<p>{$cat_content.text}</p>
+</div>
+</div>
