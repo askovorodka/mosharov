@@ -597,17 +597,18 @@ if (isset($_POST['submit_edit_product'])) {
 	$title=String::secure_format($_POST['edit_title']);
 	$meta_keywords=String::secure_format($_POST['edit_meta_keywords']);
 	$meta_description=String::secure_format($_POST['edit_meta_description']);
-	$site_url=$_POST['edit_site_url'];
-	//$small_description=String::secure_format($_POST['edit_small_description']);
-	//$description=String::secure_format($_POST['edit_description']);
+	
+	$description=String::secure_format($_POST['edit_description']);
 	$price=String::secure_format($_POST['edit_price']);
-	$price2=String::secure_format($_POST['edit_price2']);
-	//$price3=String::secure_format($_POST['edit_price3']);
-	$sale=String::secure_format($_POST['edit_sale']);
+	
 	$guarantie=String::secure_format($_POST['edit_guarantie']);
 	$status=$_POST['edit_status'];
 	$hit=isset($_POST['edit_hit'])?"1":"0";
-	$type=($_POST['edit_type']!='')?intval($_POST['edit_type']):"NULL";
+	$age=String::secure_format($_POST['edit_age']);
+	$country=String::secure_format($_POST['edit_country']);
+	$garant=String::secure_format($_POST['edit_garant']);
+	$sex=String::secure_format($_POST['edit_sex']);
+	
 
 	$id=$_POST['id'];
 
@@ -620,133 +621,20 @@ if (isset($_POST['submit_edit_product'])) {
 	$db->query("UPDATE 
 		fw_products SET 
 			article='$article',
-			product_type='$type',
 			parent='$parent',
 			name='$name',
 			title='$title',
 			meta_description='$meta_description',
 			meta_keywords='$meta_keywords',
-			site_url='$site_url',
 			price='$price',
-			price2='$price2',
-			sale='$sale',
+			garant='$garant',
+			sex='$sex',
+			age='$age',
+			country='$country',
 			status='$status',
+			description='$description',
 			hit='$hit' 
 		WHERE id='$id'");
-	
-
-	//редактируем файлы описания
-	/*if (isset($_POST['edit_file_title']))
-	{
-		foreach ($_POST['edit_file_title'] as $key=>$val)
-		{
-			$db->query("UPDATE fw_products_files SET title = '{$val}' WHERE id = '{$key}'");
-		}
-	}*/
-	
-	//удаление файлов
-	/*if (isset($_POST['del_file']))
-	{
-		foreach ($_POST['del_file'] as $key=>$val)
-		{
-			$filename = $db->get_single("select * from fw_products_files where id='{$key}'");
-			if (isset($filename['file']))
-			{
-				if (@file_exists(BASE_PATH."/uploaded_files/shop_files/" . $filename['parent'] . '/' . $filename['file']))
-				{
-					@unlink(BASE_PATH."/uploaded_files/shop_files/" . $filename['parent'] . '/' . $filename['file']);
-				}
-			}
-			$db->query("DELETE FROM fw_products_files2 WHERE id = '{$key}'");
-		}
-	}*/
-	
-	//грузим файл описания
-	/*$inserts = array();
-	foreach ($_FILES['add_file']['tmp_name'] as $key=>$val)
-	{
-		
-		$file_name=$_FILES['add_file']['name'][$key];
-		
-		//$tmp=$_FILES['add_file']['tmp_name'][$key];
-		$tmp=$val;
-		$check_file_name=explode(".",$file_name);
-		$ext=strtolower($check_file_name[count($check_file_name)-1]);
-		$new_file_name = md5($file_name . rand(0, strlen($file_name))) . '.' . $ext;
-		//$title = 'Технические характеристики';
-		$title = $_POST['file_title'][$key];
-		$check = true;
-		
-		if (!in_array($ext,array('pdf','doc', 'zip', 'rar'))) {
-			$smarty->assign("error","Разрешены файлы форматов pdf, doc, zip и rar");
-			$check=false;
-		}
-		
-		if (filesize($tmp)>10000000) {
-			$smarty->assign("error","Размер файла не должен привышать 10Mb");
-			$check=false;
-		}
-		
-		
-		if ($check) {
-			
-			if (!is_dir(ROOT . 'uploaded_files/shop_files/' . $id))
-			{
-				@mkdir(ROOT . 'uploaded_files/shop_files/' . $id);
-				@chmod(ROOT . 'uploaded_files/shop_files/' . $id, 0777);
-			}
-			
-			if (move_uploaded_file($tmp, BASE_PATH."/uploaded_files/shop_files/{$id}/{$new_file_name}")) {
-				$inserts[] = "('".$id."','$title','$new_file_name')";
-				@chmod(BASE_PATH."/uploaded_files/shop_files/{$id}/$new_file_name}",0777);
-			}
-		}
-		
-		
-	}*/
-	
-	/*if (count($inserts))
-	{
-		$db->query("INSERT INTO fw_products_files2 (parent,title,file) VALUES " . implode(",", $inserts));
-	}*/
-	/*print_r($_FILES); exit();
-	if (!empty($_FILES['add_file']['name']) && !empty($_FILES['add_file']['tmp_name']))
-	{
-		
-		$file_name=$_FILES['add_file']['name'];
-		$tmp=$_FILES['add_file']['tmp_name'];
-		$check_file_name=explode(".",$file_name);
-		$ext=strtolower($check_file_name[count($check_file_name)-1]);
-		$new_file_name = md5($file_name . rand(0, strlen($file_name))) . '.' . $ext;
-		//$title = 'Технические характеристики';
-		$title = $_POST['file_title'];
-		$check = true;
-		
-		if (!in_array($ext,array('pdf','doc'))) {
-			$smarty->assign("error","Разрешены файлы форматов pdf и doc");
-			$check=false;
-		}
-		
-		if (filesize($tmp)>10000000) {
-			$smarty->assign("error","Размер файла не должен привышать 10Mb");
-			$check=false;
-		}
-		
-		
-		if ($check) {
-			
-			$result=$db->query("INSERT INTO fw_products_files (parent,title,file) VALUES('".$id."','$title','$new_file_name')");
-			$id=mysql_insert_id();
-			if (move_uploaded_file($tmp, BASE_PATH."/uploaded_files/shop_files/$new_file_name")) {
-				chmod(BASE_PATH."/uploaded_files/shop_files/$new_file_name",0777);
-			}
-			else {
-				$result=$db->query("DELETE FROM fw_products_files WHERE id='".mysql_insert_id()."'");
-				$smarty->assign("error","Файл не был загружен");
-			}
-		}
-		
-	}*/
 	
 
 }

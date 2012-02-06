@@ -4,17 +4,7 @@
 
 <script language="JavaScript">
 function check_form() {
-	{/literal}
-	{if $editor_style!='html'}
-	{literal}
-		document.edit_product.edit_description.value = description.getHTMLBody();
-	{/literal}
-	{else}
-	{literal}
-		document.edit_product.edit_description.value = document.getElementById('description').value;
-	{/literal}
-	{/if}
-	{literal}
+	document.edit_product.edit_description.value = edit_description.getHTMLBody();
 	return true;
 }
 function show(name, elem)
@@ -43,7 +33,7 @@ if(document.getElementById(name).style.display!="none") {
 {/literal}
 
 
-<form action="" method=post name=edit_product enctype="multipart/form-data">
+<form action="" method=post name=edit_product enctype="multipart/form-data" onSubmit="check_form();">
 <input type=hidden name=id value={$product.id}>
 <center>
 {if $error}<font color=red><b>{$error}</b></font><br><br>{/if}
@@ -119,21 +109,26 @@ if(document.getElementById(name).style.display!="none") {
 <tr>
   <td class=td1_left style="border-bottom: none;">Пол:</td>
   <td class=td1_right style="border-bottom: none;">
-  <select name="edit_sex"><option value="boy">Мальчик</option><option value="girl">Девочка</option></select>
+  <select name="edit_sex"><option value="boy" {if $product.sex=='boy'}selected{/if}>Мальчик</option>
+  <option {if $product.sex=='girl'}selected{/if} value="girl">Девочка</option></select>
   </td>
 </tr>
 
 <tr>
   <td class=td1_left style="border-bottom: none;">Возраст:</td>
   <td class=td1_right style="border-bottom: none;">
-	<select name="age">
-    <option value="0">Менее года</option>
-    <option value="1">1 год</option>
-    <option value="2">2 года</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-    <option value="6">6</option>
+	<select name="edit_age">
+    <option value="0" {if $product.age=='0'}selected{/if}>Менее года</option>
+    <option value="1" {if $product.age=='1'}selected{/if}>1 год</option>
+    <option value="2" {if $product.age=='2'}selected{/if}>2 года</option>
+    <option value="3" {if $product.age=='3'}selected{/if}>3</option>
+    <option value="4" {if $product.age=='4'}selected{/if}>4</option>
+    <option value="5" {if $product.age=='5'}selected{/if}>5</option>
+    <option value="6" {if $product.age=='6'}selected{/if}>6</option>
+    <option value="7" {if $product.age=='7'}selected{/if}>7</option>
+    <option value="8" {if $product.age=='8'}selected{/if}>8</option>
+    <option value="9" {if $product.age=='9'}selected{/if}>9</option>
+    <option value="10" {if $product.age=='10'}selected{/if}>10</option>
 	</select>
   </td>
 </tr>
@@ -168,7 +163,7 @@ if(document.getElementById(name).style.display!="none") {
 						"JustifyLeft","JustifyCenter","JustifyRight","JustifyFull"];
 
 
-				edit_description.RENDER('{/literal}{$productr.description|replace:"\r\n":""}{literal}');
+				edit_description.RENDER('{/literal}{$product.description|replace:"\r\n":""}{literal}');
 </script>
 {/literal}
 </td>
