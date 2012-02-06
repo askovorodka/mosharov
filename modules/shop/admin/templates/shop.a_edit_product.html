@@ -7,12 +7,10 @@ function check_form() {
 	{/literal}
 	{if $editor_style!='html'}
 	{literal}
-		document.edit_product.edit_small_description.value = small_description.getHTMLBody();
 		document.edit_product.edit_description.value = description.getHTMLBody();
 	{/literal}
 	{else}
 	{literal}
-		document.edit_product.edit_small_description.value = document.getElementById('small_description').value;
 		document.edit_product.edit_description.value = document.getElementById('description').value;
 	{/literal}
 	{/if}
@@ -69,6 +67,7 @@ if(document.getElementById(name).style.display!="none") {
 <tr>
 	<td class=td1_left>Имя:</td><td class=td1_right><input type=text name=edit_name class=field style="width:100%;" value="{$product.name}"></td>
 </tr>
+
 {if $mode=='edit'}
 <tr>
   <td class=td1_left style="border-bottom: none;">Статус:</td>
@@ -87,6 +86,7 @@ if(document.getElementById(name).style.display!="none") {
 
   </td>
 </tr>
+{/if}
 
 <tr>
   <td class=td1_left style="border-bottom: none;">Цена:</td>
@@ -96,13 +96,85 @@ if(document.getElementById(name).style.display!="none") {
 </tr>
 
 <tr>
-  <td class=td1_left style="border-bottom: none;">Размер:</td>
+  <td class=td1_left style="border-bottom: none;">Артикул:</td>
   <td class=td1_right style="border-bottom: none;">
-  <input type=text name=edit_price2 class=field style="width:200px;" value="{$product.price2}">
+  <input type=text name=edit_article class=field style="width:200px;" value="{$product.article}">
   </td>
 </tr>
 
-{/if}
+<tr>
+  <td class=td1_left style="border-bottom: none;">Страна производства:</td>
+  <td class=td1_right style="border-bottom: none;">
+  <input type=text name=edit_country class=field style="width:200px;" value="{$product.country}">
+  </td>
+</tr>
+
+<tr>
+  <td class=td1_left style="border-bottom: none;">Гарантия:</td>
+  <td class=td1_right style="border-bottom: none;">
+  <input type=text name=edit_garant class=field style="width:200px;" value="{$product.garant}">
+  </td>
+</tr>
+
+<tr>
+  <td class=td1_left style="border-bottom: none;">Пол:</td>
+  <td class=td1_right style="border-bottom: none;">
+  <select name="edit_sex"><option value="boy">Мальчик</option><option value="girl">Девочка</option></select>
+  </td>
+</tr>
+
+<tr>
+  <td class=td1_left style="border-bottom: none;">Возраст:</td>
+  <td class=td1_right style="border-bottom: none;">
+	<select name="age">
+    <option value="0">Менее года</option>
+    <option value="1">1 год</option>
+    <option value="2">2 года</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+	</select>
+  </td>
+</tr>
+
+
+<tr>
+<td class=td1_single colspan=2>
+
+<input type=hidden name=edit_description value="">
+<p><font color=red>*</font> Описание товара:</p>
+{literal}
+<script language="JavaScript">
+				var edit_description = new InnovaEditor("edit_description");
+
+				edit_description.btnStyles=true;
+
+				edit_description.width="100%";
+				edit_description.height="400";
+
+				edit_description.css="style.css";
+				edit_description.cmdAssetManager="modalDialogShow('{/literal}{$base_url}/{literal}javascript/editor/assetmanager/assetmanager.php?lang=russian',640,465)";
+
+				edit_description.features=["FullScreen","Search",
+						"Cut","Copy","Paste","PasteWord","PasteText","|","Undo","Redo","|",
+						"ForeColor","BackColor","|","Bookmark","Hyperlink",
+						"XHTMLSource","Numbering","Bullets","|","Indent","Outdent","|","Image","|",
+						"Table","Guidelines","Absolute","|","Characters","Line",
+						"Clean","ClearAll","BRK",
+						"Paragraph","FontSize","|",
+						"Bold","Italic",
+						"Underline","Strikethrough","|","Superscript","Subscript","|",
+						"JustifyLeft","JustifyCenter","JustifyRight","JustifyFull"];
+
+
+				edit_description.RENDER('{/literal}{$productr.description|replace:"\r\n":""}{literal}');
+</script>
+{/literal}
+</td>
+</tr>
+
+
 </table>
 
 

@@ -1,7 +1,7 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors','On');
+//error_reporting(E_ALL);
+//ini_set('display_errors','On');
 
 require_once '../lib/class.tree.php';
 require_once '../lib/class.image.php';
@@ -548,42 +548,24 @@ if (isset($_POST['submit_add_product'])) {
 	$parent=$_POST['edit_parent'];
 	$name=String::secure_format($_POST['edit_name']);
 	$title=String::secure_format($_POST['edit_title']);
-	$site_url=$_POST['edit_site_url'];
+	//$site_url=$_POST['edit_site_url'];
 	//$small_description=String::secure_format($_POST['edit_small_description']);
 	//$description=String::secure_format($_POST['edit_description']);
 	$price=String::secure_format($_POST['edit_price']);
-	$price1=String::secure_format($_POST['edit_price1']);
+	//$price1=String::secure_format($_POST['edit_price1']);
 	//$price2=String::secure_format($_POST['edit_price2']);
 	//$guarantie=String::secure_format($_POST['edit_guarantie']);
-	$sale=String::secure_format($_POST['edit_sale']);
-	
-	//св-ва шин/дисков
-	/*$tire_width = $_POST['tire_width'];
-	$tire_height = $_POST['tire_height'];
-	$tire_diameter = $_POST['tire_diameter'];
-	$tire_in = $_POST['tire_in'];
-	$tire_is = $_POST['tire_is'];
-	$tire_usil = $_POST['tire_usil'];
-	$tire_spike = $_POST['tire_spike'];
-	$tire_season = $_POST['tire_season'];
-	$tire_bodytype = $_POST['tire_bodytype'];
-	$tire_sklad = $_POST['tire_sklad'];
-	
-	$disk_width = $_POST['disk_width'];
-	$disk_diameter = $_POST['disk_diameter'];
-	$disk_krep = $_POST['disk_krep'];
-	$disk_pcd = $_POST['disk_pcd'];
-	$disk_pcd2 = $_POST['disk_pcd2'];
-	$disk_et = $_POST['disk_et'];
-	$disk_dia = $_POST['disk_dia'];
-	$disk_color = $_POST['disk_color'];
-	$disk_type = $_POST['disk_type'];
-	$disk_sklad = $_POST['disk_sklad'];*/
+	$article=String::secure_format($_POST['edit_article']);
+	$country=String::secure_format($_POST['edit_country']);
+	$garant=String::secure_format($_POST['edit_garant']);
+	$age=String::secure_format($_POST['edit_age']);
+	$description=String::secure_format($_POST['edit_description']);
+	$sex=String::secure_format($_POST['edit_sex']);
 	
 	//$sort_order=$db->get_single("SELECT MAX(sort_order) as max FROM fw_products WHERE parent='$parent'");
 	//$sort_order=$sort_order['max']+1;
 	$sort_order=0;
-  	$type=($_POST['edit_type']!='')?intval($_POST['edit_type']):"NULL";
+  	//$type=($_POST['edit_type']!='')?intval($_POST['edit_type']):"NULL";
 
 
 	if ($name=='') $name='Новый продукт';
@@ -593,22 +575,12 @@ if (isset($_POST['submit_add_product'])) {
 		(
 		
 		article,parent,name,
-		title,site_url,
-		price,price2,insert_date,
-		sale,sort_order,product_type) 
+		title,price,insert_date,
+		country,garant,age,description,sex) 
 		
 		VALUES(
-			'$article',
-			'$parent',
-			'$name',
-			'$title',
-			'$site_url',
-			'$price','$price1',
-			'".time()."',
-			'$sale',
-			'$sort_order',
-			'$type'
-			
+			'$article','$parent','$name','$title','$price',
+			'".time()."','$country','$garant','$age','$description','$sex'
 		)");
 	
 	header("Location: ?mod=shop&action=edit_product&id=".mysql_insert_id());
@@ -1184,7 +1156,7 @@ SWITCH (TRUE) {
 				$smarty->assign("cat",$sort_cat);
 			}
 			if (isset($_GET['search'])) {
-				$temp_cond[]="(name LIKE '%".$_GET['search']."%' OR small_description LIKE '%".$_GET['search']."%' OR description LIKE '%".$_GET['search']."%')";
+				$temp_cond[]="(name LIKE '%".$_GET['search']."%' OR description LIKE '%".$_GET['search']."%' OR article='".$_GET['search']."')";
 				$smarty->assign("search",$_GET['search']);
 			}
 
@@ -1254,11 +1226,11 @@ SWITCH (TRUE) {
 
 		$cat_list=Common::get_nodes_list($cat_list);
         $types_list=$db->get_all("SELECT * FROM fw_products_types WHERE status='1' ORDER BY name");
-        $body_types=$db->get_all("SELECT * FROM fw_body_types ORDER BY name");
-        $disk_types=$db->get_all("SELECT * FROM fw_disk_types ORDER BY name");
+        //$body_types=$db->get_all("SELECT * FROM fw_body_types ORDER BY name");
+        //$disk_types=$db->get_all("SELECT * FROM fw_disk_types ORDER BY name");
         $smarty->assign('types_list',$types_list);
-        $smarty->assign('body_types',$body_types);
-        $smarty->assign('disk_types',$disk_types);
+        //$smarty->assign('body_types',$body_types);
+        //$smarty->assign('disk_types',$disk_types);
 		$smarty->assign("cat_list",$cat_list);
 		$smarty->assign("mode","add");
 		$smarty->assign("cat",@$_GET['cat']);
@@ -1314,7 +1286,7 @@ SWITCH (TRUE) {
 		}
 		$photos_list=$db->get_all("SELECT * FROM fw_products_images WHERE parent='$id' ORDER BY sort_order");
         $types_list=$db->get_all("SELECT * FROM fw_products_types WHERE status='1' ORDER BY name");
-        $files_list=$db->get_all("SELECT * FROM fw_products_files2 where parent='$id'");
+        //$files_list=$db->get_all("SELECT * FROM fw_products_files2 where parent='$id'");
 		//$body_types=$db->get_all("SELECT * FROM fw_body_types ORDER BY name");
 		//$disk_types=$db->get_all("SELECT * FROM fw_disk_types ORDER BY name");
 		
@@ -1323,7 +1295,7 @@ SWITCH (TRUE) {
 		//$smarty->assign('body_types',$body_types);
 		//$smarty->assign('disk_types',$disk_types);
 		$smarty->assign('photos_list',$photos_list);
-		$smarty->assign('files_list',$files_list);
+		//$smarty->assign('files_list',$files_list);
 		$smarty->assign('photos_count',count($photos_list));
 		$smarty->assign('photo_height',PRODUCT_PREVIEW_HEIGHT+10);
 		$smarty->assign("cat_list",$cat_list);

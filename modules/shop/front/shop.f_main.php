@@ -1094,11 +1094,12 @@ SWITCH (TRUE) {
 				$smarty->assign('cat_parent_info', $cat_parent_info);
 			}
 		}
-
+		
 		if (isset($folders_list)) {
           $done=0;
           for ($c=0;$c<count($folders_list);$c++) {
 
+          	$folders_list[$c]['full_url'] = $shop->getFullUrlCategory($folders_list[$c]['id'], "catalog");
           	$folders_list[$c]['products'] = $shop->getProductsByCategory($folders_list[$c]['id']);
           	
           	if (isset($folders_list[$c]['products']))

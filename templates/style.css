@@ -566,6 +566,7 @@ h3 {
 	height:105px;
 	width:105px;
 }
+.nophoto{width:105px; height:105px; text-align:middle; color:#666;}
 .catitemini {
 	position:absolute;
 	width:43px;

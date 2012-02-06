@@ -8,32 +8,18 @@
 	{if $folders_list}
 		<table class="cats">
 		{foreach from=$folders_list item=folder name=for1}
-			<td><div class="catitem"><a href="#" title="Машинки">{$folder.name}</a>
-			<br><img src="img/toy_special.jpg" alt="Машинки">
+			{if $smarty.foreach.for1.iteration%5 == 0 && !$smarty.foreach.for1.first}<tr><td colspan="4" class="catnone"></td></tr>{/if}
+			{if $smarty.foreach.for1.first || $smarty.foreach.for1.iteration%5 == 0}<tr>{/if}
+			<td><div class="catitem"><a href="{$base_url}/{$folder.full_url}/" title="{$folder.name}">{$folder.name}</a>
+			<br>{if $folder.image}<img src="/uploaded_files/shop_images/{$folder.image}" alt="Машинки">{else}<div class="nophoto">Нет фото</div>{/if}
 			<div class="cato"><span class="catcap">Возраст:</span> 
 			<span class="catcapt">от 6 мес.</span>
-			<br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
+			<br><span class="catcap">Цена:</span> от 640 руб.</div></div>
+			</td>
+			{if $smarty.foreach.for1.last || $smarty.foreach.for1.iteration%4 == 0}</tr>{/if}
 		{/foreach}
 		</table>
 	{/if}
-	{*<table class="cats"><tr>
-    	<td><div class="catitem"><a href="#" title="Машинки">Машинки</a><br><img src="img/toy_special.jpg" alt="Машинки"><div class="cato"><span class="catcap">Возраст:</span> <span class="catcapt">от 6 мес.</span><br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
-        <td><div class="catitem"><a href="#" title="Машинки">Машинки</a><br><img src="img/toy_special.jpg" alt="Машинки"><div class="cato"><span class="catcap">Возраст:</span> <span class="catcapt">от 6 мес.</span><br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
-        <td><div class="catitem"><a href="#" title="Машинки">Машинки</a><br><img src="img/toy_special.jpg" alt="Машинки"><div class="cato"><span class="catcap">Возраст:</span> <span class="catcapt">от 6 мес.</span><br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
-        <td class="catsl"><div class="catitem"><a href="#" title="Машинки">Машинки</a><br><img src="img/toy_special.jpg" alt="Машинки"><div class="cato"><span class="catcap">Возраст:</span> <span class="catcapt">от 6 мес.</span><br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
-	</tr>
-	<tr><td colspan="4" class="catnone"></td></tr>
-	<tr>
-        <td><div class="catitem"><a href="#" title="Машинки">Машинки</a><br><img src="img/toy_special.jpg" alt="Машинки"><div class="cato"><span class="catcap">Возраст:</span> <span class="catcapt">от 6 мес.</span><br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
-        <td><div class="catitem"><a href="#" title="Машинки">Машинки</a><br><img src="img/toy_special.jpg" alt="Машинки"><div class="cato"><span class="catcap">Возраст:</span> <span class="catcapt">от 6 мес.</span><br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
-        <td><div class="catitem"><a href="#" title="Машинки">Машинки</a><br><img src="img/toy_special.jpg" alt="Машинки"><div class="cato"><span class="catcap">Возраст:</span> <span class="catcapt">от 6 мес.</span><br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
-        <td class="catsl"><div class="catitem"><a href="#" title="Машинки">Машинки</a><br><img src="img/toy_special.jpg" alt="Машинки"><div class="cato"><span class="catcap">Возраст:</span> <span class="catcapt">от 6 мес.</span><br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
-	</tr>
-	<tr><td colspan="4" class="catnone"></td></tr>
-	<tr>
-        <td><div class="catitem"><a href="#" title="Машинки">Машинки</a><br><img src="img/toy_special.jpg" alt="Машинки"><div class="cato"><span class="catcap">Возраст:</span> <span class="catcapt">от 6 мес.</span><br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
-       <td><div class="catitem"><a href="#" title="Машинки">Машинки</a><br><img src="img/toy_special.jpg" alt="Машинки"><div class="cato"><span class="catcap">Возраст:</span> <span class="catcapt">от 6 мес.</span><br><span class="catcap">Цена:</span> от 640 руб.</div></div></td>
-</tr></table>*}
 <br>
 </div>
 </div>
