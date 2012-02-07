@@ -1,3 +1,16 @@
+#loading-layer	{
+	font-family:Tahoma, Geneva, sans-serif;
+	position: fixed; display:none; width:200px;height:60px;background:#a3238e;
+	padding:10px 10px 15px 10px;text-align:center;border:1px solid #0070B1;
+	z-index:50;
+	top:50%;
+	left:50%;
+}
+#loading-layer div	{font-weight:bold; color: #fff; background: url(/templates/img/loading.gif) 50% 100% no-repeat; height: 70px}
+
+label.error, #response_server	{color:red; font-size:11px;}
+
+
 body {
 	margin:0px;
 	padding:0px;

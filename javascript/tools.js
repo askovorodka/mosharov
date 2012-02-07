@@ -1,6 +1,16 @@
 
 $(document).ready( function(){
 
+	$("a.smallimage").click(function(){
+		var src = $(this).attr("href");
+		if ($.trim(src) != "")
+		{
+			$("#bigimage").attr("src", src);
+		}
+		return false;
+	});
+	
+	
 	$(function() {
 		$('a.gallery').lightBox({fixedNavigation:true});
 	});
@@ -361,14 +371,15 @@ $(document).ready( function(){
 				$("#basket_currency").html(floor[1]);
 			};
 		
+		var product_id = parseInt($(this).attr("product_id"));
 		
-		var product_count = $("td input[type='text']", $(this).parent().parent()).val();
-		var product_id = $("td input[type='text']", $(this).parent().parent()).attr("name");
+		var product_count = $("#product_count_" + product_id).val();
+		
 		if (parseInt(product_count) > 0 && parseInt(product_id) > 0)
 		{
 			$("DIV#loading-layer").show();
 			//кидаем запрос на сервер
-			$.post('http://' + location.hostname + '/shop/basket/add/', 
+			$.post('http://' + location.hostname + '/catalog/basket/add/', 
 			{product_id : product_id, product_count : product_count}, 
 			this.response );
 			

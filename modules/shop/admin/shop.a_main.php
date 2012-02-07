@@ -670,7 +670,7 @@ if (isset($_POST['submit_add_photo'])) {
 		$result=$db->query("INSERT INTO fw_products_images(parent,title,ext,sort_order) VALUES('".$_POST['parent']."','$title','$ext','".$order."')");
 		$id=mysql_insert_id();
 		if (move_uploaded_file($tmp, BASE_PATH."/uploaded_files/shop_images/$id.$ext")) {
-			chmod(BASE_PATH."/uploaded_files/shop_images/$id.$ext",0644);
+			chmod(BASE_PATH."/uploaded_files/shop_images/$id.$ext",0777);
 			Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/resized-$id.$ext", PRODUCT_PREVIEW_WIDTH,PRODUCT_PREVIEW_HEIGHT, false, "#FFFFFF");
 			Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/medium-$id.$ext", PRODUCT_MEDIUM_WIDTH,PRODUCT_MEDIUM_HEIGHT, false, "#FFFFFF");
 			Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/big-$id.$ext", PRODUCT_BIG_WIDTH,PRODUCT_BIG_HEIGHT, false, "#FFFFFF");

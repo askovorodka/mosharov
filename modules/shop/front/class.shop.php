@@ -119,7 +119,7 @@ class Shop extends db {
 	 *
 	 * @param unknown_type $id
 	 */
-	function getFullUrlProduct($id)
+	function getFullUrlProduct($id, $module_name = "")
 	{
 		$product = self::getProductInfo($id);
 		if (!$product)
@@ -132,13 +132,15 @@ class Shop extends db {
 		if ($category)
 		{
 			$url = $category['url'] . '/' . $url;
-			for ($i = $category['param_level']; $i > 0; $i--)
+			for ($i = $category['param_level']; $i > 1; $i--)
 			{
 				$category = self::getParent($category, $category['param_level']-1 );
 				$url = $category['url'] . '/' . $url;
 			}
 		}
-		return $url . '/';
+		
+		return ($module_name) ? $module_name . "/" .$url : $url;
+		
 	}
 	
 	function getFullUrlCategory($id, $module_name = "")
@@ -403,6 +405,25 @@ class Shop extends db {
 		}
 		
 	}
+	
+	
+	
+	function getProductImages($product_id)
+	{
+		
+		$result = $this->db->get_all("select * from fw_products_images where parent='{$product_id}' ");
+		
+		if ($result)
+		{
+			return $result;
+		}
+		else
+		{
+			return null;
+		}
+		
+	}
+	
 	
 }
 ?>
