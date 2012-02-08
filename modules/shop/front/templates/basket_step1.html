@@ -7,6 +7,7 @@
 <table class="zakaz">
       <tr>
         <td class="zakaznew">
+        {if !$user}
         <h3>Новый пользователь?</h3>
         <input type="text">ФИО<br>
         <input type="text">Телефон<br>
@@ -14,6 +15,7 @@
         <input type="text">Email<br>
         <div class="zakaznewpwd"><input type="text"><span class="zakaznewpvdc">Пароль</span><br><div class="zakaznewpwdt">Введите пароль, если хотите 
 зарегистрироваться!<br>Регистрация упрощает заказ и дает право на скидку.<br><br></div></div>
+		{/if}
 		<p class="zakazpol">Получение товара</p>
         <table class="zakazradiot">
           <tr>
@@ -31,14 +33,16 @@
         <input type="image" src="{$template_image}zakaz_butt_end.png" class="zakazbut">
         </td>
         <td class="zakazold">
+        {if !$user}
         <h3>Уже зарегистрированы?</h3>
         <input type="text">Email<br>
         <input type="text">Пароль<br>
         <input type="image" src="{$template_image}zakaz_butt_enter.png" class="enterbut"> <a href="#" class="lostpwd">Забыли пароль?</a>
+        {/if}
         </td>
       </tr>
     </table>
-    <p>Происходил из дворянского рода, известного, по легендарным источникам[К 1], с 1351 года. Его предок по отцовской линии, граф Пётр Андреевич Толстой, известен своей ролью в следствии над царевичем Алексеем Петровичем, за что был поставлен во главе Тайной канцелярии.</p>
+    <p></p>
 <br><br>
 </div>
 </div>
