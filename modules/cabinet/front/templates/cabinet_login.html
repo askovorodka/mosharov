@@ -1,4 +1,34 @@
+<div class="txtd">
+<div class="contt">
+
+{include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
+
+<h1>Авторизация</h1>
+
 <center>{if $error_message}<font color=red>{$error_message}</font><br><br>{/if}</center>
+
+<table class="zakaz">
+      <tr>
+        <td class="zakazold">
+        <form action="" method="post">
+        <input type="hidden" name="submit_login" value="1" />
+        <input type="text" name="email" value="{$email}">Email<br>
+        <input type="password" name="password" value="">Пароль<br>
+        <input type="image" src="{$template_image}zakaz_butt_enter.png" class="enterbut"> 
+        <a href="#" class="lostpwd">Забыли пароль?</a>
+        </form>
+        </td>
+      </tr>
+</table>
+<p></p>
+<br><br>
+</div>
+</div>
+
+
+
+
+{*<center>{if $error_message}<font color=red>{$error_message}</font><br><br>{/if}</center>
 
 			<form id="login_user_form" method="POST" action="{$smarty.const.DOMAIN}/cabinet/login/">
 				<input type=hidden name=submit_login value=1>
@@ -12,3 +42,4 @@
 <p><strong>!</strong> Если Вы забыли пароль, пройдите процедуру <a style='position:left;' href="{$base_url}/cabinet/restore" class="blue"><strong>восстановления
 пароля</strong></a>.<br><br></p>
 <p><strong>!</strong> Если у вас нет логина и пароля, просим Вас пройти процедуру <a href={$module_url}/register/><strong>регистрации</strong></a>.</p>
+*}

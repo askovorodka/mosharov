@@ -71,60 +71,69 @@ if (isset($_POST['submit_login'])) {
 
 	$check = true;
 
-	$login=String::secure_format($_POST['login_email']);
+	$login=String::secure_format($_POST['email']);
 	if (isset($_POST['submit_login_top']))$top=$_POST['submit_login_top'];
 	if (isset($_POST['submit_login_basket']))$basket=$_POST['submit_login_basket'];
-	$password=$_POST['login_pass'];
+	$password=$_POST['password'];
 
-	/*if ($login < '1') {
-		$smarty->assign("error_message",'Введите пожалуйста ваш логин');
+
+	if (trim($password) == "") {
+		$smarty->assign("error_message",'Введите пожалуйста ваш пароль');
+		$smarty->assign("email",$login);
 		$check=false;
 	}
 
-	if ($password < '1') {
-		$smarty->assign("error_message",'Введите пожалуйста ваш пароль');
-		$smarty->assign("temp_login",$login);
+	if (trim($login) == "") {
+		$smarty->assign("error_message",'Введите пожалуйста ваш логин');
 		$check=false;
-	}*/
-
+	}
+	
 	if ($check==true) {
 
 		$content=$db->get_single("SELECT * FROM fw_users WHERE login='$login' AND status='1'");
 		$password_to_check = @$content['password'];
 		if (empty($password_to_check)) {
-			//$smarty->assign("login_message",'Такого пользователя не существует');
+			$smarty->assign("error_message",'Такого пользователя не существует');
+			$smarty->assign("email",$login);
 			//echo 'Такого пользователя не существует';
-			echo "error2";
-			die();
+			//echo "error2";
+			//die();
 		}
 		else {
 
 			if (sha1($password) != $password_to_check) {
 				$smarty->assign("error_message",'Неправильный пароль');
-				$smarty->assign("temp_login",$login);
+				$smarty->assign("email",$login);
 				//echo 'Неправильный пароль';
 				//echo sha1($password) . " - " . $password_to_check;
-				echo "error2";
-				die();
+				//echo "error2";
+				//die();
 			}
 			else {
 				setcookie('fw_login_cookie',$login."|".sha1($password),time()+LOGIN_LIFETIME,'/','');
 				$_SESSION['fw_user'] = $content;
+				
+				if (!empty($_SESSION['fw_basket']))
+				{
+					header("Location: ".BASE_URL.'/catalog/basket/step1/');
+					die();
+				}
+				
 				//header("Location: ".BASE_URL.'/cabinet/');
-				echo 1;
+				//echo 1;
 				//die();
-				/*if ($_SERVER['HTTP_REFERER']==BASE_URL.'/'.$module_url.'/login') header ("Location:". BASE_URL.'/'.$module_url);
+				if ($_SERVER['HTTP_REFERER']==BASE_URL.'/'.$module_url.'/login') header ("Location:". BASE_URL.'/'.$module_url);
 				else {
 					$location=$_SERVER['HTTP_REFERER'];
 					header ("Location: $location");
 
-				}*/
+				}
 			}
 
 		}
 	}
 
-	exit();
+	//exit();
 
 }
 

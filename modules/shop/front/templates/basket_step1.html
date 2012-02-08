@@ -36,8 +36,9 @@
         {if !$user}
         <h3>Уже зарегистрированы?</h3>
         <form action="/cabinet/login/" method="post">
+        <input type="hidden" name="submit_login" value="1" />
         <input type="text" name="email">Email<br>
-        <input type="text" name="password">Пароль<br>
+        <input type="password" name="password">Пароль<br>
         <input type="image" src="{$template_image}zakaz_butt_enter.png" class="enterbut"> 
         <a href="#" class="lostpwd">Забыли пароль?</a>
         </form>
