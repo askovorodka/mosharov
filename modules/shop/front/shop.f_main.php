@@ -210,6 +210,7 @@ SWITCH (TRUE) {
 		$page_found=true;
 		$navigation[]=array("url" => 'basket',"title" => 'Ваша корзина');
 		$navigation[]=array("url" => 'step1',"title" => 'Оформление заказа');
+		$title="Оформление заказа";
 		$template='basket_step1.html';
 
 	BREAK;

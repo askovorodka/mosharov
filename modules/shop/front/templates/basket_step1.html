@@ -35,14 +35,17 @@
         <td class="zakazold">
         {if !$user}
         <h3>Уже зарегистрированы?</h3>
-        <input type="text">Email<br>
-        <input type="text">Пароль<br>
-        <input type="image" src="{$template_image}zakaz_butt_enter.png" class="enterbut"> <a href="#" class="lostpwd">Забыли пароль?</a>
+        <form action="/cabinet/login/" method="post">
+        <input type="text" name="email">Email<br>
+        <input type="text" name="password">Пароль<br>
+        <input type="image" src="{$template_image}zakaz_butt_enter.png" class="enterbut"> 
+        <a href="#" class="lostpwd">Забыли пароль?</a>
+        </form>
         {/if}
         </td>
       </tr>
-    </table>
-    <p></p>
+</table>
+<p></p>
 <br><br>
 </div>
 </div>
