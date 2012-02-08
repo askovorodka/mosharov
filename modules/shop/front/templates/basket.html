@@ -28,7 +28,7 @@
   {/foreach}
   <tr>
     <td colspan="3" class="basketitog">Общая стоимость: <span class="itog">{$total_price} р.</span></td>
-    <td colspan="2"><input type="image" src="{$template_image}basket_button.png" class="basketbutton" /></td>
+    <td colspan="2"><a title="Оформить заказ" href="/catalog/basket/step1/"><img src="{$template_image}basket_button.png" class="basketbutton" /></a></td>
   </tr>
 </table>
 </form>
@@ -87,10 +87,10 @@
             Доставка: <span style="color:#e07e13;">{if $total_price|format_number < $smarty.const.SHOP_DOSTAVKA_LIMIT}{$smarty.const.SHOP_DOSTAVKA_PRICE}</span> <span style="font-size:12px;">руб.</span>{else}<span style="color:#e07e13;">Бесплатно</span>{/if}<br><br>
             Всего: <span style="color:#156391;">{$total_price_dostavka|format_number}</span> <span style="font-size:12px;">руб.</span><br>
             </div>
-         	
+
 {/if}       
 
-			  	
+
 	        {if !$user}
 	        	<div id="response_server"></div>
 	        	<input type="hidden" id="register" value="0"></div>
@@ -99,7 +99,7 @@
 			{else}
 				<input type="hidden" id="register" value="1"></div>
 			{/if}
-			
+
 			<form action="{$smarty.const.DOMAIN}/shop/basket/submit/" method="post" id="submit_basket_form">
 				<input type="hidden" name="submit_order" value="1">
 	            <div id="regp">Выберите способ доставки:</div>

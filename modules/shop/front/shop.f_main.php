@@ -208,8 +208,8 @@ SWITCH (TRUE) {
 	CASE (@$url[$n]=='step1' && $url[$n-1]=='basket'):
 
 		$page_found=true;
-		$navigation[]=array("url" => 'basket',"title" => 'Моя корзина');
-		$navigation[]=array("url" => 'step1',"title" => 'Регистрация и авторизация');
+		$navigation[]=array("url" => 'basket',"title" => 'Ваша корзина');
+		$navigation[]=array("url" => 'step1',"title" => 'Оформление заказа');
 		$template='basket_step1.html';
 
 	BREAK;
