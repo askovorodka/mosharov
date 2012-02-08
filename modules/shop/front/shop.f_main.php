@@ -53,24 +53,6 @@ if (preg_match("/^page_[0-9]+$/",$url[$n])) {
 }
 else $page=1;
 
-/*
-if (preg_match("/sort=([a-z]+)$/i",$url[$n])) {
-	list(,$page)=explode("_",$url[$n]);
-	$url=array_values($url);
-	unset($url[$n]);
-	unset($current_url_pages[count($current_url_pages)-1]);
-	$n=count($url)-1;
-}
-
-if (preg_match("/order=([a-z]+)$/i",$url[$n])) {
-	list(,$page)=explode("_",$url[$n]);
-	$url=array_values($url);
-	unset($url[$n]);
-	unset($current_url_pages[count($current_url_pages)-1]);
-	$n=count($url)-1;
-}
-*/
-
 if (preg_match("/\?type=([0-9a-z]+)$/",$url[$n],$type)) {
   $type = $type[1];
   unset($url[$n]);
@@ -98,11 +80,7 @@ $smarty->assign("currency_site2",$cur_site2);
 
 $shop = new Shop($db);
 
-//print_r($url);
 /*-----------------РАЗЛИЧНЫЕ ДЕЙСТВИЯ-----------------*/
-
-
-
 
 if (isset($_POST['submit_comment'])) {
 
@@ -130,22 +108,6 @@ if (isset($_POST['submit_comment'])) {
 	}
 
 	
-	/*if (isset($_POST['rating'])) {
-
-		$rating=$_POST['rating'];
-
-		$check_rating=explode(",",$_COOKIE['fw_rating']);
-		if (!in_array($id,$check_rating)) {
-
-			$db->query("UPDATE fw_products SET rating=rating+$rating WHERE id='$id'");
-
-			if (!@isset($_COOKIE['fw_rating']) or $_COOKIE['fw_rating']=='') $cookie_content=$id;
-			else $cookie_content=$_COOKIE['fw_rating'].','.$id;
-
-			setcookie('fw_rating',$cookie_content,time()+315360000,'/','');
-		}
-	}*/
-
 	$location=@$_SERVER['HTTP_REFERER'];
 	header("Location: $location");
 	die();
@@ -183,55 +145,6 @@ SWITCH (TRUE) {
 		}
 	BREAK;
 
-	CASE ($url[$n]=='index.xml' && count($url)==2):
-		
-		ini_set('memory_limit', '300M');
-		/*
-		$cat_list=$db->get_all("SELECT c.*, 
-		(SELECT id FROM fw_catalogue WHERE 
-		c.param_left>param_left AND c.param_level-param_level=1 ORDER BY param_left DESC LIMIT 1) as parent 
-		FROM fw_catalogue as c WHERE c.status='1' ORDER BY c.param_left");
-		*/
-		
-		$cat_list=$db->get_all("SELECT c.* FROM fw_catalogue as c WHERE c.status='1' ORDER BY c.param_left");
-		
-		//$cat_list=Common::get_nodes_list($cat_list);
-		
-		//$products_list = $db->get_all("SELECT *,(select image from fw_catalogue where id = p.parent) as image FROM fw_products AS p WHERE p.status='1' and (tire_sklad > 3 or disk_sklad > 3)");
-		$products_list = $db->get_all("
-			SELECT *, c.image FROM 
-			fw_products AS p 
-			LEFT JOIN fw_catalogue as c on p.parent = c.id
-			WHERE p.status='1' and (p.tire_sklad > 3 or p.disk_sklad > 3)");
-		
-		//echo 123;
-		///o 123; exit();
-		
-		header("Content-type: text/xml; charset=Windows-1251");
-		
-		if (count($products_list)>0) {
-
-			for ($a=0;$a<count($products_list);$a++) {
-				for ($a1=0;$a1<count($cat_list);$a1++) {
-					//$cat_list[$a1]['parent'] = $shop->getParent($cat_list[$a1], ($cat_list[$a1]['param_level']-1));
-					if ($products_list[$a]['parent']==$cat_list[$a1]['id']) {
-						//$products_list[$a]['full_url']=$cat_list[$a1]['full_url'];
-						$products_list[$a]['full_url']=$shop->getFullUrlProduct($products_list[$a]['id']);
-					}
-				}
-				$products_list[$a]['description']=str_replace("&nbsp;","",strip_tags($products_list[$a]['description']));
-			}
-
-			$smarty->assign("products_list",$products_list);
-			unset($cat_list[0]);
-			$smarty->assign("cat",$cat_list);
-
-			$page_found=true;
-			$template_mode='single';
-			$template = "yandex_market.html";
-		}
-		
-	BREAK;
 
 	CASE ($url[$n]=='compare'):
 
@@ -280,7 +193,7 @@ SWITCH (TRUE) {
 								if (substr_count($products_list[$v]['properties'][$val][3],"\n")>0) $products_list[$v]['properties'][$val][3]=explode("\n",$products_list[$v]['properties'][$val][3]);
 							}
 						}
-//					}
+						
 				}
 
 				$smarty->assign("products_list",$products_list);
@@ -297,7 +210,6 @@ SWITCH (TRUE) {
 		$page_found=true;
 		$navigation[]=array("url" => 'basket',"title" => 'Моя корзина');
 		$navigation[]=array("url" => 'step1',"title" => 'Регистрация и авторизация');
-		//$js[] = BASE_URL.'/javascript/jquery.validate.min.js';
 		$template='basket_step1.html';
 
 	BREAK;
@@ -332,7 +244,6 @@ SWITCH (TRUE) {
 						(SELECT ext FROM fw_products_images WHERE parent=fw_products.id ORDER BY insert_date DESC LIMIT 1) AS ext
 		 				FROM fw_products WHERE id='".$product_id."' AND status='1'");
 
-        //$product['price']=($product['price'] * $cur_admin['kurs'])/$cur_site['kurs'];
         
 		for ($i=0;$i<count($_SESSION['fw_basket']);$i++) {
 			if ($_SESSION['fw_basket'][$i]['id']==$product['id']) {
@@ -459,25 +370,9 @@ SWITCH (TRUE) {
 
 	CASE ($url[$n]=='basket' && count($url)==2):
 
-		
 		$page_found=true;
 		$navigation[]=array("url" => 'basket',"title" => 'Моя корзина');
 
-		//print_r($_SESSION['fw_basket']);
-		/*$sess = &$_SESSION['fw_basket'];
-		if (count($sess)>0)
-			foreach ($sess as $key=>$val){
-				if (intval($sess[$key]['id'])>0){
-					$image = $db->get_single("SELECT id as image, ext FROM fw_products_images WHERE parent='".$sess[$key]['id']."' ORDER BY id DESC LIMIT 0,1");
-					if (strlen(trim($image['image']))>1 && strlen(trim($image['ext']))>1){
-						$sess[$key]['image'] = $image['image'];
-						$sess[$key]['ext'] = $image['ext'];
-					}
-
-				}
-			}
-		*/
-		
 		if (isset($_POST['basket_remove']))
 		{
 			unset($_SESSION['fw_basket']);
@@ -509,21 +404,13 @@ SWITCH (TRUE) {
         	foreach($sess['fw_basket'][$key] as $key2=>$val2)
         		$sess['fw_basket'][$key]['price_number'] = sprintf("%.2f",$sess['fw_basket'][$key]['price']*$sess['fw_basket'][$key]['number']);
         		$sess['fw_basket'][$key]['full_url'] = DOMAIN . 'shop' . $shop->getFullUrlProduct($sess['fw_basket'][$key]['id']);
+        		$sess['fw_basket'][$key]['image'] = $shop->getProductImage($sess['fw_basket'][$key]['id']);
+        		
         }
 
 			$smarty->assign("basket",$_SESSION['fw_basket']);
 			
-			if ($total_price < SHOP_DOSTAVKA_LIMIT)
-			{
-				$total_price_dostavka = $total_price + SHOP_DOSTAVKA_PRICE;
-			}
-			else 
-			{
-				$total_price_dostavka = $total_price;
-			}
-			
 			$smarty->assign("total_price",sprintf("%.2f",$total_price));
-			$smarty->assign("total_price_dostavka",sprintf("%.2f",$total_price_dostavka));
 			if (isset($_SESSION['fw_user'])) $smarty->assign("user",$_SESSION['fw_user']);
 		}
 		$template='basket.html';

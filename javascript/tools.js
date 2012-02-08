@@ -1,6 +1,8 @@
 
 $(document).ready( function(){
 
+	$("input[type='text']", $("#basket_form")).change(function(){ $("#basket_form").submit(); });
+	
 	$("a.smallimage").click(function(){
 		var src = $(this).attr("href");
 		if ($.trim(src) != "")

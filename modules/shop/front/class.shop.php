@@ -423,6 +423,23 @@ class Shop extends db {
 		}
 		
 	}
+
+	
+	function getProductImage($product_id)
+	{
+		
+		$result = $this->db->get_single("select id, ext from fw_products_images where parent='{$product_id}' order by sort_order limit 1 ");
+		
+		if ($result)
+		{
+			return $result['id'].'.'.$result['ext'];
+		}
+		else
+		{
+			return null;
+		}
+		
+	}
 	
 	
 }
