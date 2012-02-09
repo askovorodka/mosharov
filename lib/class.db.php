@@ -6,7 +6,7 @@ class db {
 	var $host, $user, $pass;
 	var $result;
 
-	function db($db, $host, $user, $pass) {
+	function db($db=DB_NAME, $host=DB_HOST, $user=DB_USER, $pass=DB_PASS) {
 		$this->db = $db; $this->host = $host; $this->user = $user; $this->pass = $pass;
 		if($this->link = mysql_connect($host,$user,$pass)) {
 			mysql_query("SET NAMES cp1251");

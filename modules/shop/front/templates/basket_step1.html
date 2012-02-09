@@ -7,30 +7,34 @@
 <table class="zakaz">
       <tr>
         <td class="zakaznew">
+        <form action="/catalog/basket/submit/" method="post">
+        <input type="hidden" name="submit_order" value="1" />
         {if !$user}
+        <input type="hidden" name="submit_register" value="1" />
         <h3>Новый пользователь?</h3>
-        <input type="text">ФИО<br>
-        <input type="text">Телефон<br>
-        <input type="text" class="zakaznewdop">Доп. тел.<br>
-        <input type="text">Email<br>
-        <div class="zakaznewpwd"><input type="text"><span class="zakaznewpvdc">Пароль</span><br><div class="zakaznewpwdt">Введите пароль, если хотите 
+        <input type="text" name="name">ФИО<br>
+        <input type="text" name="phone">Телефон<br>
+        <input type="text" class="zakaznewdop" name="phone2">Доп. тел.<br>
+        <input type="text" name="email">Email<br>
+        <div class="zakaznewpwd"><input type="password" name="password"><span class="zakaznewpvdc">Пароль</span><br><div class="zakaznewpwdt">Введите пароль, если хотите 
 зарегистрироваться!<br>Регистрация упрощает заказ и дает право на скидку.<br><br></div></div>
 		{/if}
 		<p class="zakazpol">Получение товара</p>
         <table class="zakazradiot">
           <tr>
-            <td><input type="radio" class="zakazradio" name="dostabka" value="Самовывоз"></td>
-            <td>Самовывоз</td>
+            <td><input type="radio" class="zakazradio" name="dostavka" id="dost1" value="1"></td>
+            <td><label for="dost1">Самовывоз</label></td>
           </tr>
           <tr>
-            <td><input type="radio" class="zakazradio" name="dostabka" value="Доставка"></td>
-            <td>Доставка <span class="basketint">(стоимость - 200 р.)</span></td>
+            <td><input type="radio" class="zakazradio" name="dostavka" value="2" id="dost2"></td>
+            <td><label for="dost2">Доставка <span class="basketint">(стоимость - 200 р.)</span></label></td>
           </tr>
         </table>
-        <input type="text">Метро<br>
-        <input type="text">Адрес<br>
-        <textarea></textarea>Комментарий<br>
+        <input type="text" name="metro">Метро<br>
+        <input type="text" name="address">Адрес<br>
+        <textarea name="comment"></textarea>Комментарий<br>
         <input type="image" src="{$template_image}zakaz_butt_end.png" class="zakazbut">
+        </form>
         </td>
         <td class="zakazold">
         {if !$user}

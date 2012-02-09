@@ -32,6 +32,7 @@ require_once 'lib/class.image.php';
 require_once 'lib/class.photoalbum.php';
 require_once 'lib/class.table.php';
 require_once 'lib/class.form.php';
+require_once 'lib/class.users.php';
 //require_once 'modules/shop/front/class.shop.php';
 
 $navigation[]=array("url" => $module_url,"title" => $node_content['name']);
@@ -79,6 +80,7 @@ $smarty->assign("currency_site",$cur_site);
 $smarty->assign("currency_site2",$cur_site2);
 
 $shop = new Shop($db);
+$users = new Users();
 
 /*-----------------ÐÀÇËÈ×ÍÛÅ ÄÅÉÑÒÂÈß-----------------*/
 
@@ -457,6 +459,18 @@ SWITCH (TRUE) {
 	CASE ($url[$n]=='submit' && $url[$n-1]=='basket' && count($url)==3):
 
 		if (isset($_POST['submit_order'])) {
+			
+			if (!empty($_POST['submit_register']))
+			{
+
+				$users->setEmail($_POST['email']);
+				$users->setName($_POST['name']);
+				$users->setPhone1($_POST['phone']);
+				$users->setPhone2($_POST['phone2']);
+				$users->register();
+
+			}
+			exit();
 
 			if (count($_SESSION['fw_basket'])<1)
 			{
