@@ -467,7 +467,7 @@ SWITCH (TRUE) {
 				$users->setName($_POST['name']);
 				$users->setPhone1($_POST['phone']);
 				$users->setPhone2($_POST['phone2']);
-				$users->register();
+				$user$users->register();
 
 			}
 			exit();

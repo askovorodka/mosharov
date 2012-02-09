@@ -8,6 +8,8 @@ class Users extends db
 	private $phone1=null;
 	private $phone2=null;
 	private $address=null;
+	private $id=null;
+	private $result=null;
 	
 	function __construct()
 	{
@@ -50,9 +52,21 @@ class Users extends db
 	 */
 	function register()
 	{
-		return parent::query("insert into fw_users (login,mail,name,phone_1,phone_2,address,password)
+		parent::query("insert into fw_users (login,mail,name,phone_1,phone_2,address,password)
 		values('{$this->email}','{$this->email}','{$this->name}','{$this->phone1}','{$this->phone2}',
 		'{$this->address}','{$this->password}')");
+		
+		return $this->getUser(mysql_insert_id());
+		
+	}
+	
+	function getUser($id)
+	{
+		$this->result = parent::get_single("select * from fw_users where id=" . $id);
+		if ($this->result)
+			return $this->result;
+		else
+			return null;
 	}
 	
 }
