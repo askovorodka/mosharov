@@ -1,9 +1,0 @@
-{foreach from=$documents_list item=page}
-	<tr>
-		<td>
-			{if $page.image}<img src="uploaded_files/documents_images/resized-{$page.image}" align="left">{/if}
-			<div><strong><a href={$page_content.full_url}item_{$page.id}/>{$page.name|stripslashes}</a></strong></div>
-			<div>{$page.small_description}</div><br />
-		</td>
-	</tr>
-{/foreach}

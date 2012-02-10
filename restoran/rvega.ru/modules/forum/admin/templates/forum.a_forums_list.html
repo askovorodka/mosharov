@@ -1,3 +1,0 @@
-{foreach from=$forums_list item=entry}
-	{str_repeat str="&nbsp;" num=$entry.param_level mod="4"}<img src=templates/img/tree.gif> <a href=index.php?mod=forum&action=move_post&forum_id={$entry.id}&post_id={$post_id}>{$entry.name}</a><br>
-{/foreach}
