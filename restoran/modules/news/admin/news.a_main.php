@@ -43,11 +43,11 @@ if (isset($_POST['submit_add_news'])) {
 	$status="1";
 	
 	if ($_FILES['edit_news_image']['name']!='') {
-	
+		
 		$file_name=$_FILES['edit_news_image']['name'];
 		$tmp=$_FILES['edit_news_image']['tmp_name'];
 		
-		$trusted_formats=array('jpg','jpeg','gif','png');
+		$trusted_formats=array('jpg','jpeg','gif','png','JPG');
 		
 		$check_file_name=explode(".",$file_name);
 		$ext=$check_file_name[count($check_file_name)-1];
@@ -56,7 +56,7 @@ if (isset($_POST['submit_add_news'])) {
 			$check=false;
 		}
 		
-		if (filesize($tmp)>2000000) {
+		if (filesize($tmp)>200000000) {
 			$smarty->assign("error_message","Размер фотографии не должен привышать 2Mb");
 			$check=false;
 		}
@@ -71,16 +71,18 @@ if (isset($_POST['submit_add_news'])) {
 				$id=mysql_insert_id();
 				$image_name = md5($id . rand(1,1000)).".".$ext;
 				if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/news/'.$image_name)) {
-					chmod(BASE_PATH.'/uploaded_files/news/'.$image_name, 0644);
+					chmod(BASE_PATH.'/uploaded_files/news/'.$image_name, 0777);
 					Image::image_resize(BASE_PATH.'/uploaded_files/news/'.$image_name, BASE_PATH.'/uploaded_files/news/resized-'.$image_name,NEWS_IMAGE_WIDTH,NEWS_IMAGE_WIDTH);
+					//Image::resize(BASE_PATH.'/uploaded_files/news/'.$image_name, BASE_PATH.'/uploaded_files/news/resized-'.$image_name,NEWS_IMAGE_WIDTH,NEWS_IMAGE_WIDTH);
 					unlink(BASE_PATH.'/uploaded_files/news/'.$image_name);
 					$result=$db->query("UPDATE fw_news SET image='resized-{$image_name}' WHERE id='".mysql_insert_id()."'");
 				}
+				header("Location: index.php?mod=news&action=edit&id=".$id);
 			}
 		}
 	}
 	
-header("Location: index.php?mod=news&action=edit&id=".$id);
+
 die();
 	
 }
@@ -118,7 +120,7 @@ if (isset($_POST['submit_edit_news'])) {
 		$file_name=$_FILES['edit_news_image']['name'];
 		$tmp=$_FILES['edit_news_image']['tmp_name'];
 		
-		$trusted_formats=array('jpg','jpeg','gif','png');
+		$trusted_formats=array('jpg','jpeg','gif','png','JPG');
 		
 		$check_file_name=explode(".",$file_name);
 		$ext=$check_file_name[count($check_file_name)-1];
@@ -127,7 +129,8 @@ if (isset($_POST['submit_edit_news'])) {
 			$check=false;
 		}
 		
-		if (filesize($tmp)>2000000) {
+		if (filesize($tmp)>200000000)
+		{
 			$smarty->assign("error_message","Размер фотографии не должен привышать 2Mb");
 			$check=false;
 		}

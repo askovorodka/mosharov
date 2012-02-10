@@ -40,7 +40,7 @@ function resize($src, $dst, $dst_width, $dst_height, $crop = true, $background =
 						$new_width = floor($src_height * $dst_ratio);
 						$x_offset = floor(($src_width - $new_width) / 2);
 
-						$commands[] = "/usr/local/bin/convert -crop {$new_width}x{$src_height}+$x_offset+0 $src $tmp";
+						$commands[] = "/usr/bin/convert -crop {$new_width}x{$src_height}+$x_offset+0 $src $tmp";
 					}
 					elseif ($src_ratio < $dst_ratio)
 					{
@@ -49,7 +49,7 @@ function resize($src, $dst, $dst_width, $dst_height, $crop = true, $background =
 						$new_height = floor($src_width / $dst_ratio);
 						$y_offset = floor(($src_height - $new_height) / 2);
 
-						$commands[] = "/usr/local/bin/convert -crop {$src_width}x{$new_height}+0+$y_offset $src $tmp";
+						$commands[] = "/usr/bin/convert -crop {$src_width}x{$new_height}+0+$y_offset $src $tmp";
 					}
 					else
 					{
@@ -60,7 +60,7 @@ function resize($src, $dst, $dst_width, $dst_height, $crop = true, $background =
 
 					// Изменяем размер
 
-					$commands[] = "/usr/local/bin/convert -strip -resize {$dst_width}x{$dst_height} -filter sinc -unsharp 0.5x0.3+1+0.0 $tmp $dst";
+					$commands[] = "/usr/bin/convert -strip -resize {$dst_width}x{$dst_height} -filter sinc -unsharp 0.5x0.3+1+0.0 $tmp $dst";
 				}
 				else
 				{
@@ -73,7 +73,7 @@ function resize($src, $dst, $dst_width, $dst_height, $crop = true, $background =
 						$x_border = ceil(($dst_width - $src_width) / 2);
 						$y_border = ceil(($dst_height - $src_height) / 2);
 
-						$commands[] = "/usr/local/bin/convert -strip -bordercolor \"$background\" -border {$x_border}x{$y_border} -crop {$dst_width}x{$dst_height}+0+0 $src $dst";
+						$commands[] = "/usr/bin/convert -strip -bordercolor \"$background\" -border {$x_border}x{$y_border} -crop {$dst_width}x{$dst_height}+0+0 $src $dst";
 					}
 					elseif ($src_ratio > $dst_ratio)
 					{
@@ -81,8 +81,8 @@ function resize($src, $dst, $dst_width, $dst_height, $crop = true, $background =
 
 						$y_border = ceil(($dst_height - $dst_width / $src_ratio) / 2);
 
-						$commands[] = "/usr/local/bin/convert -strip -resize {$dst_width}x{$dst_height} -filter sinc -unsharp 0.5x0.3+1+0.0 $src $tmp";
-						$commands[] = "/usr/local/bin/convert  -bordercolor \"$background\" -border 0x{$y_border} -crop {$dst_width}x{$dst_height}+0+0 $tmp $dst";
+						$commands[] = "/usr/bin/convert -strip -resize {$dst_width}x{$dst_height} -filter sinc -unsharp 0.5x0.3+1+0.0 $src $tmp";
+						$commands[] = "/usr/bin/convert  -bordercolor \"$background\" -border 0x{$y_border} -crop {$dst_width}x{$dst_height}+0+0 $tmp $dst";
 					}
 					elseif ($src_ratio < $dst_ratio)
 					{
@@ -90,14 +90,14 @@ function resize($src, $dst, $dst_width, $dst_height, $crop = true, $background =
 
 						$x_border = ceil(($dst_width - $dst_height * $src_ratio) / 2);
 
-						$commands[] = "/usr/local/bin/convert -strip -resize {$dst_width}x{$dst_height} -filter sinc -unsharp 0.5x0.3+1+0.0 $src $tmp";
-						$commands[] = "/usr/local/bin/convert -bordercolor \"$background\" -border {$x_border}x0 -crop {$dst_width}x{$dst_height}+0+0 $tmp $dst";
+						$commands[] = "/usr/bin/convert -strip -resize {$dst_width}x{$dst_height} -filter sinc -unsharp 0.5x0.3+1+0.0 $src $tmp";
+						$commands[] = "/usr/bin/convert -bordercolor \"$background\" -border {$x_border}x0 -crop {$dst_width}x{$dst_height}+0+0 $tmp $dst";
 					}
 					else
 					{
 						// Исходник имеет теже соотношения сторон, что результат и больше оного
 
-						$commands[] = "/usr/local/bin/convert -strip -resize {$dst_width}x{$dst_height} -filter sinc -unsharp 0.5x0.3+1+0.0 $src $dst";
+						$commands[] = "/usr/bin/convert -strip -resize {$dst_width}x{$dst_height} -filter sinc -unsharp 0.5x0.3+1+0.0 $src $dst";
 					}
 				}
 
@@ -126,7 +126,7 @@ function resize($src, $dst, $dst_width, $dst_height, $crop = true, $background =
 					$dst_height = floor($dst_width / $src_ratio);
 				}
 				//хренарим
-				$commands[] = "/usr/local/bin/convert -strip -resize {$dst_width}x{$dst_height} -filter sinc -unsharp 0.5x0.3+1+0.0 $src $dst";
+				$commands[] = "/usr/bin/convert -strip -resize {$dst_width}x{$dst_height} -filter sinc -unsharp 0.5x0.3+1+0.0 $src $dst";
 			}
 
 		}
@@ -152,6 +152,9 @@ function resize($src, $dst, $dst_width, $dst_height, $crop = true, $background =
 	
 	function image_resize($src, $dest, $width, $height, $quality=90) {
 		
+		//error_reporting(E_ALL);
+		//ini_set('display_errors','On');
+
 		if (!file_exists($src)) return false;
 		
 		$size = getimagesize($src);
@@ -188,10 +191,10 @@ function resize($src, $dst, $dst_width, $dst_height, $crop = true, $background =
 		
 		$image_dest = imagecreatetruecolor($new_width, $new_height);
 		$image_dest2 = imagecreatetruecolor($w, $h);
-
+		
 		imagecopyresampled($image_dest, $image_src, 0, 0, 0, 0, $new_width, $new_height, $w, $h);
 		//imagecopyresampled($image_dest2, $image_src, 0, 0, 0, 0, $w, $h, $w, $h);
-
+		
 		imagecolorset($image_dest, 0, 255, 255, 255);
 		if ($format=='jpeg') imagejpeg($image_dest, $dest, $quality);
 		if ($format=='png') imagepng($image_dest, $dest, $quality);
@@ -205,7 +208,7 @@ function resize($src, $dst, $dst_width, $dst_height, $crop = true, $background =
 		imagedestroy($image_dest);
 		
 		return true;
-	
+		
 	}
 	
 	function image_details ($image) {

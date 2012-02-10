@@ -171,8 +171,8 @@ if (isset($_POST['submit_add_photo'])) {
 		echo 1;
 	
 	
-	if (!in_array($ext, array('flv','avi', 'mpg', 'mpeg4')))
-		list($max_width,$max_height)=explode("x",PHOTO_MAX_SIZE);
+	/*if (!in_array($ext, array('flv','avi', 'mpg', 'mpeg4')))
+		list($max_width,$max_height)=explode("x",PHOTO_MAX_SIZE);*/
 	
 	$resize_main=false;
 	if ($filetype == 'photo')
@@ -181,20 +181,20 @@ if (isset($_POST['submit_add_photo'])) {
 			$resize_main=true;
 		}
 	}
-	 
 	
 	
-	if (filesize($tmp)>PHOTO_MAX_FILESIZE*1000) {
+	
+	/*if (filesize($tmp)>PHOTO_MAX_FILESIZE*1000) {
 		$smarty->assign("error","Размер файла не должен привышать ".PHOTO_MAX_FILESIZE."Кб");
 		$check=false;
-	}
-
+	}*/
+	
 	if ($check) {
 
 		$order=$db->get_single("SELECT MAX(sort_order)+1 AS s_order FROM fw_photoalbum_images WHERE parent='$parent'");
 		if ($order['s_order']=='') $order=1;
 		else $order=$order['s_order'];
-
+		
 		$filesize=round(filesize($tmp)/1000,2);
 		$result=$db->query("INSERT INTO fw_photoalbum_images(parent,description,link,ext,sort_order,insert_date) VALUES('$parent','$description','$link','$ext','$order','".time()."')");
 		$id=mysql_insert_id();
