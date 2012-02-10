@@ -1,15 +1,3 @@
-#Tue Jul 19 14:20:39 MSD 2011
+#Fri Feb 10 16:18:56 MSK 2012
 eclipse.preferences.version=1
-encoding//modules/photoalbum/admin/templates/photoalbum.a_albums_list.html=cp1251
-encoding//modules/photoalbum/admin/templates/photoalbum.a_edit_album.html=cp1251
-encoding//modules/photoalbum/front/templates/photoalbum_main.html=cp1251
-encoding//modules/shop/admin/templates/shop.a_edit_product.html=cp1251
-encoding//modules/shop/admin/templates/shop.a_main.html=cp1251
-encoding//modules/shop/admin/templates/shop.a_products_list.html=cp1251
-encoding//modules/shop/front/templates/shop.f_main.html=cp1251
-encoding//templates/footer_block.html=cp1251
-encoding//templates/text.html=cp1251
-encoding//templates/top_menu_block.html=cp1251
-encoding//templates/top_news_block.html=cp1251
-encoding//templates/top_products_block.html=cp1251
 encoding/<project>=cp1251
