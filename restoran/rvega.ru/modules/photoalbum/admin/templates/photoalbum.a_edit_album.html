@@ -1,0 +1,237 @@
+{literal}
+<script language=JavaScript>
+function show(name, elem)
+{
+if(document.getElementById(name).style.display!="none") {
+		document.getElementById(name).style.display="none";
+		elem.className = "plus";
+	}
+	else {
+		document.getElementById(name).style.display="";
+		elem.className = "minus";
+	}
+}
+function shows(name)
+{
+if(document.getElementById(name).style.display!="none") {
+		document.getElementById(name).style.display="none";
+		document.getElementById('nav_' + name).style.display="";
+	}
+	else {
+		document.getElementById(name).style.display="";
+		document.getElementById('nav_' + name).style.display="none";
+	}
+}
+</script>
+{/literal}
+<form action="" method=post name=edit_product>
+<input type=hidden name=id value={$album.id}>
+<center>
+{if $error}<font color=red><b>{$error}</b></font><br><br>{/if}
+{if $message}<font color=green><b>{$message}</b></font><br><br>{/if}
+<table width=100% cellspacing=1 cellpadding=3 class=content_table>
+<tr>
+<th>{if $mode=='edit'}Редактировать альбом{else}Создать альбом{/if}</th>
+</tr>
+</table>
+
+
+<table width=100% cellspacing=1 cellpadding=3 class=content_table>
+<tr>
+	<td width=15% class=td1_left>Раздел:</td>
+	<td class=td1_right>
+		<select name=edit_parent class=field style="width:100%;">
+		{foreach from=$cat_list item=entry}
+			<option value={$entry.id}{if $entry.id==$album.parent or $entry.id==$cat} selected=true{/if}>{$entry.full_title}</option>
+		{/foreach}
+		</select>
+	</td>
+</tr>
+
+<tr>
+	<td width=15% class=td1_left>Тип альбома:</td>
+	<td class=td1_right>
+		<select name=edit_album_type class=field style="width:100%;">
+			<option value='photo' {if $album.album_type == 'photo'} selected=true{/if}>	Фото</option>
+			<option value='video' {if $album.album_type == 'video'} selected=true{/if}>	Видео</option>
+		</select>
+	</td>
+</tr>
+
+<tr>
+	<td width=15% class=td1_left>Прикрепить к ресторану:</td>
+	<td class=td1_right>
+		<select name=edit_category class=field style="width:100%;">
+		<option value=""></option>
+		{foreach from=$categories item=entry}
+			<option value={$entry.id}{if $entry.id==$rel.cat_id} selected=true{/if}>
+			{$entry.name}</option>
+		{/foreach}
+		</select>
+	</td>
+</tr>
+
+<tr>
+	<td class=td1_left>Имя:</td><td class=td1_right><input type=text name=edit_name class=field style="width:100%;" value="{$album.name}"></td>
+</tr>
+<tr>
+	<td class=td1_left valign=top>Описание:</td><td class=td1_right><textarea name=edit_description class=field style="width:100%;" rows=3>{$album.description}</textarea></td>
+</tr>
+{if $mode=='edit'}
+<tr>
+	<td class=td1_left width=15%>Статус:</td>
+	<td class=td1_right>
+	<select name=edit_status style="width:40%;" class=field>
+		<option value="1" {if $album.status=='1'}selected=true{/if}>Активный</option>
+		<option value="0" {if $album.status=='0'}selected=true{/if}>Ждёт</option>
+	</select>
+	</td>
+</tr>
+<tr>
+<td width=15% class="td1_left">Комментарии:</td>
+<td class="td1_right"><input type=checkbox name=edit_comments {if $album.switch_comments=='1'}checked{/if} id="comm"> <label for="comm">комментарии к файлам</label></tr></tr>
+{/if}
+</table>
+<table width=100% class=content_table>
+	<tr>
+		<th bgcolor=#99CCFF onClick="show('metas', this);" class="button plus" style="border-bottom: none; text-align: left; padding-left: 30px;"><b>Metas</b></th>
+	</tr>
+ </table>
+    <div id="metas" style="display:none;">
+<table width=100% class=content_table>
+	<tr>
+		<td width=15% class=td1_left><b>Title:</b><br><small>(заголовок страницы)</small></td>
+		<td class=td1_right><input type=text name=edit_title style="width: 500px;" class=field value="{$album.title}">
+	</tr>
+	<tr>
+		<td width=15% class=td1_left><b>Кeywords:</b><br><small>(ключевые слова)</small></td>
+		<td class=td1_right><textarea name=edit_meta_keywords class=field rows="4" style="width: 500px;">{$album.meta_keywords}</textarea></td>
+	</tr>
+
+	<tr>
+		<td class=td1_left><b>Description:<br><small></b>(описание страницы)</small></td>
+		<td class=td1_right><textarea name=edit_meta_description class=field rows="4" style="width: 500px;">{$album.meta_description}</textarea></td>
+	</tr>
+</table>
+</div>
+
+<br><br>
+<center><input type=submit name={if $mode=='edit'}submit_edit_album value="Сохранить изменения"{else}submit_add_album value="Создать альбом"{/if} class=button></center>
+</form>
+
+{if $mode=='edit'}
+<br><br>
+<table width=100% cellspacing=1 cellpadding=3 class=content_table>
+<tr>
+<th>Файлы албома</th>
+</tr>
+</table>
+
+<form action="" method=post name=edit_photos>
+{if !$photos_list}
+<br><br><center>В альбоме нет файлов</center><br><br>
+{else}
+<table width=100% cellspacing=1 cellpadding=3 class=content_table>
+<tr>
+<td class=td1_single valign=top>
+
+
+
+<table width={if $photos_count=='1'}25{/if}{if $photos_count=='2'}50{/if}{if $photos_count=='3'}75{/if}{if $photos_count>3}100{/if}% cellspacing=1 cellpadding=3>
+<tr>
+{assign var="i" value=0}
+{foreach from=$photos_list item=entry name=tp}
+{if $i==4}{assign var="i" value=0}</tr><tr>{/if}
+<td valign=top width="25%">
+<input type=hidden id=order_{$entry.id} name=order_changed[{$entry.id}] value="">
+<input type=hidden id=title_{$entry.id} name=title_changed[{$entry.id}] value="">
+<input type=hidden id=link_{$entry.id} name=link_changed[{$entry.id}] value="">
+<input type=hidden id=description_{$entry.id} name=description_changed[{$entry.id}] value="">
+{* Фотка пошла *}
+<table width=100% cellspacing=1 cellpadding=3 bgcolor=#666666>
+<tr bgcolor=#ffffff>
+<td height=180 style="padding: 2px;" valign="top">
+
+<div id="photo_{$entry.id}" style="display: none; height: 160px;" class="ten">
+{*<a href="javascript:makeSiteLink('inpURL_{$entry.sort_order}');document.getElementById('link_{$entry.id}').value=1; void(0);" title="Установить ссылку" class="ten" style="text-decoration: underline;">cсылка</a>:<br>
+<input type=text id=inpURL_{$entry.sort_order} name=edit_link[{$entry.id}] style="width:100%;"  class="field ten" value="{$entry.link}" onchange="document.getElementById('link_{$entry.id}').value=1;">*}
+{*<div class="ten" style="padding-top: 4px;">краткое описание:<br></div>
+<textarea class="field ten" style="width:100%; height: 40px;" name=edit_title[{$entry.id}] onchange="document.getElementById('title_{$entry.id}').value=1;">{$entry.title}</textarea>*}
+<div class="ten" style="padding-top: 4px;">описание:<br></div>
+<textarea  class="field ten" style="width:100%; height: 70px" name=edit_description[{$entry.id}] onchange="document.getElementById('description_{$entry.id}').value=1;">{$entry.description}</textarea>
+</div>
+
+<table width="100%" style="height: 170px;" border="0" cellspacing="0" cellpadding="0" id="nav_photo_{$entry.id}">
+  <tr>
+    <td align="center">
+    {if $entry.filetype == 'video'}
+		<object type="application/x-shockwave-flash" data="/uflvplayer_500x375.swf" height="200" width="200">
+		<param name="bgcolor" value="#FFFFFF" /><param name="allowFullScreen" value="true" />
+		<param name="allowScriptAccess" value="always" />
+		<param name="movie" value="/uflvplayer_500x375.swf" />
+		<param name="FlashVars" value="way={$base_url}/{$photos_folder}/{$entry.id}.{$entry.ext}&amp;swf={$base_url}/uflvplayer_500x375.swf&amp;w=200&amp;h=200&amp;pic=http://&amp;autoplay=0&amp;tools=2&amp;skin=noneblack&amp;volume=70&amp;q=&amp;comment=Ваша подпись" />
+		</object>
+		
+	{else}    
+    	<img src={$base_url}/{$photos_folder}/small-{$entry.id}.{$entry.ext} border="0" width="100" height="100" alt="">
+    {/if}
+    </td>
+  </tr>
+</table>
+
+</td></tr>
+<tr><td onClick="shows('photo_{$entry.id}');" class="button" bgcolor="#3689d8" style="height: 20px; color: white; padding-left: 10px;"><img src="templates/img/plus.gif" width="7" height="7" border="0" alt="" align="left" style="margin: 3px 10px 0 0;"><small>дополнительно</small></td></tr>
+<tr bgcolor=#ffffff class=table_content>
+<td>
+
+<table width="100%" style="height: 25px;" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td colspan="2"><input type=checkbox name=edit_hit[] value={$entry.id} id="edit_hit_{$entry.id}" {if $entry.hit=='1'} checked="checked"{/if}> <label for="edit_hit_{$entry.id}" class="ten">Главная</label></td></tr>
+  <tr>
+    <td><input type=checkbox name=delete_photos[] value={$entry.id} id="del_photo_{$entry.id}"> <label for="del_photo_{$entry.id}" class="ten">Удалить</label></td>
+    <td align="right" style="padding-right: 2px;"><input type=text size="2" class="field ten" name=edit_order[{$entry.id}] value={$entry.sort_order} onchange="document.getElementById('order_{$entry.id}').value=1;"></td>
+  </tr>
+</table>
+
+</td></tr>
+</table>
+
+</td>
+{math equation="x + y" x=$i y=1 assign="i"}
+{/foreach}
+</tr>
+</table>
+
+
+</td></tr>
+</table>
+
+<br><br>
+<center><input type=submit name=submit_save_photos value="Сохранить изменения в альбоме" class=button></center><br><br>
+{/if}</form>
+
+
+
+<form action="" method=post name=add_photos enctype="multipart/form-data">
+<input type=hidden name=parent value={$album.id}>
+<table width=100%  class=content_table>
+<tr>
+<th colspan="2">Добавить файл в альбом</th></tr>
+<tr>
+<td width=20% class=td1_left>Подпись к файлу:</td><td class=td1_right><textarea name="add_photo_title" class="field" style="width: 450px; height: 60px;">{$photo_title}</textarea></td>
+</tr>
+{*<tr>
+<td width=20% class=td1_left><a href="javascript:makeSiteLink('inpURL')" title="Установить ссылку" style="text-decoration: underline;">Ссылка</a>:</td><td class=td1_right><input type=text id=inpURL class=field name=add_photo_link style="width: 450px;"></td>
+</tr>*}
+<tr>
+<td class=td1_left style="height: 30px;">Файл:</td><td class=td1_right><input type=file class=field name=add_new_photo style="width:450px;"><br><div style="padding-top: 5px; font-size: 10px; color: #999;">Разрешенные форматы для загрузки jpg, gif, png. Максимальный размер файла 2 Мб.</div></td>
+</tr></table>
+<br><br><center><input type=submit name=submit_add_photo value="Добавить файл"></center>
+
+<br><br>
+
+</center>
+</form>
+
+
+{/if}

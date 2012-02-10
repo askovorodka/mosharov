@@ -1,0 +1,23 @@
+<center>
+{if $error_message}<font color=red>{$error_message}</font><br><br>{/if}
+<form action="/cabinet/login/" method=post>
+<table width=50% cellspacing=1 cellpadding=3 class=text>
+<tr>
+<td width=25%>Логин:</td><td><input type=text name=login_user value="{$temp_login}"></td>
+</tr>
+<tr>
+<td width=25%>Пароль:</td><td><input type=password name=login_password></td>
+</tr>
+<tr>
+<td>&nbsp;</td><td nowrap="nowrap"><input type=checkbox name=login_save> запомнить логин и пароль</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td><input type=submit name=submit_login value="Вход"></td></tr>
+</table>
+</form>
+</center>
+<br><br>
+<p><strong>!</strong> Если Вы забыли пароль, пройдите процедуру <a style='position:left;' href="{$base_url}/cabinet/restore" class="blue"><strong>восстановления
+пароля</strong></a>.<br><br></p>
+<p><strong>!</strong> Если у вас нет логина и пароля, просим Вас пройти процедуру <a href={$module_url}/register/><strong>регистрации</strong></a>.</p>

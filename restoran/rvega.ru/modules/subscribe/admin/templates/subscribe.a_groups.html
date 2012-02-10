@@ -1,0 +1,52 @@
+<table width=100% class=content_table>
+<tr>
+<th>Добавить электронную почту</th>
+</tr>
+<tr>
+<td valign="top" class="td1_middle">
+<form action="" method=post>
+
+<table width="100%" style="height: 30px;" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="150" nowrap>Электронная почта:</td>
+    <td width="320"><input type=text name=new_group class=field style="width: 300px;"></td>
+    <td><input type=submit name=submit_new_group value="Добавить" class="hand ten"></td>
+  </tr>
+</table>
+</form>
+
+</td>
+</tr></table>
+<br><br>
+
+<form action="" method=post>
+<table width=100% class=content_table>
+	<tr><th>Группа подписчиков </th><th width=10% align=center>Удалить</th></tr>
+{if $groups_list}
+{foreach from=$groups_list item=group name=tree}
+	{if $col==1}
+	{assign var="td" value='td1'}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value='td2'}
+	{assign var="col" value=1}
+	{/if}
+
+	<tr onmouseover="flatlinkOver(this)" {if $smarty.foreach.tree.iteration%2==1}onmouseout="flatlinkOut(this)"{else}onmouseout="flatlinkOut1(this)"{/if}>
+	<td class={$td}_left><input type=text name=edit_group[{$group.id}] class=field style="width:100%" value="{$group.name}"></td>
+	<td class={$td}_right align=center><input type=checkbox name=delete_group[{$group.id}]></td>
+	</tr>
+	{/foreach}
+	<tr>
+	<td colspan=2 align=center></td>
+	</tr>
+	<tr>
+	<td colspan=2 align=center><input type=submit name=submit_save_groups value="Сохранить изменения"></td>
+	</tr>
+{else}
+<td colspan="2" class="td1_middle" style="height: 25px;"><center>Нет ниодной группы подписчиков.</center></td>
+{/if}
+</table>
+</form>
+
+

@@ -1,0 +1,79 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>{$page_title}</title>
+<meta name="Keywords" content="{$meta_keywords}">
+<meta name="Description" content="{$meta_description}">
+{foreach from=$css item=css}
+<link rel="stylesheet" type="text/css" href="{$css}">
+{/foreach}
+
+{foreach from=$js item=js}
+<script src="{$js}" type="text/javascript"></script>
+{/foreach}
+
+</head>
+<body>
+<table class="mtbl" cellspacing="0" cellpadding="0" align="center">
+  <tr>
+    <td class="toptr"><div class="logo"><a href="{$base_url}"><img src="{$template_image}logo.jpg" width="201" height="131"></a></div>
+	<table class="logotbl" cellspacing="0" cellpadding="0">
+	  <tr>
+		<td class="langru">Русский</td>
+		<td class="langen"><a href="/eng/">English</a></td>
+	  </tr>
+	</table></td>
+  </tr>
+  <tr>
+    <td class="sectr">
+    <div id="toping"></div>
+   	{include file="../templates/top_menu_block.html"}
+	<!--- PICT ROTATION --->
+	<div id="rotator">
+		<ul>
+			{foreach from=$background_images item=b_image name="rotate"}
+				<li{if $smarty.foreach.rotate.first} class="show"{/if}><img src="{$b_image.image}"></li>
+			{/foreach}
+		</ul>
+	</div>
+
+	{*<div class="main_image" style="position:relative;">
+		<img id="main_image" src="{$template_image}main.jpg" width="1200" height="532" hspace="0" vspace="0" style="z-index:10; position:absolute;">
+	</div>*}
+
+	<br>
+	<!--- /PICT ROTATION --->
+	<table class="captt" cellspacing="0" cellpadding="0">
+	  <tr>
+		<td class="capt1">&nbsp;</td>
+		<td class="capt3"><h2>Новости и акции</h2></td>
+		<td class="capt2">&nbsp;</td>
+	  </tr>
+	</table>
+	</td>
+  </tr>
+  <tr>
+    <td>
+    {include file="../templates/top_news_block.html"}
+	</td>
+  </tr>
+  <tr height="100%">
+    <td class="txt">
+	
+		{if $content=='' or !$content}
+			{assign var="content" value=""}
+			{fetch file=$template assign="content"}
+		{/if}
+		{eval var=$content}
+	
+	</td>
+  </tr>
+  <tr>
+    <td class="bline">
+    {include file="../templates/top_products_block.html"}
+	</td>
+  </tr>
+  {include file="../templates/footer_block.html"}
+</table>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<h1>Новости</h1>
+{foreach from=$news_list item=news}
+<table width=100% cellspacing=1 cellpadding=3>
+<tr>
+<td><small>[{$news.publish_date|date_format:"%d.%m.%Y %H:%M"}]</small> <b>{$news.title}</b><br>
+{if $news.image!=''}<br><img src={$base_url}/uploaded_files/news/{$news.image} align=left>{/if}
+{$news.small_text}
+{if $news.text!=''}<br><a class="mommyhref" href={$module_url}/archive/{$news.id}>читать дальше</a>{/if}
+</td>
+</tr>
+</table>
+<br>
+{/foreach}
+<br>
+{if $mode=='archive'}
+<center>
+Страница: <a href="{$module_url}/archive/page_1"><<</a>
+	
+{section name=p loop=$pages}
+	{if $pages[p]==$current_page}
+	{$pages[p]}
+	{else}
+	<a href="{$module_url}/archive/page_{$pages[p]}">{$pages[p]}</a>
+	{/if}
+{/section}
+	
+<a href="{$module_url}/archive/page_{$total_pages}">>></a>
+</center>
+{else}
+<center>[<a href={$current_url}/archive>архив новостей</a>]</center>
+{/if}

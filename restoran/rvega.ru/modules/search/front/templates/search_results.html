@@ -1,0 +1,52 @@
+{if $query}
+
+	{if !$results_list}
+	<h1 style="margin-top: 13px; margin-bottom: 0px;">ПОИСК</h1>
+	<br>
+		По вашему запросу ничего не найдено
+	{else}
+	<h1 style="margin-top: 13px; margin-bottom: 0px;">ПОИСК<font style="color : #333333; font-size : 11px; font-weight : normal; text-transform : none;">&nbsp;&nbsp;&laquo;{$query}&raquo;</font></h1>
+	<br>
+
+		{if $current_page!='1'}
+		{math equation="x * (y-1) +1" x=$per_page y=$current_page assign="num"}
+		{else}
+		{assign var="num" value="1"}
+		{/if}
+		{foreach from=$results_list item=result}
+		{if strstr($result.url, "?")==""}{assign var=url value=$result.url|cat:"/"}{/if}
+		{assign var=url value=$url|replace:$base_url:""}
+
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td width="1"><font style="color : #a7a7a7; font-size : 11px;">{$num}</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td><a href="{$url}">{if $result.title}{$result.title}{else}{$url}{/if}</a></td>
+</tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td><small><font style="font-size : 11px; color : #666666;">...{$result.content}...</font></small></td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td><a href="{$base_url}{$url}" style="color : #cc9999; font-size : 10px;">{$base_url}{$url}</a></td></tr>
+</table>
+
+		<br><br>
+		{math equation="x + y" x=$num y=1 assign="num"}
+		{/foreach}
+	{/if}
+
+
+	{if $total_pages>1}
+	<br>
+	<center>
+	Страница:&nbsp;&nbsp;<a href="{$base_url}/{$search_url}/?query={$query}&page=1" style="text-decoration : none; font-size : 11px;">&laquo;</a>
+
+	{section name=p loop=$pages}
+		{if $pages[p]==$current_page}
+		{$pages[p]}
+		{else}
+		<a href="{$base_url}/{$search_url}/?query={$query}&page={$pages[p]}">{$pages[p]}</a>
+		{/if}
+	{/section}
+
+	<a href="{$base_url}/{$search_url}/?query={$query}&page={$total_pages}" style="text-decoration : none; font-size : 11px;">&raquo;</a>
+	</center>
+	{/if}
+
+{/if}

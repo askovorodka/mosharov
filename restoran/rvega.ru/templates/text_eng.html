@@ -1,0 +1,78 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>{$page_title}</title>
+<meta name="Keywords" content="{$meta_keywords}">
+<meta name="Description" content="{$meta_description}">
+{foreach from=$css item=css}
+<link rel="stylesheet" type="text/css" href="{$css}">
+{/foreach}
+
+{foreach from=$js item=js}
+<script src="{$js}" type="text/javascript"></script>
+{/foreach}
+</head>
+<body>
+<table class="mtbl" cellspacing="0" cellpadding="0" align="center">
+  <tr>
+    <td class="toptr"><div class="logo"><a href="{$base_url}/eng/"><img src="{$template_image}logo.jpg" width="201" height="131"></a></div>
+	<table class="logotbl" cellspacing="0" cellpadding="0">
+	  <tr>
+		<td class="langru"><a href="/">Русский</a></td>
+		<td class="langen">English</td>
+	  </tr>
+	</table></td>
+  </tr>
+  <tr>
+    <td class="sectrin"><div id="toping"></div>
+		{include file="../templates/top_eng_menu_block.html"}	
+		<!--- PICT ROTATION --->
+		<div id="rotator">
+			<ul>
+				{foreach from=$background_images item=b_image name="rotate"}
+					<li{if $smarty.foreach.rotate.first} class="show"{/if}><img src="{$b_image.image}"></li>
+				{/foreach}
+			</ul>
+		</div>
+		
+		<br>
+	<!--- /PICT ROTATION --->
+	</td>
+  </tr>
+  <tr height="100%">
+    <td>
+    <table class="capttin" cellspacing="0" cellpadding="0">
+	  <tr>
+		<td class="capt1">&nbsp;</td>
+		<td class="capt3"><h2>News and Special Offers</h2></td>
+		<td class="capt2">&nbsp;</td>
+	  </tr>
+	</table>
+    
+    <table class="txtin" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="100%">
+        
+		{if $content=='' or !$content}
+			{assign var="content" value=""}
+			{fetch file=$template assign="content"}
+		{/if}
+		{eval var=$content}
+        
+        </td>
+      </tr>
+	</table>
+	
+	</td>
+  </tr>
+  <tr>
+    <td class="bline">
+		
+	</td>
+  </tr>
+	
+	{include file="../templates/footer_eng_block.html"}
+  
+</table>
+</body>
+</html>
