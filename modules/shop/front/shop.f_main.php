@@ -446,16 +446,15 @@ SWITCH (TRUE) {
 
 	BREAK;
 
-	
+
 	CASE ($url[$n]=='final' && $url[$n-1]=='basket' && count($url)==3):
 
 		$page_found=true;
 		$template='basket_final.html';
 
 	BREAK;
-	
-	
-	
+
+
 	CASE ($url[$n]=='submit' && $url[$n-1]=='basket' && count($url)==3):
 
 		if (isset($_POST['submit_order'])) {
@@ -467,7 +466,7 @@ SWITCH (TRUE) {
 				$users->setName($_POST['name']);
 				$users->setPhone1($_POST['phone']);
 				$users->setPhone2($_POST['phone2']);
-				$user$users->register();
+				$user->register();
 
 			}
 			exit();
@@ -478,7 +477,7 @@ SWITCH (TRUE) {
 			}
 			else
 			{
-				//exit();
+				
 				$navigation[]=array("url" => 'basket',"title" => 'Моя корзина');
 				$navigation[]=array("url" => 'confirm',"title" => 'Ваш заказ выполнен');
 
