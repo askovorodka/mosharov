@@ -144,6 +144,7 @@ if (isset($_POST['submit_add_photo'])) {
 	$parent=$_POST['parent'];
 	$description=String::secure_format($_POST['add_photo_title']);
 	$link=String::secure_format($_POST['add_photo_link']);
+	//$youtube=String::secure_format($_POST['add_photo_youtube']);
 	$file_name=$_FILES['add_new_photo']['name'];
 	$tmp=$_FILES['add_new_photo']['tmp_name'];
 	
@@ -154,7 +155,7 @@ if (isset($_POST['submit_add_photo'])) {
 	$check_file_name=explode(".",$file_name);
 	$ext=$check_file_name[count($check_file_name)-1];
 	
-	if (in_array($ext, array('flv','avi', 'mpg', 'mpeg4')))
+	if (in_array($ext, array('flv','avi', 'mpg', 'mpeg4')) || !empty($link))
 	{
 		$filetype = 'video';
 	}
@@ -163,7 +164,7 @@ if (isset($_POST['submit_add_photo'])) {
 		$filetype='photo';
 	}
 
-	if (!in_array($ext,$trusted_formats)) {
+	if (!in_array($ext,$trusted_formats) && empty($link)) {
 		$smarty->assign("error","Разрешены файлы форматов ".ALLOWED_FORMATS);
 		$check=false;
 	}
@@ -195,23 +196,31 @@ if (isset($_POST['submit_add_photo'])) {
 		if ($order['s_order']=='') $order=1;
 		else $order=$order['s_order'];
 		
-		$filesize=round(filesize($tmp)/1000,2);
-		$result=$db->query("INSERT INTO fw_photoalbum_images(parent,description,link,ext,sort_order,insert_date) VALUES('$parent','$description','$link','$ext','$order','".time()."')");
-		$id=mysql_insert_id();
-		
-		if (move_uploaded_file($tmp, BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext)) {
-			chmod(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext, 0644);
-			if ($filetype == 'photo')
-			{
-				Image::resize(BASE_PATH."/uploaded_files/photos/$id.$ext", BASE_PATH."/uploaded_files/photos/small-$id.$ext", PREVIEW1_WIDTH,PREVIEW1_HEIGTH, true, "#32321d");
-				Image::resize(BASE_PATH."/uploaded_files/photos/$id.$ext", BASE_PATH."/uploaded_files/photos/medium-$id.$ext", PREVIEW2_WIDTH,PREVIEW2_HEIGTH, true, "#32321d");
-				Image::resize(BASE_PATH."/uploaded_files/photos/$id.$ext", BASE_PATH."/uploaded_files/photos/big-$id.$ext", 800,600, false, "#32321d");
-			}
-			$smarty->assign("message","Файл успешно загружен");
+		if ($link)
+		{
+			$result=$db->query("INSERT INTO fw_photoalbum_images(parent,description,link,ext,sort_order,insert_date) VALUES('$parent','$description','$link','$ext','$order','".time()."')");
+			$smarty->assign("message","Ссылка на файл Youtube добавлена");
 		}
-		else {
-			$result=$db->query("DELETE FROM fw_photoalbum_images WHERE id='".mysql_insert_id()."'");
-			$smarty->assign("error","Файл не загружен!");
+		else 
+		{
+			$filesize=round(filesize($tmp)/1000,2);
+			$result=$db->query("INSERT INTO fw_photoalbum_images(parent,description,link,ext,sort_order,insert_date) VALUES('$parent','$description','$link','$ext','$order','".time()."')");
+			$id=mysql_insert_id();
+			
+			if (move_uploaded_file($tmp, BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext)) {
+				chmod(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$id.'.'.$ext, 0644);
+				if ($filetype == 'photo')
+				{
+					Image::resize(BASE_PATH."/uploaded_files/photos/$id.$ext", BASE_PATH."/uploaded_files/photos/small-$id.$ext", PREVIEW1_WIDTH,PREVIEW1_HEIGTH, true, "#32321d");
+					Image::resize(BASE_PATH."/uploaded_files/photos/$id.$ext", BASE_PATH."/uploaded_files/photos/medium-$id.$ext", PREVIEW2_WIDTH,PREVIEW2_HEIGTH, true, "#32321d");
+					Image::resize(BASE_PATH."/uploaded_files/photos/$id.$ext", BASE_PATH."/uploaded_files/photos/big-$id.$ext", 800,600, false, "#32321d");
+				}
+				$smarty->assign("message","Файл успешно загружен");
+			}
+			else {
+				$result=$db->query("DELETE FROM fw_photoalbum_images WHERE id='".mysql_insert_id()."'");
+				$smarty->assign("error","Файл не загружен!");
+			}
 		}
 		
 		$location=$_SERVER['HTTP_REFERER'];
@@ -542,7 +551,7 @@ SWITCH (TRUE) {
 		$photos_list=String::unformat_array($photos_list);
 		foreach ($photos_list as $key=>$val)
 		{
-			if (in_array(strtolower($photos_list[$key]['ext']), array('flv', 'avi', 'mpg', 'mpeg4')))
+			if (in_array(strtolower($photos_list[$key]['ext']), array('flv', 'avi', 'mpg', 'mpeg4')) || !empty($photos_list[$key]['link']))
 			{
 				$photos_list[$key]['filetype'] = 'video';
 			}
