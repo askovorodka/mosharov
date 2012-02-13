@@ -1,0 +1,27 @@
+<p>
+	<ul>
+		{foreach name=tree from=$tree item=entry}
+			<a href="{$parent_url}/{$entry.url}/">
+				<li>
+					{$entry.name}
+					{if count($entry.sublist)>0}
+						{assign var=_tmp_parent_url value=$parent_url}
+						{assign var=parent_url value=$parent_url|cat:"/"|cat:$entry.url}
+						{assign var=_tmp_tree value=$tree}
+							{assign var=tree value=$entry.sublist}
+							{include file="../modules/site_map/front/templates/site_map_main.html"}
+							{assign var=tree value=$_tmp_tree}
+						{assign var=parent_url value=$_tmp_parent_url}
+					{/if}
+				</li>
+			</a>
+		{/foreach}
+		
+		{*<a href="{$parent_url}/shop/"><li>Каталог</li></a>
+		{foreach from=$catalog item=category}
+			<li style="margin-left:{$category.padding}px"><a href="{$base_url}/shop{$category.full_url}">{$category.name}</a></li>
+		{/foreach}
+		*}
+		
+	</ul>
+</p>

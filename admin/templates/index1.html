@@ -1,0 +1,62 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="templates/main.css">
+<title>Админ панель</title>
+</head>
+{literal}
+<SCRIPT language=JavaScript>
+<!--
+function show_menu(name,image)
+{
+if(document.getElementById(name).style.display!="none") {
+		document.getElementById(name).style.display="none";
+		document.getElementById('button_'+name).style.background="#B9C4FA";
+		document.getElementById(image).src = "templates/img/menu_closed.gif";
+	}
+	else {
+		document.getElementById(name).style.display="";
+		document.getElementById('button_'+name).style.background="#8B9DF9";
+		document.getElementById(image).src = "templates/img/menu_open.gif";
+	}
+}
+//-->
+</SCRIPT>
+{/literal}
+
+<table width=100% border=1>
+<tr>
+<td width=20% valign=top>
+Юзер: {$user_login}<br>
+Права: {$user_priv}<br><br>
+Меню:<br><br><br>
+
+{foreach from=$main_menu item=entry}
+<div class=menu_button_box align=center id=button_{$entry.name} {if $current_module==$entry.name}style="background: #8B9DF9;"{/if}>
+<a href="javascript:show_menu('{$entry.name}','image_{$entry.name}');" class=menu_button><img id="image_{$entry.name}" {if $current_module==$entry.name}src="templates/img/menu_open.gif"{else}src="templates/img/menu_closed.gif"{/if} border=0></a>&nbsp;&nbsp;&nbsp;<a href="javascript:show_menu('{$entry.name}','image_{$entry.name}');" class=menu_button>{$entry.title}</a>
+</div>
+{if $entry.sub}
+<div id={$entry.name} {if $current_module!=$entry.name}style="display: none;"{/if}>
+{foreach from=$entry.sub item=sub}
+&nbsp;&nbsp;&nbsp;&nbsp;<img src=templates/img/menu.gif align=absmiddle> <a href={$sub.link} class=menu_parent>{$sub.name}</a><br>
+{/foreach}
+<br>
+</div>
+{/if}
+{/foreach}
+</td>
+<td valign=top>
+<b>Крошки</b>:
+
+{foreach name=nav_loop from=$navigation item=nav}
+{assign var="temp" value=$nav.title}
+	  {assign var="ntitle" value=$temp}
+      {if $smarty.foreach.nav_loop.last}
+		- {$ntitle}
+      {else}
+        - <a href="{$nav.url}" class=navigation>{$ntitle}</a>
+      {/if}
+{/foreach}
+<br><br>
+{include file="$template"}</td>
+</tr>
+</table>

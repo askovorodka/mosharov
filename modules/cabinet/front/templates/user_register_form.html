@@ -1,0 +1,59 @@
+{if $registration_success=='1'}
+Благодарим за регистрацию!<br><br>
+На указанный Вами почтовый адрес было выслано письмо с Вашими регистрационными данными. Теперь Вы можете войти в свой <a href="/cabinet/">личный кабинет</a>.
+<br><br>
+{else}
+{literal}
+<script language="JavaScript">
+function submit_reg_form(){
+  if ((document.reg_form.reg_name.value == '') | (document.reg_form.reg_login.value == '') | (document.reg_form.reg_password.value == '') | (document.reg_form.reg_mail.value == '') | (document.reg_form.reg_tel.value == '') | (document.reg_form.reg_deliver.value == '')) {
+    alert("Пожалуйста, заполните обязательные поля");
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+</script>
+{/literal}
+<center>
+<form action="/cabinet/register/" method=post name=reg_form onSubmit="return submit_reg_form();">
+<input type="hidden" name="submit_user_register" value="1">
+{if $error_message}<font color=red>{$error_message}</font><br><br>{/if}
+<table width=100% cellspacing=1 cellpadding=3 class=text>
+<tr>
+<td width="90" style="padding-left: 10px;">Ф.И.О:<font color=red>*</font></td><td><input type=text name=reg_name style="width:100%" value="{$temp_reg_name}" class=field></td>
+</tr>
+<tr>
+<td width="90" style="padding-left: 10px;">Компания:</td><td><input type=text name=reg_company style="width:100%" value="{$temp_reg_company}" class=field></td>
+</tr>
+<tr>
+{*
+<td width="90" style="padding-left: 10px;">Логин: <font color=red>*</font> </td><td><input type=text name=reg_login style="width:100%" value="{$temp_reg_login}" class=field></td>
+</tr>
+<tr>
+<td width="90" style="padding-left: 10px;">Пароль: <font color=red>*</font></td><td><input type=text name=reg_password style="width:100%" class=field></td>
+</tr>
+*}
+<tr>
+<td width="90" style="padding-left: 10px;">Элек. почта: <font color=red>*</font></td><td><input type=text name=reg_mail style="width:100%" value="{$temp_reg_mail}" class=field></td>
+</tr>
+<tr>
+<td width="90" style="padding-left: 10px;">Телефон: <font color=red>*</font></td><td><input type=text name=reg_tel style="width:100%" value="{$temp_reg_tel}" class=field></td>
+</tr>
+<tr>
+<td width="90" style="padding-left: 10px;">Адрес<br>доставки: <font color=red>*</font></td><td><textarea name=reg_deliver style="width:100%" rows="5" class=field>{$temp_reg_deliver}</textarea></td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td valign="top"><input type="submit" name="submit_user_register" value="Регистрация"></td></tr>
+</table>
+<br>
+</form>
+</center>
+<br>
+<div style="padding: 0 10px 0 10px;">
+<p><font color=red>*</font> <strong>Поля обязательные для заполнения.</strong><br>
+<B>!</B> Для восстановления пароля перейдите по <a href="cabinet/my_pass/">этой ссылке</a>.<br>
+<strong>!</strong> Настоятельно рекомендуем Вам указывать существующий адрес, так как на него будут высылаться копии Ваших заказов и прочая важная информация.</div></p>
+{/if}

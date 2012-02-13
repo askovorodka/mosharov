@@ -1,0 +1,52 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>Странице не найдена</title>
+<meta name="Keywords" content="{$meta_keywords}">
+<meta name="Description" content="{$meta_description}">
+{foreach from=$css item=css}
+<link rel="stylesheet" type="text/css" href="{$css}">
+{/foreach}
+
+{foreach from=$js item=js}
+<script src="{$js}" type="text/javascript"></script>
+{/foreach}
+
+</head>
+<body>
+<table class="mtbl" cellspacing="0" cellpadding="0">
+  <tr height="234">
+    <td width="271"><a href="{$base_url}"><img src="{$template_image}logo.png" width="271" height="234"></a></td>
+    <td colspan="2" class="rtbg"><div class="toptel" align="center">{$smarty.const.PHONE1}<br>{$smarty.const.PHONE2}</div></td>
+  </tr>
+  <tr height="36">
+    <td colspan="3" class="gline">{$smarty.const.HEADER_TITLE}</td>
+  </tr>
+  <tr height="100%">
+    <td class="leftside">
+    {include file="../templates/left_menu_block.html"}
+	<br><br>
+	<center><div class="bann"><br><a href="{$base_url}/insertfiles/price_list_2011_3k.xls">Скачать прайс-лист<br> с нашей продукцией</a></div></center>
+	<img src="{$template_image}clear.png" width="271" height="1"><br>
+	</td>
+    <td class="txt">
+    
+		<center>Запрашиваемая вами страница не найдена.</center>    
+    
+	</td>
+	
+    <td class="rightside"><img src="{$template_image}clear.png" width="231" height="1"><br>
+    
+	<a href="{$base_url}/news/" id="news">Новости и акции</a><br><br>
+	
+	{foreach from=$news_list item=news name=news}
+		<span class="ndate">{$news.publish_date|date_format:"%d.%m.%Y"}</span><br>
+		<a href="{$base_url}/news/archive/{$news.id}/">{$news.title|strip_tags}</a><br><br>
+	{/foreach}
+	
+	</td>
+  </tr>
+  {include file="../templates/footer_block.html"}
+</table>
+</body>
+</html>
