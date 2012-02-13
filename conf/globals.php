@@ -1,7 +1,7 @@
 <?php
 
   define("DB_HOST","localhost");
-  define("DB_NAME","shop-toy");
+  define("DB_NAME","kidsboom");
   define("DB_USER","demo");
   define("DB_PASS","gthtgenmt");
 
