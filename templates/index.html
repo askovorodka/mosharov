@@ -38,6 +38,11 @@
     </td>
     <td class="cont">
     
+    {if $current_url == 'home'}
+    	{include file="`$smarty.const.TPL_PATH`top_search.html"}
+    	{include file="`$smarty.const.TPL_PATH`top_special_block.html"}
+    {/if}
+    
     {if $content=='' or !$content}
 	{assign var="content" value=""}
 	{fetch file=$template assign="content"}
