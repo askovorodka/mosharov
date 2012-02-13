@@ -3,7 +3,7 @@ $(document).ready(function() {
 
 	/* This is basic - uses default settings */
 	
-	$("a#single_image").fancybox({
+	$("a.gallery").fancybox({
 		padding:0,
 		margin:0,
 		overlayColor:'#000'

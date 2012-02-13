@@ -23,7 +23,7 @@
 	<div class="gallery_small">
 	{foreach from=$photos_list item=photo name=tp}
 	{if $album.album_type=='photo'}
-		<a id="single_image" title="{$photo.descroption|strip_tags}" href="{$base_url}/{$photos_folder}/big-{$photo.id}.{$photo.ext}" class="gallery"><img src={$base_url}/{$photos_folder}/small-{$photo.id}.{$photo.ext} border=0 alt="{$photo.title|replace:'"':''}"></a>
+		<a rel="group1" title="{$photo.descroption|strip_tags}" href="{$base_url}/{$photos_folder}/big-{$photo.id}.{$photo.ext}" class="gallery"><img src={$base_url}/{$photos_folder}/small-{$photo.id}.{$photo.ext} border=0 alt="{$photo.title|replace:'"':''}"></a>
 		
 	{elseif $album.album_type == 'video'}
 		
