@@ -69,7 +69,7 @@
 	position: relative;
 	width: 100%;
 	height: 100%;
-	background: #fff;
+	background: #000;
 }
 
 #fancybox-content {
@@ -80,7 +80,7 @@
 	position: relative;
 	overflow: hidden;
 	z-index: 1102;
-	border: 0px solid #fff;
+	border: 0px solid #000;
 }
 
 #fancybox-hide-sel-frame {
@@ -263,20 +263,20 @@
 	padding-bottom: 10px;
 	text-align: center;
 	color: #333;
-	background: #fff;
+	background: #000;
 	position: relative;
 }
 
 .fancybox-title-outside {
 	padding-top: 10px;
-	color: #fff;
+	color: #000;
 }
 
 .fancybox-title-over {
 	position: absolute;
 	bottom: 0;
 	left: 0;
-	color: #FFF;
+	color: #000;
 	text-align: left;
 }
 
@@ -310,7 +310,7 @@
 }
 
 #fancybox-title-float-main {
-	color: #FFF;
+	color: #000;
 	line-height: 29px;
 	font-weight: bold;
 	padding: 0 0 3px 0;

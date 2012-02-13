@@ -3,12 +3,19 @@ $(document).ready(function() {
 
 	/* This is basic - uses default settings */
 	
-	$("a#single_image").fancybox();
+	$("a#single_image").fancybox({
+		padding:0,
+		margin:0,
+		overlayColor:'#000'
+	});
 	
 	/* Using custom settings */
 	
 	$("a#inline").fancybox({
-		'hideOnContentClick': true
+		'hideOnContentClick': true,
+		padding:0,
+		margin:0,
+		overlayColor:'#000'
 	});
 
 	/* Apply fancybox to multiple items */

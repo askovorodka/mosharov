@@ -1095,9 +1095,9 @@
 	};
 
 	$.fn.fancybox.defaults = {
-		padding : 10,
-		margin : 40,
-		opacity : false,
+		padding : 0,
+		margin : 0,
+		opacity : true,
 		modal : false,
 		cyclic : false,
 		scrolling : 'auto',	// 'auto', 'yes' or 'no'
@@ -1116,8 +1116,8 @@
 		hideOnContentClick : false,
 
 		overlayShow : true,
-		overlayOpacity : 0.7,
-		overlayColor : '#777',
+		overlayOpacity : 0,
+		overlayColor : '#000',
 
 		titleShow : true,
 		titlePosition : 'float', // 'float', 'outside', 'inside' or 'over'

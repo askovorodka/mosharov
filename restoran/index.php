@@ -91,6 +91,7 @@ $js[]=BASE_URL."/javascript/tools_13-02-12.js";
 $js[]=BASE_URL."/javascript/fancybox/jquery.fancybox-1.3.4.pack.js";
 $js[]=BASE_URL."/javascript/fancybox/jquery.easing-1.3.pack.js";
 $js[]=BASE_URL."/javascript/fancybox/jquery.mousewheel-3.0.4.pack.js";
+//$js[]=BASE_URL."/javascript/fancybox/jquery.fancybox-1.3.4.js";
 //$js[]=BASE_URL."/video/js/mootools.js";
 //$js[]=BASE_URL."/video/js/swfobject.js";
 //$js[]=BASE_URL."/video/js/videobox.js";
