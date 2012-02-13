@@ -1,7 +1,6 @@
 <?php
 ob_start();
 
-
 //error_reporting(E_ALL);
 //ini_set('display_errors','On');
 
@@ -81,13 +80,17 @@ $switch_off_smarty=false;
 
 $css[] = BASE_URL."/templates/style.css";
 $css[]=BASE_URL."/templates/jquery.lightbox-0.5.css";
-$css[] = BASE_URL."/video/css/videobox.css";
+//$css[] = BASE_URL."/video/css/videobox.css";
+$css[] = BASE_URL."/javascript/fancybox/jquery.fancybox-1.3.4.css";
 
 $js[]=BASE_URL."/javascript/jquery-1.5.min.js";
-$js[]=BASE_URL."/javascript/jquery.lightbox-0.5.js";
+//$js[]=BASE_URL."/javascript/jquery.lightbox-0.5.js";
 $js[]=BASE_URL."/javascript/jquery.validate.min.js";
-$js[]=BASE_URL."/javascript/jquery.center.js";
-$js[]=BASE_URL."/javascript/tools_01-06-11.js";
+//$js[]=BASE_URL."/javascript/jquery.center.js";
+$js[]=BASE_URL."/javascript/tools_13-02-12.js";
+$js[]=BASE_URL."/javascript/fancybox/jquery.fancybox-1.3.4.pack.js";
+$js[]=BASE_URL."/javascript/fancybox/jquery.easing-1.3.pack.js";
+$js[]=BASE_URL."/javascript/fancybox/jquery.mousewheel-3.0.4.pack.js";
 //$js[]=BASE_URL."/video/js/mootools.js";
 //$js[]=BASE_URL."/video/js/swfobject.js";
 //$js[]=BASE_URL."/video/js/videobox.js";

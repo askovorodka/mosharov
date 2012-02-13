@@ -136,9 +136,9 @@ SWITCH (TRUE) {
 		
 		if ($album['album_type'] == 'video')
 		{
-			$js[]=BASE_URL."/video/js/mootools.js";
-			$js[]=BASE_URL."/video/js/swfobject.js";
-			$js[]=BASE_URL."/video/js/videobox.js";
+			//$js[]=BASE_URL."/video/js/mootools.js";
+			//$js[]=BASE_URL."/video/js/swfobject.js";
+			//$js[]=BASE_URL."/video/js/videobox.js";
 		}
 		
 		for ($f=0;$f<count($cat_list);$f++) {
@@ -150,10 +150,14 @@ SWITCH (TRUE) {
 				
 				$photos_list=$db->get_all("SELECT * FROM fw_photoalbum_images WHERE parent='$album_id' ORDER BY sort_order LIMIT ".$pager['limit']);
 				
-				for ($i=0;$i<sizeof($photos_list);$i++) {
-					$output=Image::image_details(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$photos_list[$i]['id'].'.'.$photos_list[$i]['ext']);
-					$photos_list[$i]['width']=$output['width']+20;
-					$photos_list[$i]['height']=$output['height']+20;
+				for ($i=0;$i<sizeof($photos_list);$i++) 
+				{
+					if ($photos_list[$i]['link'] == "")
+					{
+						$output=Image::image_details(BASE_PATH.'/'.PHOTOS_FOLDER.'/'.$photos_list[$i]['id'].'.'.$photos_list[$i]['ext']);
+						$photos_list[$i]['width']=$output['width']+20;
+						$photos_list[$i]['height']=$output['height']+20;
+					}
 				}
 				
 				if ($cat_list[$f]['full_title']!='/') {

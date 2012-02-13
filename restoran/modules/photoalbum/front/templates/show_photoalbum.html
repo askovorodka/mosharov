@@ -23,11 +23,27 @@
 	<div class="gallery_small">
 	{foreach from=$photos_list item=photo name=tp}
 	{if $album.album_type=='photo'}
-		<a title="{$photo.descroption|strip_tags}" href="{$base_url}/{$photos_folder}/big-{$photo.id}.{$photo.ext}" class="gallery"><img src={$base_url}/{$photos_folder}/small-{$photo.id}.{$photo.ext} border=0 alt="{$photo.title|replace:'"':''}"></a>
+		<a id="single_image" title="{$photo.descroption|strip_tags}" href="{$base_url}/{$photos_folder}/big-{$photo.id}.{$photo.ext}" class="gallery"><img src={$base_url}/{$photos_folder}/small-{$photo.id}.{$photo.ext} border=0 alt="{$photo.title|replace:'"':''}"></a>
+		
 	{elseif $album.album_type == 'video'}
-	<a href="/uploaded_files/photos/{$photo.id}.{$photo.ext}" rel="vidbox" title="{$photo.description}">
-	{$photo.description}<br>
-	<img src="/templates/img/video.jpg" width="233" height="150" /></a>
+		
+		<a id="inline" href="#data_{$photo.id}" title="{$photo.description}">
+		{$photo.description}<br>
+		<img src="/templates/img/video.jpg" width="233" height="150" /></a>
+		
+		<div style="display:none">
+			<div id="data_{$photo.id}">
+				<object type="application/x-shockwave-flash" data="{$base_url}/uppod-video.swf" width="600" height="475">
+				<param name="bgcolor" value="#ffffff" />
+				<param name="allowFullScreen" value="true" />
+				<param name="allowScriptAccess" value="always" />
+				<param name="wmode" value="transparent" />
+				<param name="movie" value="{$base_url}/uppod-video.swf" />
+				<param name="flashvars" value="st={$base_url}/video48-2061.txt&amp;file={if !empty($photo.link)}{$photo.link}{else}{$base_url}/uploaded_files/photos/{$photo.id}.{$photo.ext}{/if}" />
+				</object>				
+			</div>
+		</div>
+		
 	{/if}
 	{/foreach}
 	</div>
