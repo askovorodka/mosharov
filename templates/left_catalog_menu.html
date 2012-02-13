@@ -1,48 +1,10 @@
-	<ul class="menu1"><a href="#">Одежда для мальчиков</a>
-    	<li><a href="#">Комбинезоны, песочники</a></li>
-    	<li><a href="#">Детские костюмы, комплекты</a></li>
-    	<li><a href="#">Футболки, майки, трусы, поло</a></li>
-        <li><a href="#">Детские брюки, джинсы</a></li>
-        <li><a href="#">Рубашки, толстовки</a></li>
-        <li><a href="#">Детские шорты, плавки</a></li>
-        <li><a href="#">Аксессуары,головные уборы</a></li>
-        <li><a href="#">Водолазки, свитера, кофты, жилетки</a></li>
-        <li><a href="#">Куртки, ветровки, пиджаки</a></li>
-        <li><a href="#">Детские халаты, пижамы</a></li>
-        <li><a href="#">Детские носки, колготки</a></li>
-    </ul>
-   <ul class="menu2"><a href="#">Одежда для девочек</a>
-		<li><a href="#">Комбинезоны, песочники</a></li>
-    	<li><a href="#">Детские костюмы, комплекты</a></li>
-    	<li><a href="#">Футболки, майки, трусы, поло</a></li>
-        <li><a href="#">Детские брюки, джинсы</a></li>
-        <li><a href="#">Рубашки, толстовки</a></li>
-        <li><a href="#">Детские шорты, плавки</a></li>
-    </ul>
-   <ul class="menu3"><a href="#">Одежда для новорожденных</a>
-		<li><a href="#">Комбинезоны, песочники</a></li>
-    	<li><a href="#">Детские костюмы, комплекты костюмы, комплекты</a></li>
-    	<li><a href="#">Футболки, майки, трусы, поло</a></li>
-        <li><a href="#">Детские брюки, джинсы</a></li>
-        <li><a href="#">Рубашки, толстовки</a></li>
-        <li><a href="#">Детские шорты, плавки</a></li>
-    </ul>
-    <ul class="menu1"><a href="#">Постельные и банные принадлежности</a>
-    </ul>
-    <img src="{$template_image}clear.gif" width="275" height="1">
-
-{*<div class="lmenubody">
-	{foreach from=$shop_menu item=categor}
-		<div class="lmenuc{if $cat_content.id == $categor.id || $cat_parent_info.id == $categor.id}o{/if}">
-		<img src="/uploaded_files/shop_images/{$categor.image}">
-		<a title="{$categor.name}" href="{$base_url}/{$categor.full_url}/">{$categor.name|strip_tags}</a>
-		{if $cat_content.id == $categor.id || $cat_parent_info.id == $categor.id}
-			<div class="lmenucos">
-			{foreach from=$categor.children item=child}
-				<div><a href="{$base_url}/{$child.full_url}/"{if $cat_content.id == $child.id} style="font-weight:bold;"{/if}>{$child.name|strip_tags}</a></div>
-			{/foreach}
-			</div>
-		{/if}		
-		</div>
+	{foreach from=$shop_menu item=category name=for1}
+		{assign var=counter value=`$counter+1`}
+		{if $counter % 4 == 0}{assign var=counter value=1}{/if}
+		<ul class="menu{$counter}"><a title="{$category.name}" href="{$base_url}/{$category.full_url}/">{$category.name}</a>
+		{foreach from=$category.children item=child}
+			<li><a title="{$child.name}" href="{$base_url}/{$child.full_url}/">{$child.name}</a></li>
+		{/foreach}
+		</ul>
 	{/foreach}
-</div>*}
+    <img src="{$template_image}clear.gif" width="275" height="1">
