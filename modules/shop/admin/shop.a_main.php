@@ -57,69 +57,6 @@ else $action='';
 
 /*------------------------- ¬џѕќЋЌя≈ћ –ј«Ћ»„Ќџ≈ ƒ≈…—“¬»я ---------------------*/
 
-//импорт прайс-листов
-/*if (isset($_POST['submit_import']))
-{
-	//require_once('../lib/class.import.php');
-	//require_once('../lib/class.string.php');
-	
-	$string = new String();
-	
-	if ($_FILES['import_file']['name']!='') {
-
-		$file_name=$_FILES['import_file']['name'];
-		$tmp=$_FILES['import_file']['tmp_name'];
-
-		$trusted_formats=array('xls');
-
-		$check_file_name=explode(".",$file_name);
-		$ext=strtolower($check_file_name[count($check_file_name)-1]);
-		if (!in_array($ext,$trusted_formats)) {
-			die("ћожно загружать только файлы с разрешение *.xls");
-		}
-
-		if (filesize($tmp) > 5000000) {
-			die("–азмер файла не больше 5 ћб");
-		}
-
-		$import = new Import($db, $tree, $string);
-		//грузим xls
-		$xlsfile = $import->upload($_FILES['import_file']);
-		//называем csv файл также как и xls
-		$tocsv = explode('.', $xlsfile);
-		$csvfile = $tocsv[0] . '.csv';
-		//конвертируем xls
-		if ($import->convert($xlsfile, $csvfile))
-		{
-
-			//если выбран не тот файл
-			if (!$import->getImportTypeByFile($csvfile))
-			{
-				header ("Location: http://" . $_SERVER['SERVER_NAME'] . "/admin/index.php?mod=shop&action=import_error");
-				die();
-			}
-			
-
-			//получаем данные в массив
-			$import->read($csvfile);
-			if ($_POST['type'] == 'tires')
-			{
-				$import->importTires(TIRES_ID);
-			}
-			elseif ($_POST['type'] == 'disk')
-			{
-				$import->importDisk(DISK_ID);
-			}
-		}
-
-		//echo 123;
-		header ("Location: http://" . $_SERVER['SERVER_NAME'] . "/admin/index.php?mod=shop&action=import_log");
-		//die();
-
-	}
-	
-}
-*/
 
 if (isset($_POST['action']) && $_POST['action']=="resort_order") {
 	if (isset($_POST['product']) && isset($_POST['product_prev']) && isset($_POST['parent_cat'])) {
@@ -414,14 +351,14 @@ if (isset($_POST['submit_add_cat'])) {
 			
 		if (@$file_name!='') {
 			$id=mysql_insert_id();
-			$image = 'icon-'.$id.'.'.$ext;
-			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/shop_images/'.$image)) {
-				chmod(BASE_PATH.'/uploaded_files/shop_images/'.$image, 0644);
-				$details = Image::image_details(BASE_PATH.'/uploaded_files/shop_images/'.$image);
+			$image = $id.'.'.$ext;
+			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/category_images/'.$image)) {
+				chmod(BASE_PATH.'/uploaded_files/category_images/'.$image, 0777);
+				$details = Image::image_details(BASE_PATH.'/uploaded_files/category_images/'.$image);
 				//превьюшка
-				//Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext,BASE_PATH.'/images/cat-'.$id.'.'.$ext,215,236);
-				//Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext,BASE_PATH.'/images/pcat-'.$id.'.'.$ext,139,100);
-				//Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext,BASE_PATH.'/images/bcat-'.$id.'.'.$ext,$details['width'],$details['height']);
+				Image::resize(BASE_PATH."/uploaded_files/category_images/$image", BASE_PATH."/uploaded_files/category_images/small-$image", PRODUCT_PREVIEW_WIDTH,PRODUCT_PREVIEW_HEIGHT, false, "#FFFFFF");
+				Image::resize(BASE_PATH."/uploaded_files/category_images/$image", BASE_PATH."/uploaded_files/category_images/medium-$image", PRODUCT_MEDIUM_WIDTH,PRODUCT_MEDIUM_HEIGHT, false, "#FFFFFF");
+				Image::resize(BASE_PATH."/uploaded_files/category_images/$image", BASE_PATH."/uploaded_files/category_images/big-$image", PRODUCT_BIG_WIDTH,PRODUCT_BIG_HEIGHT, false, "#FFFFFF");
 				//unlink(BASE_PATH.'/uploaded_files/shop_images/'.'-'.$id.'.'.$ext);
 				$result=$db->query("UPDATE fw_catalogue SET image='". $image ."' WHERE id='". $id ."'");
 			}
@@ -506,15 +443,13 @@ if (isset($_POST['submit_edit_cat'])) {
 	if ($check || $id=="1") {
 
 		if (@$file_name!='') {
-			$image='icon-'.$id.'.'.$ext;
-			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/shop_images/'.$image)) {
-				chmod(BASE_PATH.'/uploaded_files/shop_images/'.$image, 0644);
-				$details = Image::image_details(BASE_PATH.'/uploaded_files/shop_images/'.$image);
-				//print_r($details); exit();
-				//$image_name='icon-'.$id.'.'.$ext;
-				//Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/'.$image_name,BASE_PATH.'/uploaded_files/shop_images/cat'.$image_name,215,236);
-				//Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/'.$image_name,BASE_PATH.'/uploaded_files/shop_images/pcat'.$image_name,139,100);
-				//Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/'.$image_name,BASE_PATH.'/uploaded_files/shop_images/bcat'.$image_name,$details['width'],$details['height']);
+			$image=$id.'.'.$ext;
+			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/category_images/'.$image)) {
+				chmod(BASE_PATH.'/uploaded_files/category_images/'.$image, 0777);
+				$details = Image::image_details(BASE_PATH.'/uploaded_files/category_images/'.$image);
+				Image::resize(BASE_PATH."/uploaded_files/category_images/$image", BASE_PATH."/uploaded_files/category_images/small-$image", PRODUCT_PREVIEW_WIDTH,PRODUCT_PREVIEW_HEIGHT, false, "#FFFFFF");
+				Image::resize(BASE_PATH."/uploaded_files/category_images/$image", BASE_PATH."/uploaded_files/category_images/medium-$image", PRODUCT_MEDIUM_WIDTH,PRODUCT_MEDIUM_HEIGHT, false, "#FFFFFF");
+				Image::resize(BASE_PATH."/uploaded_files/category_images/$image", BASE_PATH."/uploaded_files/category_images/big-$image", PRODUCT_BIG_WIDTH,PRODUCT_BIG_HEIGHT, false, "#FFFFFF");
 				//unlink(BASE_PATH.'/uploaded_files/shop_images/icon-'.$id.'.'.$ext);
 			}
 			
@@ -523,7 +458,7 @@ if (isset($_POST['submit_edit_cat'])) {
 
 		if (isset($_POST['delete_image'])) {
 			$image='';
-			unlink(BASE_PATH.'/uploaded_files/shop_images/'.$_POST['old_image']);
+			unlink(BASE_PATH.'/uploaded_files/category_images/'.$_POST['old_image']);
 		}
 		$db->query("UPDATE fw_catalogue SET name='$name',image='$image',title='$title',text='$text',url='$url',status='$status',meta_keywords='$keywords',meta_description='$description' WHERE id='$id'");
 
@@ -557,10 +492,10 @@ if (isset($_POST['submit_add_product'])) {
 	//$guarantie=String::secure_format($_POST['edit_guarantie']);
 	$article=String::secure_format($_POST['edit_article']);
 	$country=String::secure_format($_POST['edit_country']);
-	$garant=String::secure_format($_POST['edit_garant']);
-	$age=String::secure_format($_POST['edit_age']);
+	$sostav=String::secure_format($_POST['edit_sostav']);
+	
 	$description=String::secure_format($_POST['edit_description']);
-	$sex=String::secure_format($_POST['edit_sex']);
+	
 	
 	//$sort_order=$db->get_single("SELECT MAX(sort_order) as max FROM fw_products WHERE parent='$parent'");
 	//$sort_order=$sort_order['max']+1;
@@ -576,11 +511,11 @@ if (isset($_POST['submit_add_product'])) {
 		
 		article,parent,name,
 		title,price,insert_date,
-		country,garant,age,description,sex) 
+		country,sostav,description) 
 		
 		VALUES(
 			'$article','$parent','$name','$title','$price',
-			'".time()."','$country','$garant','$age','$description','$sex'
+			'".time()."','$country','$sostav','$description'
 		)");
 	
 	header("Location: ?mod=shop&action=edit_product&id=".mysql_insert_id());
@@ -601,23 +536,29 @@ if (isset($_POST['submit_edit_product'])) {
 	$description=String::secure_format($_POST['edit_description']);
 	$price=String::secure_format($_POST['edit_price']);
 	
-	$guarantie=String::secure_format($_POST['edit_guarantie']);
 	$status=$_POST['edit_status'];
 	$hit=isset($_POST['edit_hit'])?"1":"0";
-	$age=String::secure_format($_POST['edit_age']);
 	$country=String::secure_format($_POST['edit_country']);
-	$garant=String::secure_format($_POST['edit_garant']);
-	$sex=String::secure_format($_POST['edit_sex']);
+	$sostav=String::secure_format($_POST['edit_sostav']);
 	
 
 	$id=$_POST['id'];
 
-	$db->query("DELETE FROM fw_products_properties WHERE product_id='$id' LIMIT ".count($_POST['edit_properties']));
-	foreach($_POST['edit_properties'] as $k => $v) {
-		$v=String::secure_format($v);
-		if ($v!="") $db->query("INSERT INTO fw_products_properties SET product_id='$id', property_id='$k', value='$v'");
+	//$db->query("DELETE FROM fw_products_properties WHERE product_id='$id' LIMIT ".count($_POST['edit_properties']));
+	$db->query("DELETE FROM fw_products_properties WHERE product_id='$id'");
+	
+	//print_r($_POST['edit_properties']);
+	foreach($_POST['edit_properties'] as $key => $val)
+	{
+		$key_array = explode("|",$key);
+		$property_id = $key_array[0];
+		$value = $key_array[1];
+		$db->query("REPLACE INTO fw_products_properties SET product_id='$id', property_id='$property_id', value='$value'");
+		//$v=String::secure_format($v);
+		//if ($v!="") $db->query("INSERT INTO fw_products_properties SET product_id='$id', property_id='$k', value='$v'");
 	}
 
+	
 	$db->query("UPDATE 
 		fw_products SET 
 			article='$article',
@@ -627,9 +568,7 @@ if (isset($_POST['submit_edit_product'])) {
 			meta_description='$meta_description',
 			meta_keywords='$meta_keywords',
 			price='$price',
-			garant='$garant',
-			sex='$sex',
-			age='$age',
+			sostav='$sostav',
 			country='$country',
 			status='$status',
 			description='$description',
@@ -1151,6 +1090,8 @@ SWITCH (TRUE) {
 			LEFT JOIN fw_catalogue_properties AS cp ON cp.id=cr.property_id
 		WHERE cr.cat_id = p.parent) as properties FROM fw_products AS p WHERE id='$id'");
 
+		
+		
 		$tmp=explode("##|##",$product['properties']);
 		$product['properties']=array();
 		foreach ($tmp as $val => $k) {
@@ -1164,26 +1105,23 @@ SWITCH (TRUE) {
 		}
 
 		$product=String::unformat_array($product);
-
-/****************************************************************/
-
-
+		
+		
+		$product_properties = $db->get_all("select * from fw_products_properties where product_id='$id'");
+		
+		
 		if ($product['additional_products']!='') {
 			$additional_products=$db->get_all("SELECT * FROM fw_products WHERE id IN (".$product['additional_products'].")");
 			$smarty->assign("additional_products",$additional_products);
 		}
 		$photos_list=$db->get_all("SELECT * FROM fw_products_images WHERE parent='$id' ORDER BY sort_order");
         $types_list=$db->get_all("SELECT * FROM fw_products_types WHERE status='1' ORDER BY name");
-        //$files_list=$db->get_all("SELECT * FROM fw_products_files2 where parent='$id'");
-		//$body_types=$db->get_all("SELECT * FROM fw_body_types ORDER BY name");
-		//$disk_types=$db->get_all("SELECT * FROM fw_disk_types ORDER BY name");
 		
 		$smarty->assign("currency_admin",$cur_admin);
 		$smarty->assign('types_list',$types_list);
-		//$smarty->assign('body_types',$body_types);
-		//$smarty->assign('disk_types',$disk_types);
+		$smarty->assign('product_properties',$product_properties);
+		
 		$smarty->assign('photos_list',$photos_list);
-		//$smarty->assign('files_list',$files_list);
 		$smarty->assign('photos_count',count($photos_list));
 		$smarty->assign('photo_height',PRODUCT_PREVIEW_HEIGHT+10);
 		$smarty->assign("cat_list",$cat_list);

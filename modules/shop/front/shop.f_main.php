@@ -889,54 +889,6 @@ SWITCH (TRUE) {
 				}*/
 				
 				
-	            //мегу тайтлы
-	            /*$parent_0 = $shop->getParent($cat_content);
-	            if ($parent_0)
-	            {
-	            	if ($parent_0['id'] == DISK_ID)
-	            	{
-	            		// тайлты для дисков
-	            		$title_template = DISK_TITLE_TEMPLATE;
-	            	}
-	            	elseif ($parent_0['id'] == TIRES_ID)
-	            	{
-	            		//тайтлы для шин
-	            		$title_template = TIRES_TITLE_TEMPLATE;
-	            	}
-	            	
-	            	$title_template = str_replace("{name}", $cat_content['title'], $title_template);
-	            	
-	            	//if ( preg_match_all( '/\[([^\]]*)\]/', $title_template, $matches ) )
-	            	if ( preg_match_all( '/\[([^\]]*)\]/', $title_template, $matches ) )
-	            	{
-						if (is_array($matches))
-						{
-							foreach ($matches as $key=>$val)
-							{
-								foreach ($matches[$key] as $key2=>$val2)
-								{
-									//почему-то повторяется два раза данные паттерн поэтому делаю еще одно условия
-									if (preg_match("/\[(.*)\]/", $matches[$key][$key2], $str) )
-									{
-										if (isset($str[1]))
-										{
-											$array = explode("|", $str[1]);
-											$random = rand(0, count($array)-1);
-											$word = $array[$random];
-											$title_template = str_replace($matches[$key][$key2], $word, $title_template);
-										}
-									}
-								}
-							}
-						}
-	            	}
-
-	            	//echo $title_template;
-
-	            }*/
-				
-				
-				
 				/*if ($cat_content['title']!='') $page_title=$cat_content['title'];
 				else if ($cat_content['name']!='/') $page_title=$cat_content['name'];*/
 				
@@ -944,16 +896,6 @@ SWITCH (TRUE) {
 				else if ($cat_content['name']!='/') $page_title=$cat_content['name'];
 				if ($cat_content['meta_keywords']!='') $meta_keywords=$cat_content['meta_keywords'];
 				if ($cat_content['meta_description']!='') $meta_description=$cat_content['meta_description'];
-				
-				/*$photo = new Photoalbum();
-				$cat_content['text']= $photo->pregReplace($cat_content['text'],BASE_PATH,PHOTOS_FOLDER,PHOTOS_PER_PAGE_SUP);
-				
-				$table = new Table();
-				$cat_content['text'] = $table->pregReplace($cat_content['text'],BASE_PATH);
-
-				$form = new Form();
-				$cat_content['text'] = $form->pregReplace($cat_content['text'],BASE_PATH);
-				*/
 				
 				$text=$cat_content['text'];
 				$smarty->assign("text",$text);
@@ -1011,53 +953,6 @@ SWITCH (TRUE) {
           		}
           	}
           	
-            /*for ($d=0;$d<count($cat_list);$d++) {
-              if ($cat_list[$d]['param_left']>$folders_list[$c]['param_left'] && $cat_list[$d]['param_right']<$folders_list[$c]['param_right'] && $cat_list[$d]['param_level']==($folders_list[$c]['param_level']+1)) {
-              	
-   				if (isset($type)){
-   					$item2=array();
-   					$item2=$db->get_single("SELECT count(id) as count FROM fw_cats_types_relations WHERE cat_id='".(int)$cat_list[$d]['id']."' AND type_id='".$type."'");
-                	if (intval($item2['count'])>0)
-                		$folders_list[$c]['subfolders'][]=$cat_list[$d];
-        		}
-        		else
-        			$folders_list[$c]['subfolders'][]=$cat_list[$d];
-        		
-                $done++;
-                if ($done==8) break;
-              }
-            }*/
-
-            
-            
-            
-            
-          	//находим св-ва продукции категории
-			/*if ($cat_parent_info['id'] == DISK_ID)
-			{
-				$folders_list[$c]['properties'] = $shop->getProductsPropertiesDisk($folders_list[$c]['id']);
-			}
-			elseif ($cat_parent_info['id'] == TIRES_ID)
-			{
-				$folders_list[$c]['properties'] = $shop->getProductsPropertiesTires($folders_list[$c]['id']);
-			}*/
-
-			/*if ($cat_parent_info['param_level'] == 0)
-			{
-				$children_folders = $shop->getChildrenCategor($folders_list[$c], 3);
-				if ($children_folders)
-				{
-					$ids = array();
-					foreach ($children_folders as $val)
-					{
-						$ids[] = $val['id'];
-					}
-					$folders_list[$c]['properties'] = $shop->getProductsProperties($ids);
-				}
-				
-			}*/
-          	
-
           }
           $smarty->assign("folders_list",$folders_list);
         }

@@ -33,9 +33,7 @@
     </td>
   </tr>
   <tr>
-    <td class="lmenu">
-    {include file="`$smarty.const.TPL_PATH`left_catalog_menu.html"}
-    </td>
+    <td class="lmenu">{include file="`$smarty.const.TPL_PATH`left_catalog_menu.html"}</td>
     <td class="cont">
     
     {if $current_url == 'home'}
@@ -51,8 +49,8 @@
     
     </td>
     
-    <td class="rside">{include file="`$smarty.const.TPL_PATH`basket_block.html"}
-    </td>
+    <td class="rside">{include file="`$smarty.const.TPL_PATH`basket_block.html"}</td>
+    
   </tr>
   <tr>
     <td colspan="4" class="bottom">{include file="`$smarty.const.TPL_PATH`footer_block.html"}
@@ -61,74 +59,3 @@
 </table>
 </body>
 </html>
-
-
-
-{*
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
-<title>{$page_title}</title>
-<meta name="Keywords" content="{$meta_keywords}">
-<meta name="Description" content="{$meta_description}">
-{foreach from=$css item=css}
-<link rel="stylesheet" type="text/css" href="{$css}">
-{/foreach}
-{foreach from=$js item=js}
-<script src="{$js}" type="text/javascript"></script>
-{/foreach}
-</head>
-
-<div id='loading-layer'><div>Кладем в корзину. Подождите...</div></div>
-
-<body>
-<!--- toping --->
-<div class="topd">
-	
-	<div class="topt"><div class="toptel"><span class="kod">+7 (495)</span> 648-73-68</div><div class="littler">режим работы:  9:00 - 21:00  без выходных</div></div>
-
-	{include file="`$smarty.const.TPL_PATH`basket_block.html"}
-
-    <div class="tmenu">
-    {include file="../templates/top_menu.html"}
-    </div>
-
-</div>
-<!--- /toping --->
-<!--- search --->
-{include file="../templates/top_search.html"}
-<!--- /search --->
-
-<!--- special --->
-{if $current_url == "home"}{include file="../templates/top_special_block.html"}{/if}
-<!--- /special --->
-
-<!--- middle --->
-<table class="middle">
-<tr>
-<td class="lmenu">
-{include file="../templates/left_catalog_menu.html"}
-</td>
-<td class="righter">
-		
-		{if $content=='' or !$content}
-			{assign var="content" value=""}
-			{fetch file=$template assign="content"}
-		{/if}
-		{eval var=$content}
-
-</td>
-</tr>
-</table>
-<!--- /middle --->
-<!--- bottom --->
-<div class="bottom"><br><br>
-
-{include file="../templates/top_menu.html"}
-
-</div>
-<!--- /bottom --->
-</body>
-</html>
-
-*}

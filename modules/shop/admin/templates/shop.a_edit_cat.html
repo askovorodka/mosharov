@@ -79,14 +79,7 @@ function form_check() {
 		<td class=td1_right><input type=text name=edit_cat_url style="width:100%;" class=field value="{$cat.url}"></td>
 	</tr>
 	
-	{*if $cat.param_level == 1}	
-	<tr class=table_content>
-		<td class=td1_left>Показать в верхнем меню:</td>
-		<td class=td1_right><input type="checkbox" name=show_in_menu class=field value="1" {if $cat.show_in_menu}checked{/if}></td>
-	</tr>
-	{/if*}
-	
-	{if $mode=="edit"}
+ 	{if $mode=="edit"}
 	<tr>
 		<td class=td1_single valign=top colspan="2">
 			<p>&nbsp;Краткое описание:</p>
@@ -137,7 +130,7 @@ function form_check() {
 	{/if}
 	{/if}
 	<tr>
-		<td valign=top class=td1_left>&nbsp;Картинка:</td><td class=td1_right>{if $mode=='edit' and $cat.image!=''}<img src={$base_url}/uploaded_files/shop_images/{$cat.image}><br><input type=checkbox name=delete_image> Удалить картинку<br><br>{/if}<input type=file name=edit_cat_image style="width:500px;" class=field></td>
+		<td valign=top class=td1_left>&nbsp;Картинка:</td><td class=td1_right>{if $mode=='edit' and $cat.image!=''}<img src={$base_url}/uploaded_files/category_images/medium-{$cat.image}><br><input type=checkbox name=delete_image> Удалить картинку<br><br>{/if}<input type=file name=edit_cat_image style="width:500px;" class=field></td>
 	</tr>
 	
 	<tr>
@@ -149,7 +142,7 @@ function form_check() {
 		</select>
 		</td>
 	</tr>
-{*if $mode=='edit'}
+{if $mode=='edit'}
 	<tr>
 		<td class="td1_left" valign="top">&nbsp;Свойства товаров:<br>
 		</td>
@@ -168,7 +161,7 @@ function form_check() {
 		</div>
 		</td>
 	</tr>
-{/if*}	
+{/if}
 	</table>
 
 <table width=100% class=content_table>

@@ -9,7 +9,7 @@ class Users extends db
 	private $phone2=null;
 	private $address=null;
 	private $id=null;
-	private $result=null;
+	private $rst=null;
 	
 	function __construct()
 	{
@@ -59,12 +59,13 @@ class Users extends db
 		return $this->getUser(mysql_insert_id());
 		
 	}
-	
+
+
 	function getUser($id)
 	{
-		$this->result = parent::get_single("select * from fw_users where id=" . $id);
-		if ($this->result)
-			return $this->result;
+		$this->rst = parent::get_single("select * from fw_users where id=" . $id);
+		if ($this->rst)
+			return $this->rst;
 		else
 			return null;
 	}
