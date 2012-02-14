@@ -1,3 +1,54 @@
+{include file="`$smarty.const.TPL_PATH`top_search.html"}
+{include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
+
+{if $product}
+<h1>{$product.name}</h1>
+
+
+    <table class="catinn">
+      <tr>
+        <td class="catinnimg">
+        	<div><img src="img/cat_inner_pict.jpg" width="156" height="206"></div>
+            <img src="img/cat_inner_pict_s.jpg" width="64" height="74" class="catinnsm">
+            <img src="img/cat_inner_pict_s.jpg" width="64" height="74" class="catinnsm">
+            <img src="img/cat_inner_pict_s.jpg" width="64" height="74" class="catinnsm">
+        </td>
+        <td class="catinnp">
+        <strong>Артикул:</strong> 53453095734<br>
+        <strong>Состав:</strong> 100% хлопок<br>
+        <strong>Производитель:</strong> Китай<br>
+        <span class="innprice"><span class="pozcena">1920</span> руб.</span><br>
+        <table class="tblrc">
+          <tr>
+            <td class="razmeri">
+            	<strong>Размеры:</strong><br>
+                <input type="checkbox"> 62<br>
+                <input type="checkbox"> 68<br>
+                <input type="checkbox"> 70<br>
+                <input type="checkbox"> 74<br>
+                <input type="checkbox"> 82<br>
+                <input type="checkbox"> 86<br>
+            </td>
+            <td class="cveta">
+            	<strong>Цвета:</strong><br>
+                <input type="checkbox"> Белый<br>
+                <input type="checkbox"> Красный<br>
+                <input type="checkbox"> Синий<br>
+                <input type="checkbox"> Черный<br>
+            </td>
+          </tr>
+        </table>
+        <input type="image" src="img/but_inbasket.png" class="inbasket">
+        </td>
+      </tr>
+    </table>
+ 
+ <div class="txt">{$product.description}</div>
+{else}
+<center>Такого продукта не существует.</center>
+{/if}
+
+{*
 {include file="`$smarty.const.TPL_PATH`filter_green.html"}
 
 <div class="cat">
@@ -32,3 +83,4 @@
 <br><br>
 </div>
 </div>
+*}
