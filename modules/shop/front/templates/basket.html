@@ -1,3 +1,45 @@
+{include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
+
+<h1>Моя корзина</h1>
+
+{if $basket}
+
+<form action="" method="post" id="basket_form">
+<input type="hidden" name="basket_recount" value="1" />
+<table class="basketin">
+  <tr class="basketintop">
+    <td class="basketintopl">Наименование товара</td>
+    <td>Цена</td>
+    <td>Количество</td>
+    <td class="basketintopr">&nbsp;</td>
+  </tr>
+  {foreach from=$basket item=item}
+  <tr class="basketlist">
+    <td class="basketcapt"><a href="{$base_url}/{$item.full_url}/" title="{$item.name}">{$item.name}</a>
+    {if $item.properties}<br /><small>{foreach from=$item.properties item=pr key=key}{$key}:{$pr}<br />{/foreach}</small>{/if}
+    </td>
+    <td class="basketnw">{$item.price_number} <span class="basketval">руб.</span></td>
+    <td class="basketnw"><input type="text" value="{$item.number}" name="edit_number[{$item.id}]"> <span class="basketint">шт.</span></td>
+    <td><a href="{$module_url}/basket/delete/{$item.id}" onClick="return confirm('Удалить продукт из корзины');"><img src="{$template_image}delete.gif" width="14" height="14" title="Удалить" alt="Удалить"></a></td>
+  </tr>
+  {/foreach}
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2" class="basketall">Итого: {$total_price} <span class="basketallval">руб.</span><br><a href="#" onClick="$('#basket_form').submit();">пересчитать</a></td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</form>
+
+<a title="Оформить заказ" href="/catalog/basket/step1/"><img src="{$template_image}but_oform.png" class="basketoform" /></a>
+
+{else}
+<center>Корзина пуста.</center>
+{/if}
+
+
+
+{*
 <div class="txtd">
 <div class="contt">
 
@@ -40,7 +82,7 @@
 </div>
 </div>
 
-
+*}
 
 {*
 {if $basket}

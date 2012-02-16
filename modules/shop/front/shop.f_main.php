@@ -210,7 +210,7 @@ SWITCH (TRUE) {
 	CASE (@$url[$n]=='step1' && $url[$n-1]=='basket'):
 
 		$page_found=true;
-		$navigation[]=array("url" => 'basket',"title" => 'Ваша корзина');
+		$navigation[]=array("url" => 'basket',"title" => 'Моя корзина');
 		$navigation[]=array("url" => 'step1',"title" => 'Оформление заказа');
 		$title="Оформление заказа";
 		$template='basket_step1.html';
@@ -266,6 +266,7 @@ SWITCH (TRUE) {
 		for ($i=0;$i<count($_SESSION['fw_basket']);$i++) {
 			if ($_SESSION['fw_basket'][$i]['id']==$product['id']) {
 				$_SESSION['fw_basket'][$i]['number']=$_SESSION['fw_basket'][$i]['number']+$number;
+				$_SESSION['fw_basket'][$i]['properties'] = $properties;
 				$number_found=true;
 			}
 		}
@@ -425,7 +426,7 @@ SWITCH (TRUE) {
         foreach($sess['fw_basket'] as $key=>$val){
         	foreach($sess['fw_basket'][$key] as $key2=>$val2)
         		$sess['fw_basket'][$key]['price_number'] = sprintf("%.2f",$sess['fw_basket'][$key]['price']*$sess['fw_basket'][$key]['number']);
-        		$sess['fw_basket'][$key]['full_url'] = DOMAIN . 'shop' . $shop->getFullUrlProduct($sess['fw_basket'][$key]['id']);
+        		$sess['fw_basket'][$key]['full_url'] = $shop->getFullUrlProduct($sess['fw_basket'][$key]['id'], 'catalog');
         		$sess['fw_basket'][$key]['image'] = $shop->getProductImage($sess['fw_basket'][$key]['id']);
         		
         }
