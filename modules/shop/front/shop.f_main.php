@@ -234,12 +234,25 @@ SWITCH (TRUE) {
 	//добавляем продукт в корзину
 	CASE (@$url[$n-1] == 'basket' && @$url[$n] == 'add'):
 		
-		header("Content-type: text/html; charset=Windows-1251");
+		//header("Content-type: text/html; charset=Windows-1251");
 		if (!empty($_POST) && !empty($_POST['product_id']) && !empty($_POST['product_count']))
 		{
-			
-		$number_found=false;
 
+		$number_found=false;
+		
+		$properties = array();
+		if ($_POST['property'])
+		{
+			foreach($_POST['property'] as $key=>$val)
+			{
+				$key_array = explode("|",$key);
+				if (empty($properties[$key_array[0]]))
+					$properties[$key_array[0]] = $key_array[1];
+				else
+					 $properties[$key_array[0]] .= "," . $key_array[1];
+			}
+		}
+		
 		$number = $_POST['product_count'];
 		$product_id = $_POST['product_id'];
 		$product=$db->get_single("SELECT id,parent,name,price,sale,article,
@@ -247,7 +260,9 @@ SWITCH (TRUE) {
 						(SELECT ext FROM fw_products_images WHERE parent=fw_products.id ORDER BY insert_date DESC LIMIT 1) AS ext
 		 				FROM fw_products WHERE id='".$product_id."' AND status='1'");
 
-        
+
+		$product['properties'] = $properties;
+		
 		for ($i=0;$i<count($_SESSION['fw_basket']);$i++) {
 			if ($_SESSION['fw_basket'][$i]['id']==$product['id']) {
 				$_SESSION['fw_basket'][$i]['number']=$_SESSION['fw_basket'][$i]['number']+$number;
@@ -265,14 +280,18 @@ SWITCH (TRUE) {
 			$basket_number+=@$_SESSION['fw_basket'][$i]['number'];
 			$basket_total+=@$_SESSION['fw_basket'][$i]['price'] * @$_SESSION['fw_basket'][$i]['number'];
 		}
-			
+
 			$switch_off_smarty=true;
 			$basket_total = number_format($basket_total,2,",","");
-			print "$basket_number;$basket_total";
-			
+			//print "$basket_number;$basket_total";
+
 		}
-		exit();
 		
+		$location=$_SERVER['HTTP_REFERER'];
+		header("Location: $location");
+		die();
+				//exit();
+
 	BREAK;
 
 
