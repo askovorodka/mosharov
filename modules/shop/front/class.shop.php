@@ -442,5 +442,39 @@ class Shop extends db {
 	}
 	
 	
+	function get_product_properties($product_id)
+	{
+		
+		$result = $this->db->get_all("select * from fw_products_properties as a left join fw_catalogue_properties as b on a.property_id=b.id where a.product_id='{$product_id}'");
+		
+		if ($result)
+		{
+			return $result;
+		}
+		else
+		{
+			return null;
+		}
+		
+	}
+	
+	
+	function get_catalog_properties($cat_id)
+	{
+		
+		$result = $this->db->get_all("select * from fw_catalogue_relations left join fw_catalogue_properties on fw_catalogue_relations.property_id=fw_catalogue_properties.id where fw_catalogue_relations.cat_id='{$cat_id}'");
+		
+		if ($result)
+		{
+			return $result;
+		}
+		else
+		{
+			return null;
+		}
+		
+	}
+	
+	
 }
 ?>

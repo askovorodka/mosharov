@@ -1076,8 +1076,13 @@ SWITCH (TRUE) {
 								$meta_description=$product_content['meta_description'];
 							else 
 								$meta_description=$page_title;
-							
+
+
+							$product_properties = $shop->get_product_properties($product_content['id']);
 							$smarty->assign("product",$product_content);
+							$smarty->assign("product_properties",$product_properties);
+							$smarty->assign("properties",$shop->get_catalog_properties($product_content['parent']));
+							
 							
 							$images = $shop->getProductImages($product_content['id']);
 							$smarty->assign("images",$images);
@@ -1115,6 +1120,9 @@ SWITCH (TRUE) {
 									$navigation[]=array("url" => $nav_urls[$l],"title" => trim($nav_titles[$l]));
 								}
 							}
+							
+							
+							
 							$navigation[]=array("url" => $product_content['id'],"title" => $product_content['name']);
 
 

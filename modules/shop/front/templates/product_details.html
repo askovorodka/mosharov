@@ -8,37 +8,32 @@
     <table class="catinn">
       <tr>
         <td class="catinnimg">
-        	<div><img src="img/cat_inner_pict.jpg" width="156" height="206"></div>
-            <img src="img/cat_inner_pict_s.jpg" width="64" height="74" class="catinnsm">
-            <img src="img/cat_inner_pict_s.jpg" width="64" height="74" class="catinnsm">
-            <img src="img/cat_inner_pict_s.jpg" width="64" height="74" class="catinnsm">
+        	{if $images}
+        	<div style="margin-bottom:5px;"><img id="bigimage" src="/uploaded_files/shop_images/big-{$photo.id}.{$photo.ext}" width="156" height="206"></div>
+        		{foreach from=$images item=image}
+            		<a href="/uploaded_files/shop_images/big-{$image.id}.{$image.ext}" class="smallimage"><img src="/uploaded_files/shop_images/resized-{$image.id}.{$image.ext}" width="64" height="74" class="catinnsm" /></a>
+            	{/foreach}
+        	{/if}
         </td>
+        
         <td class="catinnp">
-        <strong>Артикул:</strong> 53453095734<br>
-        <strong>Состав:</strong> 100% хлопок<br>
-        <strong>Производитель:</strong> Китай<br>
-        <span class="innprice"><span class="pozcena">1920</span> руб.</span><br>
+        <strong>Артикул:</strong> {$product.article}<br>
+        <strong>Состав:</strong> {$product.sostav}<br>
+        <strong>Производитель:</strong> {$product.country}<br>
+        <span class="innprice"><span class="pozcena">{$product.price}</span> руб.</span><br>
         <table class="tblrc">
           <tr>
-            <td class="razmeri">
-            	<strong>Размеры:</strong><br>
-                <input type="checkbox"> 62<br>
-                <input type="checkbox"> 68<br>
-                <input type="checkbox"> 70<br>
-                <input type="checkbox"> 74<br>
-                <input type="checkbox"> 82<br>
-                <input type="checkbox"> 86<br>
-            </td>
-            <td class="cveta">
-            	<strong>Цвета:</strong><br>
-                <input type="checkbox"> Белый<br>
-                <input type="checkbox"> Красный<br>
-                <input type="checkbox"> Синий<br>
-                <input type="checkbox"> Черный<br>
-            </td>
+          	{foreach from=$properties item=property name=forp}
+          		<td nowrap class="{if $smarty.foreach.forp.first}razmeri{else}cveta{/if}">
+          			<strong>{$property.name}:</strong><br>
+          			{foreach from=$product_properties item=product_p}
+          				{if $product_p.property_id==$property.id}<input id="p_{$product_p.property_id}_{$product_p.value}" type="checkbox"><label for="p_{$product_p.property_id}_{$product_p.value}">{$product_p.value}</label><br>{/if}
+          			{/foreach}
+          		</td>
+          	{/foreach}
           </tr>
         </table>
-        <input type="image" src="img/but_inbasket.png" class="inbasket">
+        <input type="image" src="{$template_image}but_inbasket.png" class="inbasket">
         </td>
       </tr>
     </table>
