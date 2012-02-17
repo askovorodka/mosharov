@@ -33,6 +33,7 @@ require_once 'lib/class.photoalbum.php';
 require_once 'lib/class.table.php';
 require_once 'lib/class.form.php';
 require_once 'lib/class.users.php';
+require_once 'lib/class.password.php';
 //require_once 'modules/shop/front/class.shop.php';
 
 $navigation[]=array("url" => $module_url,"title" => $node_content['name']);
@@ -208,7 +209,34 @@ SWITCH (TRUE) {
 	BREAK;
 
 	CASE (@$url[$n]=='step1' && $url[$n-1]=='basket'):
+		
+		//идет авторизация на 1 шаге
+		if (isset($_POST['submit_login']))
+		{
+			
+			$users->setEmail($_POST['email']);
+			$users->setPassword($_POST['password']);
+			if ($users->get_login())
+			{
+				header("Location: ".BASE_URL.'/catalog/basket/step1/');
+				die();
+			}
+			else
+			{
+				$smarty->assign('error_auth_message','Неверно введен логин или пароль');
+			}
+			
+		}
 
+		
+		if ($user_id = $users->is_auth_user())
+		{
+			$user = $users->get_user($user_id);
+			$smarty->assign('user', $user);
+		}
+		
+		
+		
 		$page_found=true;
 		$navigation[]=array("url" => 'basket',"title" => 'Моя корзина');
 		$navigation[]=array("url" => 'step1',"title" => 'Оформление заказа');
@@ -479,23 +507,84 @@ SWITCH (TRUE) {
 
 		if (isset($_POST['submit_order'])) {
 			
-			if (!empty($_POST['submit_register']))
+			//оформление с регистрацией
+			//сначало регим пользователя
+			$error_register = false;
+			if (!empty($_POST['submit_register']) && !$users->is_auth_user())
 			{
 
 				$users->setEmail($_POST['email']);
 				$users->setName($_POST['name']);
 				$users->setPhone1($_POST['phone']);
 				$users->setPhone2($_POST['phone2']);
-				$user->register();
+				if (!empty($_POST['password']))
+				{
+					$users->setPassword($_POST['password']);
+				}
+				else
+				{
+					$password = new Password();
+					$users->setPassword($password->generate());
+				}
+
+				if (!$users->get_user_by_email($_POST['email']))
+				{
+					$user = $users->register();
+					
+				}
+				else
+				{
+					$smarty->assign('error_register_message','Пользователь с тами email уже зарегистрирован');
+					$error_register = true;
+					header("Location: " . $_SERVER['HTTP_REFERER']);
+					die();
+				}
+				
+				//если ввел пароль, то отпавляем письмо о регистрации пользователя
+				if (!empty($_POST['password']))
+				{
+					
+					$mail_template = $db->get_single("SELECT template FROM fw_mails_templates WHERE mail_key='REGISTOR_MAIL'");
+					$message_body=$smarty->fetch('/modules/cabinet/front/templates/registration_mail.txt');
+					$message_body = $mail_template['template'];
+					$message_body = str_replace("{site_url}",BASE_URL,$message_body);
+					$message_body = str_replace("{login}",$user['login'],$message_body);
+					$message_body = str_replace("{password}",$_POST['password'],$message_body);
+			        $headers  = "Content-type: text/html; charset=windows-1251 \r\n";
+			        $headers .= "From: <noreply@".$_SERVER['SERVER_NAME'].".ru>\r\n";
+					Mail::send_mail($user['mail'],"register@".$_SERVER['SERVER_NAME'],"Регистрация на сайте ".BASE_URL,$message_body,"","html","standard","windows-1251");
+
+				}
 
 			}
-			exit();
-
+			
+			
+			
+			if (!$user)
+			{
+				$user_id = $users->is_auth_user();
+				if (!$user_id)
+				{
+					header("Location: " . $_SERVER['HTTP_REFERER']);
+					die();
+				}
+				$user = $users->get_user($user_id);
+	
+				if (!$user)
+				{
+					header("Location: " . $_SERVER['HTTP_REFERER']);
+					die();
+				}
+			}
+			
+			
+			
 			if (count($_SESSION['fw_basket'])<1)
 			{
 				header("Location: ".BASE_URL);
+				die();
 			}
-			else
+			elseif (!$error_register)
 			{
 				
 				$navigation[]=array("url" => 'basket',"title" => 'Моя корзина');
@@ -504,16 +593,13 @@ SWITCH (TRUE) {
 				$products_list='';
 				$total_number=0;
 
-				$user = $shop->getUser($_SESSION['fw_user']['id']);
-				$name=$user['name'];
-				//$mail=$_POST['login'];
-				//$tel=$_POST['phone'];
-				$company=iconv('utf-8','windows-1251',$_POST['company']);
-				$comments=iconv('utf-8','windows-1251',$_POST['comment']);
-				$inn = $_POST['inn'];
-				$kpp = $_POST['kpp'];
+				$metro=$_POST['metro'];
+				$address=$_POST['address'];
+				$comment = $_POST['comment'];
 				$dostavka = $_POST['dostavka'];
-				if ($dostavka == 1)
+				
+				
+				if ($dostavka == 2)
 				{
 					$order_price = SHOP_DOSTAVKA_PRICE;
 				}
@@ -522,7 +608,7 @@ SWITCH (TRUE) {
 					$order_price = 0;
 				}
 				
-				$payment = $_POST['payment'];
+				
 
 				$total_price=0;
 				for ($i=0;$i<count($_SESSION['fw_basket']);$i++)
@@ -530,56 +616,74 @@ SWITCH (TRUE) {
 					$total_price+=$_SESSION['fw_basket'][$i]['price']*$_SESSION['fw_basket'][$i]['number'];
 				}
 
+				$total_price += $order_price;
+
 				$db->query("INSERT INTO fw_orders (
 					user,
 					comments,
 					total_price,
 					insert_date,
-					inn,
-					kpp,
-					company,
 					dostavka,
-					payment,
+					address,
+					metro,
 					order_price) 
 					VALUES('".$user['id']."',
-					'$comments',
+					'$comment',
 					'$total_price',
 					'".time()."',
-					'{$inn}',
-					'{$kpp}',
-					'{$company}',
 					'{$dostavka}',
-					'{$payment}',
+					'{$address}',
+					'{$metro}',
 					'{$order_price}')");
 
 				$order_id = mysql_insert_id();
 				$rel_prod = array();
 				for ($i=0;$i<count($_SESSION['fw_basket']);$i++) {
-					$products_list.=$_SESSION['fw_basket'][$i]['id'].'|'.$_SESSION['fw_basket'][$i]['number'].',';
+					//$products_list.=$_SESSION['fw_basket'][$i]['id'].'|'.$_SESSION['fw_basket'][$i]['number'].',';
 					$total_number=$total_number+$_SESSION['fw_basket'][$i]['number'];
-					$rel_prod[] = "('".$_SESSION['fw_basket'][$i]['id']."','".$order_id."','".$_SESSION['fw_basket'][$i]['number']."')";
+					$rel_prod[] = "('".$_SESSION['fw_basket'][$i]['id']."','".$order_id."','".$_SESSION['fw_basket'][$i]['number']."', '{$_SESSION['fw_basket'][$i]['price']}', '".serialize($_SESSION['fw_basket'][$i]['properties'])."')";
 				}
 
-				$db->query("INSERT INTO fw_orders_products (product_id,order_id,product_count) VALUES ".implode(",",$rel_prod));
+				$db->query("INSERT INTO fw_orders_products (product_id,order_id,product_count, product_price, properties) VALUES ".implode(",",$rel_prod));
 
+				$order_id = mysql_insert_id();
+				
+				if ($_SESSION['fw_basket'])
+				{
+					$products = array();
+					foreach ($_SESSION['fw_basket'] as $key=>$val)
+					{
+						$products[$key]['details'] = $shop->getProductInfo($_SESSION['fw_basket'][$key]['id']);
+						$products[$key]['count'] = $_SESSION['fw_basket'][$key]['number'];
+						$products[$key]['sum'] = $products[$key]['details']['price'] * $products[$key]['count']; 
+					}
+					$smarty->assign("products",$products);
+				}
+				
+				
 				$_SESSION['fw_basket']=array();
 
 				$smarty->assign("name",$user['name']);
 				$smarty->assign("site_url",BASE_URL);
 				$smarty->assign("date",time());
 				$smarty->assign("order_total",$total_price);
+				$smarty->assign("order_id",$order_id);
 				$smarty->assign("number",$total_number);
+				$smarty->assign("order_price",$order_price);
+				$smarty->assign("dostavka",$dostavka);
 				$smarty->assign("currency",DEFAULT_CURRENCY);
 
 				$body=$smarty->fetch($templates_path.'/order_notice.txt');
-				Mail::send_mail($user['login'],"noreply@".$_SERVER['SERVER_NAME'],"Новый заказ в интернет магазине",$body,'','text','standard','Windows-1251');
+				Mail::send_mail($user['login'],"noreply@".$_SERVER['SERVER_NAME'],"Новый заказ в интернет магазине",$body,'','html','standard','Windows-1251');
 
 				$admin_body=$smarty->fetch($templates_path.'/admin_order_notice.txt');
 				Mail::send_mail(ADMIN_MAIL,"noreply@".$_SERVER['SERVER_NAME'],"Новый заказ в интернет магазине",$admin_body,'','text','standard','WIndows-1251');
 
-				echo 1;
-				$page_found = true;
-				$template = 'order_done.html';
+				
+				//$page_found = true;
+				//$template = 'order_done.html';
+				header("Location: /catalog/basket/final/");
+				die();
 			}
 
 		}

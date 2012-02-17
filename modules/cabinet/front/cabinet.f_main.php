@@ -841,7 +841,7 @@ SWITCH (TRUE){
 
     $navigation[]=array("url" => 'orders',"title" => 'История заказов');
 
-    $orders_list=$db->get_all("SELECT *, (total_price + order_price) dostavka  FROM fw_orders WHERE user='".$_SESSION['fw_user']['id']."' ORDER BY insert_date DESC");
+    $orders_list=$db->get_all("SELECT *  FROM fw_orders WHERE user='".$_SESSION['fw_user']['id']."' ORDER BY insert_date DESC");
     $orders_list=String::unformat_array($orders_list,'front');
 
     foreach ($orders_list as $key=>$val)
@@ -853,7 +853,7 @@ SWITCH (TRUE){
     	where a.order_id = '{$val['id']}' ");
     	foreach ($orders_list[$key]['products_list'] as $key2=>$val2)
     	{
-    		$orders_list[$key]['products_list'][$key2]['full_url'] = $shop->getFullUrlProduct( $val2['product_id'] );
+    		$orders_list[$key]['products_list'][$key2]['full_url'] = $shop->getFullUrlProduct( $val2['product_id'], "catalog" );
     	}
     }
     

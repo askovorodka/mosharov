@@ -181,14 +181,29 @@ class Common {
 					else {
 						$_SESSION['fw_user']=$content;
 						if ($where=='admin' && (!isset($content['priv']) && $content['priv']>=9)) return '0';
-						else return '1';
+						else return $content['id'];
 					}
 				}
 			}
 			else {
 
 				if ($where=='admin' && (!isset($_SESSION['fw_user']['priv']) || $_SESSION['fw_user']['priv']>=9)) return '0';
-				else return '1';
+				else
+				{ 
+
+					$content = $db->get_single("SELECT * FROM fw_users WHERE login='{$_SESSION['fw_user']['login']}' and password='{$_SESSION['fw_user']['password']}' AND status='1'");
+					if (!empty($content['id']))
+					{
+						return $content['id'];
+						
+					}
+					else
+					{
+						$_SESSION['fw_user']="";
+						return '0';
+					}
+					
+				}
 			}
 		}
 	
