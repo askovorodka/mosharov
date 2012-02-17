@@ -22,7 +22,11 @@
                 <td>{$order.id}</td>
                 <td>{$product.product_count} шт.</td>
                 <td><span class="tableart">{$product.article}</span></td>
-                <td><a href="{$base_url}/{$product.full_url}/">{$product.name}</a></td>
+                <td><a href="{$base_url}/{$product.full_url}/">{$product.name}</a>
+                
+                {if $product.properties}<br /><small>{foreach from=$product.properties item=pr key=key}{$key}:{$pr}<br />{/foreach}</small>{/if}
+                
+                </td>
                 <td id="nw">{$product.price|format_number} <span class="tableart">руб.</span></td>
                 <td id="nw">{$product.total_price|format_number} <span class="tableart">руб.</span></td>
               </tr>

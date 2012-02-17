@@ -854,6 +854,7 @@ SWITCH (TRUE){
     	foreach ($orders_list[$key]['products_list'] as $key2=>$val2)
     	{
     		$orders_list[$key]['products_list'][$key2]['full_url'] = $shop->getFullUrlProduct( $val2['product_id'], "catalog" );
+    		$orders_list[$key]['products_list'][$key2]['properties'] = unserialize($val2['properties']);
     	}
     }
     
