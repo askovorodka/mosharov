@@ -20,6 +20,12 @@ $sub[]= array(
 			"name"=>"Свойства продуктов",
 			"link"=>"?mod=shop&action=properties"
 	   );
+	  
+$sub[]= array(
+			"name"=>"Список заказов",
+			"link"=>"?mod=shop&action=orders"
+	   );
+	   
 	   /*
 $sub[]= array(
 			"name"=>"Статистика",

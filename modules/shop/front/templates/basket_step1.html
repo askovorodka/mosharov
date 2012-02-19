@@ -46,8 +46,18 @@
         	<h2>Уже зарегистрированы?</h2>
         	<input type="text" name="email">Email<br>
         	<input type="password" name="password">Пароль<br>
-        	<input type="image" src="{$template_image}but_enter.png" class="enterbut"> <a href="#" class="lostpwd">Забыли пароль?</a>
+        	<input type="image" src="{$template_image}but_enter.png" class="enterbut"> <a href="#" id="repassword" class="lostpwd">Забыли пароль?</a>
         	</form>
+        	
+<div id="repassword_user" style="display:none; z-index:90; position:absolute; width:350px; height:120px; background:#FFFFFF; border:1px solid #E07E13; padding:15px;">
+<form action="" method="post" id="repassword_form">
+Введите ваше адрес электронной почты, который вы указали при заказе, на него будет выслан новый пароль.
+<div style="color:green;" id="repassword_msg"></div>
+<div class="regin">E-mail: <input type="text" name="repassword_email"></div>
+<input type="submit" value="Восстановить">&nbsp;&nbsp;
+<input type="button" value="Закрыть" id="repassword_close">
+</form>
+</div>        	
         {/if}
         </td>
       </tr>

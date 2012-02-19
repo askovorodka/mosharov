@@ -553,7 +553,6 @@ SWITCH (TRUE) {
 			        $headers  = "Content-type: text/html; charset=windows-1251 \r\n";
 			        $headers .= "From: <noreply@".$_SERVER['SERVER_NAME'].".ru>\r\n";
 					Mail::send_mail($user['mail'],"register@".$_SERVER['SERVER_NAME'],"Регистрация на сайте ".BASE_URL,$message_body,"","html","standard","windows-1251");
-
 				}
 
 			}
@@ -661,6 +660,7 @@ SWITCH (TRUE) {
 				}
 				
 				
+				
 				$_SESSION['fw_basket']=array();
 
 				$smarty->assign("name",$user['name']);
@@ -671,13 +671,17 @@ SWITCH (TRUE) {
 				$smarty->assign("number",$total_number);
 				$smarty->assign("order_price",$order_price);
 				$smarty->assign("dostavka",$dostavka);
+				$smarty->assign("user",$user);
+				$smarty->assign("metro",$metro);
+				$smarty->assign("address",$address);
+				$smarty->assign("comment",$comment);
 				$smarty->assign("currency",DEFAULT_CURRENCY);
 
 				$body=$smarty->fetch($templates_path.'/order_notice.txt');
 				Mail::send_mail($user['login'],"noreply@".$_SERVER['SERVER_NAME'],"Новый заказ в интернет магазине",$body,'','html','standard','Windows-1251');
 
 				$admin_body=$smarty->fetch($templates_path.'/admin_order_notice.txt');
-				Mail::send_mail(ADMIN_MAIL,"noreply@".$_SERVER['SERVER_NAME'],"Новый заказ в интернет магазине",$admin_body,'','text','standard','WIndows-1251');
+				Mail::send_mail(ADMIN_MAIL,"noreply@".$_SERVER['SERVER_NAME'],"Новый заказ в интернет магазине",$admin_body,'','html','standard','WIndows-1251');
 
 				
 				//$page_found = true;

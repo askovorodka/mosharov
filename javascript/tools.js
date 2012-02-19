@@ -1,6 +1,60 @@
 
 $(document).ready( function(){
 
+	$("#repassword").click(function(){
+		
+		$("#repassword_user").css({"top" : $(this).offset().top, "left" : $(this).offset().left-100 })
+		.fadeIn("fast");
+		return false;
+	});
+
+	
+	$("#repassword_form").submit(function(){
+		if (validator_repassword.form())
+		{
+			var email = $("input[name='repassword_email']").val();
+			$.post('http://' + location.hostname + '/cabinet/', {submit_restore : 1, email : email}, 
+					function(response){
+					if (response == 1)
+						$("#repassword_msg").html("Новый пароль выслан на ваш email");
+					else
+						$("#repassword_msg").html("Пароль не восстановлен");
+				});
+		}
+		return false;
+	});
+	
+	$("#repassword_close").click(function(){
+		
+		$("#repassword_user").fadeOut("fast");
+		return false;
+	});
+	
+	
+	var validator_repassword = $("FORM#repassword_form").validate(
+	{
+
+	errorPlacement: function(error, element) {
+		error.insertAfter( element );
+	},
+		    	
+	rules:
+	{
+		repassword_email :	{required: true, email : true}
+	},
+				
+	messages:
+	{
+		repassword_email:	{
+			required : "Введите email",
+			email : "Неверный формат"
+		}
+	}
+	}
+	);
+	
+	
+	
 	$("input[type='text']", $("#basket_form")).change(function(){ $("#basket_form").submit(); });
 	
 	$("a.smallimage").click(function(){

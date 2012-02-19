@@ -807,17 +807,15 @@ if (isset($_POST['submit_number_recount'])) {
 	if (isset($_POST['edit_number']) && is_array($_POST['edit_number'])){
 		foreach ($_POST['edit_number'] as $key=>$val){
    			$db->query("UPDATE fw_orders_products SET product_count='$val' WHERE product_id='$key' AND order_id='$order_id'");
-			echo "UPDATE fw_orders_products SET product_count='$val' WHERE product_id='$key' AND order_id='$order_id'";
+			//echo "UPDATE fw_orders_products SET product_count='$val' WHERE product_id='$key' AND order_id='$order_id'";
 		}
 	}
 
-	foreach ($_POST['edit_number'] as $k=>$v) {
+	/*foreach ($_POST['edit_number'] as $k=>$v) {
 		$id_list.=$k.',';
 	}
 	$id_list=substr($id_list,0,-1);
-
 	$products=$db->get_all("SELECT id,price FROM fw_products WHERE id IN ($id_list)");
-
 	foreach ($_POST['edit_number'] as $k=>$v) {
 		$products_list.=$k.'|'.$v.',';
 		for ($p=0;$p<count($products);$p++) {
@@ -827,8 +825,8 @@ if (isset($_POST['submit_number_recount'])) {
 		}
 	}
 	$products_list=substr($products_list,0,-1);
+	$db->query("UPDATE fw_orders SET products='$products_list',total_price='$total_price' WHERE id='$order_id'");*/
 
-	$db->query("UPDATE fw_orders SET products='$products_list',total_price='$total_price' WHERE id='$order_id'");
 	$location=$_SERVER['HTTP_REFERER'];
 	header("Location: $location");
 }
@@ -1167,7 +1165,7 @@ SWITCH (TRUE) {
 
 		for ($i=0;$i<count($orders_list);$i++) {
 			$orders_list[$i]['status']=str_replace($status_value,$status_name,$orders_list[$i]['status']);
-			$orders_list[$i]['total_products_price'] = (($orders_list[$i]['total_products_price'] * $cur_admin['kurs'])/$cur_site['kurs']);
+			$orders_list[$i]['total_products_price'] = (($orders_list[$i]['total_price'] * $cur_admin['kurs'])/$cur_site['kurs']);
 		}
 
 		$smarty->assign("orders_list",$orders_list);
@@ -1189,7 +1187,8 @@ SWITCH (TRUE) {
 
 		$total_summ = $db->get_single("SELECT SUM(price) FROM fw_products WHERE id IN (SELECT product_id FROM fw_orders_products WHERE order_id='$id')");
 
-		$user_info=$db->get_single("SELECT a.*,b.comments,b.status FROM fw_users as a INNER JOIN fw_orders as b
+		$user_info=$db->get_single("SELECT a.*,b.comments,b.status, b.address, b.metro,b.order_price, b.total_price,b.dostavka FROM fw_users as a 
+									INNER JOIN fw_orders as b
 									ON a.id=b.user AND b.id='$id'
 									WHERE a.id=(SELECT user FROM fw_orders WHERE id='$id' LIMIT 0,1)");
 		$smarty->assign("user_info",$user_info);
@@ -1200,7 +1199,8 @@ SWITCH (TRUE) {
 		c.hit as hit,
 		b.product_count,
 		c.price as price,
-		(c.price * product_count) as total_summ,
+		(b.product_price*b.product_count) as total_summ,
+		b.product_price,
 		order_id,
 		product_count,
 		c.name 	

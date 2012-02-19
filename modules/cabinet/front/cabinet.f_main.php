@@ -2,10 +2,10 @@
 
 require_once BASE_PATH.'/lib/class.image.php';
 
-if ($url[$n]!='login' && $url[$n]!='register' && count($url)!=2) {
+if ($url[$n]!='login' && $url[$n]!='register' && count($url)!=2 && empty($_POST)) {
 
 	$check_auth=Common::check_auth('user');
-	if ($check_auth!='1') {
+	if (!$check_auth) {
 		header ("Location: ".BASE_URL."/$module_url/login/");
 		die();
 	}
@@ -40,31 +40,39 @@ $shop = new Shop($db);
 
 if (isset($_POST['submit_restore'])){
 
+	if (isset($_POST['email']))
+	{
       $email = $_POST['email'];
+	}
+	else
+	{
+		echo 0;
+		exit();
+	}
 
       $item = $db->get_single("SELECT id,login FROM fw_users WHERE mail='".$email."'");
 
       if ($item['id'] != ""){
             $pwd = new Password();
             $password = $pwd->generate();
-            $db->query("UPDATE fw_users SET password='".md5($password)."' WHERE id=".intval($item['id']));
+            $db->query("UPDATE fw_users SET password='".sha1($password)."' WHERE id=".intval($item['id']));
 
             $subject = "Регистрационные данные http://www." . $_SERVER['SERVER_NAME'];
             $message = 'Ваш логин: ' . $item['login'] . '<br>Ваш пароль: ' .$password;
-            $message .= '<br>Авторизация: http://' . $_SERVER['SERVER_NAME'] . '/cabinet/login/';
-			
+
             $headers  = "Content-type: text/html; charset=windows-1251 \r\n";
             $headers .= "From: <noreply@".$_SERVER['SERVER_NAME'].".ru>\r\n";
 
-            mail($_POST['email'], $subject, $message, $headers);
-
-            $smarty->assign("error_message",'На ваш E-mail выслан новый пароль');
+            if (mail($_POST['email'], $subject, $message, $headers))
+            	echo 1;
       }
-
       else
-            $smarty->assign("error_message",'Такой e-mail отсутствует');
+            echo 0;
+
+      exit();
 
 }
+
 
 
 if (isset($_POST['submit_login'])) {
@@ -142,7 +150,8 @@ if ($url[$n]=='logout' && count($url)==2) {
 	setcookie('fw_login_cookie',"",time()-5555,'/','');
 	session_destroy();
 	$location=$_SERVER['HTTP_REFERER'];
-	header ("Location: $location");
+	//header ("Location: $location");
+	header ("Location: /");
 	die();
 
 }
