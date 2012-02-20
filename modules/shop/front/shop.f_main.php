@@ -1,7 +1,7 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors','On');
+//error_reporting(E_ALL);
+//ini_set('display_errors','On');
 
 //$_SESSION['fw_basket']=array();
 
@@ -505,6 +505,7 @@ SWITCH (TRUE) {
 
 	CASE ($url[$n]=='submit' && $url[$n-1]=='basket' && count($url)==3):
 
+		
 		if (isset($_POST['submit_order'])) {
 			
 			//оформление с регистрацией
@@ -677,17 +678,54 @@ SWITCH (TRUE) {
 				$smarty->assign("comment",$comment);
 				$smarty->assign("currency",DEFAULT_CURRENCY);
 
-				$body=$smarty->fetch($templates_path.'/order_notice.txt');
-				Mail::send_mail($user['login'],"noreply@".$_SERVER['SERVER_NAME'],"Новый заказ в интернет магазине",$body,'','html','standard','Windows-1251');
+		//set_include_path(ROOT .'PHPExcel/Classes/');
+		include_once ROOT .'PHPExcel/Classes/PHPExcel/IOFactory.php';
+		
+		$objPHPExcel = PHPExcel_IOFactory::load(ROOT . "factura.xls");
+		$objPHPExcel->setActiveSheetIndex(0);
+		$aSheet = $objPHPExcel->getActiveSheet();
 
-				$admin_body=$smarty->fetch($templates_path.'/admin_order_notice.txt');
-				Mail::send_mail(ADMIN_MAIL,"noreply@".$_SERVER['SERVER_NAME'],"Новый заказ в интернет магазине",$admin_body,'','html','standard','WIndows-1251');
+		
+		$aSheet->setCellValue('B11', mb_convert_encoding("К платежно-расчетному документу  Платежное поручение N {$order_id} от ".date("d.m.y"),'utf-8','windows-1251'));
+		$aSheet->setCellValue('B12', mb_convert_encoding("Покупатель: ".$user['name'].", ".$user['mail'],'utf-8','windows-1251'));
+		$aSheet->setCellValue('B13', mb_convert_encoding("Телефон: ".$user['phone_1'],'utf-8','windows-1251'));
+		$aSheet->setCellValue('B14', mb_convert_encoding("Телефон доп.: ".$user['phone_2'],'utf-8','windows-1251'));
+		$aSheet->setCellValue('B15', mb_convert_encoding("Стоимость доставки: ".$order_price,'utf-8','windows-1251'));
+		$aSheet->setCellValue('B16', mb_convert_encoding("Адрес: ".$address,'utf-8','windows-1251'));
+		$aSheet->setCellValue('B17', mb_convert_encoding("Метро: ".$metro,'utf-8','windows-1251'));
+		$aSheet->setCellValue('B18', mb_convert_encoding("Комментарий: ".$comment,'utf-8','windows-1251'));
+		//добавляем строки для продуктов
+		$row=25;
+		foreach ($products as $product)
+		{
+			$aSheet->insertNewRowBefore($row, 1);
+			$aSheet->setCellValue('B'.$row, mb_convert_encoding($product['details']['name'],'utf-8','windows-1251'));
+			$aSheet->setCellValue('E'.$row, $product['count']);
+			$aSheet->setCellValue('F'.$row, $product['details']['price']);
+			$aSheet->setCellValue('M'.$row, mb_convert_encoding($product['details']['country'],'utf-8','windows-1251'));
+			$row++;
+		}
+		$aSheet->setCellValue('C'.$row, $total_price);
+		
+		include(ROOT ."PHPExcel/Classes/PHPExcel/Writer/Excel5.php");
+		$objWriter = new PHPExcel_Writer_Excel5($objPHPExcel);
+		
+		$attach = ROOT . "xls/order_".$order_id.".xls";
+		chmod($attach,0777);
+		$objWriter->save($attach);
+		
+		$smarty->assign('file_attach', BASE_URL . '/xls/order_'.$order_id.'.xls');
+		
+		$body=$smarty->fetch($templates_path.'/order_notice.txt');
+		Mail::send_mail($user['login'],"noreply@".$_SERVER['SERVER_NAME'],"Новый заказ в интернет магазине",$body,'','html','standard','Windows-1251');
 
-				
-				//$page_found = true;
-				//$template = 'order_done.html';
-				header("Location: /catalog/basket/final/");
-				die();
+		$admin_body=$smarty->fetch($templates_path.'/admin_order_notice.txt');
+		Mail::send_mail(ADMIN_MAIL,"noreply@".$_SERVER['SERVER_NAME'],"Новый заказ в интернет магазине",$admin_body, $attach,'html','standard','WIndows-1251');
+
+		
+		
+		header("Location: /catalog/basket/final/");
+		die();
 			}
 
 		}

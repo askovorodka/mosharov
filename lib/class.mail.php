@@ -27,6 +27,23 @@ class Mail {
 		}
 	
 		if(!empty($attach_file)) {
+			
+				$file_name=basename($attach_file);
+				//$attach_file="uploads/".$attach_file;
+				$message.= "--MailBoundary\n";
+				$message.="Content-Type: application/octetstream; name=$file_name\n";
+				$message.="Content-Transfer-Encoding: base64\n";
+				$message.="Content-Disposition: attachment; filename=$file_name\n\n";
+	
+				$file=fopen ($attach_file, "r");
+				$content=fread($file,filesize($attach_file));
+				fclose ($file);
+				$encoded_file=chunk_split(base64_encode($content));
+				$message.=$encoded_file."\n\n";
+			
+		}
+		
+		/*if(!empty($attach_file)) {
 			foreach($attach_file as $attach_file) {
 				$file_name=$attach_file;
 				$attach_file="uploads/".$attach_file;
@@ -41,7 +58,7 @@ class Mail {
 				$encoded_file=chunk_split(base64_encode($content));
 				$message.=$encoded_file."\n\n";
 			}
-		}
+		}*/
 		$message.="--MailBoundary--\n";
 	
 		if ($send_type=="standard") {
