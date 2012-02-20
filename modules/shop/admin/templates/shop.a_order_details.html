@@ -95,6 +95,7 @@ parent.location.href = "index.php?mod=shop&action=delete_from_order&order_id=" +
             {if intval($entry.hit)==1}<img src="templates/img/hit.gif" width="21" height="21" border="0" alt="Хит продаж" align="right" style="margin: 2px 5px 0 10px;">{/if}
 				<small><font color=#666666>{$entry.cat_title}</font></small><br>
 				<a href="?mod=shop&action=edit_product&id={$entry.product_id}">{$entry.name}</a>
+				{if $entry.properties}<br><small>{foreach from=$entry.properties item=pr key=key}{$key}:{$pr}<br />{/foreach}</small>{/if}
 			</td>
 			<td class={$td}_middle align=center>{$entry.product_count}
 				{*<input type=text name=edit_number[{$entry.product_id}] value="{$entry.product_count}" class=field style="width:100%;" />*}

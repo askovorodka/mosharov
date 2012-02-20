@@ -311,7 +311,7 @@ SWITCH (TRUE) {
 		}
 
 			$switch_off_smarty=true;
-			$basket_total = number_format($basket_total,2,",","");
+			//$basket_total = number_format($basket_total,2,",","");
 			//print "$basket_number;$basket_total";
 
 		}
@@ -453,7 +453,8 @@ SWITCH (TRUE) {
         $sess = &$_SESSION;
         foreach($sess['fw_basket'] as $key=>$val){
         	foreach($sess['fw_basket'][$key] as $key2=>$val2)
-        		$sess['fw_basket'][$key]['price_number'] = sprintf("%.2f",$sess['fw_basket'][$key]['price']*$sess['fw_basket'][$key]['number']);
+        		//$sess['fw_basket'][$key]['price_number'] = sprintf("%.2f",$sess['fw_basket'][$key]['price']*$sess['fw_basket'][$key]['number']);
+        		$sess['fw_basket'][$key]['price_number'] = ($sess['fw_basket'][$key]['price']*$sess['fw_basket'][$key]['number']);
         		$sess['fw_basket'][$key]['full_url'] = $shop->getFullUrlProduct($sess['fw_basket'][$key]['id'], 'catalog');
         		$sess['fw_basket'][$key]['image'] = $shop->getProductImage($sess['fw_basket'][$key]['id']);
         		
@@ -461,9 +462,13 @@ SWITCH (TRUE) {
 
 			$smarty->assign("basket",$_SESSION['fw_basket']);
 			
-			$smarty->assign("total_price",sprintf("%.2f",$total_price));
+			//$smarty->assign("total_price",sprintf("%.2f",$total_price));
+			$smarty->assign("total_price",$total_price);
 			if (isset($_SESSION['fw_user'])) $smarty->assign("user",$_SESSION['fw_user']);
 		}
+		
+		//print_r($_SESSION['fw_basket']);
+		
 		$template='basket.html';
 
 	BREAK;
@@ -655,7 +660,8 @@ SWITCH (TRUE) {
 					{
 						$products[$key]['details'] = $shop->getProductInfo($_SESSION['fw_basket'][$key]['id']);
 						$products[$key]['count'] = $_SESSION['fw_basket'][$key]['number'];
-						$products[$key]['sum'] = $products[$key]['details']['price'] * $products[$key]['count']; 
+						$products[$key]['sum'] = $products[$key]['details']['price'] * $products[$key]['count'];
+						$products[$key]['properties'] =  $_SESSION['fw_basket'][$key]['properties'];
 					}
 					$smarty->assign("products",$products);
 				}
@@ -698,8 +704,20 @@ SWITCH (TRUE) {
 		$row=25;
 		foreach ($products as $product)
 		{
+			$prop = "";
+			if ($product['properties'])
+			{
+				foreach ($product['properties'] as $key=>$val)
+				{
+					$prop .= "\n".$key.":".$val; 				
+				}
+			}
+			
+			if (!empty($prop))
+				$prop = $prop;
+			
 			$aSheet->insertNewRowBefore($row, 1);
-			$aSheet->setCellValue('B'.$row, mb_convert_encoding($product['details']['name'],'utf-8','windows-1251'));
+			$aSheet->setCellValue('B'.$row, mb_convert_encoding($product['details']['name'] . $prop,'utf-8','windows-1251'));
 			$aSheet->setCellValue('E'.$row, $product['count']);
 			$aSheet->setCellValue('F'.$row, $product['details']['price']);
 			$aSheet->setCellValue('M'.$row, mb_convert_encoding($product['details']['country'],'utf-8','windows-1251'));

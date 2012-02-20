@@ -1,7 +1,7 @@
 <?php
 
-//error_reporting(E_ALL);
-//ini_set('display_errors','On');
+error_reporting(E_ALL);
+ini_set('display_errors','On');
 
 require_once '../lib/class.tree.php';
 require_once '../lib/class.image.php';
@@ -1195,6 +1195,7 @@ SWITCH (TRUE) {
 
 		$orders=$db->get_all("SELECT a.*,
 		b.product_id as product_id,
+		b.properties,
 		c.parent as parent,
 		c.hit as hit,
 		b.product_count,
@@ -1209,7 +1210,7 @@ SWITCH (TRUE) {
 		(fw_orders_products as b INNER JOIN fw_products as c ON b.product_id=c.id)	ON a.id=b.order_id 
 		WHERE a.id='$id'");
 
-  		$orders=String::unformat_array($orders);
+  		//$orders=String::unformat_array($orders);
 
 		$cl=Common::get_nodes_list($cat_list);
 
@@ -1236,6 +1237,7 @@ SWITCH (TRUE) {
 				if (strlen(trim($orders[$key]['price']))>0){
 					$orders[$key]['total_summ']=(($orders[$key]['total_summ'] * $cur_admin['kurs'])/$cur_site['kurs']);
 					$order_price += $orders[$key]['total_summ'];
+					$orders[$key]['properties'] = @unserialize($orders[$key]['properties']);
 				}
 			}
 		}

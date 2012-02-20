@@ -11,48 +11,10 @@
 		    <div class="pozb"><div class="poz">
 		    <a title="{$product.name}" href="{$base_url}/{$product.full_url}/">{$product.name|strip_tags}</a><br>
 		    {if $product.image}<a title="{$product.name}" href="{$base_url}/{$product.full_url}/"><img src="/uploaded_files/shop_images/medium-{$product.image}.{$product.ext}" width="149" height="144" class="pozimg"></a>{/if}
-		    <div class="pozprс"><span class="pozcena">{$product.price|format_price}</span> руб.<br><br></div>
+		    <div class="pozprс"><span class="pozcena">{$product.price}</span> руб.<br><br></div>
 		    </div></div>
 		{/foreach}
 	{/if}
     </div>
 
     <div class="txt"><br />{$cat_content.text}</div>
-
-
-{*
-<div class="cat">
-<div class="contt">
-{include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
-<h1>{$cat_content.title|strip_tags}</h1>
-{if !empty($products_list)}
-<table class="cats">
-	{foreach from=$products_list item=product name=for2}
-	{if $smarty.foreach.for2.iteration%5 == 0 && !$smarty.foreach.for2.first}<tr><td colspan="4" class="catnone"></td></tr>{/if}
-	{if $smarty.foreach.for2.first || $smarty.foreach.for2.iteration%5 == 0}<tr>{/if}
-	
-    <td><div class="catitemin"><a href="{$base_url}/{$product.full_url}/" title="{$product.name}">{$product.name}</a>
-    <br>
-    <a href="{$base_url}/{$product.full_url}/" title="{$product.name}">
-    <img src="/uploaded_files/shop_images/medium-{$product.image}.{$product.ext}" alt="{$product.name}">
-    </a>
-    <div class="cato"><span class="catcap">Артикул:</span> {$product.article}
-    <br><span class="catcap">Возраст:</span> {$product.age}
-    <br><div class="catiteminp"><input type="hidden" id="product_count_{$product.id}" value="1" />
-    <input type="image" name="add_order" src="{$template_image}sub_button.jpg" class="catitemini" product_id="{$product.id}" title="Добавить в корзину"> {$product.price} р.</div></div></div></td>
-    
-	{if $smarty.foreach.for2.last || $smarty.foreach.for2.iteration%4 == 0}</tr>{/if}
-	{/foreach}
-</table><br>
-{else}
-<center>В этой категории пока нет продуктов.</center>
-{/if}
-</div>
-</div>
-
-<div class="catt">
-<div class="contt">
-{$cat_content.text}
-</div>
-</div>
-*}

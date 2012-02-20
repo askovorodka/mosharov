@@ -6,7 +6,7 @@
 
 <p>Номер вашего заказа: {$order_id}</p>
 
-<p>Вы заказали {$number} товаров на сумму {$order_total|format_price} {$currency}.</p> 
+<p>Вы заказали {$number} товаров на сумму {$order_total} {$currency}.</p> 
 
 <p>Историю ваших заказов смотрите на сайте {$site_url}/cabinet/orders/</p>
 
@@ -17,17 +17,23 @@
 <table>
 <tr><th>№</th><th>Наименование</th><th>Количество</th><th>Стоимость за единицу</th><th>Сумма</th></tr>
 {foreach from=$products item=product name=for1}
-<tr><td>{$smarty.foreach.for1.iteration}</td><td>{$product.details.name}</td><td>{$product.count}</td><td>{$product.details.price|format_price} руб.</td><td>{$product.sum|format_price} руб.</td></tr>
+<tr><td>{$smarty.foreach.for1.iteration}</td>
+<td>{$product.details.name}
+{if $product.properties}<br><small>{foreach from=$product.properties item=pr key=key}{$key}:{$pr}<br />{/foreach}</small>{/if}
+</td>
+<td>{$product.count}</td>
+<td>{$product.details.price} руб.</td>
+<td>{$product.sum} руб.</td></tr>
 {/foreach}
 
 <tr>
 <td colspan="4" align="right">Стоимость доставки:</td>
-<td>{$order_price|format_price} руб.</td>
+<td>{$order_price} руб.</td>
 </tr>
 
 <tr>
 <td colspan="4" align="right">Итого:</td>
-<td>{$order_total|format_price} руб.</td>
+<td>{$order_total} руб.</td>
 </tr>
 
 </table>

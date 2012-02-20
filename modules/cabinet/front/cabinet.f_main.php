@@ -856,7 +856,7 @@ SWITCH (TRUE){
     foreach ($orders_list as $key=>$val)
     {
     	$orders_list[$key]['products_list'] = $db->get_all("
-    	select a.*, b.name, b.price, b.article, (a.product_count * b.price) as total_price
+    	select a.*, b.name, b.price, b.article, (a.product_count * a.product_price) as total_price
     	from fw_orders_products as a
     	left join fw_products as b on a.product_id = b.id 
     	where a.order_id = '{$val['id']}' ");
