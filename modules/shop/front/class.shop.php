@@ -47,7 +47,7 @@ class Shop extends db {
 	}
 
 	
-	function search($where, $pager, $sort_field = "date", $sort_order = "desc")
+	function search($keyword, $sort_field = "date", $sort_order = "desc")
 	{
 		if (count($where) > 0)
 		{
@@ -103,11 +103,10 @@ class Shop extends db {
 		}
 		
 		
-		$result = $this->db->get_all("select a.*, b.image 
-		from fw_products as a
-		left join fw_catalogue as b on a.parent = b.id 
-		where a.status = '1' " . 
-		$where . " {$sort_field} {$sort_order} ");
+		$result = $this->db->get_all("select a.*
+		from fw_products as a 
+		where a.status = '1' and (name like '{$keyword}%' or article='{$keyword}' or price='{$keyword}' or country='{$keyword}') " . 
+		" {$sort_field} {$sort_order} ");
 		
 		return $result;
 		

@@ -7,18 +7,14 @@
 
 if ($switch_default=='on' or $main_module=='on') {
 
-	//$js[]=BASE_URL.'/javascript/thickbox-3.1.js';
-	//$js[]=BASE_URL.'/lib/JsHttpRequest/Js.js';
-
 	$basket_number=0;
 	$basket_total=0;
 	for ($i=0;$i<count(@$_SESSION['fw_basket']);$i++) {
 		$basket_number+=@$_SESSION['fw_basket'][$i]['number'];
-		$basket_total+=@$_SESSION['fw_basket'][$i]['price']*@$_SESSION['fw_basket'][$i]['number'];
+		$basket_total+=(@$_SESSION['fw_basket'][$i]['price']*@$_SESSION['fw_basket'][$i]['number']);
 	}
 	$smarty->assign("basket_number",$basket_number);
-	//$smarty->assign("basket_total",sprintf("%.2f",$basket_total));
-	$smarty->assign("basket_total",$basket_total);
+	$smarty->assign("basket_total",number_format($basket_total,2,'.',''));
 	$smarty->assign("currency",DEFAULT_CURRENCY);
 
 }
@@ -293,7 +289,7 @@ SWITCH (TRUE) {
 		
 		for ($i=0;$i<count($_SESSION['fw_basket']);$i++) {
 			if ($_SESSION['fw_basket'][$i]['id']==$product['id']) {
-				$_SESSION['fw_basket'][$i]['number']=$_SESSION['fw_basket'][$i]['number']+$number;
+				$_SESSION['fw_basket'][$i]['number']= number_format($_SESSION['fw_basket'][$i]['number']+$number,2,'.','');
 				$_SESSION['fw_basket'][$i]['properties'] = $properties;
 				$number_found=true;
 			}
@@ -308,6 +304,7 @@ SWITCH (TRUE) {
 		for ($i=0;$i<count(@$_SESSION['fw_basket']);$i++) {
 			$basket_number+=@$_SESSION['fw_basket'][$i]['number'];
 			$basket_total+=@$_SESSION['fw_basket'][$i]['price'] * @$_SESSION['fw_basket'][$i]['number'];
+			$basket_total = number_format($basket_total,2,'.','');
 		}
 
 			$switch_off_smarty=true;
@@ -330,8 +327,27 @@ SWITCH (TRUE) {
   		$replace = array('');
   		$keyword = $_REQUEST['keyword'];
   		$keyword = preg_replace($patterns,$replace,$keyword);
+  		
+  		$navigation[]=array("url" => 'product_search',"title" => 'Результаты поиска');
 
-    	$query = $db->get_all("SELECT name FROM fw_products WHERE name LIKE '".$keyword."%'");
+  		$products = $shop->search($keyword);
+  		
+  		if ($products)
+  		{
+  			foreach ($products as $key=>$val)
+  			{
+  				$products[$key]['image'] = $shop->getProductImage($val['id']);
+  				$products[$key]['category'] = $shop->getCategory($val['parent']);
+  				$products[$key]['full_url'] = $shop->getFullUrlProduct($val['id'],'catalog');
+  			}
+  			$smarty->assign('products', $products);
+  		}
+  		
+  		$smarty->assign('keyword', $keyword);
+  		$page_found = true;
+  		$template = "shop.f_search.html";
+  		
+    	/*$query = $db->get_all("SELECT name FROM fw_products WHERE name LIKE '".$keyword."%'");
     	$output = '<?xml version="1.0" encoding="windows-1251" standalone="yes"?>';
     	$output .= "<response>";
     	for ($i=0; $i<count($query); $i++)
@@ -347,7 +363,7 @@ SWITCH (TRUE) {
   		header("Pragma: no-cache");
   		header("Content-Type: text/xml");
   		echo $output;
-		die();
+		die();*/
 
 	BREAK;
 
@@ -448,13 +464,14 @@ SWITCH (TRUE) {
 			$total_price=0;
 			for ($i=0;$i<count($_SESSION['fw_basket']);$i++) {
 				$total_price+=$_SESSION['fw_basket'][$i]['price']*$_SESSION['fw_basket'][$i]['number'];
+				$total_price = number_format($total_price,2,'.','');
 			}
 
         $sess = &$_SESSION;
         foreach($sess['fw_basket'] as $key=>$val){
         	foreach($sess['fw_basket'][$key] as $key2=>$val2)
         		//$sess['fw_basket'][$key]['price_number'] = sprintf("%.2f",$sess['fw_basket'][$key]['price']*$sess['fw_basket'][$key]['number']);
-        		$sess['fw_basket'][$key]['price_number'] = ($sess['fw_basket'][$key]['price']*$sess['fw_basket'][$key]['number']);
+        		$sess['fw_basket'][$key]['price_number'] = number_format(($sess['fw_basket'][$key]['price']*$sess['fw_basket'][$key]['number']),2,'.','');
         		$sess['fw_basket'][$key]['full_url'] = $shop->getFullUrlProduct($sess['fw_basket'][$key]['id'], 'catalog');
         		$sess['fw_basket'][$key]['image'] = $shop->getProductImage($sess['fw_basket'][$key]['id']);
         		
@@ -622,6 +639,7 @@ SWITCH (TRUE) {
 				}
 
 				$total_price += $order_price;
+				$total_price = number_format($total_price,2,'.','');
 
 				$db->query("INSERT INTO fw_orders (
 					user,
@@ -660,7 +678,7 @@ SWITCH (TRUE) {
 					{
 						$products[$key]['details'] = $shop->getProductInfo($_SESSION['fw_basket'][$key]['id']);
 						$products[$key]['count'] = $_SESSION['fw_basket'][$key]['number'];
-						$products[$key]['sum'] = $products[$key]['details']['price'] * $products[$key]['count'];
+						$products[$key]['sum'] = number_format($products[$key]['details']['price'] * $products[$key]['count'],2,'.','');
 						$products[$key]['properties'] =  $_SESSION['fw_basket'][$key]['properties'];
 					}
 					$smarty->assign("products",$products);

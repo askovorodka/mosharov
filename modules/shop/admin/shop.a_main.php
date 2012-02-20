@@ -1025,7 +1025,7 @@ SWITCH (TRUE) {
 						$products_list[$i]['cat_title']=$cl[$k]['full_title'];
 					else
 						$products_list[$i]['cat_title']=$cl[$k]['name'];
-					$products_list[$i]['price'] = number_format(($products_list[$i]['price'] * $cur_admin['kurs'])/$cur_site['kurs'],2);
+					//$products_list[$i]['price'] = $products_list[$i]['price'];
 					break;
 				}
 			}
@@ -1160,7 +1160,15 @@ SWITCH (TRUE) {
 		$result=$db->query("SELECT COUNT(*) FROM fw_orders $cond");
 		$pager=Common::pager($result,PRODUCTS_PER_PAGE,$page);
 
-		$orders_list=$db->get_all("SELECT id,user,status,status as status_number,insert_date,total_price,(SELECT name FROM fw_users WHERE id=o.user) AS user_name, (SELECT SUM((SELECT price FROM fw_products WHERE id=b.product_id) * b.product_count) FROM fw_orders_products as b WHERE b.order_id=o.id) as total_products_price FROM fw_orders o $cond $sort LIMIT ".$pager['limit']);
+		/*$orders_list=$db->get_all("SELECT id,user,status,status as status_number,insert_date,total_price,
+		(SELECT name FROM fw_users WHERE id=o.user) AS user_name, 
+		(SELECT SUM((SELECT price FROM fw_products WHERE id=b.product_id) * b.product_count) 
+		FROM fw_orders_products as b WHERE b.order_id=o.id) as total_products_price 
+		FROM fw_orders o $cond $sort LIMIT ".$pager['limit']);*/
+		$orders_list=$db->get_all("SELECT id,user,status,status as status_number,insert_date,total_price,
+		(SELECT name FROM fw_users WHERE id=o.user) AS user_name
+		FROM fw_orders o $cond $sort LIMIT ".$pager['limit']);
+		
 		$orders_list=String::unformat_array($orders_list);
 
 		for ($i=0;$i<count($orders_list);$i++) {
@@ -1235,7 +1243,7 @@ SWITCH (TRUE) {
 		if (count($orders)>0){
 			foreach ($orders as $key=>$val){
 				if (strlen(trim($orders[$key]['price']))>0){
-					$orders[$key]['total_summ']=(($orders[$key]['total_summ'] * $cur_admin['kurs'])/$cur_site['kurs']);
+					$orders[$key]['total_summ']=number_format(($orders[$key]['total_summ'] * $cur_admin['kurs'])/$cur_site['kurs'], 2, '.', '');
 					$order_price += $orders[$key]['total_summ'];
 					$orders[$key]['properties'] = @unserialize($orders[$key]['properties']);
 				}

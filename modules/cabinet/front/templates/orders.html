@@ -27,8 +27,8 @@
                 {if $product.properties}<br /><small>{foreach from=$product.properties item=pr key=key}{$key}:{$pr}<br />{/foreach}</small>{/if}
                 
                 </td>
-                <td id="nw">{$product.product_price} <span class="tableart">руб.</span></td>
-                <td id="nw">{$product.total_price} <span class="tableart">руб.</span></td>
+                <td id="nw">{$product.product_price|format_number} <span class="tableart">руб.</span></td>
+                <td id="nw">{$product.total_price|format_number} <span class="tableart">руб.</span></td>
               </tr>
               {/foreach}
               
@@ -36,7 +36,7 @@
             <div id="tar2">
             Доставка: <span style="color:#e07e13;">{$order.order_price|format_number}</span> руб.
             <span style="color:#999999;font-size:12px;">({if $order.dostavka == 2}Требуется доставка{else}Самовывоз{/if})</span><br>
-            Итого: <span style="color:#e07e13;">{$order.total_price}</span> руб.<br>
+            Итого: <span style="color:#e07e13;">{$order.total_price|format_number}</span> руб.<br>
             Статус заказа: {$order.status|get_order_status}
             </div>
             {/foreach}

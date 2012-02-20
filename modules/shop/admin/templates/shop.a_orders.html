@@ -44,7 +44,7 @@ parent.location.href = "index.php?mod=shop&action=delete_order&id=" + delete_id;
 			<a href="?mod=shop&action=order_details&id={$entry.id}"><strong>{$entry.user_name}</strong></a>
 			</td>
 			<td class={$td}_middle align="right">
-				{$entry.total_products_price|string_format:"%.2f"} {$currency_site.znak}
+				{$entry.total_price|format_number} {$currency_site.znak}
 			</td>
 			<td class={$td}_middle align="center">
 				<font style="color: {if $entry.status_number=='0'}red{/if}{if $entry.status_number=='1'}#f7c21e{/if}{if $entry.status_number>1}#3fda2a{/if}"><strong>{$entry.status}</strong></font>

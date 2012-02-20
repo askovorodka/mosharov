@@ -101,11 +101,11 @@ parent.location.href = "index.php?mod=shop&action=delete_from_order&order_id=" +
 				{*<input type=text name=edit_number[{$entry.product_id}] value="{$entry.product_count}" class=field style="width:100%;" />*}
 			</td>
 			<td class={$td}_middle align="right">
-				{$entry.product_price} руб.
+				{$entry.product_price|format_number} руб.
 			</td>
 			
 			<td class={$td}_middle align="right">
-				{$entry.total_summ} руб.
+				{$entry.total_summ|format_number} руб.
 			</td>
 			<td class={$td}_right align=center>
 				<a href="javascript:confirm_delete('{$entry.id}','{$entry.product_id}');" class=img_link><img src=templates/img/ico_delete.gif border=0 /></a>
@@ -117,7 +117,7 @@ parent.location.href = "index.php?mod=shop&action=delete_from_order&order_id=" +
 		<td class=2_left><img src="templates/img/tree.gif" style="margin-left: 5px;">
 		{*<a href="javascript:void(0);" onClick="window.open('index.php?mod=shop&action=mini_catalogue&order_id={$smarty.get.id}','winscript','height=500,width=500,toolbar=yes,resizable=yes,scrollbars=yes,,menubar=no' ); return false" style="color: #390; text-decoration: underline;">Добавить продукт</a>*}</td>
 		<td class=2_middle align=left>Стоимость доставки: {$user_info.order_price} руб. </td>
-		<td class=2_middle align="right">Итого: <font color=red><b>{$user_info.total_price} {$currency_site.znak}</b></font></td>
+		<td class=2_middle align="right">Итого: <font color=red><b>{$user_info.total_price|format_number} {$currency_site.znak}</b></font></td>
 		<td class=2_right align=center>{*<input type=submit name=submit_number_recount style="font-size: 9px; width: 100px; cursor: hand; cursor: pointer;" value="Пересчитать">*}</td>
 	</tr>
 

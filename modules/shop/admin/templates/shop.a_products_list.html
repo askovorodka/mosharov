@@ -91,6 +91,7 @@ if(document.getElementById(name).style.display!="none") {
 	<tr>
 	<th width="30" align="center" style="border-right: none;"><input type="checkbox" onClick="select_all(this,'del_product')" style="margin-left: 7px;"></th>
 	<th style="border-left: none;">Продукция&nbsp;&nbsp;<a href="?mod=shop&action=products_list&cat={$cat}&sort=name&{if trim($type)!=""}type={$type}&{/if}order=asc&search={$search}&page={$current_page}" class=img_link><img src=templates/img/cat_up.gif border=0 width="7" height="6"></a> <a href="?mod=shop&action=products_list&cat={$cat}&{if trim($type)!=""}type={$type}&{/if}sort=name&order=desc&search={$search}&page={$current_page}" class=img_link><img src=templates/img/cat_down.gif border=0 width="7" height="6"></a></th>
+	<th style="border-left: none;">Цена</th>
 	<th width="80">Статус <a href="?mod=shop&action=products_list&cat={$cat}&sort=status&order=asc&search={$search}&page={$current_page}" class=img_link><img src=templates/img/cat_up.gif border=0 width="7" height="6"></a>&nbsp;<a href="?mod=shop&action=products_list&cat={$cat}&sort=status&order=desc&search={$search}&page={$current_page}" class=img_link><img src=templates/img/cat_down.gif border=0 width="7" height="6"></a></th>
 	
 	{*<th width="80">Хит продаж</th>*}
@@ -113,6 +114,10 @@ if(document.getElementById(name).style.display!="none") {
 			<td class={$td}_middle>
 				{if intval($entry.hit)==1}<img src="templates/img/hit.gif" width="21" height="21" border="0" alt="Хит продаж" align="right" style="margin: 5px 5px 0 10px;">{/if}<small><font color=#666666>{$entry.cat_title}</font></small><br><img src="templates/img/tree.gif"><b>{$entry.name}</b>
 			</td>
+			<td class={$td}_middle align=center width="80">
+			{$entry.price}
+			</td>
+			
 			<td class={$td}_middle align=center width="80">
 			<a href="?mod=shop&action=change_product_status&id={$entry.id}" title="Изменить статус"><img src=templates/img/status_{$entry.status}.gif border=0></a>
 			</td>
