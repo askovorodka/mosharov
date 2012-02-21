@@ -138,17 +138,6 @@ $current_url_pages=$url;
 $current_url=implode("/",$url);
 $smarty->assign("current_url",$current_url);
 
-//новости в блоке справа
-//$news=$db->get_all("SELECT * FROM fw_news WHERE status='1' ORDER BY publish_date DESC " . $limit);
-//$smarty->assign("news_list",$news);
-
-//$smarty->assign('top_product', $shop->getTopProducts(1));
-
-//сессия
-//$session =  new Session($db);
-//$session->setSession();
-//$smarty->assign('online_users', $session->getOnLine() );
-
 $smarty->assign("base_url",BASE_URL);
 $smarty->assign("base_path",BASE_PATH);
 $smarty->assign("catalog_image",BASE_URL . '/uploaded_files/shop_images/');
@@ -161,17 +150,6 @@ $smarty->assign("template_image",'http://'.$_SERVER['HTTP_HOST'].'/templates/img
 
 if (!empty($_SESSION['fw_user'])) $smarty->assign('user_info',$_SESSION['fw_user']);
 
-
-/*$cat_list=$db->get_all("SELECT * FROM fw_catalogue WHERE status = '1' ORDER BY param_left");
-$cat_list=Common::get_nodes_list($cat_list);
-
-$types_list=$db->get_all("SELECT * FROM fw_products_types WHERE status='1' ORDER BY name");
-$smarty->assign("types_list",$types_list);
-
-$prod_list=$db->get_all("SELECT name FROM fw_products WHERE status='1' AND name<>'' ORDER BY name");
-$smarty->assign("prod_list",$prod_list);
-$smarty->assign("cat_list",$cat_list);
-*/
 
 
 /*--- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ ----*/
@@ -260,17 +238,6 @@ foreach ($main_menu as $key=>$val)
 }
 $smarty->assign("main_menu",$main_menu);
 
-//меню каталога
-/*$shop_menu=$db->get_all("
-	SELECT a.id,a.name,a.url,a.image,a.param_level,a.param_right,a.param_left, parent.url as parent_url 
-	FROM fw_catalogue as a
-	LEFT JOIN fw_catalogue as parent 
-	ON a.param_left > parent.param_left 
-	AND a.param_right < parent.param_right AND parent.param_level = (a.param_level - 1)
-	WHERE a.param_level in ('1', '2') AND a.status='1' 
-	ORDER BY a.param_left");
-*/
-
 $shop_menu=$db->get_all("
 	SELECT * 
 	FROM fw_catalogue as a
@@ -291,6 +258,7 @@ if ($shop_menu)
 
 $smarty->assign("shop_menu",$shop_menu);
 
+$smarty->assign('top_products', $shop->getTopProducts());
 
 if (!isset($page_title)) {
   if (isset($node_content['title']) && $node_content['title']!='') $page_title=$node_content['title'];

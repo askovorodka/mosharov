@@ -261,13 +261,13 @@ h3 {
 	color:#000000;
 	line-height:24px;
 }
-.pozboys {
+.pozboys, .poz1 {
 	color:#541b6e;
 }
-.pozgirls {
+.pozgirls, .poz2 {
 	color:#e400c1;
 }
-.pozlittle {
+.pozlittle, .poz3 {
 	color:#6cc000;
 }
 .pozcena {

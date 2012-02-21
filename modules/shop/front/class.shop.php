@@ -14,9 +14,13 @@ class Shop extends db {
 		
 		if ($result && count($result) > 0)
 		{
-			$rnd = rand(0, count($result)-1);
-			$result[$rnd]['full_url'] = $this->getFullUrlProduct($result[$rnd]['id']);
-			return $result[$rnd];
+			foreach ($result as $key=>$val)
+			{
+				$result[$key]['full_url'] = $this->getFullUrlProduct($val['id'], "catalog");
+				$result[$key]['category'] = $this->getCategory($val['parent']);
+				$result[$key]['image'] = $this->getProductImage($val['id']);
+			}
+			return $result;
 		}
 		else 
 		{

@@ -107,6 +107,13 @@ if(document.getElementById(name).style.display!="none") {
 </tr>
 
 <tr>
+  <td class=td1_left style="border-bottom: none;">Последние поступления на главной:</td>
+  <td class=td1_right style="border-bottom: none;">
+  <input type="checkbox" name="edit_hit" value="1" {if $product.hit == '1'}checked{/if} />
+  </td>
+</tr>
+
+<tr>
 <td class=td1_single colspan=2>
 
 <input type=hidden name=edit_description value="">
