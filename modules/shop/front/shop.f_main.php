@@ -1177,9 +1177,6 @@ SWITCH (TRUE) {
 					}
 				}
 				
-				//комменты
-				//$comments = $db->get_all("select * from fw_products_comments where product_id = '{$cat_content['id']}' order by insert_date desc");
-				//$smarty->assign("comments",$comments);
 				
 				$smarty->assign("cat_list",$cat_list);
 
