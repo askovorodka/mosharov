@@ -981,21 +981,6 @@ SWITCH (TRUE) {
 
 			if (isset($_GET['page'])) $page=$_GET['page'];
 
-			/*if (isset($_GET['order'])) {
-				list($order,$dir)=explode("-",$_GET['order']);
-				$dir=str_replace("/","",$dir);
-				$smarty->assign("current_dir",$dir);
-				foreach ($dirs as $k=>$v) {
-					if ($k==$order && $dir=='asc') $dirs[$k]='desc';
-					else if ($k==$order && $dir=='desc') $dirs[$k]='asc';
-				}
-
-				$order='ORDER BY '.$order.' '.$dir;
-				$smarty->assign("order",$_GET['order']);
-			}
-			else $order='ORDER BY sort_order ASC';*/
-
-
 			if (isset($_GET['sort']))
 			{
 				
@@ -1009,27 +994,6 @@ SWITCH (TRUE) {
 					break;
 					case 'price':
 						$order = "order by price ";
-					break;
-					case 'tire_is':
-						$order = "order by tire_is ";
-					break;
-					case 'tire_width':
-						$order = "order by tire_width ";
-					break;
-					case 'tire_in':
-						$order = "order by tire_in ";
-					break;
-					case 'disk_width':
-						$order = "order by disk_width ";
-					break;
-					case 'disk_diameter':
-						$order = "order by disk_diameter ";
-					break;
-					case 'disk_krep':
-						$order = "order by disk_krep ";
-					break;
-					case 'disk_pcd':
-						$order = "order by disk_pcd ";
 					break;
 					
 					default:
@@ -1103,21 +1067,15 @@ SWITCH (TRUE) {
 				$smarty->assign("text",$text);
 				$smarty->assign('cat_content', $cat_content);
 
-				//$result=$db->query("SELECT COUNT(*) FROM fw_products WHERE parent='".$cat_content['id']."' $where $order ");
-				//$pager=Common::pager($result,PRODUCTS_PER_PAGE_FRONT,$page);
-
-				//$smarty->assign("total_pages",$pager['total_pages']);
-				//$smarty->assign("current_page",$pager['current_page']);
-				//$smarty->assign("pages",$pager['pages']);
-
-
 		
 		$cat_children_ids = array();
 		for ($c=0;$c<count($cat_list);$c++) {
 			//определяем дочернии категории каталога
-			if ($cat_list[$c]['param_left']>$cat_content['param_left'] && $cat_list[$c]['param_right']<$cat_content['param_right'] && $cat_list[$c]['param_level']==($cat_content['param_level'])+1) {
+			if ($cat_list[$c]['param_left']>$cat_content['param_left'] && $cat_list[$c]['param_right']<$cat_content['param_right'] && $cat_list[$c]['param_level']==($cat_content['param_level'])+1) 
+			{
 				$cat_children_ids[] = $cat_list[$c]['id'];
-				if (isset($type)){
+				if (isset($type))
+				{
     				$item=array();
     				$item=$db->get_single("SELECT count(id) as count FROM fw_cats_types_relations WHERE cat_id='".(int)$cat_list[$c]['id']."' AND type_id='".$type."'");
     				if (intval($item['count'])>0)
@@ -1133,8 +1091,8 @@ SWITCH (TRUE) {
 				}
 			}
 			//определяем родительскую категорию каталога
-			
-			if ($cat_list[$c]['param_left'] < $cat_content['param_left'] && $cat_list[$c]['param_right'] > $cat_content['param_right'] && $cat_list[$c]['param_level'] == $cat_content['param_level']-1) {
+			if ($cat_list[$c]['param_left'] < $cat_content['param_left'] && $cat_list[$c]['param_right'] > $cat_content['param_right'] && $cat_list[$c]['param_level'] == $cat_content['param_level']-1)
+			{
 				$cat_parent_info = $cat_list[$c];
 				$smarty->assign('cat_parent_info', $cat_parent_info);
 			}
@@ -1146,7 +1104,7 @@ SWITCH (TRUE) {
 
           	$folders_list[$c]['full_url'] = $shop->getFullUrlCategory($folders_list[$c]['id'], "catalog");
           	$folders_list[$c]['products'] = $shop->getProductsByCategory($folders_list[$c]['id']);
-          	
+
           	if (isset($folders_list[$c]['products']))
           	{
           		foreach ($folders_list[$c]['products'] as $key=>$val)
@@ -1154,12 +1112,12 @@ SWITCH (TRUE) {
           			$folders_list[$c]['products'][$key]['full_url'] = $shop->getFullUrlProduct($folders_list[$c]['products'][$key]['id'], "catalog");
           		}
           	}
-          	
+
           }
           $smarty->assign("folders_list",$folders_list);
         }
 
-        
+
 				$products_list=$db->get_all("
 				SELECT *,
 						(SELECT id FROM fw_products_images i WHERE i.parent=p.id ORDER BY sort_order ASC LIMIT 1) AS image,
@@ -1185,7 +1143,7 @@ SWITCH (TRUE) {
 						p.status='1' $where
 						$order "
 				);
-				
+
 
 				foreach ($products_list as $v => $key) {
 						$tmp=explode("##|##",$key['properties']);
@@ -1199,8 +1157,8 @@ SWITCH (TRUE) {
 						}
 						$products_list[$v]['full_url'] = $shop->getFullUrlProduct($products_list[$v]['id'], "catalog");
 				}
-        
-				
+
+
 				$smarty->assign("products_list",$products_list);
 
 				if ($cat_list[$f]['full_title']!='/') {
