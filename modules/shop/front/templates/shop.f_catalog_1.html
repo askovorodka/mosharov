@@ -10,42 +10,11 @@
     	{foreach from=$folders_list item=folder}
 		    <div class="pozb"><div class="poz">
 		    <a title="{$folder.name}" href="{$base_url}/{$folder.full_url}/">{$folder.name|strip_tags}</a><br>
-		    {if $folder.image}<a title="{$folder.name}" href="{$base_url}/{$folder.full_url}/"><img src="/uploaded_files/category_images/medium-{$folder.image}" width="149" height="144" class="pozimg"></a>{/if}
-		    {*<a href="#"><img src="img/tovar.jpg" width="149" height="144" class="pozimg"></a>
-		    <div class="pozprс"><span class="pozcena">1920</span> руб.<br><br></div>*}
+		    {if $folder.image}<a title="{$folder.name}" href="{$base_url}/{$folder.full_url}/"><img src="/uploaded_files/category_images/medium-{$folder.image}" width="149" height="144" class="pozimg"></a>
+		    {elseif $folder.picture}<a title="{$folder.name}" href="{$base_url}/{$folder.full_url}/"><img src="/uploaded_files/shop_images/medium-{$folder.picture}" width="149" height="144" class="pozimg"></a>{/if}
 		    </div></div>
 		{/foreach}
 	{/if}
     </div>
 
     <div class="txt"><br />{$cat_content.text}</div>
-
-{*
-<div class="cat">
-<div class="contt">
-<h1>{$cat_content.name|strip_tags}</h1>
-	{if $folders_list}
-		<table class="cats">
-		{foreach from=$folders_list item=folder name=for1}
-			{if $smarty.foreach.for1.iteration%5 == 0 && !$smarty.foreach.for1.first}<tr><td colspan="4" class="catnone"></td></tr>{/if}
-			{if $smarty.foreach.for1.first || $smarty.foreach.for1.iteration%5 == 0}<tr>{/if}
-			<td><div class="catitem"><a href="{$base_url}/{$folder.full_url}/" title="{$folder.name}">{$folder.name}</a>
-			<br>{if $folder.image}<a href="{$base_url}/{$folder.full_url}/" title="{$folder.name}"><img src="/uploaded_files/shop_images/{$folder.image}" alt="Машинки"></a>{else}<div class="nophoto">Нет фото</div>{/if}
-			<div class="cato"><span class="catcap">Возраст:</span> 
-			<span class="catcapt">от 6 мес.</span>
-			<br><span class="catcap">Цена:</span> от 640 руб.</div></div>
-			</td>
-			{if $smarty.foreach.for1.last || $smarty.foreach.for1.iteration%4 == 0}</tr>{/if}
-		{/foreach}
-		</table>
-	{/if}
-<br>
-</div>
-</div>
-<!--- /CAT --->
-<div class="catt">
-<div class="contt">
-<p>{$cat_content.text}</p>
-</div>
-</div>
-*}

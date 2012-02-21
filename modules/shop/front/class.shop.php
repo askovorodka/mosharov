@@ -7,6 +7,23 @@ class Shop extends db {
 	{
 		$this->db = &$db;
 	}
+
+	
+	function getImageProductByCategory($cat_id)
+	{
+		$products = $this->getProductsByCategory($cat_id);
+		if ($products)
+		{
+			foreach ($products as $product)
+			{
+				$image = $this->getProductImage($product['id']);
+				if (!empty($image))
+				{
+					return $image;
+				}
+			}
+		}
+	}
 	
 	function getTopProducts($limit = 1)
 	{
@@ -28,8 +45,8 @@ class Shop extends db {
 		}
 
 	}
-	
-	
+
+
 	function searchCount($where)
 	{
 		if (count($where) > 0)
@@ -50,7 +67,7 @@ class Shop extends db {
 		
 	}
 
-	
+
 	function search($keyword, $sort_field = "date", $sort_order = "desc")
 	{
 		if (count($where) > 0)
@@ -115,8 +132,8 @@ class Shop extends db {
 		return $result;
 		
 	}
-	
-	
+
+
 	/**
 	 * Полный путь до продукта
 	 *
@@ -145,7 +162,7 @@ class Shop extends db {
 		return ($module_name) ? $module_name . "/" .$url : $url;
 		
 	}
-	
+
 	function getFullUrlCategory($id, $module_name = "")
 	{
 		$category = self::getCategory($id);
@@ -162,7 +179,7 @@ class Shop extends db {
 		return ($module_name) ? $module_name . "/" .$url : $url;
 		
 	}
-	
+
 	function getUser($id)
 	{
 		$result = $this->db->get_single("select * from fw_users where id = '{$id}'");
@@ -175,7 +192,7 @@ class Shop extends db {
 			return null;
 		}
 	}
-	
+
 	function getChildrenCategor($categor, $param_level = null)
 	{
 		if (isset($param_level))
@@ -198,8 +215,8 @@ class Shop extends db {
 		}
 		
 	}
-	
-	
+
+
 	function getCategories($param_level = 0)
 	{
 		$result = $this->db->get_all("select * from fw_catalogue where status='1' and param_level >= '{$param_level}' order by param_left");
@@ -247,7 +264,7 @@ class Shop extends db {
 		
 	}
 
-	
+
 	function getProductsPropertiesTires($categories)
 	{
 		if (is_array($categories))
@@ -276,6 +293,7 @@ class Shop extends db {
 		}
 		
 	}
+	
 	
 	function getProductsPropertiesDisk($categories)
 	{

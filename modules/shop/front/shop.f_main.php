@@ -1104,7 +1104,12 @@ SWITCH (TRUE) {
 
           	$folders_list[$c]['full_url'] = $shop->getFullUrlCategory($folders_list[$c]['id'], "catalog");
           	$folders_list[$c]['products'] = $shop->getProductsByCategory($folders_list[$c]['id']);
-
+			
+          	if (!$folders_list[$c]['image'])
+          	{
+          		$folders_list[$c]['picture'] = $shop->getImageProductByCategory($folders_list[$c]['id']);
+          	}
+          	
           	if (isset($folders_list[$c]['products']))
           	{
           		foreach ($folders_list[$c]['products'] as $key=>$val)
