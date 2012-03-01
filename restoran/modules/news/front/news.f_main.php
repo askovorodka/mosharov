@@ -69,12 +69,12 @@ SWITCH (TRUE) {
 		$result=$db->query("SELECT COUNT(*) FROM fw_news WHERE status='1'");
 		$pager=Common::pager($result,NEWS_PER_PAGE_FRONT_ARCHIVE,$page);
 
-		$smarty->assign("total_pages",$pager['total_pages']);
-		$smarty->assign("current_page",$pager['current_page']);
-		$smarty->assign("pages",$pager['pages']);
+		//$smarty->assign("total_pages",$pager['total_pages']);
+		//$smarty->assign("current_page",$pager['current_page']);
+		//$smarty->assign("pages",$pager['pages']);
 		$smarty->assign("mode","archive");
 		
-		$news_list=$db->get_all("SELECT * FROM fw_news WHERE $where ORDER BY publish_date DESC ".$limit_all);
+		$news_list=$db->get_all("SELECT * FROM fw_news WHERE status='1' ORDER BY publish_date DESC");
 		
 		$page_title=$node_content['name'].' - '.'Архив';
 		

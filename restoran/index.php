@@ -122,7 +122,7 @@ else $module_url=$url[0];
 
 //else $module_url=$url[$n];
 
-$background_images = $db->get_all("select * from fw_background_images");
+$background_images = $db->get_all("select * from fw_background_images order by sort");
 $smarty->assign('background_images', $background_images);
 
 $node=$db->get_single("
@@ -301,7 +301,6 @@ for ($i=0;$i<count($navigation);$i++)
   $temp.=$navigation[$i]['url']."/";
   $navigation[$i]['url']=$temp;
 }
-
 
 
 $navigation=String::unformat_array($navigation,'front');

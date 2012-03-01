@@ -10,9 +10,11 @@
 	<tr>
 		<td width=40% align=left><img src="{$image.small_image}"></td>
 		<td>[<a href="index.php?mod=edit_conf&action=delete_background_image&id={$image.id}" onclick="return confirm('Удалить фоновое изображение');" >Удалить</a>]</td>
+		{*<td><input type="text" name="sort[{$image.id}]" value="{$image.sort}" style="width:35px;" /></td>*}
 	</tr>
 {/foreach}
 </table>
+{*<input type="submit" value="Сортировать" name="sort_images" />*}
 </form>
 {/if}
 

@@ -56,10 +56,10 @@ if (isset($_POST['submit_add_news'])) {
 			$check=false;
 		}
 		
-		if (filesize($tmp)>200000000) {
+		/*if (filesize($tmp)>200000000) {
 			$smarty->assign("error_message","Размер фотографии не должен привышать 2Mb");
 			$check=false;
-		}
+		}*/
 	}
 	
 	if ($check) {
@@ -129,11 +129,11 @@ if (isset($_POST['submit_edit_news'])) {
 			$check=false;
 		}
 		
-		if (filesize($tmp)>200000000)
+		/*if (filesize($tmp)>200000000)
 		{
 			$smarty->assign("error_message","Размер фотографии не должен привышать 2Mb");
 			$check=false;
-		}
+		}*/
 	}
 	
 	if ($check) {

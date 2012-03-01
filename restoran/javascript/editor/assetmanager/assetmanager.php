@@ -40,7 +40,7 @@ $currFolder=$sBase0;
 $ffilter="";
 $sUploadedFile="";
 
-$MaxFileSize = 3000000;
+$MaxFileSize = 30000000;
 //$AllowedTypes = "gif|jpg";
 $AllowedTypes = "*";
 

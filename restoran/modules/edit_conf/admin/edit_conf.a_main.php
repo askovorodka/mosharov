@@ -6,6 +6,21 @@ if (isset($_GET['action'])) $action=$_GET['action'];
 else $action='';
 
 
+if (isset($_POST['sort_images']))
+{
+	if (!empty($_POST['sort']))
+	{
+		foreach ($_POST['sort'] as $key=>$val)
+		{
+			$db->query("update fw_background_images set sort='{$val}' where id='{$key}' ");
+		}
+	}
+	
+	$location=$_SERVER['HTTP_REFERER'];
+	header("Location: $location");
+	
+}
+
 if (isset($_POST['submit_add_background_image']))
 {
 	
@@ -154,7 +169,7 @@ SWITCH (TRUE) {
 	
 	CASE ($action=='background_images'):
 		$navigation[]=array("url" => BASE_URL."/admin/?mod=edit_conf&action=background_images","title" => 'Фоновые изображения');
-		$images_list=$db->get_all("SELECT * FROM fw_background_images");
+		$images_list=$db->get_all("SELECT * FROM fw_background_images order by sort");
 		$smarty->assign("images_list",$images_list);
 		$template='edit_conf.a_background_images.html';
 	BREAK;
