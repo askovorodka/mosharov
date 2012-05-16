@@ -1,0 +1,33 @@
+{include file="`$TPL`breadcrumbs.html"}
+
+<h1>Новости</h1>
+
+{foreach from=$news_list item=news}
+<p class="newslist"> 
+<a href="{$base_url}/{$module_url}/archive/{$news.id}/" class="newscapt" title="{$news.title|strip_tags}">{$news.title|strip_tags}</a><br />
+{$news.small_text|strip_tags}</p>
+{/foreach}
+
+<br>
+
+{*if $mode=='archive'}
+{if $total_pages>1}
+<div class="listing">
+<li class="str">
+<ul>
+<li class="center"><a href="{$base_url}/{$module_url}/archive/page_1">&laquo;</a>
+{section name=p loop=$pages}
+	{if $pages[p]==$current_page}
+	<a class="active" href="{$base_url}/{$module_url}/archive/page_{$pages[p]}">{$pages[p]}</a>
+	{else}
+	<a href="{$base_url}/{$module_url}/archive/page_{$pages[p]}">{$pages[p]}</a>
+	{/if}
+{/section}
+<a href="{$base_url}/{$module_url}/archive/page_{$total_pages}">&raquo;</a></li>
+</ul>
+</li>
+</div>
+{/if}
+{else}
+<div style="margin-top : 17px;"><center><a href="{$base_url}/news/archive/">Архив новостей</a></center></div>
+{/if*}

@@ -1,0 +1,5 @@
+        <div class="catmenu">
+        	{foreach from=$models item=model}
+        	<a href="/catalog{$model.full_url}" {if $cat_content.id==$model.id}class="catmenuactive"{/if} title="{$model.name|strip_tags}">{$model.name|strip_tags}</a><br />
+        	{/foreach}
+        </div>

@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>{$page_title}</title>
+<meta name="Keywords" content="{$meta_keywords}">
+<meta name="Description" content="{$meta_description}">
+{foreach from=$css item=css}
+<link rel="stylesheet" type="text/css" href="{$css}">
+{/foreach}
+
+{foreach from=$js item=js}
+<script src="{$js}" type="text/javascript"></script>
+{/foreach}
+
+{assign var=curnav value=$navigation.1.url|replace:"$base_url":""|replace:"/":""}
+{assign var=curnav2 value=$navigation.2.url|replace:"$base_url":""|replace:"/":""|replace:"$curnav":""}
+
+</head>
+<body>
+
+<div style="position:absolute; z-index:90; border:1px solid #CD4900; background:#FFF; display:none;" id="ImageLayout"></div>
+<div id='loading-layer'><div>Загрузка. Пожалуйста, подождите...</div></div>
+
+<table class="mtbl" align="center">
+  <tr>
+    <td class="tops">
+    	{include file="`$TEMP`basket.html"}
+<!--- MENU --->
+        {foreach from=$main_menu item=item name=main_menu}
+        	{if $item.url == "home"}
+        		<a href="/">{$item.name|strip_tags}</a>
+        	{else}
+        		<a href="{$base_url}/{$item.url|urlencode}/">{$item.name|strip_tags}</a>
+        	{/if}
+        {/foreach}
+<!--- /MENU --->
+    </td>
+  </tr>
+  <tr>
+    <td class="biger">
+    {include file="`$TEMP`top_filter.html"}
+    <div class="slogan">Шины и диски с доставкой<br /> <span class="slogannumber">+7 (495) 755-35-25</span></div>
+    </td>
+  </tr>
+  <tr>
+    <td class="searcher">{include file="`$TEMP`form_search.html"}</td>
+  </tr>
+  {if $current_url == "home"}{include file="`$TEMP`top_products.html"}{/if}
+  <tr>
+    <td class="content">
+    <center><h2>Ошибка 404. Такой страницы не существует.</h2></center>
+    </td>
+  </tr>
+<!--- NEWS & ARTICLES --->
+{include file="`$TEMP`home_news_block.html"}  
+<!--- /NEWS & ARTICLES ---> 
+  <tr>
+    <td class="bottom">
+    	Информация о ценах и наличии является справочной! Указанные цены не являются офертой в понятии ст. 435 ГК РФ.
+        <a href="/sitemap/">карта сайта</a>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<h1>Шины {$product.name}</h1>
+
+{if $models}{include file="`$TEMP`models_list.html"}{/if}
+
+<div class="modelitem">
+				
+				{if trim($product.image) != ""}<img class="bigben" src="{$product.image}" />{else}<img src="{$template_image}nophoto.jpg" class="bigben" />{/if}                    <strong>Бренд:</strong>  {$cat_parent_info.name}<br>
+                Модель:  {$cat_content.name}<br>
+                Шипованная: {if $product.tire_spike == '2'}шип{elseif $product.tire_spike == 1}нешип{/if}<br>
+                Сезон: {if $product.tire_season == '1'}зима{elseif $product.tire_season == '2'}лето{elseif $product.tire_season == '3'}всесезон{/if}<br>
+                Артикул: {$product.article}<br>
+                Типоразмер: {$product.tire_width|format_number}/{$product.tire_height|format_number} R{$product.tire_diameter|format_number}<br>
+                Индекс нагрузки: {$product.tire_in}<br>
+                Индекс скорости: {$product.tire_is}<br>
+                Тип ТС: {$product_body.name}<br>
+                Усил: {$product.tire_usil}<br>
+                
+                <br>
+
+					<form action="" name="order_product" method="POST" id="form_order_single">
+					<input type="hidden" name="product_id" value="{$product.id}">
+                    <table class="itemprice">
+                      <tr>
+                        <td>{$product.price|format_price} руб.</td>
+                        <td><input {if !$product.tire_sklad}disabled{/if} type="text" value="{if $product.tire_sklad > 3}4{elseif $product.tire_sklad > 1}{$product.tire_sklad}{else}1{/if}" name="count"></td>
+                        {if $product.tire_sklad > 0}
+                        	<td><input type="image" src="{$template_image}but_inbasket.gif" class="itembut" title="В корзину"></td>
+                        {else}
+                        	<td>Нет в наличии</td>
+                        {/if}
+                      </tr>
+                    </table>
+                    </form>
+
+		{if $product.tire_sklad > 0}
+			{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/fast_order_form.html"}
+		{/if}
+</div>

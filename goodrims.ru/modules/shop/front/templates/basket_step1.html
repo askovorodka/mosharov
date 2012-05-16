@@ -1,0 +1,44 @@
+<h1>Авторизация</h1>
+
+<table style="height:300px;"><tr><td>
+
+<a href="" id="i_registered">Я уже зарегистрирован</a>
+
+<form id="Registration" action="{$base_url}/cabinet/register/" method="POST">
+	<input type=hidden name=submit_user_register value=1>
+	<input type=hidden name=submit_user_register_basket value=1>
+	<ul class="Auth">
+		<li><em>Email:</em><input type="text" name="email"></li>
+		<li><em>Ваше имя:</em><input type="text" name="name"></li>
+		<li><em>Контактный телефон:</em><input type="text" name="phone"></li>
+		<li><em>Пароль:</em><input type="password" name="password"></li>
+		<li><em>Повтор пароля:</em><input type="password" name="password_again"></li>
+		
+		<li><input type="submit" value="Регистрация" class="Button" name="submit_user_register"></li>
+	</ul>
+</form>
+
+<form id="Auth" action="{$base_url}/cabinet/login/" method="POST">
+	<input type=hidden name=submit_login_basket value=1>
+	<input type=hidden name=submit_login value=1>
+	<ul class="Registration">
+		<li><em>Email:</em><input type="text" name="login_user"></li>
+		<li><em>Пароль:</em><input type="text" name="login_password"></li>
+		<li><input type=checkbox name=login_save id="login_save"><label for="login_save">запомнить меня</label></li>
+		<li><input type="submit" value="Войти" class="Button"></li>
+	</ul>
+</form>
+
+</td></tr></table>
+
+{*<table width="100%">
+
+	<tr>
+		<td height=35 colspan=2 align=center valign=middle><h1>Регистрация и авторизация</h1></td>
+	</tr>
+  	<tr>
+    	<td>{include file="../modules/cabinet/front/templates/cabinet_login_basket.html"}</td>
+    	<td>{include file="../modules/cabinet/front/templates/cabinet_register_basket.html"}</td>
+  	</tr>
+</table>
+*}

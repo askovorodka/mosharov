@@ -1,0 +1,25 @@
+{include file="`$TEMP`breadcrumbs.html"}
+
+<h1 class="headerright">Специальные предложения диски</h1><h1>Специальные предложения шины</h1>
+
+<table class="catinsp">
+
+{foreach from=$top_disk item=product name=diskprod}
+	
+		{if $smarty.foreach.diskprod.iteration == 0}<tr>{/if}
+		<td><a href="{$base_url}/{$product.full_url}">{if $product.image}<img src="/uploaded_files/shop_images/c{$product.image}"  title="{$product.name}" />{else}<img src="{$template_image}nophoto_98.jpg" />{/if}<br>{$product.name}</a></td>
+		{if $smarty.foreach.diskprod.iteration % 3 == 0 && $smarty.foreach.diskprod.iteration > 0}</tr><tr>{/if}
+	
+{/foreach}
+
+</table>
+
+<table class="catinsp">
+{foreach from=$top_tires item=product name=tireprod}
+	
+		{if $smarty.foreach.tireprod.iteration == 0}<tr>{/if}
+		<td><a href="{$base_url}/{$product.full_url}">{if $product.image}<img src="/uploaded_files/shop_images/c{$product.image}"  title="{$product.name}" />{else}<img src="{$template_image}nophoto_98.jpg" />{/if}<br>{$product.name}</a></td>
+		{if $smarty.foreach.tireprod.iteration % 3 == 0 && $smarty.foreach.tireprod.iteration > 0}</tr><tr>{/if}
+	
+{/foreach}
+</table>

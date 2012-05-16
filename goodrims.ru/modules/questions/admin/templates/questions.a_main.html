@@ -1,0 +1,49 @@
+{if $questions_list}
+<DIV id=dhtmltooltip></DIV>
+{literal}
+<script language="JavaScript">
+function confirm_delete(delete_id) {
+	if (confirm("Дейтсвительно удалить этот вопрос?")) {
+		parent.location.href = "?mod=questions&action=delete&id=" + delete_id;
+	}
+}
+</script>
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/tooltips.js'></script>
+{/literal}
+
+<table width=100% class="content_table">
+<tr>
+<th>Вопрос</th><th width=20%>Ответов</th><th width=10%>Действия</th>
+</tr>
+{foreach from=$questions_list item=question}
+{if $col==1}
+{assign var="td" value='td1'}
+{assign var="col" value=0}
+{else}
+{assign var="td" value='td2'}
+{assign var="col" value=1}
+{/if}
+<tr>
+<td class={$td}_left><b>{$question.question}</b></td><td>{$question.count_answers}</td><td class={$td}_right><a href="javascript:confirm_delete('{$question.id}');" class=img_link onmouseover="ddrivetip('Удалить вопрос')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a><a href=?mod=questions&action=edit&id={$question.id} class=img_link onmouseover="ddrivetip('Редактировать вопрос')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a></td>
+</tr>
+{/foreach}
+</table>
+
+
+<br><br>
+<center>
+Страница: <a href="?mod=news&page=1"><<</a>
+	
+{section name=p loop=$pages}
+	{if $pages[p]==$current_page}
+	{$pages[p]}
+	{else}
+	<a href="?mod=news&page={$pages[p]}">{$pages[p]}</a>
+	{/if}
+{/section}
+	
+<a href="?mod=news&page={$total_pages}">>></a>
+</center>
+{else}
+<center>В системе нет вопросов.</center>
+{/if}

@@ -1,0 +1,79 @@
+{if $news_list}
+<DIV id=dhtmltooltip></DIV>
+{literal}
+<script language="JavaScript">
+function confirm_delete(delete_id) {
+  if (confirm("Дейтсвительно удалить эту новость?")) {
+    parent.location.href = "?mod=news&action=delete&id=" + delete_id;
+  }
+}
+</script>
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/tooltips.js'></script>
+{/literal}
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="150" style="padding-bottom: 10px;">сортировать по году:&nbsp;&nbsp;</td>
+    <td style="padding-bottom: 10px;">
+        <form action="" method="get">
+        <input type="hidden" name="mod" value="news">
+        {if $smarty.get.page!=""}<input type="hidden" name="page" value="{$smarty.get.page}">{/if}
+        <select name="year" style="width: 150px;" onChange="this.form.submit()">
+        <option value=""></option>
+        {foreach from=$news_years_list item=item}
+        <option value="{$item.year}" {if $year==$item.year}selected{/if}>{$item.year}</option>
+        {/foreach}
+        </select>
+        </form>
+
+    </td>
+  </tr>
+</table>
+
+<table width=100% class="content_table">
+<tr>
+<th>Список новостей</th><th width=20%>Дата</th><th width=5%>Статус</th><th width=10%>Действия</th>
+</tr>
+{foreach from=$news_list item=news name=ns}
+{if $col==1}
+{assign var="td" value='td1'}
+{assign var="col" value=0}
+{else}
+{assign var="td" value='td2'}
+{assign var="col" value=1}
+{/if}
+<tr onmouseover="flatlinkOver(this)" {if $smarty.foreach.ns.iteration%2==1}onmouseout="flatlinkOut(this)"{else}onmouseout="flatlinkOut1(this)"{/if}>
+<td class={$td}_left style="padding-bottom: 20px;" valign="top"><a href=?mod=news&action=edit&id={$news.id}><b>{$news.title|strip_tags}</b></a><br><div style="font-size: 11px; padding: 0 20px 0 0;">{$news.small_text|strip_tags|truncate:200}</div></td><td class={$td}_middle align="center" style="font-size: 11px;"><B>{$news.publish_date|date_format:"%d"}&nbsp;{$news.publish_date|date_format:"%B"}&nbsp;{$news.publish_date|date_format:"%Y"}</B><br>{$news.publish_date|date_format:"%T"}</td><td class={$td}_middle align="center">{if $news.param_level!='0'}<a href="?mod=news{if $smarty.get.year!=""}&year={$smarty.get.year}{/if}&action=change_status&id={$news.id}" title="Изменить статус"><img src=templates/img/status_{$news.status}.gif border=0></a>{/if}</td><td class={$td}_right align="center"><a href="javascript:confirm_delete('{$news.id}');" class=img_link onmouseover="ddrivetip('Удалить новость')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a><a href=?mod=news&action=edit&id={$news.id} class=img_link onmouseover="ddrivetip('Редактировать новость')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a></td>
+</tr>
+{/foreach}
+</table>
+<br>
+<div class="add_but" onClick="location.href='?mod=news&action=add'"><div><a href="?mod=news&action=add">добавить новость</a></div></div>
+{if $total_pages>1}
+<br><br>
+<div class="listing">
+<li class="str">
+<ul>
+<li class="center"><a href="?mod=news&page=1{if $smarty.get.year!=""}&year={$smarty.get.year}{/if}">&laquo;</a>
+{section name=p loop=$pages}
+  {if $pages[p]==$current_page}
+  <a class="active" href="?mod=news&page={$pages[p]}{if $smarty.get.year!=""}&year={$smarty.get.year}{/if}">{$pages[p]}</a>
+  {else}
+  <a href="?mod=news&page={$pages[p]}{if $smarty.get.year!=""}&year={$smarty.get.year}{/if}">{$pages[p]}</a>
+  {/if}
+{/section}
+<a href="?mod=news&page={$total_pages}{if $smarty.get.year!=""}&year={$smarty.get.year}{/if}">&raquo;</a></li>
+</ul>
+</li>
+</div>
+{/if}
+{else}
+<table width=100% class="content_table">
+<tr>
+<th>Список новостей</th><th width=20%>Дата</th><th width=5%>Статус</th><th width=10%>Действия</th>
+</tr>
+<tr>
+<td class=td2_middle colspan="4" style="height: 30px;">
+<center>В системе нет новостей.</center></td></tr></table>
+<br>
+<div class="add_but" onClick="location.href='?mod=news&action=add'"><div><a href="?mod=news&action=add">добавить новость</a></div></div>{/if}

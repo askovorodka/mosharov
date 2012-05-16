@@ -1,0 +1,25 @@
+<!--- SPECIAL --->
+{if $top_products}  
+  <tr>
+    <td class="special">
+        <div class="specialcapt">—ѕ≈÷»јЋ№Ќџ≈ ѕ–≈ƒЋќ∆≈Ќ»я</div>
+        <a href="/catalog/top_products/" class="speciall" title="предыдущие позиции"></a>
+        <a href="/catalog/top_products/" class="specialr" title="следующие позиции"></a>
+    	<table class="specialtbl" align="center">
+          <tr>
+	          {foreach from=$top_products item=item}
+	            <td>
+	            	<a title="{$item.name}" href="{$base_url}/{$item.full_url}">{if $item.image}<img src="/uploaded_files/shop_images/p{$item.image}" style="float:left;" />{else}<img src="{$template_image}nophoto_100.jpg" />{/if}</a>
+	                <a title="{$item.name}" href="{$base_url}/{$item.full_url}">{$item.manufacture_name}</a><br /><br />
+	                <span class="specialorange">{$item.model_name}</span><br />
+	                {if $item.tire_width > 0}{$item.tire_width}/{$item.tire_height} R{$item.tire_diameter}{/if}
+	                {if $item.disk_width > 0}{$item.disk_width}/{$item.disk_height} R{$item.disk_diameter}{/if}<br /><br />
+	                <span class="specialbig"><strong>{$item.price|format_price}</strong> руб.</span>
+	            </td>
+	          {/foreach}
+          </tr>
+        </table>
+    </td>
+  </tr>
+{/if}
+<!--- /SPECIAL --->

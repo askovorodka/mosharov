@@ -1,0 +1,11 @@
+<div class="catmenu">
+        	{if $parent.id == $smarty.const.TIRES_ID}
+	        	{foreach from=$tires_manufacturer item=brand}
+	        	<a {if $cat_content.id==$brand.id}class="catmenuactive"{/if} href="/catalog/tyres/{$brand.url}/" title="{$brand.name|strip_tags}">{$brand.name|strip_tags}</a><br />
+	        	{/foreach}
+	        {elseif $parent.id == $smarty.const.DISK_ID}
+	        	{foreach from=$disk_manufacturer item=brand}
+	        	<a {if $cat_content.id==$brand.id}class="catmenuactive"{/if} href="/catalog/rims/{$brand.url}/" title="{$brand.name|strip_tags}">{$brand.name|strip_tags}</a><br />
+	        	{/foreach}
+			{/if}	        
+</div>

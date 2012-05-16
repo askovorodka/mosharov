@@ -1,0 +1,8 @@
+<table class="cattbl">
+{foreach from=$folders_list item=folder name=folder}
+{if $smarty.foreach.folder.iteration == 0}<tr>{/if}
+<td><a href="{$base_url}/catalog/{$folder.full_url}">{if $folder.image}<img src="/uploaded_files/shop_images/s{$folder.image}" title="{$filter.name|strip_tags}" />{/if}</a><br />
+<a href="{$base_url}/catalog/{$folder.full_url}">{$folder.name|strip_tags}</a></td>
+{if $smarty.foreach.folder.iteration % 6 == 0 && $smarty.foreach.folder.iteration > 0}</tr><tr>{/if}
+{/foreach}
+</table>

@@ -1,0 +1,29 @@
+<table width="189" style="height: 85px; border-top: 2px solid #003366; border-bottom: 1px solid #c8c8c8;" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td valign="top" style="padding-top: 8px;">
+			{if $logged_user}
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" id="auth">
+			<tr>
+			<td style="padding: 7px;" align="center">
+				Добро пожаловать,<br><strong>{$logged_user.login}</strong><br><br>
+				<a href={$base_url}/{$cabinet_url}>Личный кабинет</a> | <a href={$base_url}/{$cabinet_url}/logout>Выход</a>
+			</td></tr>
+			</table>
+			{else}
+			<form action={$base_url}/{$cabinet_url}/login method=post>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" id="auth">
+			<tr>
+			<td width="53" style="padding-left: 7px;"><strong>логин</strong></td>
+			<td><input type="text" name="login_user" style="width: 112px;" value="введите логин" onclick="if (this.value == 'введите логин') this.value=''; else this.focus();" onblur="if (this.value == '') this.value='введите логин'" ></td></tr>
+			<tr>
+			<td style="padding-left: 7px;"><strong>пароль</strong></td>
+			<td><input type="password" name="login_password" style="width: 112px;"></td></tr>
+			<tr>
+			<td>&nbsp;</td>
+			<td><input type=submit name=submit_login value="Войти" class="hands"></td></tr>
+			</table>
+			</form>				
+			{/if}
+		</td>
+	</tr>
+</table>

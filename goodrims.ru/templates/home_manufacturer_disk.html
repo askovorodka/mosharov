@@ -1,0 +1,13 @@
+			<table class="creaters">
+              <tr>
+                <td class="createrscapt"><div><a href="{$base_url}/katalog/diski/" title="Производители дисков">Производители дисков</a></div></td>
+                <td class="creatersmin"><span>размер имеет значение!</span></td>
+              </tr>
+              <tr>
+                <td colspan="2" class="createrslnk">
+                {foreach from=$disk_manufacturer item=disk}
+                <a href="{$base_url}/katalog/diski/{$disk.url|urlencode}/">{$disk.name}</a>
+                {/foreach}
+                </td>
+              </tr>
+            </table>

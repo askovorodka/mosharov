@@ -1,0 +1,229 @@
+
+<h1>{$product.name}</h1>
+{$product.description}<br>
+
+<br><br>
+<table width="600" border="0" cellpadding="0" cellspacing="0">
+  <tbody><tr>
+    <td class="MediumPic"><a href="{$base_url}/uploaded_files/shop_images/big-{$photos_list[0].id}.{$photos_list[0].ext}" class="thickbox"><img src="{$base_url}/uploaded_files/shop_images/medium-{$photos_list[0].id}.{$photos_list[0].ext}"></a></td>
+    <td width="15"><img src="{$template_image}vline.jpg" style="margin: 0px 7px;" width="1" height="172"><br></td>
+    <td class="manpict" width="100%">
+    	{foreach from=$photos_list item=item}
+			<a href="" medium="{$base_url}/uploaded_files/shop_images/medium-{$item.id}.{$item.ext}" big="{$base_url}/uploaded_files/shop_images/big-{$item.id}.{$item.ext}"><img src="{$base_url}/uploaded_files/shop_images/resized-{$item.id}.{$item.ext}"></a>
+		{/foreach}
+	</td>
+  </tr>
+  <tr>
+    <td class="big-cena" id="PriceProduct">{$product.price|string_format:"%.2f"}</td>
+	<td colspan="2"><a href="" class="AddToBasket" id="{$product.id}"><img src="{$template_image}v_korziny.jpg" style="margin: 2px 0px 0px 7px;" width="95" height="34"></a></td>
+  </tr>
+</tbody></table>
+<br>
+
+{if $product.properties}
+
+<table class="catalog" cellpadding="0" cellspacing="0">
+  <tbody><tr class="cattop2">
+    <td width="22"><img src="{$template_image}opis_left_top.jpg" width="22" height="22"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td width="22"><img src="{$template_image}opis_right_top.jpg" width="22" height="22"></td>
+  </tr>
+  
+  {foreach from=$product.properties item=item name=pp}
+	  <tr height="23" {if $smarty.foreach.pp.iteration % 2 == 0}class="catgrayline2"{/if}>
+	    <td>&nbsp;</td>
+	    <td class="capt-inner">{$item.name}:</td>
+	    <td>{$item.value}.</td>
+	    <td>&nbsp;</td>
+	  </tr>
+  {/foreach}
+  
+  {*<tr class="catgrayline2">
+    <td class="opisl"><img src="{$template_image}clear.gif" width="22" height="22"></td>
+    <td class="capt-inner">Процессор:</td>
+    <td>Intel Core 2 Duo Mobile</td>
+    <td class="opisr"><img src="{$template_image}clear.gif" width="22" height="22"></td>
+  </tr>
+  <tr height="23">
+    <td>&nbsp;</td>
+    <td class="capt-inner">Оперативная память:</td>
+    <td>2048 Mb</td>
+
+    <td>&nbsp;</td>
+  </tr>
+  <tr class="catgrayline2">
+    <td class="opisl"><img src="{$template_image}clear.gif" width="22" height="22"></td>
+    <td class="capt-inner">Дисплей:</td>
+    <td>1280*800</td>
+    <td class="opisr"><img src="{$template_image}clear.gif" width="22" height="22"></td>
+  </tr>
+
+  <tr height="23">
+    <td>&nbsp;</td>
+    <td class="capt-inner">Жесткий диск:</td>
+    <td>320 Gb</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr class="catgrayline2">
+    <td class="opisl"><img src="{$template_image}clear.gif" width="22" height="22"></td>
+
+    <td class="capt-inner">Средства связи:</td>
+    <td>Bt, LAN, WAN, Modem</td>
+    <td class="opisr"><img src="{$template_image}clear.gif" width="22" height="22"></td>
+  </tr>
+  <tr height="23">
+    <td>&nbsp;</td>
+    <td class="capt-inner">Операционная система:</td>
+
+    <td>Vindows Vista Home Premium 32bit</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr class="catgrayline2">
+    <td class="opisl"><img src="{$template_image}clear.gif" width="22" height="22"></td>
+    <td class="capt-inner">Батарея:</td>
+    <td>3200 Li-ion</td>
+
+    <td class="opisr"><img src="{$template_image}clear.gif" width="22" height="22"></td>
+  </tr>
+  <tr height="23">
+    <td>&nbsp;</td>
+    <td class="capt-inner">Масса:</td>
+    <td>2.400</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr class="catgrayline2">
+    <td class="opisl"><img src="{$template_image}/clear.gif" width="22" height="22"></td>
+    <td class="capt-inner">Материнская плата:</td>
+    <td>ASUS P5B</td>
+    <td class="opisr"><img src="{$template_image}clear.gif" width="22" height="22"></td>
+  </tr>
+  <tr height="23">
+    <td>&nbsp;</td>
+
+    <td class="capt-inner">Чипсет:</td>
+    <td>Intel P965</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr class="catgrayline2">
+    <td class="opisl"><img src="{$template_image}/clear.gif" width="22" height="22"></td>
+    <td class="capt-inner">Сайт производителя:</td>
+
+    <td><a href="#">www.asus.com</a></td>
+    <td class="opisr"><img src="{$template_image}clear.gif" width="22" height="22"></td>
+  </tr>*}
+  <tr class="catbot2">
+    <td><img src="{$template_image}opis_left_bot.jpg" width="22" height="25"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td><img src="{$template_image}opis_right_bot.jpg" width="22" height="25"></td>
+
+  </tr>
+</tbody></table>
+
+{/if}
+
+{literal}
+<script type="text/javascript" language="javascript">
+	// <![CDATA[
+		$("TABLE TD.manpict A").click(function(){
+			$("TABLE TD.MediumPic A IMG").attr("src", $(this).attr("medium") );
+			$("TABLE TD.MediumPic A").attr("href", $(this).attr("big") );
+			return false;
+		});
+		
+		//кладем в карзину
+		$("A.AddToBasket").click(function(){
+			
+			this.response = function(response){
+				$("DIV#loading-layer").hide();
+				$("DIV#basket").removeClass("basketContentHide").addClass("basketContentShow");
+				var floor = response.split(";");
+				$("#basket_number").html(floor[0]);
+				$("#basket_currency").html(floor[1]);
+			};
+			
+			if (parseInt($(this).attr("id")))
+			{
+				var product_id = $(this).attr("id");
+				var product_count = 1;
+				var left = $(this).offset().left;
+				var top = $(this).offset().top;
+				$("DIV#loading-layer").css({"top": top, "left" : left-200}).show();
+			
+				$.post('http://' + location.hostname + '/shop/basket/add/', {product_id : product_id, product_count : product_count}, this.response );
+				
+			}
+			return false;
+		});
+	// ]]>
+	</script>
+{/literal}
+
+{*
+<div style="position: absolute; left: 15px; margin-top: 160px; width: 300px;">
+<div align="center" class="title yel" style="line-height: 14px; padding-bottom: 12px;">{$product.name}<br><font style="font-weight: normal">(другие страницы)</font></div>
+{if $photos_list}
+<table border="0">
+<tr>
+{foreach from=$photos_list item=item name=sl}
+{if $smarty.foreach.sl.iteration%2==1 && !$smarty.foreach.sl.first}</tr><tr>{/if}
+<td style="height: 115px; margin-bottom: 5px; width: 145px;" align="center"><a href="javascript: void(viewBigImage('/uploaded_files/shop_images/{$item.id}.{$item.ext}'));"><img src="uploaded_files/shop_images/resized-{$item.id}.{$item.ext}" border=0 alt="" galleryimg="no"></a></td>
+{if $smarty.foreach.sl.last && $smarty.foreach.sl.iteration%2==1}<td bgcolor="#505050" width="145">&nbsp;</td>{/if}
+{/foreach}
+</tr>
+</table>
+{/if}
+</div>
+
+<div style="position: absolute; margin: 377px 0 0 420px;">
+<skip>
+<table cellpadding="0" cellspacing="0" border="0" width="200" id="shop">
+<tr>
+<td width="3" align="right"><div style="width: 3px; background: #0e68fe; height: 17px;">&nbsp;</div></td>
+<td style="padding-left: 6px;">{if $prev_product!=""}<a href="/{$url1}{$prev_product}">Предыдущая работа</a>{/if}</td>
+</tr>
+<tr>
+<td colspan="2" style="height: 4px;"><div style="height: 4px; font-size: 1px;"></div></td>
+</tr>
+<tr>
+<td width="3" align="right"><div style="width: 3px; background: #19d84a; height: 17px;">&nbsp;</div></td>
+<td style="padding-left: 6px;">{if $curnav2=="ecomon"}<a href="/portfolio/ecomon/">В портфолио Эконом&mdash;класса</a>{/if}{if $curnav2=="business"}<a href="/portfolio/business/">В портфолио Бизнес&mdash;класса</a>{/if}{if $curnav2=="premium"}<a href="/portfolio/premium/">В портфолио Премиум&mdash;класса</a>{/if}</td>
+</tr>
+<tr>
+<td colspan="2" style="height: 4px;"><div style="height: 4px; font-size: 1px;"></div></td>
+</tr>
+<tr>
+<td width="3" align="right"><div style="width: 3px; background: #ff0000; height: 17px;">&nbsp;</div></td>
+<td style="padding-left: 6px;">{if $next_product!=""}<a href="/{$url1}{$next_product}">Следующая работа</a>{/if}</td>
+</tr>
+</table>
+</skip>
+</div>
+<div style="display:none;" id="probka" class="bt"></div> 
+<table width="100%" style="height: 447px" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td bgcolor="#000000" align="center">
+   
+    {foreach from=$photos_list item=item name=sp}
+    {if $smarty.foreach.sp.iteration<2}<span style=color:#FFFFFF; id=fff><img id="bigImage" src="uploaded_files/shop_images/{$item.id}.{$item.ext}" border=0 alt="" galleryimg="no"></span>{/if}
+	{/foreach}
+    
+    </td>
+  </tr>
+  <tr>
+    <td style="height: 28px;" valign="top" bgcolor="#000000">
+
+	    <table width="100%" style="height: 28px;" border="0" cellspacing="0" cellpadding="0">
+   		   <tr>
+   	    	 <td width="21" bgcolor="#4f4f4f"><div style="width: 21px;">&nbsp;</div></td>
+       		 <td style="padding-left: 13px;" class="title">{$product.name}</td>
+		   </tr>
+    	</table>
+
+    </td>
+  </tr>
+</table>
+<p>{$product.description}</p>
+*}

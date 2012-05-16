@@ -1,0 +1,18 @@
+{include file="`$TEMP`breadcrumbs.html"}
+
+
+<h1>Результаты поиска{if $smarty.get.filter_type == 'disk'} дисков{elseif $smarty.get.filter_type == 'tire'} шин{/if}</h1>
+
+{if $products || $search_results}
+	{if $smarty.get.filter_type == 'disk'}
+		{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/search_result_disk.html"}
+	{elseif $smarty.get.filter_type == 'tire'}
+		{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/search_result_tire.html"}
+	{/if}
+
+	{if $search_results}
+		{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/search_results.html"}
+	{/if}
+{else}
+<center>Ничего не найдено</center>
+{/if}

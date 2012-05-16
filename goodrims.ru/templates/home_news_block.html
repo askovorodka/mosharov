@@ -1,0 +1,26 @@
+  <tr>
+    <td class="newsart">
+        <table class="newsarttbl">
+          <tr>
+            <th>Новости <a href="/novosti/">читать все</a></th>
+            <th>Статьи <a href="/novosti/">читать все</a></th>
+          </tr>
+          <tr>
+            <td>
+            	<ul>
+            	{foreach from=$news_list item=news}
+            	<li><a href="{$base_url}/novosti/archive/{$news.id}/">{$news.title|strip_tags}</a></li>
+            	{/foreach}
+                </ul>
+            </td>
+            <td>
+            	<ul>
+            	{foreach from=$content_list item=content}
+            	<li><a href="{$base_url}/novosti/archive/{$content.id}/">{$content.title|strip_tags}</a></li>
+            	{/foreach}
+                </ul>
+            </td>
+          </tr>
+        </table>
+    </td>
+  </tr>

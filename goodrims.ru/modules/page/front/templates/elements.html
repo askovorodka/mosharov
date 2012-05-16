@@ -1,0 +1,5 @@
+{include file="../templates/breadcrumbs.html"}
+<h1>{$page_content.name|strip_tags|stripslashes}</h1>
+{if $page_content}
+	<p>{eval var=$page_content.text|stripslashes}</p>
+{/if}

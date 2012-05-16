@@ -1,0 +1,43 @@
+<h1>Диски {$product.name}</h1>
+
+{if $models}{include file="`$TEMP`models_list.html"}{/if}
+
+<div class="modelitem">
+
+	{if trim($product.image) != ""}<img class="bigben" src="{$product.image}" />{else}<img src="{$template_image}nophoto.jpg" class="bigben" />{/if}
+
+
+                    Производитель:  {$cat_parent_info.name}<br>
+                    Модель:  {$cat_content.name}<br>
+                    Ширина: {$product.disk_width|format_number}<br>
+                    Диаметр: {$product.disk_diameter|format_number}<br>
+                    Крепеж: {$product.disk_krep|format_number}<br>
+                    PCD: {$product.disk_pcd|format_number}<br>
+                    PCD (двойной): {$product.disk_pcd2|format_number}<br>
+                    ET: {$product.disk_et|format_number}<br>
+                    Dia: {$product.disk_dia|format_number}<br>
+                    Цвет: {$product.disk_color}<br>
+                    Тип диска: {$disk_type.name}<br>
+					
+					<br>
+					
+					<form action="" name="order_product" method="POST" id="form_order_single">
+					<input type="hidden" name="product_id" value="{$product.id}">
+                    <table class="itemprice">
+                      <tr>
+                        <td>{$product.price|format_price} руб.</td>
+                        <td><input {if !$product.disk_sklad}disabled{/if} type="text" value="{if $product.disk_sklad > 3}4{elseif $product.disk_sklad > 1}{$product.disk_sklad}{else}1{/if}" name="count"></td>
+                        {if $product.disk_sklad > 0}
+                        	<td><input type="image" src="{$template_image}but_inbasket.gif" class="itembut" title="В корзину"></td>
+                        {else}
+                        	<td>Нет в наличии</td>
+                        {/if}
+                      </tr>
+                    </table>
+                    </form>
+
+	                {if $product.disk_sklad > 0}
+	                	{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/fast_order_form.html"}
+					{/if}
+
+</div>
