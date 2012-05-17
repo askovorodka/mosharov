@@ -1,0 +1,48 @@
+  <tr>
+    <td valign="top" class="center">
+    <div class="add" style="background: url('img/add_sp.gif') no-repeat;">Проект: {$url_item.p_name}<br><div class="green"><a href="{$url_item.url}">{if trim($url_item.name)==""}{$url_item.url}{else}{$url_item.name}{/if}</a></div></div>
+    <div style="padding-left: 31px;">тексты <span class="over">{$url_item.count_text}</span> | <a href="/projects/links/{$url_item.id}">размещены</a> <span class="over">{$count_inner}</span> | <a href="/projects/links_add/{$url_item.id}">разместить</a></div>
+    
+    {*<h6>Количество размещенных ссылок превышает количество добавленных на URL текстов, для повышения эффективности поисковой оптимизации рекомендуется увеличить количество текстов! </h6>*}
+    
+{if count($text_list)>0}
+    <form action="" name="links" method="post">
+    <input type="hidden" name="submit_del_text" value="1">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" id="links" style="margin-top: 20px;">
+          <tr>
+            <th>Тексты ссылок</th>
+            <th width="150">Используется, раз</th>
+            <th width="60">
+            	<input type="checkbox" name="all_links" novalidate=1>
+            </th>
+          </tr>
+          {foreach from=$text_list item=item name=f1}
+          	<tr {if !($smarty.foreach.f1.iteration % 2)}bgcolor="#e6ecef"{/if}>
+            	<td style="text-align: left;">{$item.text}</td>
+            	<td><a href="/projects/links/{$url_item.id}/{$item.id}">{$item.count_texts}</a></td>
+            	<td><input type="checkbox" id=links name="che1[{$item.id}]"></td>
+          	</tr>
+          {/foreach}
+        </table>
+        <div align="right" style="padding-right: 28px;"><div style="background: url(img/del.gif) right top no-repeat; padding: 4px 13px 0 0;"><a href="javascript: void(delText(document.links));">Удалить</a></div></div>
+	</form>
+{else}
+	<center>Тексты незагруженны</center>
+{/if}
+    <form name="add" method="post">
+    <input type="hidden" value="1" name="submit_add_text">
+    <input type="hidden" name="url_id" value="{$url_item.id}">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td valign="top"><div class="add">Тексты ссылок, каждый &mdash; с новой строки:</div>
+        <textarea name="text" rows="8" style="width: 60%;"></textarea>
+        <div style="width: 60%" align="right"><a href="javascript: void(addText(document.add));">сохранить</a></div></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+
+    </form>
+    </td>
+  </tr>

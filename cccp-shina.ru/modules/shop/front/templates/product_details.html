@@ -1,0 +1,12 @@
+
+{if $parent.id == $smarty.const.TIRES_ID}
+	{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/tires_filter.html"}
+{elseif $parent.id == $smarty.const.DISK_ID}
+	{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/disk_filter.html"}
+{/if}
+
+{if $parent.id == $smarty.const.TIRES_ID}
+	{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/tires_single.html"}
+{elseif $parent.id == $smarty.const.DISK_ID}
+	{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/disk_single.html"}
+{/if}

@@ -1,0 +1,41 @@
+<h1>Диск {$product.name}</h1>
+
+                <table class="itemtbl">
+                  <tr>
+                    <td class="itembigpict">{if $cat_content.image}<img src="{$smarty.const.SHOP_IMAGE}{$cat_content.image}" width="215" height="236">{else}<img src="{$template_image}nophoto.jpg" />{/if}</td>
+                    <td class="itemopis">
+                    <span class="catline">Бренд:</span>  {$cat_parent_info.name}<br>
+                    <span class="catline">Модель:</span>  {$cat_content.name}<br>
+                    <span class="catline">Ширина:</span> {$product.disk_width|format_number}<br>
+                    <span class="catline">Диаметр:</span> {$product.disk_diameter|format_number}<br>
+                    <span class="catline">Крепеж:</span> {$product.disk_krep|format_number}<br>
+                    <span class="catline">PCD:</span> {$product.disk_pcd|format_number}<br>
+                    <span class="catline">PCD (двойной):</span> {$product.disk_pcd2|format_number}<br>
+                    <span class="catline">ET:</span> {$product.disk_et|format_number}<br>
+                    <span class="catline">Dia:</span> {$product.disk_dia|format_number}<br>
+                    <span class="catline">Цвет:</span> {$product.disk_color}<br>
+                    <span class="catline">Тип диска:</span> {$disk_type.name}<br>
+					{include file="../templates/yandex_share.html"}
+					
+					<form action="" name="order_product" method="POST" id="form_order_single">
+					<input type="hidden" name="product_id" value="{$product.id}">
+                    <table class="itemopiscena">
+                      <tr>
+                        <td><strong>{$product.price|format_price}</strong> руб.</td>
+                        <td><input {if !$product.disk_sklad}disabled{/if} type="text" value="{if $product.disk_sklad > 3}4{elseif $product.disk_sklad > 1}{$product.disk_sklad}{else}1{/if}" class="tableinpb" name="count"></td>
+                        {if $product.disk_sklad > 0}
+                        	<td><input type="image" src="{$template_image}button_to-basket.png" class="itembuttonin" title="В корзину"></td>
+                        {else}
+                        	<td>закончились</td>
+                        {/if}
+                      </tr>
+                    </table>
+                    </form>
+                    
+                    </td>
+                  </tr>
+                </table>
+                    
+                {if $product.disk_sklad > 0}
+                	{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/fast_order_form.html"}
+				{/if}

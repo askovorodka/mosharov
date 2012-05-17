@@ -1,0 +1,30 @@
+<h1>История заказов</h1>
+
+{foreach from=$orders_list item=order}
+            	<span class="historycapt">Заказ от {$order.insert_date|date_format:"%d.%m.%y"}</span>
+                <table class="itemlisttbl">
+                  <tr class="itemlisttblcapt">
+                    <td>№</td>
+                    <td>Наименование</td>
+                    <td>Кол-во</td>
+                    <td>Артикул</td>
+                    <td>Цена</td>
+                    <td>Сумма</td> 
+                  </tr>
+                  {foreach from=$order.products_list item=product name=products}
+                  <tr>
+                    <td>{$order.id}</td>
+                    <td class="itemlistname"><a href="{$base_url}/catalog{$product.full_url}">{$product.name}</a></td>
+                    <td>{$product.product_count}</td>
+                    <td>{$product.article}</td>
+                    <td>{$product.product_price|format_number} руб.</td>
+                    <td>{$product.total_price|format_number} руб.</td>
+                  </tr>
+                  {/foreach}
+                </table>
+                <div class="historyall">
+                	Итого: {$order.total_price|format_number} руб.<br>
+                	Доставка: {$order.order_price|format_number} руб. <span class="historltl">({if $order.dostavka == '1'}доставка по Москве и Области{elseif $order.dostavka == '2'}самовывоз{elseif $order.dostavka > 2}Транспортной компанией - {$order.company}{/if})</span><br>
+                    Всего: {if $order.total_price < 20000}{$order.dostavka_sum|format_number}{else}{$order.total_price|format_number}{/if} руб. <span class="historltl">({if $order.payment == 1}оплата наличными{else}безналичный расчет{/if})</span><br>
+                </div>
+{/foreach}

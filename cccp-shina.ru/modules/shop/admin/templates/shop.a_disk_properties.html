@@ -1,0 +1,64 @@
+<table width=100% class=content_table>
+	<tr>
+		<th bgcolor=#99CCFF onClick="show('disk', this);" class="button plus" style="border-bottom: none; text-align: left; padding-left: 30px;"><b>Свойства дисков</b></th>
+	</tr>
+ </table>
+    <div id="disk" style="display:none;">
+<table width=100% class=content_table>
+	<tr>
+		<td width=15% class=td2_left><b>Ширина:</b></td>
+		<td class=td2_right><input type=text name=disk_width class=field value="{$product.disk_width}"></td>
+	</tr>
+	
+	<tr>
+		<td width=15% class=td2_left><b>Диаметр:</b></td>
+		<td class=td2_right><input type=text name=disk_diameter class=field  value="{$product.disk_diameter}"></td>
+	</tr>
+	
+	<tr>
+		<td width=15% class=td2_left><b>Крепеж:</b></td>
+		<td class=td2_right><input type=text name=disk_krep class=field value="{$product.disk_krep}"></td>
+	</tr>
+	
+	<tr>
+		<td width=15% class=td2_left><b>PCD:</b></td>
+		<td class=td2_right><input type=text name=disk_pcd class=field value="{$product.disk_pcd}"></td>
+	</tr>
+	
+	<tr>
+		<td width=15% class=td2_left><b>PCD (Двойной):</b></td>
+		<td class=td2_right><input type=text name=disk_pcd2 class=field value="{$product.disk_pcd2}"></td>
+	</tr>
+	
+	<tr>
+		<td width=15% class=td2_left><b>ET:</b></td>
+		<td class=td2_right><input type=text name=disk_et class=field value="{$product.disk_et}"></td>
+	</tr>
+
+	<tr>
+		<td width=15% class=td2_left><b>DIA:</b></td>
+		<td class=td2_right><input type=text name=disk_dia class=field value="{$product.disk_dia}"></td>
+	</tr>
+	
+	<tr>
+		<td width=15% class=td2_left><b>Цвет:</b></td>
+		<td class=td2_right><input type=text name=disk_color class=field value="{$product.disk_color}"></td>
+	</tr>
+	
+	<tr>
+		<td width=15% class=td2_left><b>Тип диска:</b></td>
+		<td class=td2_right><select name="disk_type">
+		{foreach from=$disk_types item=disk}
+			<option value="{$disk.id}" {if $product.disk_type == $disk.id}selected{/if}>{$disk.name}
+		{/foreach}
+		</select></td>
+	</tr>
+
+	<tr>
+		<td width=15% class=td2_left><b>Склад:</b></td>
+		<td class=td2_right><input type=text name=disk_sklad class=field value="{$product.disk_sklad}"></td>
+	</tr>
+	
+	
+</table>
+</div>

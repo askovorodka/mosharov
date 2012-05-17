@@ -1,0 +1,7 @@
+<div class="bags" id="basket">
+	<div class="bagscapt"><a href="{$smarty.const.DOMAIN}/shop/basket/">Ваша корзина</a></div>
+	<span class="bagstxt">Кол-во товара: <a href="{$base_url}/catalog/basket/" id="basket_number">{$basket_number}</a></span><br>
+	<span class="bagstxt">Сумма:</span> <span class="summ" id="basket_currency">{$basket_total|format_price}</span> 
+	<span class="rub">руб.</span><br><br>
+	<div style="text-align:right;"><input type="image" onClick="location = 'http://' + location.hostname + '/catalog/basket/';" src="{$template_image}oform_zakaz.png" width="121" height="25"></div>
+</div>

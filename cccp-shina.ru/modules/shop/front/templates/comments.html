@@ -1,0 +1,23 @@
+                {if $comments}
+                <h2>Отзывы о товаре</h2>	
+                {foreach from=$comments item=comment}	
+                <p class="itemotziv"><strong>{$comment.username}</strong><br>
+                {$comment.text|strip_tags}</p>
+                {/foreach}
+                {/if}
+                <br><h2>Отправь свой отзыв</h2>
+
+                <div class="itemotzivw">
+                <form action="{$base_url}/catalog/add_comment/" method="POST" id="add_comment">
+		            <input type="hidden" name="brand_id" value="{$cat_content.id}">
+		            <input type="hidden" name="email" value="">
+		            <input type="hidden" name="username" value="">
+		            <input type="hidden" name="text" value="">
+		            <input type="hidden" name="submit_comment" value="1">
+
+                <div>Ваше имя: <input type="text" name="bvz"></div>
+                <div>E-mail: <input type="text" name="tvfbk"></div>
+                <div>Отзыв: <textarea name="ntrcn"></textarea></div>
+                <input type="image" src="{$template_image}button_send.png" class="itemotzivb" title="Отправить">
+                </form>
+                </div>

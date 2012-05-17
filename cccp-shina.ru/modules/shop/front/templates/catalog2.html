@@ -1,0 +1,17 @@
+<table class="cattbl">
+		{foreach from=$folders_list item=folder name=folder}
+			{if $smarty.foreach.folder.iteration == 0}<tr>{/if}
+			<td>
+			
+                <a href="{$base_url}/catalog/{$folder.full_url}" class="catl">
+                <div class="catl">
+                <div class="catpct">{if $folder.image}<img src="{$smarty.const.SHOP_IMAGE}p{$folder.image}">{else}<img src="{$template_image}nophoto_100.jpg">{/if}</div>
+                 <span class="catcaptf">{$folder.name|strip_tags}</span><br>
+                     <span class="catline">Диаметр:</span> R{$folder.properties.min_diameter} - R{$folder.properties.max_diameter}<br>
+                    {if $folder.properties.price}от <span class="catprice">{$folder.properties.price}</span> руб.<br>{/if}
+               </div></a>
+		
+            </td>
+            {if $smarty.foreach.folder.iteration % 5 == 0 && $smarty.foreach.folder.iteration > 0}</tr><tr>{/if}
+         {/foreach}
+</table>

@@ -1,0 +1,73 @@
+	
+		{if $parent.id == $smarty.const.TIRES_ID}
+			{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/tires_filter.html"}
+		{elseif $parent.id == $smarty.const.DISK_ID}
+			{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/disk_filter.html"}
+		{/if}
+
+		<h1>{if $cat_parent_info.param_level == 2}{if $parent.id == $smarty.const.TIRES_ID}Шины {else}Диски {/if}{/if}{if $cat_parent_info.name}{$cat_parent_info.name} {/if}{$cat_content.name}</h1>
+
+		{if $cat_content.param_level == 3}
+			{if $parent.id == $smarty.const.TIRES_ID}
+				{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/single_tire.html"}
+			{elseif $parent.id == $smarty.const.DISK_ID}
+				{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/single_disk.html"}
+			{/if}
+        {/if}
+
+
+		{if $folders_list} 
+			{if $cat_content.param_level < 2}
+				{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/catalog1.html"}
+			{elseif $cat_content.param_level == 2}
+				{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/catalog2.html"}
+	        {/if}
+        {/if}
+
+
+{if $products_list}
+	{if $parent.id == $smarty.const.TIRES_ID}
+		{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/tire_products.html"}
+	{elseif $parent.id == $smarty.const.DISK_ID}
+		{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/disk_products.html"}
+	{/if}
+	{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/comments.html"}
+{/if}
+
+{literal}
+<script type="text/javascript" language="javascript">
+	// <![CDATA[
+	
+	$("A.addToBasket").click(function(){
+		
+		this.response = function(response){
+			$("DIV#loading-layer").hide();
+			$("DIV#basket").removeClass("basketContentHide").addClass("basketContentShow");
+			var floor = response.split(";");
+			$("#basket_number").html(floor[0]);
+			$("#basket_currency").html(floor[1]);
+		};
+		
+		var product_count = parseInt($($($($(this).parent()).prev()).children()).val());
+		var product_id = parseInt($(this).attr("id"));
+		if (product_count && product_count)
+		{
+			var left = $(this).offset().left;
+			var top = $(this).offset().top;
+			$("DIV#loading-layer").css({"top": top, "left" : left-200}).show();
+			
+			$.post('http://' + location.hostname + '/catalog/basket/add/', {product_id : product_id, product_count : product_count}, this.response );
+		}
+		return false;
+	});
+	
+	$("INPUT.BasketCountInput").keyup(function(){
+		if (!parseInt($(this).val()))
+			return false;
+		return true;
+	});
+	
+// ]]>
+	</script>
+{/literal}
+

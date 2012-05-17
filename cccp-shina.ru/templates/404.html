@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>{$page_title}</title>
+<meta name="Keywords" content="{$meta_keywords}">
+<meta name="Description" content="{$meta_description}">
+
+{foreach from=$css item=css}
+<link rel="stylesheet" type="text/css" href="{$css}">
+{/foreach}
+
+{foreach from=$js item=js}
+<script src="{$js}" type="text/javascript"></script>
+{/foreach}
+
+{assign var=curnav value=$navigation.1.url|replace:"$base_url":""|replace:"/":""}
+{assign var=curnav2 value=$navigation.2.url|replace:"$base_url":""|replace:"/":""|replace:"$curnav":""}
+
+</head>
+<body>
+
+<div class="confirm" id="confirm_layer" style="display:none;"><div><a href="#" onClick='$("#confirm_layer").hide(); return false;' title="Продолжить"><img src="{$template_image}button_prodoljit.png"></a> <a href="{$base_url}/catalog/basket/" title="Оформить заказ"><img src="{$template_image}button_oformit-zakaz.png"></a></div></div>
+
+<div style="position:absolute; z-index:90; border:1px solid #A01C08; background:#FFF; display:none;" id="ImageLayout"></div>
+
+<table class="maintbl" align="center">
+  <tr>
+    <td class="top">
+    <div {if !$basket_number || $basket}style="display:none;"{/if} class="baskettop" id="basket_block"><p>Товаров: <span id="basket_number">{$basket_number}</span> шт.<br>Сумма: <span id="basket_currency">{$basket_total|format_price}</span> руб.<br><input type="image" src="{$template_image}button_oformit.png" title="Оформить заказ" class="baskettopb" onClick="location = 'http://' + location.hostname + '/catalog/basket/';"></p></div>
+    <div class="headiv"><h1>Интернет магазин шин и дисков</h1></div><div class="toptel">{$smarty.const.PHONE_CODE1}{$smarty.const.PHONE1}</div></td>
+  </tr>
+  <tr>
+    <td class="tmenu">
+        {foreach from=$main_menu item=item name=main_menu}
+        	<a href="{$base_url}/{if $item.url != 'home'}{$item.url|urlencode}/{/if}">{$item.name|strip_tags}</a>
+        {/foreach}
+    </td>
+  </tr>
+  <tr>
+    <td class="mainbody">
+        <table class="mainbodytbl">
+          <tr>
+            <td class="mainleft">
+            {include file="../templates/left_menu.html"}
+            </td>
+            <td class="mainright">
+            <img src="/templates/img/clear.png" width="870" height="1"><br>
+    		<center>Страница не найдена.</center>        
+	            
+            {if $page_content.url == 'home'}{include file="../templates/home_news_block.html"}{/if}
+            
+            </td>
+          </tr>
+        </table>
+    </td>
+  </tr>
+  <tr>
+    <td class="bottom">Информация о ценах и наличии является справочной! Указанные цены не являются офертой в понятии ст. 435 ГК РФ. <span class="bottomu">Товарищей на сайте - 23 <a href="#">карта сайта</a></span></td>
+  </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,61 @@
+
+<form action="" method=post>
+<input type=hidden name=edit_module_name value={$module.name}>
+<table width=100% class=content_table>
+<tr><th colspan="2">Редактировать модуль</th></tr>
+<tr>
+<td width=20% class="td1_left"><b>Имя модуля:</b> </td><td class="td1_right">{$module.name}</td>
+</tr>
+<tr>
+<td class="td1_left"><b>Статус:</b> </td><td class="td1_right">{if $module.section!='admin_main' and $module.section!='front_main'}<select name=edit_module_status class=field style="width:50%;"><option {if $module.status==0}selected=true{/if} value=0>Отключён</option><option {if $module.status==1}selected=true{/if} value=1>Активен</option></select>{else}{if $module.status==0}Отключён{else}Активен{/if}{/if}</td>
+</tr>
+<tr>
+<td class="td1_left"><b>Название модуля:</b> </td><td class="td1_right"><input type=text name=edit_module_title class=field value="{$module.title}" style="width:50%"></td>
+</tr>
+<tr>
+<td class="td1_left"><b>Права доступа:</b> </td><td class="td1_right">
+		<select name=edit_module_priv style="width:50%" class=field>
+		{foreach from=$priv_list item=entry}
+		<option value={$entry.value} {if $entry.value==$module.priv}selected=true{/if}>{$entry.name}</option>
+		{/foreach}
+		</select>
+</td>
+</tr>
+{if $module.section=='front_additional' or $module.section=='front_support'}
+<tr>
+<td class="td1_left"><b>Всегда активен:</b> </td><td class="td1_right">
+		<select name=edit_module_default style="width:50%" class=field>
+		<option value=0 {if $module.default_load=='0'}selected=true{/if}>Нет</option>
+		<option value=1 {if $module.default_load=='1'}selected=true{/if}>Да</option>
+		</select>
+</td>
+</tr>
+{/if}
+<tr>
+<td class="td1_left"><b>Версия модуля:</b> </td><td class="td1_right">{$version}</td>
+</tr>
+</table>
+
+<table width=100% class=content_table>
+	<tr><th width=70%>Файл модуля</th><th width=30%>Статус</th></tr>
+	{foreach from=$checked_files item=entry name=tree}
+	{if $col==1}
+	{assign var="td" value='td1'}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value='td2'}
+	{assign var="col" value=1}
+	{/if}
+	<tr onmouseover="flatlinkOver(this)" {if $smarty.foreach.tree.iteration%2==1}onmouseout="flatlinkOut(this)"{else}onmouseout="flatlinkOut1(this)"{/if}>
+			<td class={$td}_left>{$entry.file}</td>
+			<td align=center class={$td}_right>{if $entry.checked=='1'}<font color=green>В порядке</font>{else}<font color=red>Ошибка</font>{/if}</td>
+		</tr>
+	{/foreach}	
+	</table>
+<br>
+<center><input type=submit name=submit_edit_module value="Сохранить изменения" class=button>
+</center>
+</form>
+
+
+</center>

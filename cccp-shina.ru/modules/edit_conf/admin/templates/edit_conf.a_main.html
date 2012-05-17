@@ -1,0 +1,49 @@
+<form action="" method="get">
+<input type="hidden" name="mod" value="shop">
+<input type="hidden" name="action" value="text_generate">
+<input type=submit name=submit_model_retext value="Обновить тексты в моделях">
+</form>
+
+<form action="" method=post>
+{assign var="old_section" value=""}
+{foreach name=conf_table from=$conf_list item=conf}
+
+{if $conf.section!=$old_section}
+{assign var="old_section" value=$conf.section}
+{if $smarty.foreach.conf_table.iteration!=1}
+</table>
+{/if}
+<br><br>
+<b>{$conf.section_name}</b>
+<table width=100% cellspacing=1 cellpadding=3>
+{/if}
+
+<tr>
+<td width=25%>{$conf.name}:</td>
+<td>
+  {if $conf.conf_key == 'CURRENCY_ADMIN'  ||  $conf.conf_key == 'CURRENCY_SITE'  ||  $conf.conf_key == 'CURRENCY_SITE2'}
+    {if count($cur_list)>0}
+      <select name='{$conf.conf_key}' class=field style="width:50%;">
+        {foreach from=$cur_list item=item key=key}
+          <option {if $conf.conf_value==$item.id}selected{/if} value="{$item.id}">{$item.name}</option>
+        {/foreach}
+      </select>
+    {/if}
+  {elseif $conf.conf_key == 'MARKET_RUNNING'}
+  		<select name='{$conf.conf_key}' class=field style="width:50%;">
+  			<option value="0" {if $conf.conf_value==0}selected{/if}>Нет</option>
+  			<option value="1" {if $conf.conf_value==1}selected{/if}>Да</option>
+  		</select>
+  {elseif $conf.conf_key == 'CATEGORY_TEXT_TEMPLATE' || $conf.conf_key == 'FOOTER_TITLE' || $conf.conf_key == 'TIRES_TITLE_TEMPLATE' || $conf.conf_key == 'DISK_TITLE_TEMPLATE'}
+  	<textarea name="{$conf.conf_key}" style="width:50%; height:200px;">{$conf.conf_value}</textarea>
+  {else}
+    <input type=text name={$conf.conf_key} value="{$conf.conf_value}" class=field style="width:50%;">
+  {/if}
+</td>
+</tr>
+
+{/foreach}
+</table>
+<br>
+<center><input type=submit name=submit_edit_conf value="Сохранить изменения"></center>
+</form>

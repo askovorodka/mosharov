@@ -1,0 +1,92 @@
+           <!---- FILTER DISK ---->
+           <form action="{$base_url}/shop/search/" method="GET">
+           	<input type="hidden" name="filter_type" value="disk">
+            	<table class="mdisktbl" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td class="mdisktblt">Производитель:</td>
+                    <td width="143" class="mainselecttd" valign="bottom">
+             	    <select class="mainselect" name="disk_manufacturer">
+             	    <option value="">Все</option>
+             	    {foreach from=$disk_manufacturer item=disk}
+                      <option value="{$disk.id}">{$disk.name}</option>
+                    {/foreach}
+                    </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="mdisktblt">Ширина:</td>
+                    <td class="mainselecttd">
+             	    <select class="mainselect" name="disk_width">
+             	    <option value="">Любая</option>
+             	    {foreach from=$disk_width item=dwidth}
+                      <option value="{$dwidth.disk_width}">{$dwidth.disk_width|format_number}</option>
+                    {/foreach}
+                    </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="mdisktblt">Диаметр:</td>
+                    <td class="mainselecttd">
+             	    <select class="mainselect" name="disk_diameter">
+             	    <option value="">Любой</option>
+             	    {foreach from=$disk_diameter item=ddiameter}
+                      <option value="{$ddiameter.disk_diameter}">{$ddiameter.disk_diameter|format_number}</option>
+                    {/foreach}
+                    </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="mdisktblt">Крепеж:</td>
+                    <td class="mainselecttd">
+             	    <select class="mainselect" name="disk_krep">
+             	    <option value="">Любой</option>
+             	    {foreach from=$disk_krep item=dkrep}
+                      <option value="{$dkrep.disk_krep}">{$dkrep.disk_krep|format_number}</option>
+                    {/foreach}
+                    </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="mdisktblt">PCD:</td>
+                    <td class="mainselecttd">
+             	    <select class="mainselect" name="disk_pcd">
+             	    <option value="">Любой</option>
+             	    {foreach from=$disk_pcd item=dpcd}
+                      <option value="{$dpcd.disk_pcd}">{$dpcd.disk_pcd|format_number}</option>
+                    {/foreach}
+                    </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="mdisktblt">ET:</td>
+                    <td class="mainselecttd">
+             	    <select class="mainselect" name="disk_et">
+             	    <option value="">Любой</option>
+             	    {foreach from=$disk_et item=det}
+                      <option value="{$det.disk_et}">{$det.disk_et|format_number}</option>
+                    {/foreach}
+                    </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="mdisktblt">Цвет:</td>
+                    <td class="mainselecttd">
+             	    <select class="mainselect" name="disk_color">
+             	    <option value="">Любой</option>
+             	    {foreach from=$disk_color item=dcolor}
+                      <option value="{$dcolor.disk_color}">{$dcolor.disk_color}</option>
+                    {/foreach}
+                    </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="mdisktblt">Есть на складе:</td>
+                    <td class="mainchktd"><input type="checkbox" checked name="disk_sklad" value="1"></td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td class="filtbut"><input type="image" src="{$template_image}podobrat_orange.png" width="111" height="25"></td>
+                  </tr>
+                </table>
+           </form>
+<!---- /FILTER DISK ---->

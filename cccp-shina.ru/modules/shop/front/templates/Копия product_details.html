@@ -1,0 +1,245 @@
+{if ($rating or $comments) and $allowed_user}
+<script src="{$base_url}/javascript/insert_text/insert_text_{$browser}.js"></script>
+
+{if $show_admin_menu}
+{literal}
+<SCRIPT language=JavaScript>
+function confirm_delete(delete_id) {
+  if (confirm("Дейтсвительно удалить это сообщение?")) {
+    parent.location.href = "{/literal}{$base_url}{literal}/admin/index.php?mod=comments&action=delete&id=" + delete_id;
+  }
+}
+</SCRIPT>
+{/literal}
+{/if}
+{/if}
+
+{literal}
+	<script language='JavaScript'>
+function viewImg(image,image_big,width,height){
+
+  if (trim(image)!=""){
+
+    document.getElementById("big_img").src="{/literal}{$base_url}/uploaded_files/shop_images/{literal}" + image;
+
+    document.getElementById("big_img_link").href="{/literal}javascript: void(openImg('{$base_url}/uploaded_files/shop_images/{literal}" + image_big + "',"+width+","+height+"));";
+
+  }
+
+}
+
+function openImg(src, width, height) {
+
+var left= (screen.width / 2) - (width / 2);
+var top = (screen.height / 2) - (height / 2);
+
+if (width>screen.width || height>screen.height)
+  wnd = window.open("", "imageWindow",
+    "left=" + left + ",top=" + top + ",width=" + width + ",height=" + height +",scrollbars=yes");
+else
+  wnd = window.open("", "imageWindow",
+    "left=" + left + ",top=" + top + ",width=" + width + ",height=" + height);
+  var doc = wnd.document;
+  doc.open();
+  doc.write('<html><head><title>Увеличенное изображение</title></head>' +
+            '<body topmargin="0" leftmargin="0" marginheight="0" marginwidth="0">' +
+            '<img src="' + src + '" width="' + width + '" height="' + height +
+            '" vspace="0" hspace="0">' +
+            '<br></body></html>'
+            );
+  doc.close();
+  wnd.focus();
+  return false;
+}
+
+function trim(s){return s.replace(/(^\s+)|(\s+$)/g,"");}
+	</script>
+{/literal}
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td valign="top" class="gray" style="padding: 0 0 9px 6px;"><b>{$product.name|upper}</b></td></tr>
+<tr>
+<td valign="top">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr valign="top">
+<td width="215" style="padding-right: 13px;">
+
+<table width="100%" border="0" cellpadding="3" cellspacing="0">
+<tr>
+<td style="padding: 5px; height: 176px;" align="center">
+<div style="border: 1px solid #999999;">
+{foreach from=$items item=entry name=tp}
+
+  {if $smarty.foreach.tp.index == 0}
+
+    <a id='big_img_link' href="javascript: void(openImg('{$base_url}/uploaded_files/shop_images/{$entry.id}.{$entry.ext}',{$entry.big_width},{$entry.big_height}));"><img id='big_img' src="{$base_url}/uploaded_files/shop_images/resized-{$entry.id}.{$entry.ext}" border="0" alt=""></a>
+
+  {/if}
+
+{/foreach}
+</div>
+</td></tr>
+
+
+{if count($items)>1}
+<tr>
+<td align='center'>
+<table width="100%" cellpadding="0"  border="0">
+<tr>
+
+{assign var="count" value="0"}
+
+{foreach from=$items item=entry name=tp}
+<td  style="padding: 5px; border: 1px solid #999999; height: 82px;" align="center">
+    <a href="javascript: void(viewImg('resized-{$entry.id}.{$entry.ext}','{$entry.id}.{$entry.ext}',{$entry.big_width},{$entry.big_height}));"><img src="{$base_url}/uploaded_files/shop_images/resizedprev-{$entry.id}.{$entry.ext}" border="0" alt="" ></a>
+</td>
+{assign var="count" value=$count+1}
+{if $count==2}</tr><tr> {assign var="count" value="0"} {/if}
+{/foreach}
+</tr></table>
+</td></tr>
+{/if}
+
+</table>
+
+</td>
+<td style="border-bottom: 1px solid #ff6600; padding-top: 10px;">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" id="pres">
+<tr valign="top">
+<td width="100"><strong>Производитель:</strong></td>
+<td>{if $product.producer}{$product.producer}{else}нет данных{/if}</td>
+</tr>
+{if $product.weight}
+<tr valign="top">
+<td width="100"><strong>Вес:</strong></td>
+<td>{$product.weight}</td>
+</tr>{/if}
+{if $product.amount}
+<tr valign="top">
+<td width="100"><strong>Кол-во в упаковке:</strong></td>
+<td>{$product.amount}</td>
+</tr>{/if}
+
+{if $product.description}
+<tr valign="top">
+<td><strong>Описание:</strong></td>
+<td>{$product.description}</td></tr>{/if}
+</table>
+
+</td></tr>
+{foreach from=$mods_list item=entry}
+<tr valign="top">
+<td style="padding-top: 9px;">
+{if $entry.image}
+<table width="215" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td valign="top" align="right">
+
+<table width="83" style="height: 63px;" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td align="center" style="padding: 4px; border: 1px solid #999999;"><a href={$base_url}/uploaded_files/mod_images/{$entry.id}.{$entry.image} target=_blank><img src={$base_url}/uploaded_files/mod_images/resized-{$entry.id}.{$entry.image} width="83" border="0" alt=""></a></td>
+</tr>
+</table>
+
+</td></tr>
+</table>
+{/if}
+</td>
+<td style="padding-top: 9px; border-bottom: 1px solid #ff6600;">
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" id="pres">
+{if $entry.art}
+<tr valign="top">
+<td width="100"><strong>Артикул:</strong></td>
+<td>{$entry.art}</td></tr>
+{/if}
+
+
+<tr valign="top">
+<td width="100"><strong>Наименование:</strong></td>
+<td>{$entry.name}</td></tr>
+
+{if $entry.color}
+<tr valign="top">
+<td width="100"><strong>Цвет:</strong></td>
+<td>{$entry.color}</td></tr>
+{/if}
+
+{if $entry.material}
+<tr valign="top">
+<td width="100"><strong>Материал:</strong></td>
+<td>{$entry.material}</td></tr>
+{/if}
+
+{if $entry.size}
+<tr valign="top">
+<td width="100"><strong>Размеры:</strong></td>
+<td>{$entry.size}</td></tr>
+{/if}
+
+<tr>
+<td><strong>Цена:</strong></td>
+<td valign="top">
+<form method=post>
+<input type="hidden" id="product_id_{$entry.id}" value="{$entry.id}">
+<input type="hidden" id=product_number_{$entry.id} value="1">
+</form>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="100" style="padding-right: 5px;" class="green" nowrap="nowrap"><strong>{$entry.price}</strong> {$currency}</td>
+<td width="1"><img src="templates/img/kir.gif" width="1" height="14" border="0" alt=""></td>
+<td valign="top" width="22"><a href="{$module_url}/basket/add/{$entry.id}" onclick="return doLoad(true,{$entry.id});"><img src="templates/img/cat_03.gif" width="22" height="22" border="0" alt="" style="margin: 0 5px 0 5px;"></a></td>
+<td nowrap="nowrap"><a href="{$module_url}/basket/add/{$entry.id}/" onclick="return doLoad(true,{$entry.id});">Купить</a></td></tr>
+</table>
+
+</td></tr>
+</table>
+{/foreach}
+</td></tr>
+</table>
+
+</td></tr>
+</table>
+
+{*<table width=100% cellspecing=1 cellpadding=3>
+<tr>
+<td width=80% valign=top>
+<p>
+    <table cellpadding="1" cellspacing="1" border="1" width="80%">
+
+  PROPERTY
+  --------
+  0 - id
+  1 - name
+  2 - type
+  3 - elements (only if `type` == '1')
+  4 - status
+  5 - value
+
+    {foreach name=tree from=$product.properties item=entry}
+      {if $entry}
+        <tr>
+          <td width="30%"><strong>{$entry.1}</strong></td>
+          <td>{if $entry.5}{$entry.5}{else}<small><font color="#666666">нет данных</font></small>{/if}</td>
+        </tr>
+      {/if}
+    {/foreach}
+    </table>
+</p>
+
+{if $additional_products}
+<br><br>
+<b>Сопутствующие товары:</b><br><br>
+<table width=65% cellspacing=1 cellpadding=3>
+  {foreach from=$additional_products item=entry}
+  </tr><td>• <b><a href={$module_url}/{$entry.full_url}{$entry.id}>{$entry.name}</a></b></td> <td width=20%><font color=red><b>{$entry.price} {$currency}</b></font></td> <td width=20%>[ <a href={$module_url}/basket/add/{$entry.id}>В корзину</a> ]</td></tr>
+  {/foreach}
+</table>
+{/if}
+</td></tr>
+</table>
+*}

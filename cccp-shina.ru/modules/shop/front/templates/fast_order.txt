@@ -1,0 +1,50 @@
+<p>Вас приветствует почтовый робот сайта {$smarty.server.SERVER_NAME}</p>
+
+<p>В Вашем онлайн магазине появился быстрый заказ от {$date|date_format:"%d.%m.%Y в %T"}</p>
+
+<p>Номер заказа: {$order_id}</p>
+
+<p>{$name} заказал продукт в количестве {$product_count} шт., на сумму {$total_sum|format_price} {$currency}, 
+подробности смотрите в администраторской панели, раздел "Управление заказами".</p>
+
+<p><b>Детализация заказа:</b></p>
+
+<table>
+<tr><th>№</th><th>Артикул</th>
+<th>Наименование</th><th>Количество</th><th>Стоимость за единицу</th><th>Сумма</th></tr>
+
+<tr>
+<td>1</td>
+<td>{$product.article}</td>
+<td>{$product.name}</td>
+<td>{$product_count}</td>
+<td>{$product.price|format_price} руб.</td>
+<td>{$total_price|format_price} руб.</td>
+</tr>
+
+<tr>
+<td colspan="4" align="right">Стоимость доставки:</td>
+<td>{$order_price|format_price} руб.</td>
+</tr>
+
+<tr>
+<td colspan="4" align="right">Итого:</td>
+<td>{$total_sum|format_price} руб.</td>
+</tr>
+
+</table>
+
+<table>
+<tr><td colspan="2">Информация о пользователе:</td></tr>
+
+<tr><td>ФИО:</td><td>{$name}</td></tr>
+
+<tr><td>Телефон:</td><td>{$phone}</td></tr>
+
+<tr><td>Адрес доставки:</td><td>{$address}</td></tr>
+
+<tr><td>Способ доставки:</td><td>{if $dostavka == 1}Доставка{elseif $dostavka == 2}Самовывоз{elseif $dostavka > 2}Вывоз транспортной компанией - {$company_order}{/if}</td></tr>
+
+</table>
+
+<p>До скорых встреч!</p>

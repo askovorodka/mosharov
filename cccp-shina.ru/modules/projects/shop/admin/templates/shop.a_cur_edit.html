@@ -1,0 +1,58 @@
+{if $mode=="edit" or $mode=="add"}
+{literal}
+<SCRIPT language=JavaScript>
+function form_check() {
+  if (document.edit_cur.edit_cur_name.value=='') {
+    alert("Заполните пожалуйста обязательные поля");
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+</SCRIPT>
+{/literal}
+
+<form action="" name=edit_cur method=post onSubmit="return form_check();">
+<input type=hidden name={if $mode=='add'}submit_add_cur{else}submit_edit_cur{/if}>
+<table width=100% class=content_table>
+  <tr><th>{if $mode=='edit'}Редактировать валюту<input type=hidden name=id value={$cur.id}>{else}Добавить валюту{/if}</th></tr>
+</table>
+
+<table width=100% class=content_table>
+  <tr>
+    <td width=20% class=td1_left><b>Название валюты:</b></td>
+    <td class=td1_right>
+      <input type="text" name=edit_cur_name style="width:100%;" class=field value="{$cur.name}">
+    </td>
+  </tr>
+
+  <tr>
+    <td width=20% class=td1_left><b>Курс валюты:</b></td>
+    <td class=td1_right>
+      <input type="text" name=edit_cur_kurs style="width:100%;" class=field value="{$cur.kurs}">
+    </td>
+  </tr>
+
+  <tr>
+    <td width=20% class=td1_left><b>Символ отображения:</b></td>
+    <td class=td1_right>
+      <input type="text" name=edit_cur_znak style="width:100%;" class=field value="{$cur.znak}">
+    </td>
+  </tr>
+
+  <tr>
+    <td width=15% class=td1_left><b>Статус:</b></td>
+    <td class=td1_right>
+    <select name=edit_cur_status style="width:50%;" class=field>
+      <option value="1" {if $cur.status=='1'}selected=true{/if}>Активный</option>
+      <option value="0" {if $cur.status=='0'}selected=true{/if}>Ждёт</option>
+    </select>
+    </td>
+  </tr>
+</table>
+<br>
+<center><input name={if $mode=='add'}submit_add_cur{else}submit_edit_cur{/if} type=submit value={if $mode=='add'}"Добавить валюту"{else}"Сохранить изменения"{/if}></center>
+</form>
+{/if}

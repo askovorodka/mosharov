@@ -1,0 +1,6 @@
+            <br>
+            {foreach from=$news_list item=news name=news}
+            <div class="mainnews">{$news.publish_date|date_format:"%d.%m.%Y"}<br><a href="{$base_url}/news/archive/{$news.id}/">{$news.title|strip_tags}</a></div>
+            {/foreach}
+            
+            <br class="clear">

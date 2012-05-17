@@ -1,0 +1,91 @@
+{literal}
+<DIV id=dhtmltooltip></DIV>
+<SCRIPT language=JavaScript>
+
+function confirm_delete(delete_id)
+{
+if (confirm("Дейтсвительно удалить эту форму?")) {
+parent.location.href = "?mod=forms&action=delete&id=" + delete_id;
+}
+}
+</SCRIPT>
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/tooltips.js'></script>
+{/literal}
+
+{if $forms_list}
+<table width=100% class=content_table>
+
+	<tr>
+	<th width=10%>ID</th>
+	<th>Название</th>
+	<th width=20%>E-mail</th>
+	<th width=5%>Статус</th>
+	<th width=10%>Действия</th>
+	</tr>
+
+	{foreach from=$forms_list item=form name=forma}
+
+	{if $col==1}
+	{assign var="td" value='td1'}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value='td2'}
+	{assign var="col" value=1}
+	{/if}
+	<tr onmouseover="flatlinkOver(this)" {if $smarty.foreach.forma.iteration%2==1}onmouseout="flatlinkOut(this)"{else}onmouseout="flatlinkOut1(this)"{/if}>
+			<td class={$td}_left align=center>
+				<small>{$form.id}</small>
+			</td>
+			<td class={$td}_middle>
+				{$form.name} <font color="#666666"><small>({$form.elements})</small></font>
+			</td>
+			<td class={$td}_middle align=center>
+				{$form.email}
+			</td>
+			<td class={$td}_middle align=center>
+				<img src=templates/img/status_{$form.status}.gif border=0>
+			</td>
+			<td align=center class={$td}_right>
+				<a href="javascript:confirm_delete('{$form.id}');" class=img_link onmouseover="ddrivetip('Удалить форму')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
+				<a href=?mod=forms&action=edit&id={$form.id} class=img_link onmouseover="ddrivetip('Редактировать форму')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>
+			</td>
+		</tr>
+
+	{/foreach}
+
+</table>
+{else}
+<table width=100% class=content_table>
+
+	<tr>
+	<th width=10%>ID</th>
+	<th>Название</th>
+	<th width=20%>E-mail</th>
+	<th width=5%>Статус</th>
+	<th width=10%>Действия</th>
+	</tr>
+    <tr>
+<td class=td2_middle colspan="5" style="height: 30px;">
+<center>В системе нет ни одной формы.</center></td></tr></table>
+{/if}
+<br>
+<div class="add_but" onClick="location.href='?mod=forms&action=add'"><div><a href="?mod=forms&action=add">добавить форму</a></div></div>
+
+{if $total_pages>1}
+<br><br>
+<div class="listing">
+<li class="str">
+<ul>
+<li class="center"><a href="?mod=tables&page=1">&laquo;</a>
+{section name=p loop=$pages}
+  {if $pages[p]==$current_page}
+  <a class="active" href="?mod=forms&page={$pages[p]}">{$pages[p]}</a>
+  {else}
+  <a href="?mod=forms&page={$pages[p]}">{$pages[p]}</a>
+  {/if}
+{/section}
+<a href="?mod=forms&page={$total_pages}">&raquo;</a></li>
+</ul>
+</li>
+</div>
+{/if}

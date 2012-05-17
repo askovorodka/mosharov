@@ -1,0 +1,82 @@
+            <form action="{$base_url}/catalog/search/" method="GET">
+            	<input type="hidden" name="filter_type" value="tire">
+
+            <div class="filtertires">
+            	<table class="filterint" align="right">
+                  <tr>
+                    <td>Производитель</td>
+                    <td>
+             	    <select class="innselect" name="tire_manufacturer">
+             	    	<option value="">Все</option>
+	             	    {foreach from=$tires_manufacturer item=tire}
+	                      <option value="{$tire.id}" {if $smarty.get.tire_manufacturer == $tire.id}selected{/if}>{$tire.name}</option>
+	                    {/foreach}
+                    </select>
+                </td>
+                    <td>Ширина</td>
+                    <td>
+             	    <select class="innselect" name="tire_width">
+	             	    <option value="">Любая</option>
+	             	    {foreach from=$tires_width item=tire_width}
+	             	    {if !empty($tire_width.tire_width) && $tire_width.tire_width > 0}
+	                      <option value="{$tire_width.tire_width}" {if $smarty.get.tire_width == $tire_width.tire_width}selected{/if}>{$tire_width.tire_width|format_number}</option>
+	                      {/if}
+	                    {/foreach}
+                    </select>
+                </td>
+                    <td>Профиль</td>
+                    <td>
+             	    <select class="innselect" name="tire_height">
+	             	    <option value="">Любой</option>
+	             	    {foreach from=$tires_height item=tire_height}
+	             	    {if !empty($tire_height.tire_height)}
+	                      <option value="{$tire_height.tire_height}" {if $smarty.get.tire_height == $tire_height.tire_height}selected{/if}>{$tire_height.tire_height|format_number}</option>
+	                      {/if}
+	                    {/foreach}
+                    </select>
+                </td>
+                  </tr>
+                  <tr>
+                    <td>Диаметр</td>
+                    <td>
+             	    <select class="innselect" name="tire_diameter">
+	             	    <option value="">Любой</option>
+	             	    {foreach from=$tires_diameter item=tires_diameter}
+	             	    {if !empty($tires_diameter.tire_diameter)}
+	                      <option value="{$tires_diameter.tire_diameter}"  {if $smarty.get.tire_diameter == $tires_diameter.tire_diameter}selected{/if}>{$tires_diameter.tire_diameter|format_number}</option>
+	                      {/if}
+	                    {/foreach}
+                    </select>
+                </td>
+                    <td>Сезон</td>
+                    <td>
+             	    <select class="innselect" name="tire_season">
+             	    	<option value="">Любой</option>
+                      	<option value="1" {if $smarty.get.tire_season == 1}selected{/if}>Зима</option>
+                      	<option value="2" {if $smarty.get.tire_season == 2}selected{/if}>Лето</option>
+                      	<option value="3" {if $smarty.get.tire_season == 3}selected{/if}>Всесезон</option>
+                    </select>
+                </td>
+                    <td>Шипы</td>
+                    <td>
+             	    <select class="innselect" name="tire_spike">
+                      <option value="1" {if $smarty.get.tire_spike == 1}selected{/if}>Нет</option>
+                      <option value="2" {if $smarty.get.tire_spike == 2}selected{/if}>Да</option>
+                    </select>
+                </td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td class="filtering"><input type="checkbox" {if isset($smarty.get.filter_type)}{if $smarty.get.tire_sklad == 1}checked{/if}{else}checked{/if} style="z-index:5;" name="tire_sklad" id="tire_sklad" value=1> <label for="tire_sklad">Есть на складе</label></td>
+                  </tr>
+                  <tr>
+                    <td colspan="6" class="filterinbw"><input type="image" src="{$template_image}button_nayti.gif"></td>
+                  </tr>
+                </table>
+            </div>
+
+	</form>

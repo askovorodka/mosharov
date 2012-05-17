@@ -1,0 +1,7 @@
+{if count($subpages_list)>0}
+            <ul>
+				{foreach from=$subpages_list item=page name=for1}            
+              		<li><a href="{$page.full_url}" class="black">{$page.name|stripslashes}</a></li>
+              	{/foreach}
+              </ul>
+{/if}

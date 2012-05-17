@@ -1,0 +1,51 @@
+<form action="" method="POST" id="form_order_products">
+		<table class="itemlisttbl">
+              <tr class="itemlisttblcapt">
+              	<td></td>
+                <td nowrap>
+                <a href="{$base_url}/{$current_url}&sort=article&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Артикул</a>
+                {if $sort == "article"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}
+                </td>
+              	
+                <td nowrap>
+                <a href="{$base_url}/{$current_url}&sort=manufacturer&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Производитель</a>
+                {if $sort == "manufacturer"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}
+                </td>
+
+                <td nowrap>
+                <a href="{$base_url}/{$current_url}&sort=model&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Модель</a>
+                {if $sort == "model"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}
+                </td>
+
+                <td nowrap>
+                <a href="{$base_url}/{$current_url}&sort=name&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Наименование</a>
+                {if $sort == "name"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}
+                </td>
+
+                <td nowrap>
+                <a href="{$base_url}/{$current_url}&sort=price&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Цена</a>
+                {if $sort == "price"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}
+                </td>
+
+                <td>Кол-во</td>
+                <td>В корзину</td>
+              </tr>
+              {foreach from=$search_results item=product name=product}
+              <tr>
+              	<td><a href="{$base_url}/catalog{$product.full_url}" class="CatalogImages" {if $product.image}image="/uploaded_files/shop_images/{$product.image}"{/if}><img src="{$template_image}camera.png"></a></td>
+              	<td>{$product.article}</td>
+                <td>{$product.manufacturer.name}</td>
+                <td>{$product.model.name}</td>
+                <td class="itemlistname"><a href="{$base_url}/catalog{$product.full_url}">{$product.name}</a></td>
+                
+                <td>{$product.price|format_number} <span class="tableart">руб.</span></td>
+                <td>{if ($product.disk_width > 0 && $product.disk_sklad > 0) ||  ($product.tire_width > 0 && $product.tire_sklad > 0)}<input type="text" name="{$product.id}" value="1">{/if}</td>
+                {if ($product.disk_width > 0 && $product.disk_sklad > 0) ||  ($product.tire_width > 0 && $product.tire_sklad > 0)}
+                	<td><input type="image" src="{$template_image}button_to-basket.png" name="add_order" class="itembuttonin" title="В корзину"></td>
+                {else}
+                	<td class="itemred">закончились</td>
+                {/if}
+              </tr>
+              {/foreach}
+            </table>
+</form>
