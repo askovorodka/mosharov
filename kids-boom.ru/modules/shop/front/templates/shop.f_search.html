@@ -1,0 +1,20 @@
+{include file="`$smarty.const.TPL_PATH`top_search.html"}
+
+{include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
+
+<h1>Результаты поиска</h1>
+
+
+    <div class="pozw">
+    {if $products}
+    	{foreach from=$products item=product}
+		    <div class="pozb"><div class="poz">
+		    <a title="{$product.name}" href="{$base_url}/{$product.full_url}/">{$product.name|strip_tags}</a><br>
+		    {if $product.image}<a title="{$product.name}" href="{$base_url}/{$product.full_url}/"><img src="/uploaded_files/shop_images/medium-{$product.image}" width="149" height="144" class="pozimg"></a>{/if}
+		    <div class="pozpr"><span class="pozboys">{$product.category.name}</span><br /><span class="pozcena">{$product.price}</span> руб.<br><br></div>
+		    </div></div>
+		{/foreach}
+	{/if}
+    </div>
+
+    <div class="txt"><br />{$cat_content.text}</div>

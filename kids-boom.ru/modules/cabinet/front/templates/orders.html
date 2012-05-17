@@ -1,0 +1,42 @@
+        <h1>История заказов</h1>
+		
+        {foreach from=$orders_list item=order name=for1}
+        
+        {if !$smarty.foreach.for1.first}<div style="height:15px;">&nbsp;</div>{/if}
+        
+        <div id="hisp">Заказ от {$order.insert_date|date_format:"%d.%m.%y"}</div>
+           <table class="basketin">
+
+              <tr class="basketintop">
+                <td class="basketintopl">№</td>
+                <td>Количество</td>
+                <td>Артикул</td>
+                <td>Наименование</td>
+                <td>Цена</td>
+                <td class="basketintopr">Сумма</td>
+              </tr>
+              
+              
+              {foreach from=$order.products_list item=product name=products}
+              <tr class="basketlist">
+                <td>{$order.id}</td>
+                <td>{$product.product_count} шт.</td>
+                <td><span class="tableart">{$product.article}</span></td>
+                <td><a href="{$base_url}/{$product.full_url}/">{$product.name}</a>
+                
+                {if $product.properties}<br /><small>{foreach from=$product.properties item=pr key=key}{$key}:{$pr}<br />{/foreach}</small>{/if}
+                
+                </td>
+                <td id="nw">{$product.product_price|format_number} <span class="tableart">руб.</span></td>
+                <td id="nw">{$product.total_price|format_number} <span class="tableart">руб.</span></td>
+              </tr>
+              {/foreach}
+              
+            </table>
+            <div id="tar2">
+            Доставка: <span style="color:#e07e13;">{$order.order_price|format_number}</span> руб.
+            <span style="color:#999999;font-size:12px;">({if $order.dostavka == 2}Требуется доставка{else}Самовывоз{/if})</span><br>
+            Итого: <span style="color:#e07e13;">{$order.total_price|format_number}</span> руб.<br>
+            Статус заказа: {$order.status|get_order_status}
+            </div>
+            {/foreach}

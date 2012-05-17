@@ -1,0 +1,61 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>{$page_title}</title>
+<meta name="Keywords" content="{$meta_keywords}">
+<meta name="Description" content="{$meta_description}">
+{foreach from=$css item=css}
+<link rel="stylesheet" type="text/css" href="{$css}">
+{/foreach}
+{foreach from=$js item=js}
+<script src="{$js}" type="text/javascript"></script>
+{/foreach}
+<link rel="icon" type="image/png" href="{$template_image}favicon.png">
+</head>
+<body>
+<table class="mtbl" align="center">
+  <tr>
+    <td class="logo"><a href="/"><img src="{$template_image}logo.jpg" width="213" height="72"></a></td>
+    <td class="tmenu">
+    {include file="`$smarty.const.TPL_PATH`top_menu.html"}
+    </td>
+    <td class="rightt">наши менеджеры:<br><span class="rightcod">495</span><span class="rightnum"> 641-68-50</span><br><span class="rightcod">963</span><span class="rightnum"> 641-84-40</span></td>
+  </tr>
+  <tr>
+    <td colspan="4" class="banner">
+    <img src="{$template_image}banner.jpg" width="1100" height="196" usemap="#Map"><br>
+    <map name="Map">
+    <area shape="poly" coords="280,1,263,196,1,196,1,1" href="#" alt="Одежда для мальчиков" title="Одежда для мальчиков">
+    <area shape="poly" coords="283,1,557,1,540,196,265,196" href="#" alt="Одежда для девочек" title="Одежда для девочек">
+    <area shape="poly" coords="561,1,834,1,819,196,543,196" href="#" alt="Одежда для новорожденных" title="Одежда для новорожденных">
+    <area shape="poly" coords="1100,196,1100,1,837,1,822,196" href="#" alt="Постельные и банные принадлежности" title="Постельные и банные принадлежности">
+    </map>
+    </td>
+  </tr>
+  <tr>
+    <td class="lmenu">{include file="`$smarty.const.TPL_PATH`left_catalog_menu.html"}</td>
+    <td class="cont">
+    
+    {if $current_url == 'home'}
+    	{include file="`$smarty.const.TPL_PATH`top_search.html"}
+    	{include file="`$smarty.const.TPL_PATH`top_special_block.html"}
+    {/if}
+    
+    {if $content=='' or !$content}
+	{assign var="content" value=""}
+	{fetch file=$template assign="content"}
+	{/if}
+	{eval var=$content}
+    
+    </td>
+    
+    <td class="rside">{include file="`$smarty.const.TPL_PATH`basket_block.html"}</td>
+    
+  </tr>
+  <tr>
+    <td colspan="4" class="bottom">{include file="`$smarty.const.TPL_PATH`footer_block.html"}
+    </td>
+  </tr>
+</table>
+</body>
+</html>

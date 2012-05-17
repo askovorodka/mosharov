@@ -1,0 +1,20 @@
+
+{include file="`$smarty.const.TPL_PATH`top_search.html"}
+
+{include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
+
+<h1>{$cat_content.name|strip_tags}</h1>
+
+    <div class="pozw">
+    {if $folders_list}
+    	{foreach from=$folders_list item=folder}
+		    <div class="pozb"><div class="poz">
+		    <a title="{$folder.name}" href="{$base_url}/{$folder.full_url}/">{$folder.name|strip_tags}</a><br>
+		    {if $folder.image}<a title="{$folder.name}" href="{$base_url}/{$folder.full_url}/"><img src="/uploaded_files/category_images/medium-{$folder.image}" width="149" height="144" class="pozimg"></a>
+		    {elseif $folder.picture}<a title="{$folder.name}" href="{$base_url}/{$folder.full_url}/"><img src="/uploaded_files/shop_images/medium-{$folder.picture}" width="149" height="144" class="pozimg"></a>{/if}
+		    </div></div>
+		{/foreach}
+	{/if}
+    </div>
+
+    <div class="txt"><br />{$cat_content.text}</div>

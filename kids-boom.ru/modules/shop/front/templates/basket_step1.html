@@ -1,0 +1,66 @@
+
+{include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
+
+<h1>Оформление заказа</h1>
+
+    <table class="zakaz">
+      <tr>
+        <td class="zakaznew">
+        <form action="/catalog/basket/submit/" method="post">
+        <input type="hidden" name="submit_order" value="1" />
+        {if !$user}
+        <h2>Новый пользователь</h2>
+        {if $error_register_message}<small style="color:red;">{$error_register_message}</small>{/if}
+        <input type="hidden" name="submit_register" value="1" />
+        <input type="text" name="name">ФИО<br>
+        <input type="text" name="phone">Телефон<br>
+        <input type="text" class="zakaznewdop" name="phone2">Доп. тел.<br>
+        <input type="text" name="email">Email<br>
+        <div class="zakaznewpwd"><input type="password" name="password"><span class="zakaznewpvdc">Пароль</span><br><div class="zakaznewpwdt">Введите пароль, если хотите 
+зарегистрироваться!<br><br></div></div>
+		{/if}
+		
+		<h3>Получение товара</h3>
+        <table class="zakazradiot">
+          <tr>
+            <td><input type="radio" class="zakazradio" name="dostavka" value="1" checked id="ch1"></td>
+            <td><label for="ch1">Самовывоз</label></td>
+          </tr>
+          <tr>
+            <td><input type="radio" class="zakazradio" name="dostavka" value="2" id="ch2"></td>
+            <td><label for="ch2">Доставка</label> <span class="basketint">(стоимость - {$smarty.const.SHOP_DOSTAVKA_PRICE} р.)</span></td>
+          </tr>
+        </table>
+        <input type="text" name="metro">Метро<br>
+        <input type="text" name="address">Адрес<br>
+        Комментарий:
+        <textarea name="comment"></textarea><br>
+        <input type="image" src="{$template_image}but_utv.png" class="zakazbut">
+        </form>
+        </td>
+        <td class="zakazold">
+        {if !$user}
+        	{if $error_auth_message}<small style="color:red;">{$error_auth_message}</small>{/if}
+        	<form action="" method="post">
+        		<input type="hidden" name="submit_login" value="" />
+        	<h2>Уже зарегистрированы?</h2>
+        	<input type="text" name="email">Email<br>
+        	<input type="password" name="password">Пароль<br>
+        	<input type="image" src="{$template_image}but_enter.png" class="enterbut"> <a href="#" id="repassword" class="lostpwd">Забыли пароль?</a>
+        	</form>
+        	
+<div id="repassword_user" style="display:none; z-index:90; position:absolute; width:350px; height:120px; background:#FFFFFF; border:1px solid #E07E13; padding:15px;">
+<form action="" method="post" id="repassword_form">
+Введите ваше адрес электронной почты, который вы указали при заказе, на него будет выслан новый пароль.
+<div style="color:green;" id="repassword_msg"></div>
+<div class="regin">E-mail: <input type="text" name="repassword_email"></div>
+<input type="submit" value="Восстановить">&nbsp;&nbsp;
+<input type="button" value="Закрыть" id="repassword_close">
+</form>
+</div>        	
+        {/if}
+        </td>
+      </tr>
+    </table>
+
+    <div class="txthid"></div>

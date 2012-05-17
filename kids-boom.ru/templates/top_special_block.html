@@ -1,0 +1,18 @@
+{if $top_products}
+    
+    <p class="capt">Последние поступления:</p>
+    <div class="pozw">
+    
+	    {foreach from=$top_products item=top name=fort}
+		{assign var=counter value=`$counter+1`}
+		{if $counter % 4 == 0}{assign var=counter value=1}{/if}
+	    <div class="pozb"><div class="poz">
+	    <a title="{$top.name}" href="{$base_url}/{$top.full_url}">{$top.name}</a><br>
+	    <a title="{$top.name}" href="{$base_url}/{$top.full_url}"><img src="/uploaded_files/shop_images/medium-{$top.image}" width="149" height="144" class="pozimg"></a>
+	    <div class="pozpr"><span class="poz{$counter}">{$top.category.name}</span><br><span class="pozcena">{$top.price|format_number}</span> руб.<br><br></div>
+	    </div></div>
+	    {/foreach}
+    
+    </div>
+    
+{/if}

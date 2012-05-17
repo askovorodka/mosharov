@@ -1,0 +1,70 @@
+{include file="`$smarty.const.TPL_PATH`top_search.html"}
+{include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
+
+{if $product}
+<h1>{$product.name}</h1>
+
+<form action="{$base_url}/catalog/basket/add/" method="post">
+	<input name="product_count" value="1" type="hidden" />
+	<input name="product_id" value="{$product.id}" type="hidden" />
+	
+    <table class="catinn">
+      <tr>
+        <td class="catinnimg">
+        	{if $images}
+        	<div style="margin-bottom:5px;"><img id="bigimage" src="/uploaded_files/shop_images/big-{$photo.id}.{$photo.ext}" width="156" height="206"></div>
+        		{foreach from=$images item=image}
+            		<a href="/uploaded_files/shop_images/big-{$image.id}.{$image.ext}" class="smallimage"><img src="/uploaded_files/shop_images/resized-{$image.id}.{$image.ext}" width="64" height="74" class="catinnsm" /></a>
+            	{/foreach}
+        	{/if}
+        </td>
+        
+        <td class="catinnp">
+        <strong>Артикул:</strong> {$product.article}<br>
+        <strong>Состав:</strong> {$product.sostav}<br>
+        <strong>Производитель:</strong> {$product.country}<br>
+        <span class="innprice"><span class="pozcena">{$product.price}</span> руб.</span><br>
+        <table class="tblrc">
+          {*<tr>
+          	{foreach from=$properties item=property name=forp}
+          		<td nowrap class="{if $smarty.foreach.forp.first}razmeri{else}cveta{/if}">
+          			<strong>{$property.name}:</strong><br>
+          			{foreach from=$product_properties item=product_p}
+          				{if $product_p.property_id==$property.id}<input name="property[{$product_p.name}|{$product_p.value}]" id="p_{$product_p.property_id}_{$product_p.value}" type="checkbox"><label for="p_{$product_p.property_id}_{$product_p.value}">{$product_p.value}</label><br>{/if}
+          			{/foreach}
+          		</td>
+          	{/foreach}
+          </tr>*}
+          
+          
+          	{foreach from=$properties item=property name=forp}
+          		<tr>
+          		<td>
+          			{if $property.name != "Размер"}<strong>{$property.name}:</strong><br>{/if}
+          			
+          			{if $property.name == "Размер"}<select name="size"><option selected value="">Выберите размер</option>
+	          			{foreach from=$product_properties item=product_p}
+	          				{if $product_p.property_id==$property.id}<option value="{$product_p.value}" />{$product_p.value}{/if}
+	          			{/foreach}
+          			</select>
+          			{else}
+	          			{foreach from=$product_properties item=product_p}
+	          				{if $product_p.property_id==$property.id}<input name="property[{$product_p.name}|{$product_p.value}]" id="p_{$product_p.property_id}_{$product_p.value}" type="checkbox"><label for="p_{$product_p.property_id}_{$product_p.value}">{$product_p.value}</label><br>{/if}
+	          			{/foreach}
+          			{/if}
+          		</td>
+          		</tr>
+          	{/foreach}
+          
+          
+        </table>
+        <input type="image" src="{$template_image}but_inbasket.png" class="inbasket">
+        </td>
+      </tr>
+    </table>
+</form>
+ 
+ <div class="txt">{$product.description}</div>
+{else}
+<center>Такого продукта не существует.</center>
+{/if}

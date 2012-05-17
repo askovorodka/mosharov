@@ -1,0 +1,182 @@
+{include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
+
+<h1>Моя корзина</h1>
+
+{if $basket}
+
+<form action="" method="post" id="basket_form">
+<input type="hidden" name="basket_recount" value="1" />
+<table class="basketin">
+  <tr class="basketintop">
+    <td class="basketintopl">Наименование товара</td>
+    <td>Цена</td>
+    <td>Количество</td>
+    <td class="basketintopr">&nbsp;</td>
+  </tr>
+  {foreach from=$basket item=item}
+  <tr class="basketlist">
+    <td class="basketcapt"><a href="{$base_url}/{$item.full_url}/" title="{$item.name}">{$item.name}</a>
+    {if $item.properties}<br /><small>{foreach from=$item.properties item=pr key=key}{$key}:{$pr}<br />{/foreach}</small>{/if}
+    </td>
+    <td class="basketnw">{$item.price_number} <span class="basketval">руб.</span></td>
+    <td class="basketnw"><input type="text" value="{$item.number}" name="edit_number[{$item.id}]"> <span class="basketint">шт.</span></td>
+    <td><a href="{$module_url}/basket/delete/{$item.id}" onClick="return confirm('Удалить продукт из корзины');"><img src="{$template_image}delete.gif" width="14" height="14" title="Удалить" alt="Удалить"></a></td>
+  </tr>
+  {/foreach}
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2" class="basketall">Итого: {$total_price} <span class="basketallval">руб.</span><br><a href="#" onClick="$('#basket_form').submit();">пересчитать</a></td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</form>
+
+<a title="Оформить заказ" href="/catalog/basket/step1/"><img src="{$template_image}but_oform.png" class="basketoform" /></a>
+
+{else}
+<center>Корзина пуста.</center>
+{/if}
+
+
+
+{*
+<div class="txtd">
+<div class="contt">
+
+{include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
+
+<h1>Ваша корзина</h1>
+
+{if $basket}
+<form action="" method="post" id="basket_form">
+<input type="hidden" name="basket_recount" value="1" />
+<table class="baskettbl">
+  <tr>
+    <th>&nbsp;</th>
+    <th>Наименование</th>
+    <th>Цена</th>
+    <th>Кол-во</th>
+    <th>&nbsp;</th>
+  </tr>
+  {foreach from=$basket item=item}
+  <tr>
+    <td class="basketimg"><img src="/uploaded_files/shop_images/resized-{$item.image}" width="80" height="80"></td>
+    <td class="basketinf"><a href="{$base_url}/{$item.full_url}/">{$item.name}</a>
+    <br><span class="catcap">Артикул:</span> {$item.article}</td>
+    <td class="basketprice">{$item.price_number} р.</td>
+    <td class="basketi"><input type="text" value="{$item.number}" name="edit_number[{$item.id}]" /></td>
+    <td class="basketu"><a href="{$module_url}/basket/delete/{$item.id}" onclick="return confirm('Удалить продукт из корзины');">Удалить товар</a></td>
+  </tr>
+  {/foreach}
+  <tr>
+    <td colspan="3" class="basketitog">Общая стоимость: <span class="itog">{$total_price} р.</span></td>
+    <td colspan="2"><a title="Оформить заказ" href="/catalog/basket/step1/"><img src="{$template_image}basket_button.png" class="basketbutton" /></a></td>
+  </tr>
+</table>
+</form>
+{else}
+<center>Ваша корзина пуста</center>
+{/if}
+    <p></p>
+<br><br>
+</div>
+</div>
+
+*}
+
+{*
+{if $basket}
+
+        <h1>Корзина</h1>
+        <form action="" method="post">
+           <table width="100%" border="0" cellspacing="1" cellpadding="0">
+              <tr bgcolor="#fbf3df">
+                <td colspan="7" class="tabletop"><div class="tabletop2"></div></td>
+              </tr>
+              <tr bgcolor="#fbf3df" class="tablecapt">
+                <td>№</td>
+                <td>Количество</td>
+                <td>Артикул</td>
+                <td>Наименование</td>
+                <td>Цена</td>
+                <td>Сумма</td>
+                <td>&nbsp;</td>
+              </tr>
+              
+              {foreach from=$basket item=product name=basket_foreach}
+              <tr bgcolor="#{if $smarty.foreach.basket_foreach.iteration%2}fbf3df{else}f1f6f9{/if}" class="tableall">
+                <td>{$smarty.foreach.basket_foreach.iteration}</td>
+                <td><input type="text" value="{$product.number}" name="edit_number[{$product.id}]" class="tableinp"> шт.</td>
+                <td><span class="tableart">{$product.article}</span></td>
+                <td><a href="{$product.full_url}">{$product.name}</a></td>
+                <td id="nw">{$product.price|format_number} <span class="tableart">руб.</span></td>
+                <td id="nw">{$product.price_number|format_number} <span class="tableart">руб.</span></td>
+                <td><a href="{$module_url}/basket/delete/{$product.id}" onclick="return confirm('Удалить продукт из корзины');"><input type="image" src="{$template_image}del.png" width="57" height="17"></a></td>
+              </tr>
+              {/foreach}
+              <tr bgcolor="#fbf3df">
+                <td colspan="7" class="tablebot"><div class="tablebot2"></div></td>
+              </tr>
+            </table>
+            
+            <input type="submit" value="Пересчитать" name="basket_recount">
+            
+        </form>    
+            
+            <br>
+            <div id="tar">
+            Итого: <span style="color:#e07e13;">{$total_price|format_number}</span> <span style="font-size:12px;">руб.</span><br>
+            Доставка: <span style="color:#e07e13;">{if $total_price|format_number < $smarty.const.SHOP_DOSTAVKA_LIMIT}{$smarty.const.SHOP_DOSTAVKA_PRICE}</span> <span style="font-size:12px;">руб.</span>{else}<span style="color:#e07e13;">Бесплатно</span>{/if}<br><br>
+            Всего: <span style="color:#156391;">{$total_price_dostavka|format_number}</span> <span style="font-size:12px;">руб.</span><br>
+            </div>
+
+{/if}       
+
+
+	        {if !$user}
+	        	<div id="response_server"></div>
+	        	<input type="hidden" id="register" value="0"></div>
+				{include file="`$smarty.const.BASE_PATH`/modules/cabinet/front/templates/cabinet_login_basket.html"}
+				{include file="`$smarty.const.BASE_PATH`/modules/cabinet/front/templates/cabinet_register_basket.html"}
+			{else}
+				<input type="hidden" id="register" value="1"></div>
+			{/if}
+
+			<form action="{$smarty.const.DOMAIN}/shop/basket/submit/" method="post" id="submit_basket_form">
+				<input type="hidden" name="submit_order" value="1">
+	            <div id="regp">Выберите способ доставки:</div>
+	            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	              <tr>
+	                <td><input type="radio" name="dostavka" value="1" id="dost1" checked></td>
+	                <td width="100%"><div id="size14"><label for="dost1">Доставка по Москве и Подмосковью</label></div>
+	                Для Вас - {if $total_price|format_number < $smarty.const.SHOP_DOSTAVKA_LIMIT}<span style="color:#185f95;">{$smarty.const.SHOP_DOSTAVKA_PRICE}</span>{else}<span style="color:#185f95;">Бесплатно</span>{/if} руб.<br><br></td>
+	              </tr>
+	              <tr>
+	                <td><input type="radio" name="dostavka" value="2" id="dost2"></td>
+	                <td><div id="size14"><label for="dost2">Забрать самостоятельно</label></div>
+	                Уточните у менеджера место наличия товара</td>
+	              </tr>
+	            </table>
+	            <div id="regp">Выберите способ оплаты:</div>
+	            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	              <tr>
+	                <td><input type="radio" name="payment" value="1" id="rb1" checked></td>
+	                <td width="100%"><div id="size14"><label for="rb1">Наличные</label></div>
+	                <span style="color:#999999;">Оплата при получении товара</span><br><br></td>
+	              </tr>
+	              <tr>
+	                <td><input type="radio" name="payment" value="2" id="rb2"></td>
+	                <td><div id="size14"><label for="rb2">Безналичный расчет (для юридических лиц)</label></div>
+	                <span style="color:#999999;">Оплата с банковского счета</span></td>
+	              </tr>
+	            </table>
+	            <div class="regin2" style="width:500px;">Название компании: <input type="text" name="company"></div>
+	            <div class="regin2" style="width:500px;">ИНН: <input type="text" name="inn"></div>
+	            <div class="regin2" style="width:500px;">КПП: <input type="text" name="kpp"></div>
+	            <div id="regp">Дополнительные пожелания:</div>
+	            <div class="regin2">Текст пожелания: <textarea name="comment"></textarea></div>
+			
+         <center><input name="submit_basket" type="image" src="{$template_image}send_zakaz.png" width="318" height="31"></center>
+         
+		</form>
+*}
