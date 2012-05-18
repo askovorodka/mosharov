@@ -1,0 +1,273 @@
+10
+
+dir
+0
+https://mosharov.googlecode.com/svn/trunk/autoshina/javascript/tinymce/jscripts/tiny_mce/plugins
+https://mosharov.googlecode.com/svn
+add
+
+
+
+
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+4348ae4c-d2ae-f2fc-3d50-e0a6c441ee88
+
+advhr
+dir
+
+
+
+add
+
+advimage
+dir
+
+
+
+add
+
+advlink
+dir
+
+
+
+add
+
+autoresize
+dir
+
+
+
+add
+
+autosave
+dir
+
+
+
+add
+
+bbcode
+dir
+
+
+
+add
+
+contextmenu
+dir
+
+
+
+add
+
+directionality
+dir
+
+
+
+add
+
+emotions
+dir
+
+
+
+add
+
+example
+dir
+
+
+
+add
+
+fullpage
+dir
+
+
+
+add
+
+fullscreen
+dir
+
+
+
+add
+
+iespell
+dir
+
+
+
+add
+
+imagemanager
+dir
+
+
+
+add
+
+inlinepopups
+dir
+
+
+
+add
+
+insertdatetime
+dir
+
+
+
+add
+
+layer
+dir
+
+
+
+add
+
+media
+dir
+
+
+
+add
+
+nonbreaking
+dir
+
+
+
+add
+
+noneditable
+dir
+
+
+
+add
+
+pagebreak
+dir
+
+
+
+add
+
+paste
+dir
+
+
+
+add
+
+preview
+dir
+
+
+
+add
+
+print
+dir
+
+
+
+add
+
+safari
+dir
+
+
+
+add
+
+save
+dir
+
+
+
+add
+
+searchreplace
+dir
+
+
+
+add
+
+spellchecker
+dir
+
+
+
+add
+
+style
+dir
+
+
+
+add
+
+tabfocus
+dir
+
+
+
+add
+
+table
+dir
+
+
+
+add
+
+template
+dir
+
+
+
+add
+
+visualchars
+dir
+
+
+
+add
+
+wordcount
+dir
+
+
+
+add
+
+xhtmlxtras
+dir
+
+
+
+add
+

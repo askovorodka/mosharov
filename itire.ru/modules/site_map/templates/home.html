@@ -1,0 +1,179 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>{$page_title}</title>
+<link rel="stylesheet" type="text/css" href="{$base_url}/templates/main.css">
+{foreach from=$js item=js}
+<script src="{$js}" type="text/javascript"></script>
+{/foreach}
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<meta name="keywords" content="{$meta_keywords}">
+<meta name="description" content="{$meta_description}">
+<base href="{$base_url}/">
+</head>
+{assign var=curnav value=$navigation.1.url|replace:"$base_url":""|replace:"/":""}
+{assign var=curnav2 value=$navigation.2.url|replace:"$base_url":""|replace:"/":""|replace:"$curnav":""}
+</head>
+<body>
+     <div id='loading-layer' style='position: absolute; display:none; width:200px;height:50px;background:#CCCCCC;padding:10px 10px 15px 10px;text-align:center;border:1px solid #000;'>
+           <div style="font-weight:bold; color: #FFF; background: url(/templates/img/loading.gif) 50% 100% no-repeat; height: 60px">
+                 Загрузка. Пожалуйста, подождите...
+           </div>
+     </div>
+
+<div class="maindiv">
+<table class="mtbl" border="0" cellspacing="0" cellpadding="0" align="center">
+  <tr height="158">
+    <td width="273"><a href="/"><img src="{$template_image}logo.jpg" align="left" hspace="0" alt="PC-house - интернет магазин"></a><br clear="all">
+	<img src="{$template_image}clear.gif" width="273" height="1">
+	</td>
+    <td width="100%" style="background: right top url({$template_image}phone.jpg) no-repeat; padding-left:13px;">
+		<div class="tlinks"><a href="{$base_url}/login/"><b>войти</b></a> <a href="{$base_url}/registration/">регистрация</a> <a href="{$base_url}/contacts/" style="color:#226593;">контакты</a></div><br><br>
+<!--- ВЕСЕЛЫЕ КАРТИНКИ МЕНЮ --->
+		<table class="tmenu" cellspacing="0" cellpadding="0">
+		  <tr>
+		  {if $cat_list && is_array($cat_list)}
+		  		{foreach from=$cat_list item=item}
+		  			{if $item.param_level == 1}
+					  	<td width="110">
+							<a href="{$base_url}/shop/{$item.url|urldecode}">
+								<img src="{$base_url}/uploaded_files/shop_images/{$item.image}" alt="{$item.name}">
+								<br>{$item.name}</a>
+						</td>
+					{/if}
+				{/foreach}
+			{/if}
+		  </tr>
+		</table>
+<!--- /ВЕРХНЕЕ МЕНЮ --->
+	</td>
+  </tr>
+  <tr height="20">
+    <td style="padding-left:26px;">
+<!--- ПОИСК ВРОДЕ --->
+		<form name=search method="get" style="margin:0px; padding:0px;" action="{$base_url}/search/">
+		<input name="search" type="text" style="border:1px solid #7d7d7d; height:20px; width:154px;">&nbsp;<input type="image" value="НАЙТИ" class="button" src="{$template_image}search.jpg" align="absmiddle">
+		</form>
+<!--- /ПОИСК КОНЧИЛСО ;) --->
+	</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr height="100%">
+    <td>
+<!--- KORZINO --->
+<div class="kordiv">
+<div class="{if $basket_number > 0}basketContentShow{else}basketContentHide{/if}" id="basket">
+	<font class="korz">Корзина:</font><br>
+	<table class="korztbl" cellspacing="0" cellpadding="0">
+	  <tr>
+	    <td width="100" style="text-align:right;">В вашей корзине:</td>
+	    <td width="115">&nbsp; <a href="{$base_url}/shop/basket/" id="basket_number">{$basket_number}</a> товара</td>
+	  </tr>
+	  <tr>
+	    <td style="text-align:right;">на сумму:</td>
+	    <td>&nbsp; <font color="#ba2121" id="basket_currency">{$basket_total|string_format:"%.2f"}</font> {$currency_site.znak}.</td>
+	  </tr>
+	  {*<tr>
+	    <td style="padding-top:8px;"><a href="#" style="color:#930000;"><b>Выход</b></a></td>
+	    <td style="text-align:right;padding-top:8px;"><a href="#" style="color:#20608b;"><b>Войти в корзину</b></a></td>
+	  </tr>*}
+	</table>
+</div>
+
+
+<img src="{$template_image}under_korzino.jpg" height="1" width="240" style="margin:15px 0px;"><br>
+</div>
+<!--- /KORZINO --->
+{if $shop_menu && is_array($shop_menu)}
+<!--- MENUXA --->
+<div class="lefter">
+{foreach from=$shop_menu item=item}
+	<div><a href="{$base_url}/shop/{$item.url|urlencode}">{$item.name}</a></div>
+			{foreach from=$folders_list item=cat name=f1}
+				{if $cat.parent_id == $item.id && $cat.param_level == 2}
+					<div class="sub"><a href={$current_url}/{$cat.url}>{$cat.name}</a></div>
+				{/if}
+			{/foreach}
+{/foreach}
+</div>
+{/if}
+
+{if $cat_list && is_array($cat_list)}
+<!--- MENUXA --->
+<div class="lefter">
+{foreach from=$cat_list item=item}
+	
+	{if $item.param_level == 1}
+		<div><a href="{$base_url}/shop/{$item.url|urlencode}">{$item.name}</a></div>
+			{if $cat_content && ($cat_content.id == $item.id || $cat_parent_info.id == $item.id)}
+			{foreach from=$cat_list item=subitem}
+				{if $subitem.param_left > $item.param_left && $subitem.param_right < $item.param_right && $subitem.param_level == 2}
+					<div class="sub"><a href={$base_url}/shop/{$item.url|urlencode}/{$subitem.url|urlencode}>{$subitem.name}</a></div>
+				{/if}
+			{/foreach}
+			{/if}
+		{/if}
+	
+{/foreach}
+</div>
+{/if}
+
+
+<!--- /MENUXA --->
+	</td>
+    <td class="text">
+    <div class="gradus40">
+	{if $current_url!=$default_url}
+		{foreach name=nav_loop from=$navigation item=nav}
+			{if $smarty.foreach.nav_loop.last && $smarty.foreach.nav_loop.iteration==1}{$nav.title}
+			{elseif $smarty.foreach.nav_loop.last && $smarty.foreach.nav_loop.iteration>1}
+				 / {$nav.title}
+			{else}
+				{if !$smarty.foreach.nav_loop.first} / {/if}<a class="menu" href="{$nav.url}">{$nav.title}</a>{/if}
+		{/foreach}
+	{else}
+		{$page_content.name}
+	{/if}
+    
+	</div>    
+<!--- CONTENT --->
+
+	{if $content=='' or !$content}
+		{assign var="content" value=""}
+		{fetch file=$template assign="content"}
+	{/if}
+	{eval var=$content}
+
+<!--- /CONTENT --->
+	</td>
+  </tr>
+  <tr height="1">
+    <td colspan="2" style="text-align:center; padding:0px 100px;"><br><img src="{$template_image}gray.gif" height="1" width="100%"></td>
+  </tr>
+  <tr height="90">
+    <td class="lbot">
+		PC-House company &mdash; 2008<br>
+		Все права защищены
+	</td>
+    <td class="cbot"><img src="{$template_image}counter.jpg" width="31" height="31" align="right">
+		<a href="{$base_url}/about/">О компании</a> &nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="{$base_url}/services/">Услуги</a> &nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="{$base_url}/partners/">Партнеры</a> &nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="{$base_url}/works/">Сотрудничество</a> &nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="{$base_url}/contacts/">Контакты</a>
+	</td>
+  </tr>
+</table>
+</div>
+{*вызываем глобальную JS функцию*}
+{literal}
+<script type="text/javascript" language="javascript">
+	// <![CDATA[
+		$(document).ready(function(){
+			return InitSite();
+		});
+	// ]]>
+	</script>
+{/literal}
+</body>
+</html>

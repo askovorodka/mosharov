@@ -1,0 +1,56 @@
+10
+
+dir
+0
+https://mosharov.googlecode.com/svn/trunk/autoshina/modules/otr
+https://mosharov.googlecode.com/svn
+add
+
+
+
+
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+4348ae4c-d2ae-f2fc-3d50-e0a6c441ee88
+
+admin
+dir
+
+
+
+add
+
+conf.php
+file
+
+
+
+add
+
+front
+dir
+
+
+
+add
+
+otr.sql
+file
+
+
+
+add
+

@@ -1,0 +1,110 @@
+{if !$basket}
+<center><b>В Вашей корзине нет товаров.</b><br>
+<a href={$module_url}>Перейти в каталог товаров</a>
+</center>
+{else}
+<form action={$module_url}/basket/submit method=post>
+<input type="hidden" name="submit_order" value="1">
+<table width="95%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td valign="top" style="background: url('templates/img/of_01.gif') repeat-x;">
+
+<table width="100%" cellspacing="0" cellpadding="0" id="zakaz" align="center">
+<tr>
+<th>Наименование</th>
+<th width="15%">Кол-во</th>
+<th width="15%">Цена</th>
+</tr>
+{foreach from=$basket item=product name=rl}
+<tr>
+<td>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr valign="top">
+<td class="gray" width="10" nowrap="nowrap" style="padding-top: none;">{$smarty.foreach.rl.iteration}.&nbsp;&nbsp;</td>
+<td class="title" style="padding-top: none;">{$product.name}</td></tr>
+</table>
+
+</td>
+<td align="center">{$product.number} шт.</td>
+<td align="right"><font class="price">{math equation="x * y" x=$product.price y=$product.number format="%.2d"}</font> {$currency}</td>
+</tr>
+{/foreach}
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td></tr>
+<tr>
+<td style="border-top: 1px solid #336600;">&nbsp;</td>
+<td style="border-top: 1px solid #336600;" class="title" align="center">Итого:</td>
+<td style="border-top: 1px solid #336600;" align="right"><font class="price">{$total_price}</font> {$currency}</td></tr>
+</table>
+
+</td></tr>
+</table>
+
+<br><br><br>
+<table width="95%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td valign="top">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr valign="top">
+<td width="9"><img src="templates/img/r_03.gif" width="9" height="10" border="0" alt=""></td>
+<td style="border-top: 1px solid #ff6600;"><img src="templates/img/blank.gif" width="1" height="1" border="0" alt=""></td>
+<td width="9"><img src="templates/img/r_04.gif" width="9" height="10" border="0" alt=""></td></tr>
+</table>
+
+</td></tr>
+<tr>
+<td valign="top" style="border-left: 1px solid #ff6600; border-right: 1px solid #ff6600; padding: 0 10px 0 10px;">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" id="nav">
+<tr>
+<td><strong class="act">Подтверждение данных</strong> / * поля обязательные для ввода</td></tr>
+<tr>
+<td valign="top" style="padding: 11px 0 30px 0;">
+
+<table width="100%" cellspacing="0" cellpadding="0" border="0" id="zakaz">
+<tr>
+<td width=150 align="right">Ф.И.О:</td><td><input type=text name=customer_name value="{$user.name}" style="width: 200px;"></td>
+</tr>
+<tr>
+<td width=150 align="right">Компания:</td><td><input type=text name=customer_company value="{$user.company}" style="width: 200px;"></td>
+</tr>
+<tr>
+<td align="right">Электр. почта:</td><td><input type=text name=customer_mail value="{$user.mail}" style="width: 200px;"></td>
+</tr>
+<tr>
+<td align="right">Телефон:</td><td><input type=text name=customer_tel value="{$user.tel}" style="width: 200px;"></td>
+</tr>
+<tr>
+<td align="right">Адрес доставки:</td><td><textarea name=customer_deliver style="width:100%" rows="4">{$user.deliver}</textarea></td>
+</tr>
+<tr>
+<td align="right">Комментарии:</td><td><textarea name=customer_comments style="width:100%" rows="4"></textarea></td>
+</tr>
+</table>
+
+
+</td></tr>
+</table>
+
+</td></tr>
+<tr>
+<td valign="top">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr valign="top">
+<td width="9"><img src="templates/img/r_02.gif" width="9" height="10" border="0" alt=""></td>
+<td style="border-bottom: 1px solid #ff6600;"><img src="templates/img/blank.gif" width="1" height="1" border="0" alt=""></td>
+<td width="9"><img src="templates/img/r_01.gif" width="9" height="10" border="0" alt=""></td></tr>
+</table>
+
+</td></tr>
+</table>
+
+
+<center><input type="image" src="templates/img/oformit.gif" style="margin-top: 30px; border: none;" title="Подтвердить заказ"></center>
+</form>
+{/if}

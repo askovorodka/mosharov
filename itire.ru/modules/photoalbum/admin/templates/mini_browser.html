@@ -1,0 +1,139 @@
+<html>
+<head>
+<title>Администраторская панель</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<link rel="stylesheet" type="text/css" href="templates/style.css">
+</head>
+
+<body>
+
+{literal}
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/tooltips.js'></script>
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/common.js'></script>
+<script language=JavaScript type="text/javascript">
+function doInsert(photo)
+    {
+    var obj = window.opener.oUtil.obj;
+
+    var sPHT=photo;
+
+    obj.insertHTML(sPHT)
+    }
+
+</script>
+{/literal}
+
+{if $mode=='album'}
+<br>
+[<a href="javascript:history.back();">Назад</a>]
+<br><br>
+Код альбома: <input type=text value="{literal}{photoalbum id=&quot;{/literal}{$album_id}{literal}&quot;}{/literal}">
+<br><br>
+<table width={if $total_photos==1}30{/if}{if $total_photos==2}60{/if}{if $total_photos>2}100{/if}% cellspacing=1 cellpadding=3>
+<tr>
+{assign var="i" value=0}
+{foreach from=$photos_list item=photo name=tp}
+{if $i==3}{assign var="i" value=0}</tr><tr>{/if}
+
+<td align=center>
+
+<img src={$base_url}/{$photos_folder}/small-{$photo.id}.{$photo.ext} border=0>
+<br>
+{$photo.dim}<br>
+{$photo.title}
+
+</td>
+
+{math equation="x + y" x=$i y=1 assign="i"}
+{/foreach}
+</tr>
+</table>
+
+{if $total_pages!=1}
+<br>
+<center>
+Страница: <a href="{$current_url}/?page=1"><<</a>
+
+{section name=p loop=$pages}
+	{if $pages[p]==$current_page}
+	{$pages[p]}
+	{else}
+	<a href="{$current_url}/?page={$pages[p]}">{$pages[p]}</a>
+	{/if}
+{/section}
+
+<a href="{$current_url}/?page={$total_pages}">>></a>
+</center>
+{/if}
+
+
+{/if}
+
+
+{if $mode=='albums_list'}
+<table width="100%" style="height: 100%;" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">
+
+<table width=100% class=content_table>
+
+	<tr>
+	<th>Альбом</th>
+	<th width=10%>Фотографий</th>
+	<th width=8%>Статус</th>
+	<th width=20%>Код</th>
+	</tr>
+
+	{foreach name=tree from=$albums_list item=entry}
+
+	{if $col==1}
+	{assign var="td" value='td1'}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value='td2'}
+	{assign var="col" value=1}
+	{/if}
+	<tr>
+			<td class={$td}_left>
+				<small><font color=#666666>{$entry.cat_title}</font></small><br><img src="templates/img/tree.gif"><b><a href=index.php?mod=photoalbum&action=mini_browser&album_id={$entry.id}>{$entry.name}</a></b>
+			</td>
+			<td align=center class={$td}_middle>
+			<b><font color=red>{$entry.photos}</font></b>
+			</td>
+			<td class={$td}_middle align=center>
+			<img src=templates/img/status_{$entry.status}.gif border=0>
+			</td>
+			<td align=center class={$td}_right>
+            <input type=button value="Вставить" onclick="doInsert('{literal}{photoalbum id=&quot;{/literal}{$entry.id}{literal}&quot;}{/literal}');self.close()">
+			</td>
+		</tr>
+
+	{/foreach}
+
+</table>
+<br><br>
+<center>
+Страница: <a href="?mod=photoalbum&action=mini_browser&page=1"><<</a>
+	
+{section name=p loop=$pages}
+	{if $pages[p]==$current_page}
+	{$pages[p]}
+	{else}
+	<a href="?mod=photoalbum&action=mini_browser&page={$pages[p]}">{$pages[p]}</a>
+	{/if}
+{/section}
+
+<a href="?mod=photoalbum&action=mini_browser&page={$total_pages}">>></a>
+</center>
+
+</td></tr>
+<tr>
+<td valign="top" style="height: 40px;">
+<div class="citata">Для правильной работы фотоальбома, нужно включить дополнительный модуль &laquo;Фотоальбом&raquo;<br>(вкладка &laquo;Дополнительные настройки&raquo; / строка &laquo;Дополнительные модули&raquo;)</div>
+</td></tr>
+</table>
+
+{/if}
+
+</body>
+</html>

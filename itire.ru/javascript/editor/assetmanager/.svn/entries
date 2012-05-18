@@ -1,0 +1,175 @@
+10
+
+dir
+0
+https://mosharov.googlecode.com/svn/trunk/autoshina/javascript/editor/assetmanager
+https://mosharov.googlecode.com/svn
+add
+
+
+
+
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+4348ae4c-d2ae-f2fc-3d50-e0a6c441ee88
+
+Thumbs.db
+file
+
+
+
+add
+
+
+
+
+
+has-props
+has-prop-mods
+
+assetmanager.asp
+file
+
+
+
+add
+
+assetmanager.php
+file
+
+
+
+add
+
+bg.gif
+file
+
+
+
+add
+
+
+
+
+
+has-props
+has-prop-mods
+
+example.htm
+file
+
+
+
+add
+
+
+
+
+
+has-props
+has-prop-mods
+
+folderdel.asp
+file
+
+
+
+add
+
+folderdel.php
+file
+
+
+
+add
+
+folderdel_.asp
+file
+
+
+
+add
+
+folderdel_.php
+file
+
+
+
+add
+
+foldernew.asp
+file
+
+
+
+add
+
+foldernew.php
+file
+
+
+
+add
+
+i_upload_object_FSO.asp
+file
+
+
+
+add
+
+images
+dir
+
+
+
+add
+
+language
+dir
+
+
+
+add
+
+settings.asp
+file
+
+
+
+add
+
+settings.php
+file
+
+
+
+add
+
+style.css
+file
+
+
+
+add
+
+
+
+
+
+has-props
+has-prop-mods
+

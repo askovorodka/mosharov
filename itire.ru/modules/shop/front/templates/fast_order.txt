@@ -1,0 +1,11 @@
+Быстрый заказ, детали:
+
+Имя: {$username}
+
+Телефон: {$phone}
+
+Продукт: {$product.name}
+
+Цена: {$product.price|format_price} руб.
+
+Ссылка: {$base_url}/shop{$product.full_url}

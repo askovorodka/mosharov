@@ -1,0 +1,217 @@
+10
+
+dir
+0
+https://mosharov.googlecode.com/svn/trunk/autoshina/modules
+https://mosharov.googlecode.com/svn
+add
+
+
+
+
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+4348ae4c-d2ae-f2fc-3d50-e0a6c441ee88
+
+banners
+dir
+
+
+
+add
+
+cabinet
+dir
+
+
+
+add
+
+categors
+dir
+
+
+
+add
+
+edit_conf
+dir
+
+
+
+add
+
+ferms
+dir
+
+
+
+add
+
+file_manager
+dir
+
+
+
+add
+
+forms
+dir
+
+
+
+add
+
+forum
+dir
+
+
+
+add
+
+guestbook
+dir
+
+
+
+add
+
+modules
+dir
+
+
+
+add
+
+news
+dir
+
+
+
+add
+
+otr
+dir
+
+
+
+add
+
+page
+dir
+
+
+
+add
+
+photoalbum
+dir
+
+
+
+add
+
+polls
+dir
+
+
+
+add
+
+projects
+dir
+
+
+
+add
+
+questions
+dir
+
+
+
+add
+
+regions
+dir
+
+
+
+add
+
+search
+dir
+
+
+
+add
+
+select_date
+dir
+
+
+
+add
+
+shop
+dir
+
+
+
+add
+
+site_map
+dir
+
+
+
+add
+
+sites
+dir
+
+
+
+add
+
+subscribe
+dir
+
+
+
+add
+
+tables
+dir
+
+
+
+add
+
+tree
+dir
+
+
+
+add
+
+users
+dir
+
+
+
+add
+
