@@ -968,7 +968,7 @@ SWITCH (TRUE) {
 	BREAK;
 
 	DEFAULT:
-
+		exit();
 		$cat_list=Common::get_nodes_list($cl);
 		unset($url[0]);
 
@@ -1169,10 +1169,10 @@ SWITCH (TRUE) {
 						}
 						$products_list[$v]['full_url'] = $shop->getFullUrlProduct($products_list[$v]['id'], "catalog");
 				}
-
-
+				
+				
 				$smarty->assign("products_list",$products_list);
-
+				
 				if ($cat_list[$f]['full_title']!='/') {
 					$nav_titles=explode("/",$cat_list[$f]['full_title']);
 
@@ -1186,7 +1186,7 @@ SWITCH (TRUE) {
 				
 				
 				$smarty->assign("cat_list",$cat_list);
-
+				
 				switch($cat_content['param_level'])
 				{
 					case 1:
