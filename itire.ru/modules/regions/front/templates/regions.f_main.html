@@ -1,0 +1,32 @@
+<table width='90%'>
+  <tr><td><h1 style="margin-top : 13px; margin-bottom : 14px;">ГДЕ ЗАКАЗАТЬ</h1></td></tr>
+  <tr><td>
+    <select style='width : 150px;' name="regions" id=regions onChange="void(getCitys('{$base_url}/{$current_url}'));">
+      <option selected>---выберите регион---
+      {foreach from=$reg_list item=item}
+        <option value={$item.id}>{$item.name}
+      {/foreach}
+    </select>
+  </td>
+
+  <td><span id=one>
+    <select style='width : 150px;' name="citys" id=citys onChange="void(getMetros('{$base_url}/{$current_url}'));" disabled>
+      <option selected>---выберите город---
+    </select>
+  </span></td>
+
+  <td><span id=two>
+    <select style='width : 150px;' name="metros" id=metros onChange="void(getFirms('{$base_url}/{$current_url}'));" disabled>
+      <option selected>---выберите метро---
+    </select>
+  </span></td></tr>
+
+  <tr><td colspan=3 align=center><br>
+    <div id="firms">
+
+    </div>
+  </td></tr>
+</table>
+
+
+

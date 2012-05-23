@@ -1,0 +1,50 @@
+{if $error_message}<center><font color=red><b>{$error_message}</b></font></center><br><br>{/if}
+
+<form action="/admin/?mod=shop&action=export_set" name=edit_cat method=post enctype="multipart/form-data">
+
+<table>
+<tr><th style="width:170px; text-align:left; padding:5px;">Сайт</th>
+	<th style="width:70px; text-align:left; padding:5px;">Вкл.</th>
+	<th style="width:170px; text-align:left; padding:5px;">Коэфициент изменения цены шин</th>
+	<th style="width:170px; text-align:left; padding:5px;">Коэфициент округления цены шин</th>
+	<th style="width:170px; text-align:left; padding:5px;">Коэфициент изменения цены дисков</th>
+	<th style="width:170px; text-align:left; padding:5px;">Коэфициент округления цены дисков</th>
+	<th style="width:170px; text-align:left; padding:5px;">Обновлен</th>
+</tr>
+
+<tr>
+	<td>goodrims.ru</td>
+	<td><input type="checkbox" name="goodrims_enable" value="1" {if $smarty.const.GOODRIMS_ENABLE == 1}checked{/if} /></td>
+	<td><input style="width:40px;" type="text" name="goodrims_tire_koef" value="{$smarty.const.GOODRIMS_TIRE_KOEF}"></td>
+	<td><input style="width:40px;" type="text" name="goodrims_tire_round_koef" value="{$smarty.const.GOODRIMS_TIRE_ROUND_KOEF}"></td>
+	<td><input style="width:40px;" type="text" name="goodrims_disk_koef" value="{$smarty.const.GOODRIMS_DISK_KOEF}"></td>
+	<td><input style="width:40px;" type="text" name="goodrims_disk_round_koef" value="{$smarty.const.GOODRIMS_DISK_ROUND_KOEF}"></td>
+	<td><img src="/admin/templates/img/status_{if $smarty.const.EXPORT_LAST_TIME == $goodrims_last_import}1{else}0{/if}.gif" /></td>
+</tr>
+
+<tr>
+	<td>sell-tire.ru</td>
+	<td><input type="checkbox" name="selltire_enable" value="1" {if $smarty.const.SELLTIRE_ENABLE == 1}checked{/if} /></td>
+	<td><input style="width:40px;" type="text" name="selltire_tire_koef" value="{$smarty.const.SELLTIRE_TIRE_KOEF}"></td>
+	<td><input style="width:40px;" type="text" name="selltire_tire_round_koef" value="{$smarty.const.SELLTIRE_TIRE_ROUND_KOEF}"></td>
+	<td><input style="width:40px;" type="text" name="selltire_disk_koef" value="{$smarty.const.SELLTIRE_DISK_KOEF}"></td>
+	<td><input style="width:40px;" type="text" name="selltire_disk_round_koef" value="{$smarty.const.SELLTIRE_DISK_ROUND_KOEF}"></td>
+	<td><img src="/admin/templates/img/status_{if $smarty.const.EXPORT_LAST_TIME == $selltire_last_import}1{else}0{/if}.gif" /></td>
+</tr>
+
+<tr>
+	<td>cccp-shina.ru</td>
+	<td><input type="checkbox" name="cccp_enable" value="1" {if $smarty.const.CCCP_ENABLE == 1}checked{/if} /></td>
+	<td><input style="width:40px;" type="text" name="cccp_tire_koef" value="{$smarty.const.CCCP_TIRE_KOEF}"></td>
+	<td><input style="width:40px;" type="text" name="cccp_tire_round_koef" value="{$smarty.const.CCCP_TIRE_ROUND_KOEF}"></td>
+	<td><input style="width:40px;" type="text" name="cccp_disk_koef" value="{$smarty.const.CCCP_DISK_KOEF}"></td>
+	<td><input style="width:40px;" type="text" name="cccp_disk_round_koef" value="{$smarty.const.CCCP_DISK_ROUND_KOEF}"></td>
+	<td><img src="/admin/templates/img/status_{if $smarty.const.EXPORT_LAST_TIME == $cccp_last_import}1{else}0{/if}.gif" /></td>
+</tr>
+
+</table>
+
+<br />
+
+<center><input type=submit name=submit_export_set value="Обновить файл выгрузки"></center>
+</form>

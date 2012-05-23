@@ -1,0 +1,48 @@
+			<h1>{$product.name}</h1>
+			<br />
+            <table width="100%" height="264" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td class="catbigpct">
+                {include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/fast_order_form.html"}
+                {if trim($product.image) != ""}
+                	<img src="{$product.image}" width="215" height="236">
+                {else}
+                	Нет изображения
+                {/if}
+                </td>
+                <td class="catopis">
+				
+                <div id="catopisb"><span id="linec">Бренд:</span>&nbsp;{$cat_parent_info.name}<br>
+                <span id="linec">Модель:</span>&nbsp;{$cat_content.name}<br>
+                <span id="linec">Шипованная:</span>  {if $product.tire_spike == '2'}шип{elseif $product.tire_spike == 1}нешип{/if}<br>
+                <span id="linec">Сезон:</span>  {if $product.tire_season == '1'}зима{elseif $product.tire_season == '2'}лето{elseif $product.tire_season == '3'}всесезон{/if}<br>
+                <span id="linec">Артикул:</span>  {$product.article}<br>
+                <span id="linec">Типоразмер:</span>  {$product.tire_width}/{$product.tire_height} R{$product.tire_diameter}<br>
+                <span id="linec">Индекс нагрузки:</span>  {$product.tire_in}<br>
+                <span id="linec">Индекс скорости:</span>  {$product.tire_is}<br>
+                <span id="linec">Тип ТС:</span>  {$product_body.name}<br>
+                <span id="linec">Усил:</span>  {$product.tire_usil}<br>
+                </div><br><br>
+				
+                <form action="" name="order_product" method="POST" id="form_order_single">
+                <input type="hidden" name="product_id" value="{$product.id}">
+                <table border="0" cellspacing="0" cellpadding="5" bgcolor="#fbf3df">
+                  <tr>
+                    <td style="font-size:14px; font-weight:bold; vertical-align:middle;" valign="middle">
+                    <span style="color:#156391;">{$product.price|format_number}</span> руб.</td>
+                    <td>&nbsp;&nbsp;<input type="text" class="tableinpb" name="count" value="{if $product.tire_sklad > 3}4{elseif $product.tire_sklad > 1}{$product.tire_sklad}{else}1{/if}"> шт.</td>
+                    {if $product.tire_sklad > 0}
+                    <td style="font-size:12px; vertical-align:middle;" valign="middle">
+                    <input type="image" src="{$template_image}buy.png" width="57" height="17"></td>
+                    {else}
+                    <td id="noway">Нет в<br>наличии</td>
+                    {/if}
+                  </tr>
+                </table>
+                </form>
+				
+                </td>
+              </tr>
+            </table>
+           <br><br>
+           <p>{$product.text}</p>

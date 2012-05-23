@@ -1,0 +1,28 @@
+
+			<form id="login_user_form" method="POST" action="{$smarty.const.DOMAIN}/cabinet/login/">
+				<input type=hidden name=submit_login_basket value=1>
+				<input type=hidden name=submit_login value=1>
+	            <table class="reg" width="100%" border="0" cellspacing="0" cellpadding="0">
+	              <tr>
+	                <td class="regt" style="width:230px; height:80px;"><a href="" id="question" register="0">Вы уже зарегистрированны ?</a></td>
+	                <td style="width:250px; height:80px;">
+	                <div id="login_user" style="display:none;">
+	                 <div class="regin">E-mail: <input type="text" name="login_email"></div>
+	           		 <div class="regin">Пароль: <input type="password" name="login_pass"></div>
+	           		 <a href="" id="repassword">Забыли пароль?</a>
+	           		 </div>
+
+	                </td>
+	              </tr>
+	            </table>
+	        </form>
+	        
+<div id="repassword_user" style="display:none; z-index:90; position:absolute; width:300px; height:160px; background:#FFFFFF; border:1px solid #E07E13; padding:15px;">
+<form action="" method="post" id="repassword_form">
+Введите ваше адрес электронной почты, который вы указали при заказе, на него будет выслан новый пароль.
+<div style="color:green;" id="repassword_msg"></div>
+<div class="regin">E-mail: <input type="text" name="repassword_email"></div>
+<input type="submit" value="Восстановить">&nbsp;&nbsp;
+<input type="button" value="Закрыть окно" id="repassword_close">
+</form>
+</div>

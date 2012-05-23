@@ -1,0 +1,469 @@
+10
+
+dir
+0
+https://mosharov.googlecode.com/svn/trunk/autoshina/lib/smarty/plugins
+https://mosharov.googlecode.com/svn
+add
+
+
+
+
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+4348ae4c-d2ae-f2fc-3d50-e0a6c441ee88
+
+block.textformat.php
+file
+
+
+
+add
+
+captcha.class.php
+file
+
+
+
+add
+
+compiler.assign.php
+file
+
+
+
+add
+
+function.assign_debug_info.php
+file
+
+
+
+add
+
+function.captcha.php
+file
+
+
+
+add
+
+function.config_load.php
+file
+
+
+
+add
+
+function.counter.php
+file
+
+
+
+add
+
+function.cycle.php
+file
+
+
+
+add
+
+function.debug.php
+file
+
+
+
+add
+
+function.eval.php
+file
+
+
+
+add
+
+function.fetch.php
+file
+
+
+
+add
+
+function.filesize.php
+file
+
+
+
+add
+
+function.html_checkboxes.php
+file
+
+
+
+add
+
+function.html_editor.php
+file
+
+
+
+add
+
+function.html_image.php
+file
+
+
+
+add
+
+function.html_options.php
+file
+
+
+
+add
+
+function.html_radios.php
+file
+
+
+
+add
+
+function.html_select_date.php
+file
+
+
+
+add
+
+function.html_select_time.php
+file
+
+
+
+add
+
+function.html_table.php
+file
+
+
+
+add
+
+function.imagesize.php
+file
+
+
+
+add
+
+function.mailto.php
+file
+
+
+
+add
+
+function.math.php
+file
+
+
+
+add
+
+function.photoalbum.php
+file
+
+
+
+add
+
+function.popup.php
+file
+
+
+
+add
+
+function.popup_init.php
+file
+
+
+
+add
+
+function.str_repeat.php
+file
+
+
+
+add
+
+modifier.capitalize.php
+file
+
+
+
+add
+
+modifier.cat.php
+file
+
+
+
+add
+
+modifier.count_characters.php
+file
+
+
+
+add
+
+modifier.count_paragraphs.php
+file
+
+
+
+add
+
+modifier.count_sentences.php
+file
+
+
+
+add
+
+modifier.count_words.php
+file
+
+
+
+add
+
+modifier.date_format.php
+file
+
+
+
+add
+
+modifier.debug_print_var.php
+file
+
+
+
+add
+
+modifier.default.php
+file
+
+
+
+add
+
+modifier.escape.php
+file
+
+
+
+add
+
+modifier.format_number.php
+file
+
+
+
+add
+
+modifier.format_price.php
+file
+
+
+
+add
+
+modifier.get_order_status.php
+file
+
+
+
+add
+
+modifier.get_season.php
+file
+
+
+
+add
+
+modifier.html_entities.php
+file
+
+
+
+add
+
+modifier.html_entity_decode.php
+file
+
+
+
+add
+
+modifier.htmlentities.php
+file
+
+
+
+add
+
+modifier.htmlspecialchars.php
+file
+
+
+
+add
+
+modifier.indent.php
+file
+
+
+
+add
+
+modifier.lower.php
+file
+
+
+
+add
+
+modifier.nl2br.php
+file
+
+
+
+add
+
+modifier.regex_replace.php
+file
+
+
+
+add
+
+modifier.replace.php
+file
+
+
+
+add
+
+modifier.spacify.php
+file
+
+
+
+add
+
+modifier.string_format.php
+file
+
+
+
+add
+
+modifier.strip.php
+file
+
+
+
+add
+
+modifier.strip_tags.php
+file
+
+
+
+add
+
+modifier.stripslashes.php
+file
+
+
+
+add
+
+modifier.truncate.php
+file
+
+
+
+add
+
+modifier.upper.php
+file
+
+
+
+add
+
+modifier.urlencode.php
+file
+
+
+
+add
+
+modifier.wordwrap.php
+file
+
+
+
+add
+
+modifier.xml_replace.php
+file
+
+
+
+add
+
+outputfilter.trimwhitespace.php
+file
+
+
+
+add
+
+shared.escape_special_chars.php
+file
+
+
+
+add
+
+shared.make_timestamp.php
+file
+
+
+
+add
+

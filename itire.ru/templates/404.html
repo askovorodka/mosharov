@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>Шины и диски. Страница не найдена</title>
+<meta name="Keywords" content="{$meta_keywords}">
+<meta name="Description" content="{$meta_description}">
+
+{foreach from=$css item=css}
+<link rel="stylesheet" type="text/css" href="{$css}">
+{/foreach}
+
+{foreach from=$js item=js}
+<script src="{$js}" type="text/javascript"></script>
+{/foreach}
+
+
+{assign var=curnav value=$navigation.1.url|replace:"$base_url":""|replace:"/":""}
+{assign var=curnav2 value=$navigation.2.url|replace:"$base_url":""|replace:"/":""|replace:"$curnav":""}
+
+</head>
+<body>
+
+<table width="1100" height="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+  <tr height="125">
+    <td>
+    <table width="1050" border="0" cellspacing="0" cellpadding="0" align="center">
+      <tr>
+        <td class="topban">
+        {banners group="1"}
+        {banners group="5"}
+        {banners group="6"}
+        {*<img src="{$template_image}bann1.png"><img src="{$template_image}bann2.png"><img src="{$template_image}bann3.png">*}
+        </td>
+        <td class="toptels"><span class="telcode">/{$smarty.const.PHONE_CODE1}/</span> <span class="telnumber">{$smarty.const.PHONE1}</span>
+        <br><span class="telcode">/{$smarty.const.PHONE_CODE2}/</span> <span class="telnumber">{$smarty.const.PHONE2}</span></td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+  <tr height="43">
+    <td class="topmenu">
+    <table width="100%" height="43" class="topmenut" border="0" cellspacing="0" cellpadding="0">
+      <tr height="43">
+<!---- TOP MENU ---->
+        <td valign="top" width="18" style="background-color:#FFF;"><img src="{$template_image}tmenu_l.png"></td>
+        <td width="82"><a href="/" style="padding:0px !important;">
+        <img src="{$template_image}logo.png" width="82" height="43" vspace="0" hspace="0"></a><br></td>
+        {foreach from=$main_menu item=item name=main_menu}
+        	<td width="1" valign="top"><img src="{$template_image}tmenu_line.png" width="5" height="43" class="topl"></td>
+        	<td {if $node_content.id == $item.id}class="this"{/if}><a href="{$base_url}/{$item.url|urlencode}/" class="tlink">{$item.name|strip_tags}</a></td>
+        	{if $smarty.foreach.main_menu.last}
+        		<td width="1" valign="top"><img src="{$template_image}tmenu_line.png" width="5" height="43" class="topl"></td>
+        	{/if}
+        {/foreach}
+        
+        {include file="../templates/form_search.html"}
+        
+<!---- /TOP MENU ---->
+      </tr>
+    </table>
+</td>
+  </tr>
+  <tr height="100%">
+    <td><br>
+    <table width="1100" height="100%" border="0" cellspacing="10" cellpadding="0">
+      <tr>
+        <td width="167" valign="top">
+<!---- LEFT MENU ---->
+		<div id="box">
+        <div class="lmenu" id="dmenu">
+        	<img src="{$template_image}left_top.png" width="167" height="11" vspace="0"><br>
+        	
+        	{include file="../templates/shop_left_menu.tpl"}
+        	
+            <img src="{$template_image}left_bot.png" width="167" height="11" vspace="0"><br>
+        </div>
+        </div>
+<!---- /LEFT MENU ---->
+
+<br>
+<!---- LEFT BANNER ---->
+		{include file="../templates/recomend_product.html"}
+<!---- /LEFT BANNER ---->
+        </td>
+        <td valign="top" class="cont">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td class="maincont">
+<!---- TEXT ---->
+<center>Запрошенная вами страница не существует.</center>
+<!---- /TEXT ---->
+            </td>
+            <td width="182">
+            <div class="rside">
+            <img src="{$template_image}right_top.png" width="182" height="10" vspace="0"><br>
+<!---- NEWS ---->
+			{include file="../templates/home_news_block.html"}
+<!---- /NEWS ---->
+            <img src="{$template_image}right_bot.png" width="182" height="11" vspace="0"><br>
+            </div>
+            </td>
+          </tr>
+        </table>
+        </td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+<!---- FOOTER ---->
+  <tr height="100">
+    <td class="bot" valign="top"><div class="rbot"><br>Посетителей на сайте - {$online_users}</div><br>© 2010  -  Шины и Диски<br><br><br>{$smarty.const.FOOTER_TITLE}</td>
+  </tr>
+<!---- /FOOTER ---->
+</table>
+</body>
+</html>

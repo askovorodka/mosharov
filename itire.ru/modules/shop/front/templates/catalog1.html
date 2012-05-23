@@ -1,0 +1,15 @@
+<table class="catalogtbl" border="0" cellspacing="0" cellpadding="0">
+		{foreach from=$folders_list item=folder name=folder}
+			{if $smarty.foreach.folder.iteration == 0}<tr>{/if}
+			<td>
+            <a href="{$base_url}/shop/{$folder.full_url}" class="catf"><div class="catf">
+            	<span id="catalogc">{$folder.name|strip_tags}</span><br>
+            	<span id="linec">ƒиаметр:</span> от {if $cat_content.id == $smarty.const.TIRES_ID}{$folder.properties.min_tire_diameter}{else}{$folder.properties.min_diameter}{/if}Ф до {if $cat_content.id == $smarty.const.TIRES_ID}{$folder.properties.max_tire_diameter}{else}{$folder.properties.max_diameter}{/if}Ф<br>
+                <span id="linec">Ўирина:</span> от {if $cat_content.id == $smarty.const.TIRES_ID}{$folder.properties.min_tire_width}{else}{$folder.properties.min_width}{/if} до {if $cat_content.id == $smarty.const.TIRES_ID}{$folder.properties.max_tire_width}{else}{$folder.properties.max_width}{/if}<br>
+                {if $folder.properties.price}от <span id="price">{$folder.properties.price}</span> руб.<br>{/if}
+            </div></a>
+            </td>
+            {if $smarty.foreach.folder.iteration % 4 == 0 && $smarty.foreach.folder.iteration > 0}</tr><tr>{/if}
+            
+         {/foreach}
+</table>

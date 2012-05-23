@@ -1,0 +1,117 @@
+<html><head>
+
+<title>{$page_title}</title>
+
+<meta name="Description" content="{$meta_keywords}">
+
+<meta name="Keywords" content="{$meta_description}">
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+
+<link rel="stylesheet" type="text/css" href="/templates/main.css">
+
+<link rel="shortcut icon" href="http://www.chews4health.com/favicon.ico">
+
+<script src="/javascript/jquery-1.3.2.js" type="text/javascript" language="javascript"></script>
+
+<script type="text/javascript" src="/javascript/jquery.dropDown.pack.js"></script>
+
+<script type="text/javascript" src="index.asp_files/globalFunctions.js"></script>
+
+<link href="/templates/skypeplugin_dropdownmenu.css" type="text/css" rel="stylesheet" charset="utf-8" id="_skypeplugin_dropdownmenu_css">
+
+</head>
+
+<body>
+
+<a name="top"></a>
+<div id="mc">
+	<div id="pagetile">
+		<div id="header">
+		<div id="flashthis">
+				<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" width="850" height="193">
+				    <param name="movie" value="/templates/index.swf">
+				    <param name="quality" value="high">
+				    <param name="wmode" value="transparent">
+				    <embed src="/templates/index.swf" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" wmode="transparent" width="850" height="193">
+				  </object>
+ 		 	</div>
+ 		 
+
+		<div id="navcontainer">
+			<div id="_nav_">
+				
+<ul id="jsddm">
+	{foreach from=$main_menu item=item}
+		{if $item.param_level == 1}
+			<li>
+				<a href="{$base_url}/{$item.url}/">{$item.name}</a>
+				{if $item.submenu}
+					<ul>
+						{foreach from=$item.submenu item=subitem}
+							<li><a href="{$base_url}/{$item.url}/{$subitem.url}/">{$subitem.name}</a></li>
+						{/foreach}
+					</ul>
+				{/if}
+			</li>
+		{/if}
+	{/foreach}
+</ul>
+				
+				
+			</div>
+			
+		</div>
+</div>
+
+<div id="contentcontainerhome">
+	<div id="contenthome" style="font-size:13px;">
+		{if $content=='' or !$content}
+			{assign var="content" value=""}
+			{fetch file=$template assign="content"}
+		{/if}
+		{eval var=$content}
+	</div>
+</div>
+
+{literal}
+	<script type="text/javascript" language="javascript">
+	// <![CDATA[
+
+		var timeout    = 500;
+		var closetimer = 0;
+		var ddmenuitem = 0;
+		
+		function jsddm_open()
+		{  jsddm_canceltimer();
+		   jsddm_close();
+		   ddmenuitem = $(this).find('ul').css('visibility', 'visible');}
+		
+		function jsddm_close()
+		{  if(ddmenuitem) ddmenuitem.css('visibility', 'hidden');}
+		
+		function jsddm_timer()
+		{  closetimer = window.setTimeout(jsddm_close, timeout);}
+		
+		function jsddm_canceltimer()
+		{  if(closetimer)
+		   {  window.clearTimeout(closetimer);
+		      closetimer = null;}}
+		
+		$(document).ready(function()
+		{  $('#jsddm > li').bind('mouseover', jsddm_open)
+		   $('#jsddm > li').bind('mouseout',  jsddm_timer)});
+		
+		document.onclick = jsddm_close;
+	
+	// ]]>
+	</script>
+{/literal}
+
+ <div id="copyright">
+ Copyright 2009 Chews-4-Health. All rights reserved. 
+ </div>
+ 
+ </div></div>
+
+</div></div></body></html>
