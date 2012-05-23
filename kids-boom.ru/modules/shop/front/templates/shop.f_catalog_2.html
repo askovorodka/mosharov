@@ -7,12 +7,22 @@
 
     <div class="pozw">
     {if $products_list}
-    	{foreach from=$products_list item=product}
+    	{foreach from=$products_list item=product name=iter1}
 		    <div class="pozb"><div class="poz">
-		    <a title="{$product.name}" href="{$base_url}/{$product.full_url}/">{$product.name|strip_tags}</a><br>
-		    {if $product.image}<a title="{$product.name}" href="{$base_url}/{$product.full_url}/"><img src="/uploaded_files/shop_images/medium-{$product.image}.{$product.ext}" width="149" height="144" class="pozimg"></a>{/if}
+		    <a title="{$product.name}" style="display:block; height:13px;" href="{$base_url}/{$product.full_url}/">{$product.name|strip_tags}</a><br>
+		    
+		    	<a title="{$product.name}" href="{$base_url}/{$product.full_url}/">
+		    	{if $product.image}
+		    	<img src="/uploaded_files/shop_images/medium-{$product.image}.{$product.ext}" width="149" height="144" class="pozimg">
+		    	{else}
+		    	<img src="/templates/img/nophoto.jpg" width="146" height="144" class="pozimg">
+		    	{/if}
+		    	</a>
+		    	
 		    <div class="pozprñ"><span class="pozcena">{$product.price}</span> ðóá.<br><br></div>
-		    </div></div>
+		    </div>
+		    </div>
+		    {if $smarty.foreach.iter1.iteration%3 == 0}<div style="clear:both; height:20px;">&nbsp;</div>{/if}
 		{/foreach}
 	{/if}
     </div>

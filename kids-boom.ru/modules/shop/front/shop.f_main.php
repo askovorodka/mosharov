@@ -3,6 +3,7 @@
 //error_reporting(E_ALL);
 //ini_set('display_errors','On');
 
+
 //$_SESSION['fw_basket']=array();
 
 if ($switch_default=='on' or $main_module=='on') {
@@ -968,7 +969,7 @@ SWITCH (TRUE) {
 	BREAK;
 
 	DEFAULT:
-		exit();
+		
 		$cat_list=Common::get_nodes_list($cl);
 		unset($url[0]);
 
