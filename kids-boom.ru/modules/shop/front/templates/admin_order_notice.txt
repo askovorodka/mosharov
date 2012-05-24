@@ -51,4 +51,4 @@
 <p>Список заказов в панели управления: {$base_url}/admin/index.php?mod=shop&action=orders</p>
 <p>Детализация данного заказа в панели управления: {$base_url}/admin/index.php?mod=shop&action=order_details&id={$order_id}</p>
 
-<p>Файл счета фактуры: {$file_attach}</p>
+<p>Файл счет-фактуры: {$file_attach}</p>

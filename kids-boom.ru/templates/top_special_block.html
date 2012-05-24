@@ -11,6 +11,7 @@
 	    <a title="{$top.name}" href="{$base_url}/{$top.full_url}"><img src="/uploaded_files/shop_images/medium-{$top.image}" width="149" height="144" class="pozimg"></a>
 	    <div class="pozpr"><span class="poz{$counter}">{$top.category.name}</span><br><span class="pozcena">{$top.price|format_number}</span> руб.<br><br></div>
 	    </div></div>
+	    {if $smarty.foreach.fort.iteration%3 == 0}<div style="clear:both; height:20px;">&nbsp;</div>{/if}
 	    {/foreach}
     
     </div>
