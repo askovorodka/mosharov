@@ -1,0 +1,102 @@
+<html>
+<head>
+<title>Календарь</title>
+<link rel="stylesheet" type="text/css" href="/templates/main.css">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+</head>
+<body topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
+
+{literal}
+<script language="JavaScript">
+function calendar_go(dir) {
+	if (dir=='prev') {
+		document.calendar.calendar_go.value="prev";
+	}
+	if (dir=='next') {
+		document.calendar.calendar_go.value="next";
+	}
+	document.calendar.submit();
+	return false;
+}
+</script>
+
+
+<script language="JavaScript">
+function insert_date(id,date) {
+	window.opener.document.getElementById(id).value=date;
+	window.close();
+	return false;
+}
+</script>
+{/literal}
+
+<div style="margin: 10px">
+<table cellpadding="0" cellspacing="0" border="0" height="100" width="170">
+	<tr> 
+	  <td> </td>
+	  <td class="whitemini">{if $calendar_prev!=0}<a href="calendar_prev" onclick="return calendar_go('prev');">&larr;</a>{/if}</td>
+	  <td class="whitemini" height="20" align="center">{$calendar_time|date_format:"%B"} {$calendar_time|date_format:"%Y"}</td>
+	  <td class="whitemini"><a href=calendar_next onclick="return calendar_go('next');">&rarr;</a></td>
+	</tr>
+	<tr> 
+	  <td> </td>
+	  <td colspan="3">
+	  <form action="" name=calendar method=post>
+	<input type=hidden name=calendar_prev value="{$calendar_prev}">
+	<input type=hidden name=calendar_next value="{$calendar_next}">
+	<input type=hidden name=calendar_go value="">
+	   <table width="100%" cellpadding="2" cellspacing="0" border="1" bordercolor="#FFFFFF" class="calendar" bordercolordark="#ba243f" bordercolorlight="#FFFFFF">
+
+	  	<tr>
+	  		<th><b>Пн</b></td>
+	  		<th><b>Вт</b></td>
+	  		<th><b>Ср</b></td>
+	  		<th><b>Чт</b></td>
+	  		<th><b>Пт</b></td>
+	  		<th><b>Сб</b></td>
+	  		<th><b>Вс</b></td> 
+	  	</tr>
+
+	  	<tr>
+	  		{assign var="i" value=0}
+			{foreach from=$current_month item=day}
+			{if $i==7}{assign var="i" value=0}</tr><tr>{/if}
+			<td align=center 
+							{if $day.time==$calendar_day}
+								class="act"
+							{else}
+								{if $day.time>$calendar_day}
+									{if $i!=5 and $i!=6}class="future"{else}class=future2{/if}
+								{else}
+									{if $day.time}
+										class="past"
+									{/if}
+								{/if}
+							{/if}
+			>
+
+				{if $i==5 or $i==6}
+					<span class="future2">
+				{/if}
+					<a href="#" onclick="return insert_date('{$id}','{$day.time|date_format:"%d"}.{$day.time|date_format:"%m"}.{$day.time|date_format:"%Y"}');" {if $i==5 or $i==6}class="future2"{/if}>
+				{$day.day}
+				{if $i==6 or $i==7}
+					</span>
+				{/if}
+				{if $day.count}
+					</a>
+				{/if}
+				{if !$day.time}&nbsp;{/if}
+			</td>
+		  
+			{math equation="x + y" x=$i y=1 assign="i"}
+			{/foreach}
+			</tr>
+		</table>
+		</form>
+		</td>
+	</tr>
+</table>
+</div>
+</body>
+</html>

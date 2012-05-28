@@ -1,0 +1,34 @@
+{include file="`$smarty.const.TPL_PATH`filter_green.html"}
+
+<div class="cat">
+<div class="contt">
+
+{include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
+
+<h1>{$product.name|strip_tags}</h1>
+	<table class="itemtbl">
+      <tr>
+        <td class="itempict">
+        <img id="bigimage" src="/uploaded_files/shop_images/big-{$photo.id}.{$photo.ext}" width="315" height"228" class="itempb"><br>
+        {if $images}
+        	{foreach from=$images item=image}
+        	<a href="/uploaded_files/shop_images/big-{$image.id}.{$image.ext}" class="smallimage"><img src="/uploaded_files/shop_images/resized-{$image.id}.{$image.ext}" width="71" height="74" class="itemps"></a>
+        	{/foreach}
+        {/if}
+        </td>
+        <td class="itemprop">
+        <span class="itempropc">Название:</span> {$product.name|strip_tags}<br>
+        <span class="itempropc">Артикул:</span> {$product.article|strip_tags}<br>
+        <span class="itempropc">Возраст:</span> {$product.agestrip_tags}<br>
+        <span class="itempropc">Производитель:</span> ToyMaster<br>
+        <span class="itempropc">Страна:</span> {$product.country}<br>
+        <span class="itempropc">Гарантия:</span> {$product.garant}<br>
+        <br><span class="itempr">{$product.price} руб.</span><br><br>
+        <div class="itemnumb"><span class="sprub">кол-во:</span> <input id="product_count_{$product.id}" maxlength=3 type="text" value="1"></div><div class="itembutd"><input type="image" name="add_order" product_id="{$product.id}" src="{$template_image}item_button.png" class="itembut"></div>
+        </td>
+      </tr>
+    </table><br>
+    {$product.text}
+<br><br>
+</div>
+</div>
