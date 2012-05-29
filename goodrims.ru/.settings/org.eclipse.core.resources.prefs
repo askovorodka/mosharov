@@ -1,3 +1,6 @@
-#Mon May 21 17:16:39 MSD 2012
+#Tue May 29 12:46:38 MSD 2012
 eclipse.preferences.version=1
+encoding//modules/shop/front/templates/basket.html=cp1251
 encoding//templates/index.html=cp1251
+encoding/import.py=utf-8
+encoding/yandexmarket.py=utf-8

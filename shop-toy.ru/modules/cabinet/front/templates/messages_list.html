@@ -1,0 +1,118 @@
+
+						
+<p><a href={$module_url}/messages/new>Отправить сообщение</a></p>
+
+<p><a href="/forum/">Вернуться в Форум</a></p>
+<p><a href="/cabinet/">Вернуться в Личный кабинет</a></p>
+
+
+
+<br><br>
+
+<div style="font-weight:bold;padding-bottom:5pt;">
+
+	Ваши сообщения:
+
+</div>
+
+
+
+				
+{if $messages_list}
+<h1>Входящие</h1>
+<table width=100% cellpadding="5" cellspacing="1" bgcolor="#000000">
+	<tr bgcolor="#cccccc">
+		<td>
+			Сообщение
+		</td>
+		
+		<td width=15%>
+			От
+		</td>
+		
+		<td width=15%>
+			Дата
+		</td>
+		
+		<td align=center width=20%>
+			Можно
+		</td>
+	</tr>
+	
+	{foreach from=$messages_list item=entry}
+	<tr bgcolor="#ffffff">
+		<td style="border-bottom:1px solid #ffffff;">
+			{if $entry.read=='0'}<font color=red><b>Новое!</b></font> {/if}
+			{if $entry.read=='0'}<b>{/if}<a href={$module_url}/messages/{$entry.id}>{if $entry.subject}{$entry.subject}{else}Нет темы{/if}</a>{if $entry.read=='0'}<b>{/if}
+		</td>
+		
+		<td style="font-size:9pt; font-weight: bold;color: #666666; border-bottom:1px solid #ffffff;" width=10%>
+			{$entry.from}
+		</td>
+		
+		<td style="font-size:10pt; color: #666666; border-bottom:1px solid #ffffff;">
+			{$entry.publish_date|date_format:"%d.%m.%Y в %H:%M"}
+		</td>
+		
+		<td align=center style="border-bottom:1px solid #ffffff;">
+			[<a href={$module_url}/messages/delete/{$entry.id}>Удалить</a>]
+		</td>
+	</tr>
+	{/foreach}
+	
+</table>
+
+{else}
+<br><br>
+<center>У вас нет личных входящих сообщений</center>
+
+{/if}
+
+{if $messages_list2}
+<h1>Отправленные</h1>
+<table width=100% cellpadding="5" cellspacing="1" bgcolor="#000000">
+	<tr bgcolor="#cccccc">
+		<td>
+			Сообщение
+		</td>
+		
+		<td width=15%>
+			Кому
+		</td>
+		
+		<td width=15%>
+			Дата
+		</td>
+		
+		<td align=center width=20%>
+			Можно
+		</td>
+	</tr>
+	
+	{foreach from=$messages_list2 item=entry}
+	<tr bgcolor="#ffffff">
+		<td style="border-bottom:1px solid #ffffff;">
+			{if $entry.read=='0'}<b>{/if}<a href={$module_url}/messages/{$entry.id}>{if $entry.subject}{$entry.subject}{else}Нет темы{/if}</a>{if $entry.read=='0'}<b>{/if}
+		</td>
+		
+		<td style="font-size:9pt; font-weight: bold;color: #666666; border-bottom:1px solid #ffffff;" width=10%>
+			{$entry.to}
+		</td>
+		
+		<td style="font-size:10pt; color: #666666; border-bottom:1px solid #ffffff;">
+			{$entry.publish_date|date_format:"%d.%m.%Y в %H:%M"}
+		</td>
+		
+		<td align=center style="border-bottom:1px solid #ffffff;">
+			[<a href={$module_url}/messages/delete/{$entry.id}>Удалить</a>]
+		</td>
+	</tr>
+	{/foreach}
+	
+</table>
+
+{else}
+<br><br>
+<center>У вас нет личных отправленных сообщений</center>
+
+{/if}

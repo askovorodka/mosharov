@@ -1,6 +1,5 @@
 {include file="`$TEMP`breadcrumbs.html"}
 
-
 <h1>Ваша корзина</h1>
 {if $basket}
 {if $error_msg}<div style="color:red;">{section loop=$error_msg name=item}{$error_msg[item]}<br />{/section}</div>{/if}
@@ -22,7 +21,7 @@
                     <td>Сумма</td> 
                     <td>Кол-во</td>
                     <td></td>
-                    
+
                   </tr>
                   {foreach from=$basket item=product name=basket_foreach}
                   <tr>
@@ -68,12 +67,12 @@
                 <select name="dostavka" id="dostavka" class="basketformsel">
                 	<option value="1" selected caption="Выезд за МКАД - 30 руб/км, но не менее 100км.">Доставка по Москве и Подмосковью</option>
                 	<option value="2" caption="Стоимость 0 руб.">Забрать самостоятельно</option>
-                	<option value="3" caption="Стоимость доставки до транспортной компании - {$order_price} руб. Стоимость доставки из Москвы до Вашего города рассчитывает транспортной компании.">Доставка до транспортной компании ПЭК</option>
-                	<option value="4" caption="Стоимость доставки до транспортной компании - {$order_price} руб. Стоимость доставки из Москвы до Вашего города рассчитывает транспортной компании.">Доставка до транспортной компании Желдорэкспедиция</option>
-                	<option value="5" caption="Стоимость доставки до транспортной компании - {$order_price} руб. Стоимость доставки из Москвы до Вашего города рассчитывает транспортной компании.">Доставка до транспортной компании Автотрейдинг</option>
+                	<option value="3" caption="Стоимость доставки до транспортной компании - {$order_price} руб. Стоимость доставки из Москвы до Вашего города рассчитывает транспортная компания.">Доставка до транспортной компании ПЭК</option>
+                	<option value="4" caption="Стоимость доставки до транспортной компании - {$order_price} руб. Стоимость доставки из Москвы до Вашего города рассчитывает транспортная компания.">Доставка до транспортной компании Желдорэкспедиция</option>
+                	<option value="5" caption="Стоимость доставки до транспортной компании - {$order_price} руб. Стоимость доставки из Москвы до Вашего города рассчитывает транспортная компания.">Доставка до транспортной компании Автотрейдинг</option>
                 </select>
                 
-                <div id="dostavka_caption" style="margin-top:10px; width:385px; font-weight:bold;">Выезд за МКАД - 30 руб/км, но не менее 100км.</div>
+                <div id="dostavka_caption" style="margin-top:10px; width:385px; font-weight:bold;">Выезд за МКАД - 30 руб/км, но не менее 100 руб.</div>
                 
                 </td>
                 <td class="mainbasketform2">

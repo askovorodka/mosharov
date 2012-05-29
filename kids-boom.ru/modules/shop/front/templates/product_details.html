@@ -12,10 +12,12 @@
       <tr>
         <td class="catinnimg">
         	{if $images}
-        	<div style="margin-bottom:5px;"><img id="bigimage" src="/uploaded_files/shop_images/big-{$photo.id}.{$photo.ext}" width="156" height="206"></div>
+        	<div style="margin-bottom:5px;"><img title="Увеличить" id="bigimage" image="{$smarty.const.DOMAIN}uploaded_files/shop_images/super-{$photo.id}.{$photo.ext}" src="/uploaded_files/shop_images/big-{$photo.id}.{$photo.ext}" width="156" height="206"></div>
         		{foreach from=$images item=image}
-            		<a href="/uploaded_files/shop_images/big-{$image.id}.{$image.ext}" class="smallimage"><img src="/uploaded_files/shop_images/resized-{$image.id}.{$image.ext}" width="64" height="74" class="catinnsm" /></a>
+            		<a href="/uploaded_files/shop_images/big-{$image.id}.{$image.ext}" super="{$smarty.const.DOMAIN}uploaded_files/shop_images/super-{$image.id}.{$image.ext}" class="smallimage"><img src="/uploaded_files/shop_images/small-{$image.id}.{$image.ext}" width="64" height="74" class="catinnsm" /></a>
             	{/foreach}
+            {else}
+            <div style="margin-bottom:5px;"><img id="bigimage" src="/templates/img/nophoto.jpg" width="146" height="144"></div>
         	{/if}
         </td>
         
@@ -25,16 +27,6 @@
         <strong>Производитель:</strong> {$product.country}<br>
         <span class="innprice"><span class="pozcena">{$product.price}</span> руб.</span><br>
         <table class="tblrc">
-          {*<tr>
-          	{foreach from=$properties item=property name=forp}
-          		<td nowrap class="{if $smarty.foreach.forp.first}razmeri{else}cveta{/if}">
-          			<strong>{$property.name}:</strong><br>
-          			{foreach from=$product_properties item=product_p}
-          				{if $product_p.property_id==$property.id}<input name="property[{$product_p.name}|{$product_p.value}]" id="p_{$product_p.property_id}_{$product_p.value}" type="checkbox"><label for="p_{$product_p.property_id}_{$product_p.value}">{$product_p.value}</label><br>{/if}
-          			{/foreach}
-          		</td>
-          	{/foreach}
-          </tr>*}
           
           
           	{foreach from=$properties item=property name=forp}

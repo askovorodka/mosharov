@@ -62,8 +62,17 @@ $(document).ready( function(){
 		if ($.trim(src) != "")
 		{
 			$("#bigimage").attr("src", src);
+			$("#bigimage").attr("image", $(this).attr("super"));
 		}
 		return false;
+	});
+	
+	$("#bigimage").click(function(){
+		var image = $(this).attr("image");
+		$("#ImageLayout").empty();
+		$("#ImageLayout").append( $("<IMG>").attr("src", image).click(function(){ $("#ImageLayout").hide(); }) );
+		$("#ImageLayout").css({"left" : $(this).offset().left, "top" : $(this).offset().top} ).show();
+		
 	});
 	
 	

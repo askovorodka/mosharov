@@ -2,6 +2,7 @@
 //вспомогательный класс
 class Shop extends db {
 
+	
 	var $db;
 	function Shop($db)
 	{

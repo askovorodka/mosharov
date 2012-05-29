@@ -7,12 +7,17 @@
 
     <div class="pozw">
     {if $folders_list}
-    	{foreach from=$folders_list item=folder}
+    	{foreach from=$folders_list item=folder name=iter1}
 		    <div class="pozb"><div class="poz">
-		    <a title="{$folder.name}" href="{$base_url}/{$folder.full_url}/">{$folder.name|strip_tags}</a><br>
+		    <a title="{$folder.name}" style="display:block; height:13px;" href="{$base_url}/{$folder.full_url}/">{$folder.name|strip_tags}</a><br>
+		    
 		    {if $folder.image}<a title="{$folder.name}" href="{$base_url}/{$folder.full_url}/"><img src="/uploaded_files/category_images/medium-{$folder.image}" width="149" height="144" class="pozimg"></a>
-		    {elseif $folder.picture}<a title="{$folder.name}" href="{$base_url}/{$folder.full_url}/"><img src="/uploaded_files/shop_images/medium-{$folder.picture}" width="149" height="144" class="pozimg"></a>{/if}
+		    {elseif $folder.picture}<a title="{$folder.name}" href="{$base_url}/{$folder.full_url}/"><img src="/uploaded_files/shop_images/medium-{$folder.picture}" width="149" height="144" class="pozimg"></a>
+		    {else}
+		    <a title="{$folder.name}" href="{$base_url}/{$folder.full_url}/"><img src="/templates/img/nophoto.jpg" width="146" height="144" class="pozimg"></a>
+		    {/if}
 		    </div></div>
+		    {if $smarty.foreach.iter1.iteration%3 == 0}<div style="clear:both; height:20px;">&nbsp;</div>{/if}
 		{/foreach}
 	{/if}
     </div>
