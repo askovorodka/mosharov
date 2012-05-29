@@ -47,7 +47,7 @@ $smarty->cache_dir = 'lib/smarty/cache/';
 /* ------------ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ -------------- */
 $db=new db(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 
-//вспомогательный класс для каталога товаров
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 $shop = new Shop($db);
 
 define ('CAPTCHA_SALT', 'kjhfgkjhfsdkjghskjd hkjfdnkmbn ,msdnbskjh'); 
@@ -62,7 +62,7 @@ $default_modules=$db->get_all("SELECT * FROM fw_modules WHERE default_load='1' A
 $url=Common::get_url($_SERVER['REQUEST_URI'],SCRIPT_FOLDER);
 
 $navigation=array();
-$navigation[]=array("url" => BASE_URL,"title" => 'Главная страница');
+$navigation[]=array("url" => BASE_URL,"title" => 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
 $page_found=false;
 $set_pages_url=false;
 $module_found=false;
@@ -138,13 +138,13 @@ $current_url_pages=$url;
 $current_url=implode("/",$url);
 $smarty->assign("current_url",$current_url);
 
-//новости в блоке справа
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 //$news=$db->get_all("SELECT * FROM fw_news WHERE status='1' ORDER BY publish_date DESC " . $limit);
 //$smarty->assign("news_list",$news);
 
 //$smarty->assign('top_product', $shop->getTopProducts(1));
 
-//сессия
+//пїЅпїЅпїЅпїЅпїЅпїЅ
 //$session =  new Session($db);
 //$session->setSession();
 //$smarty->assign('online_users', $session->getOnLine() );
@@ -160,18 +160,6 @@ $smarty->assign("template_image",'http://'.$_SERVER['HTTP_HOST'].'/templates/img
 
 
 if (!empty($_SESSION['fw_user'])) $smarty->assign('user_info',$_SESSION['fw_user']);
-
-
-/*$cat_list=$db->get_all("SELECT * FROM fw_catalogue WHERE status = '1' ORDER BY param_left");
-$cat_list=Common::get_nodes_list($cat_list);
-
-$types_list=$db->get_all("SELECT * FROM fw_products_types WHERE status='1' ORDER BY name");
-$smarty->assign("types_list",$types_list);
-
-$prod_list=$db->get_all("SELECT name FROM fw_products WHERE status='1' AND name<>'' ORDER BY name");
-$smarty->assign("prod_list",$prod_list);
-$smarty->assign("cat_list",$cat_list);
-*/
 
 
 /*--- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ ----*/
@@ -260,23 +248,13 @@ foreach ($main_menu as $key=>$val)
 }
 $smarty->assign("main_menu",$main_menu);
 
-//меню каталога
-/*$shop_menu=$db->get_all("
-	SELECT a.id,a.name,a.url,a.image,a.param_level,a.param_right,a.param_left, parent.url as parent_url 
-	FROM fw_catalogue as a
-	LEFT JOIN fw_catalogue as parent 
-	ON a.param_left > parent.param_left 
-	AND a.param_right < parent.param_right AND parent.param_level = (a.param_level - 1)
-	WHERE a.param_level in ('1', '2') AND a.status='1' 
-	ORDER BY a.param_left");
-*/
 
 $shop_menu=$db->get_all("
 	SELECT * 
 	FROM fw_catalogue as a
 	WHERE a.param_level = '1' AND a.status='1' 
 	ORDER BY a.param_left");
-//добавляем в массив полный путь до категории
+
 if ($shop_menu)
 {
 	foreach ($shop_menu as $key=>$val)
