@@ -39,4 +39,9 @@ class Db:
         self.__result = self.__db.store_result()
         self.__result_row = self.__result.fetch_row(1)
         return self.__result_row[0][0]
-        
+    
+    def escape(self, string):
+        return _mysql.escape_string(string)
+    
+    def close(self):
+        self.__db.close()
