@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/45/branches/dom/modules/photoalbum/admin/templates
+END
+photoalbum.a_edit_album.html
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/45/branches/dom/modules/photoalbum/admin/templates/photoalbum.a_edit_album.html
+END
+photoalbum.a_cat_list.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/45/branches/dom/modules/photoalbum/admin/templates/photoalbum.a_cat_list.html
+END
+statistics.html
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/45/branches/dom/modules/photoalbum/admin/templates/statistics.html
+END
+mini_browser.html
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/45/branches/dom/modules/photoalbum/admin/templates/mini_browser.html
+END
+photoalbum.a_edit_cat.html
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/45/branches/dom/modules/photoalbum/admin/templates/photoalbum.a_edit_cat.html
+END
+edit_comment.html
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/45/branches/dom/modules/photoalbum/admin/templates/edit_comment.html
+END
+photoalbum.a_albums_list.html
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/45/branches/dom/modules/photoalbum/admin/templates/photoalbum.a_albums_list.html
+END

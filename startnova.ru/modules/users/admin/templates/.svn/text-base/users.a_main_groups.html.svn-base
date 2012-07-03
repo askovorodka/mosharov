@@ -1,0 +1,35 @@
+<DIV id=dhtmltooltip></DIV>
+{literal}
+<SCRIPT LANGUAGE="JavaScript"><!--
+function confirm_delete(delete_id)
+{
+if (confirm("Дейтсвительно удалить эту группу?")) {
+parent.location.href = "?mod=users&action=delete_group&id=" + delete_id;
+}
+}
+--></script>
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/tooltips.js'></script>
+{/literal}
+{if $error_message}<br><font color=red>{$error_message}</font><br><br>{/if}
+<table width=100% class=content_table>
+	<tr><th>Название группы</th><th width=15%>Пользователей</th><th width=15%>Привилегии</th><th width=10% align=center>Действия</th></tr>
+	{foreach from=$priv_list item=entry}
+	{if $col==1}
+	{assign var="td" value='td1'}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value='td2'}
+	{assign var="col" value=1}
+	{/if}
+	<tr onmouseover="flatlinkOver(this)" {if $smarty.foreach.tree.iteration%2==1}onmouseout="flatlinkOut(this)"{else}onmouseout="flatlinkOut1(this)"{/if}>
+			<td class={$td}_left><a href="?mod=users&action=edit_group&id={$entry.id}"><strong>{$entry.name}</strong></a></td>
+			<td class={$td}_middle align="center">{$entry.users}</td>
+			<td class={$td}_middle align="center">{$entry.priv}</td>
+			<td align=center class={$td}_right><a href="javascript:confirm_delete('{$entry.id}');" class=img_link onmouseover="ddrivetip('Удалить группу')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
+			<a href=?mod=users&action=edit_group&id={$entry.id} class=img_link onmouseover="ddrivetip('Редактировать данные группы')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a></td>
+		</tr>
+	{/foreach}	
+	</table>
+    
+    <br><br>
+<div class="add_but" style="float: left;" onClick="location.href='index.php?mod=users&action=add_group'"><div><a href="index.php?mod=users&action=add_group">добавить группу</a></div></div>

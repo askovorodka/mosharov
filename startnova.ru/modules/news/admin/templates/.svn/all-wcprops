@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/45/branches/dom/modules/news/admin/templates
+END
+news.a_edit.html
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/45/branches/dom/modules/news/admin/templates/news.a_edit.html
+END
+news.a_main.html
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/45/branches/dom/modules/news/admin/templates/news.a_main.html
+END
+news.a_kategors.tpl
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/45/branches/dom/modules/news/admin/templates/news.a_kategors.tpl
+END
+news.a_cat.html
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/45/branches/dom/modules/news/admin/templates/news.a_cat.html
+END
+news.a_edit_cat.html
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/45/branches/dom/modules/news/admin/templates/news.a_edit_cat.html
+END

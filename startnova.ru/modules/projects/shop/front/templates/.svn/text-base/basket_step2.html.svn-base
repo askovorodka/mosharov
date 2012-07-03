@@ -1,0 +1,53 @@
+<h1>Подтверждение заказа</h1>
+
+<form action={$module_url}/basket/submit/ method=post>
+<input type=hidden name=submit_order value=1>
+
+<ul class="Auth">
+	<li><em>Имя:</em><input type="text" name="customer_name" value="{$user.name}" /></li>
+	<li><em>Email:</em><input type="text" name="customer_mail" value="{$user.mail}" /></li>
+	<li><em>Контактный телефон:</em><input type="text" name="customer_tel" value="{$user.tel}" /></li>
+	<li><em>Адрес доставки:</em><input type="text" name="customer_deliver" value="{$user.deliver}" /></li>
+	<li><em>Комментарии к заказу:</em></li>
+	<li><textarea name="customer_comments"></textarea></li>
+</ul>
+
+{*
+<table cellspacing="0" cellpadding="0" border="0">
+<tr valign="top"><td width="130" align="right">Имя&nbsp;</td><td><input style="font-size:11px;border:0px;" type="text" name="customer_name" value="{$user.name}" class="field" /></td></tr>
+<tr valign="top"><td width="130" align="right">Email&nbsp;</td><td><input style="font-size:11px;border:0px;" type="text" name="customer_mail" value="{$user.mail}" class="field" /></td></tr>
+<tr valign="top"><td width="130" align="right">Телефон&nbsp;</td><td><input style="font-size:11px;border:0px;" type="text" name="customer_tel" value="{$user.tel}" class="field" /></td></tr>
+<tr valign="top"><td width="130" align="right">Адрес доставки&nbsp;</td><td><input style="font-size:11px;border:0px;" type="text" name="customer_deliver" value="{$user.site}" class="field" /></td></tr>
+<tr valign="top"><td width="130" align="right">Комментарии&nbsp;</td><td><textarea style="font-size:11px;" name="customer_comments" style="width : 198px; height : 94px;  border : 1px solid #999999;"></textarea></td></tr>
+</table>
+*}
+
+<br>
+<br>
+<h1>Заказанные товары:</h1><br />
+<table width=90% cellspacing=1 cellpadding=3 bgcolor=#999999 >
+<tr align=center bgcolor=#ffffff>
+<td><b>Продукт</b></td>
+<td width=15%><b>Кол-во</b></td>
+<td width=15%><b>Цена</b></td>
+</tr>
+{foreach from=$basket item=product}
+<tr bgcolor=#ffffff>
+<td><img src="{$catalog_image}medium-{$product.image}.{$product.ext}" border="0"><br>{$product.name}
+</td>
+<td align="center">{$product.number}</td>
+<td>{math equation="x * y" x=$product.price y=$product.number format="%.2f"} {$currency}</td>
+</tr>
+{/foreach}
+</table>
+<br />
+<h2>Итого: {$total_price} {$currency}</h2>
+
+<br /><br /><br />
+<center>
+<table cellspacing=0><tr>
+<td><input type="button" onclick="history.back();" value="Вернуться назад" class="Button"></td>
+<td><input type="submit" name="submit_order" value="Оформить заказ" class="Button">
+</td></tr></table></center>
+</form>
+<br><br>

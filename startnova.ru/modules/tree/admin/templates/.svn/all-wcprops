@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/72/branches/dom/modules/tree/admin/templates
+END
+tree.a_edit.html
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/45/branches/dom/modules/tree/admin/templates/tree.a_edit.html
+END
+tree.a_main.html
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/45/branches/dom/modules/tree/admin/templates/tree.a_main.html
+END
+tree.a_documents_list.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/45/branches/dom/modules/tree/admin/templates/tree.a_documents_list.html
+END
+tree.a_users_list.html
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/45/branches/dom/modules/tree/admin/templates/tree.a_users_list.html
+END
+tree.a_edit_document.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/72/branches/dom/modules/tree/admin/templates/tree.a_edit_document.html
+END
+mini_browser.html
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/45/branches/dom/modules/tree/admin/templates/mini_browser.html
+END
+tree.a_edit_elements.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/45/branches/dom/modules/tree/admin/templates/tree.a_edit_elements.html
+END
+mini_browser_list.html
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/45/branches/dom/modules/tree/admin/templates/mini_browser_list.html
+END
