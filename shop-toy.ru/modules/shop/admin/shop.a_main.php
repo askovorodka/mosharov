@@ -57,69 +57,35 @@ else $action='';
 
 /*------------------------- ВЫПОЛНЯЕМ РАЗЛИЧНЫЕ ДЕЙСТВИЯ ---------------------*/
 
-//импорт прайс-листов
-/*if (isset($_POST['submit_import']))
+if (isset($_POST['submit_add_match']))
 {
-	//require_once('../lib/class.import.php');
-	//require_once('../lib/class.string.php');
-	
-	$string = new String();
-	
-	if ($_FILES['import_file']['name']!='') {
+	$name_feed = trim($_POST['name_feed']);
+	$name_db = trim($_POST['name_db']);
+	$param_level = intval($_POST['param_level']);
+	$db->query("insert into matches_category (name_feed, name_db, param_level) values('{$name_feed}','{$name_db}','{$param_level}')");
+	header("Location: " . $_SERVER['HTTP_REFERER']);
+	die();
+}
 
-		$file_name=$_FILES['import_file']['name'];
-		$tmp=$_FILES['import_file']['tmp_name'];
-
-		$trusted_formats=array('xls');
-
-		$check_file_name=explode(".",$file_name);
-		$ext=strtolower($check_file_name[count($check_file_name)-1]);
-		if (!in_array($ext,$trusted_formats)) {
-			die("Можно загружать только файлы с разрешение *.xls");
-		}
-
-		if (filesize($tmp) > 5000000) {
-			die("Размер файла не больше 5 Мб");
-		}
-
-		$import = new Import($db, $tree, $string);
-		//грузим xls
-		$xlsfile = $import->upload($_FILES['import_file']);
-		//называем csv файл также как и xls
-		$tocsv = explode('.', $xlsfile);
-		$csvfile = $tocsv[0] . '.csv';
-		//конвертируем xls
-		if ($import->convert($xlsfile, $csvfile))
+if (isset($_POST['submit_edit_matches']))
+{
+	if (!empty($_POST['name_feed']))
+	{
+		foreach ($_POST['name_feed'] as $key => $val)
 		{
-
-			//если выбран не тот файл
-			if (!$import->getImportTypeByFile($csvfile))
-			{
-				header ("Location: http://" . $_SERVER['SERVER_NAME'] . "/admin/index.php?mod=shop&action=import_error");
-				die();
-			}
-			
-
-			//получаем данные в массив
-			$import->read($csvfile);
-			if ($_POST['type'] == 'tires')
-			{
-				$import->importTires(TIRES_ID);
-			}
-			elseif ($_POST['type'] == 'disk')
-			{
-				$import->importDisk(DISK_ID);
-			}
+			$id = $key;
+			$name_feed = $val;
+			$name_db = $_POST['name_db'][$key];
+			$param_level = intval($_POST['param_level'][$key]);
+			$db->query("update matches_category set name_feed = '{$name_feed}', name_db='{$name_db}', param_level='{$param_level}' where id='{$id}' ");
 		}
-
-		//echo 123;
-		header ("Location: http://" . $_SERVER['SERVER_NAME'] . "/admin/index.php?mod=shop&action=import_log");
-		//die();
-
 	}
 	
+	header("Location: " . $_SERVER['HTTP_REFERER']);
+	die();
+	
 }
-*/
+
 
 if (isset($_POST['action']) && $_POST['action']=="resort_order") {
 	if (isset($_POST['product']) && isset($_POST['product_prev']) && isset($_POST['parent_cat'])) {
@@ -162,6 +128,15 @@ if (isset($_POST['submit_sort_products']) && isset($_POST['sortArray']) ){
 		$db->query("UPDATE fw_products SET sort_order='$sort' WHERE id='$val' ");
 	}
 		$smarty->assign("message","Продукция отсортирована");
+}
+
+if ($action=="delete_match" && isset($_GET['id'])) {
+  $id=intval($_GET['id']);
+  $db->query("delete from matches_category where id='{$id}'");
+
+  $location=$_SERVER['HTTP_REFERER'];
+  header ("Location: $location");
+  die();
 }
 
 
@@ -1622,6 +1597,18 @@ SWITCH (TRUE) {
     $smarty->assign("cur",$cur);
     $template='shop.a_cur_edit.html';
 
+  BREAK;
+
+
+  CASE ($action == 'matches_category'):
+	
+    $navigation[] = array("url" => BASE_URL."/admin/?mod=shop","title" => 'Соответствие категорий');
+	
+    $matches = $db->get_all("SELECT * FROM matches_category");
+	
+    $smarty->assign("matches", $matches);
+    $template = 'shop.a_matches.html';
+	
   BREAK;
 
 

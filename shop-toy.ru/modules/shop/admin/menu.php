@@ -16,6 +16,11 @@ $sub[]= array(
 			"link"=>"?mod=shop&action=products_list"
 	   );
 
+$sub[]= array(
+			"name"=>"Соответствия категорий",
+			"link"=>"?mod=shop&action=matches_category"
+	   );
+	   
 /*$sub[]= array(
 			"name"=>"Свойства продуктов",
 			"link"=>"?mod=shop&action=properties"
