@@ -1,0 +1,40 @@
+{if ($rating or $comments) and $allowed_user}
+<script src="{$base_url}/javascript/insert_text/insert_text_{$browser}.js"></script>
+
+{if $show_admin_menu}
+{literal}
+<SCRIPT language=JavaScript>
+function confirm_delete(delete_id) {
+  if (confirm("Дейтсвительно удалить это сообщение?")) {
+    parent.location.href = "{/literal}{$base_url}{literal}/admin/index.php?mod=comments&action=delete&id=" + delete_id;
+  }
+}
+</SCRIPT>
+{/literal}
+{/if}
+{/if}
+
+<table width=100%>
+<tr><td height="15">&nbsp;</td></tr>
+<tr><td><h5>Фотогалерея товара:</h5></td></tr>
+
+  <tr><td align=left>
+    <table width="90%">
+          {assign var="count" value="0"}
+          {foreach from=$photos_list item=entry name=tp}
+                  {if $count=="0"}<tr>{/if}
+                  <td><a href="javascript: void(openImg('{$base_url}/uploaded_files/shop_images/{$entry.id}.{$entry.ext}',{$entry.width},{$entry.height}));"><img src="{$base_url}/uploaded_files/shop_images/resized-{$entry.id}.{$entry.ext}" class="small" hspace=5></a></td>
+                  {if $count=="3"}</tr><tr><td height="10">&nbsp;</td></tr>{/if}
+                  {assign var="count" value=$count+1}
+                  {if $count=="4"} {assign var="count" value="0"} {/if}
+          {/foreach}
+    </table>
+</td></tr>
+
+</td>
+
+</table>
+
+
+
+

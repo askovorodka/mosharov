@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/45/branches/dom/modules/subscribe
+END
+submit_subscribe.txt
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/45/branches/dom/modules/subscribe/submit_subscribe.txt
+END
+submit_unsubscribe.txt
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/45/branches/dom/modules/subscribe/submit_unsubscribe.txt
+END
+template.txt
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/45/branches/dom/modules/subscribe/template.txt
+END
+conf.php
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/45/branches/dom/modules/subscribe/conf.php
+END

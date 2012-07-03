@@ -1,0 +1,16 @@
+{if $products_list}
+
+    <table class="cattbl">
+    	{foreach from=$products_list item=product name=prod_iter}
+    		{if !$smarty.foreach.prod_iter.first && $smarty.foreach.prod_iter.iteration%5==0}
+    		</tr><tr>
+    		{elseif $smarty.foreach.prod_iter.first}<tr>
+    		{/if}
+    		<td><a href="{$base_url}/catalog{$product.full_url}">{$product.name|strip_tags}</a><br>
+    		<a href="{$base_url}/catalog{$product.full_url}"><img src="/uploaded_files/shop_images/medium-{$product.image}.{$product.ext}" width="203" height="136"></a></td>
+    		{if $smarty.foreach.prod_iter.last}</tr>{/if}
+    		
+    	{/foreach}
+    </table>
+
+{/if}

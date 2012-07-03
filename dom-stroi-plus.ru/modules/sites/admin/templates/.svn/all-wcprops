@@ -1,0 +1,113 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/45/branches/dom/modules/sites/admin/templates
+END
+sites.a_products_list.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/45/branches/dom/modules/sites/admin/templates/sites.a_products_list.html
+END
+sites.a_main.html
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/45/branches/dom/modules/sites/admin/templates/sites.a_main.html
+END
+sites.a_printView.html
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/45/branches/dom/modules/sites/admin/templates/sites.a_printView.html
+END
+sites.a_products_print.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/45/branches/dom/modules/sites/admin/templates/sites.a_products_print.html
+END
+sites.a_order_details.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/45/branches/dom/modules/sites/admin/templates/sites.a_order_details.html
+END
+sites.a_products_properties.html
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/45/branches/dom/modules/sites/admin/templates/sites.a_products_properties.html
+END
+sites.a_cur_edit.html
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/45/branches/dom/modules/sites/admin/templates/sites.a_cur_edit.html
+END
+coupon.html
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/45/branches/dom/modules/sites/admin/templates/coupon.html
+END
+sites.a_orders.html
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/45/branches/dom/modules/sites/admin/templates/sites.a_orders.html
+END
+statistics.html
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/45/branches/dom/modules/sites/admin/templates/statistics.html
+END
+sites.a_sortProducts.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/45/branches/dom/modules/sites/admin/templates/sites.a_sortProducts.html
+END
+mini_catalogue.html
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/45/branches/dom/modules/sites/admin/templates/mini_catalogue.html
+END
+sites.a_edit_cat.html
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/45/branches/dom/modules/sites/admin/templates/sites.a_edit_cat.html
+END
+move_product.html
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/45/branches/dom/modules/sites/admin/templates/move_product.html
+END
+sites.a_products_types.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/45/branches/dom/modules/sites/admin/templates/sites.a_products_types.html
+END
+sites.a_cur_list.html
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/45/branches/dom/modules/sites/admin/templates/sites.a_cur_list.html
+END
+sites.a_print_order.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/45/branches/dom/modules/sites/admin/templates/sites.a_print_order.html
+END
+sites.a_edit_product.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/45/branches/dom/modules/sites/admin/templates/sites.a_edit_product.html
+END

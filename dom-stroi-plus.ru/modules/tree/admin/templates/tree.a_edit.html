@@ -1,0 +1,481 @@
+{if $node.module=='page'}
+{literal}
+<script language=JavaScript src='{/literal}{$base_url}/{literal}javascript/editor/scripts/language/russian/editor_lang.js'></script>
+<script language=JavaScript src='{/literal}{$base_url}/{literal}javascript/editor/scripts{/literal}/{$editor_mode}{literal}'></script>
+{/literal}
+
+{*literal}
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+	google.load("jquery", "1.3");
+</script>
+{/literal*}
+
+{literal}
+<script type="text/javascript" src="{/literal}{$base_url}{literal}/javascript/jquery-1.3.2.js"></script>
+<script type="text/javascript" src="{/literal}{$base_url}/{literal}javascript/tinymce/jscripts/tiny_mce/jquery.tinymce.js"></script>
+<script language="javascript" type="text/javascript" src="{/literal}{$base_url}/{literal}javascript/tinymce/jscripts/tiny_mce/plugins/imagemanager/js/mcimagemanager.js"></script>
+<script type="text/javascript">
+	$().ready(function() {
+		$('textarea.edit_page_text').tinymce({
+			// Location of TinyMCE script
+			script_url : '{/literal}{$base_url}/{literal}javascript/tinymce/jscripts/tiny_mce/tiny_mce.js',
+
+			// General options
+			theme : "advanced",
+			plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+
+			// Theme options
+			theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
+			theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,insertimage,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+			theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+			theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak",
+			theme_advanced_toolbar_location : "top",
+			theme_advanced_toolbar_align : "left",
+			theme_advanced_statusbar_location : "bottom",
+			theme_advanced_resizing : true,
+			file_browser_callback : "mcImageManager.filebrowserCallBack",
+
+			// Example content CSS (should be your site CSS)
+			content_css : "css/content.css",
+
+			// Drop lists for link/image/media/template dialogs
+			template_external_list_url : "lists/template_list.js",
+			external_link_list_url : "lists/link_list.js",
+			external_image_list_url : "lists/image_list.js",
+			media_external_list_url : "lists/media_list.js",
+
+			// Replace values for the template plugin
+			template_replace_values : {
+				username : "Some User",
+				staffid : "991234"
+			}
+		});
+	});
+</script>
+<!-- /TinyMCE -->
+{/literal}
+{/if}
+
+{literal}
+<script language=JavaScript>
+function show(name, elem)
+{
+if(document.getElementById(name).style.display!="none") {
+		document.getElementById(name).style.display="none";
+		elem.className = "plus";
+	}
+	else {
+		document.getElementById(name).style.display="";
+		elem.className = "minus";
+	}
+}
+function shows(name)
+{
+if(document.getElementById(name).style.display!="none") {
+		document.getElementById(name).style.display="none";
+	}
+	else {
+		document.getElementById(name).style.display="";
+	}
+}
+function form_check() {
+	if (document.edit_node.edit_node_url.value=='') {
+		alert("Заполните пожалуйста обязательные поля");
+		return false;
+	}
+	else {
+		{/literal}
+		{if $node.module=='page'}
+			{if $editor_style!='html'}{literal}document.edit_node.edit_page_text.value = page_text.getHTMLBody();{/literal}
+			{else}
+			{literal}document.edit_node.edit_page_text.value = document.getElementById('page_text').value;{/literal}
+			{/if}
+		{/if}
+		{literal}
+		return true;
+	}
+}
+</script>
+{/literal}
+
+{if $error_message}<center><font color=red><b>{$error_message}</b></font></center><br><br>{/if}
+
+<form action="" method=post name=edit_node onSubmit="return form_check();" enctype="multipart/form-data">
+{if $mode!='edit'}{foreach from=$templates_list item="template" name=sq}
+{if $smarty.foreach.sq.first}
+<input type=hidden name=edit_node_template value="{$template.file}">
+{/if}
+{/foreach}{/if}
+<input type=hidden name=id value={$node.id}>
+<input type=hidden name=old_parent value={$parent}>
+<input type=hidden name=old_url value={$node.url}>
+<table width=100% class=content_table>
+	<tr bgcolor=#99CCFF>
+		<th>{if $mode=='edit'}Редактировать узел{else}Добавить узел{/if}</th>
+	</tr>
+</table>
+
+<table width=100% class=content_table>
+	<tr>
+		<td width=15% class=td1_left><b>Категория:</b></td>
+		<td class=td1_right>
+		<select name=edit_node_parent style="width:100%;font-weight:bold; font-size:9pt;" class=field>
+		{foreach from=$nodes_list item=entry}
+		<option value={$entry.id}{if $entry.id==$parent} selected=true{/if}>{$entry.full_title}</option>
+		{/foreach}
+		</select>
+		</td>
+	</tr>
+
+	<tr>
+		<td width=15% class=td1_left><b>Название:</b></td>
+		<td class=td1_right><input type=text name=edit_node_name style="width:100%;" class=field value="{$node.name}">
+	</tr>
+
+	<tr>
+		<td width=15% class=td1_left><b>Заголовок:</b></td>
+		<td class=td1_right><input type=text name=edit_node_label style="width:100%;" class=field value="{$node.label}">
+	</tr>
+
+	<tr>
+		<td width=15% class=td1_left><b><font color=red><small>*</small></font>URL:</b></td>
+		<td class=td1_right>
+		<input type=text name=edit_node_url style="width:100%;" class=field value="{$node.url}">
+		</td>
+	</tr>
+
+	<tr>
+		<td width=15% class=td1_left><b>Модуль:</b></td>
+		<td class=td1_right>
+		{if !$node.module}
+			<select name=edit_node_module style="width:50%;" class=field>
+			{foreach from=$modules item=entry}
+				<option value={$entry.name}{if $entry.name==$node.module} selected=true{/if}>{$entry.title}</option>
+			{/foreach}
+			</select>
+		{else}
+			<input type=hidden name=edit_node_module value={$node.module}>{foreach from=$modules item=entry}{if $entry.name==$node.module}{$entry.title}{/if}{/foreach}
+		{/if}
+		</td>
+	</tr>
+</table>
+
+{if $node.module=='page'}
+<br>
+<b>Текст:</b><br>
+
+<textarea name="edit_page_text" class="edit_page_text" style="width:100%; height:600px;">{$node.text|replace:"\r\n":""}</textarea>
+
+{*<input type=hidden name=edit_page_text value="">*}
+
+{*if $editor_style!='html'}
+{literal}
+<script language="JavaScript">
+			var page_text = new InnovaEditor("page_text");
+
+					page_text.btnStyles=true;
+
+					page_text.width="100%";
+					page_text.height="400";
+
+					page_text.css="style.css";
+					page_text.cmdAssetManager="modalDialogShow('{/literal}{$base_url}/{literal}javascript/editor/assetmanager/assetmanager.php?lang=russian',640,465)";
+
+					page_text.features=["FullScreen","Search",
+						"Cut","Copy","Paste","PasteWord","PasteText","|","Undo","Redo","|",
+						"ForeColor","BackColor","|","Bookmark","Hyperlink",
+						"XHTMLSource","Numbering","Bullets","|","Indent","Outdent","|","Image","|",
+						"Table","Guidelines","Absolute","|","Characters","Line",
+						"Clean","ClearAll","BRK",
+						"Paragraph","FontSize","|",
+						"Bold","Italic",
+						"Underline","Strikethrough","|","Superscript","Subscript","|",
+						"JustifyLeft","JustifyCenter","JustifyRight","JustifyFull","|","Tables","Photo","Mail"];
+
+				page_text.RENDER('{/literal}{$node.text|replace:"\r\n":""}{literal}');
+</script>
+{/literal}
+{else}
+
+<div class=tag_box>
+<a href="add_tag" onclick="return insert_tag(document.edit_node.page_text,'<b>','</b>')" class=tag_button><b>B</b></a>
+<a href="add_tag" onclick="return insert_tag(document.edit_node.page_text,'<i>','</i>')" class=tag_button><i>I</i></a>
+<a href="add_tag" onclick="return insert_tag(document.edit_node.page_text,'<u>','</u>')" class=tag_button><u>U</u></a>
+<a href="add_tag" onclick="return insert_tag(document.edit_node.page_text,'<img src=>','</img>')" class=tag_button>IMG</a>
+<a href="add_tag" onclick="return insert_tag(document.edit_node.page_text,'<a href=>','</a>')" class=tag_button>URL</a>
+<a href="add_tag" onclick="return insert_tag(document.edit_node.page_text,'<br>','')" class=tag_button>BR</a>
+</div>
+
+<textarea id=page_text class=field style="width:100%" rows=20>{$node.text|replace:"\r\n":""}</textarea>
+
+
+{/if*}
+
+<br>{/if}
+{if $mode=="edit"}
+<table width=100% class=content_table>
+
+	<tr bgcolor=#99CCFF>
+		<th colspan="2" onClick="show('editor', this);" class="button plus" style="border-bottom: none; text-align: left; padding-left: 30px;">Дополнительные настройки</th>
+	</tr>
+</table>
+<div id="editor" style="display: none;">
+<table width=100% class=content_table>
+<tr>
+		<td width=15% class=td1_left><b>Дополнительные модули:</b></td>
+		<td class=td1_right>
+		<select multiple=multiple size="4" name=edit_node_supmodules[] style="width:50%;" class=field>
+		{foreach from=$modules_support item=entry}
+			<option value={$entry.name}{if substr_count($node.support_modules, $entry.name)>0} selected=true{/if}>{$entry.title}</option>
+		{/foreach}
+		</select>
+		</td>
+	</tr>
+	<tr>
+		<td width=15% class=td1_left><b>Шаблон страницы:</b></td>
+		<td class=td1_right>
+		<select name=edit_node_template style="width:50%;" class=field>
+		{foreach from=$templates_list item="template"}
+			<option value="{$template.file}" {if $node.template==$template.file}selected=true{/if}>{$template.name}</option>
+		{/foreach}
+		</select>
+		</td>
+	</tr>
+	<tr>
+		<td width=15% class=td1_left><b>В меню:</b></td>
+		<td class=td1_right><select name=edit_node_menu style="width: 50%;" class=field>
+					<option value="1">Показывать</option>
+					<option value="0" {if $node.in_menu=='0'}selected=true{/if}>Не показывать</option>
+					</select>
+		
+		</td>
+	</tr>
+	
+	{*
+	<tr>
+		<td width=15% class=td1_left><b>В левом меню:</b></td>
+		<td class=td1_right><select name=edit_node_left_menu style="width: 50%;" class=field>
+					<option value="1">Показывать</option>
+					<option value="0" {if $node.in_left_menu=='0'}selected=true{/if}>Не показывать</option>
+					</select>
+		</td>
+	</tr>
+	*}
+	
+    <tr>
+    <td class=td1_left><strong>Статус:</strong></td>
+    <td class=td1_right><select name=edit_node_status style="width: 50%;" class=field>
+					<option value="1">Активный</option>
+					<option value="0" {if $node.status=='0'}selected=true{/if}>Ждёт</option>
+					</select></td>
+    </tr>
+	<tr>
+		<td width=15% class=td1_left><b>Картинка:</b></td>
+		<td class=td1_right>
+		<input type="hidden" name=edit_node_image_old value="{$node.image}">
+		{if $node.image==""}<input type="file" name=edit_node_image style="width:50%;" class=field>{else}
+		<div style="width: 100px; height: 100px; background: url('{$base_url}/uploaded_files/tree_images/{$node.image}') 50% 50% no-repeat; border: 1px solid #ccc;">&nbsp;</div>
+		<div>
+			<input type="checkbox" name="edit_node_image_delete" id="del_img"><label for="del_img">Удалить картинку</label>
+		</div>
+		{/if}
+		</td>
+	</tr>
+</table>
+{/if}
+{if $mode=="edit" && $node.module=='page'}
+<table width=100% class=content_table>
+	<tr>
+		<td width=15% class=td1_left style="border-bottom: none;"><b>Показывать:</b></td>
+		<td class=td1_right   style="border-bottom: none;">
+			
+            <table width="50%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+              	<td>&nbsp;<input type="checkbox" id="doc_01" onClick="shows('documents');" name="edit_node_show_documents" {if $node.show_documents=='1'}checked{/if}></td>
+               	<td nowrap><label for="doc_01">Документы</label></td>
+                <td>&nbsp;<input type="checkbox" name="edit_node_show_nodes" id="doc_02" {if $node.show_nodes=='1'}checked{/if}></td>
+              	<td nowrap><label for="doc_02">Подстраницы</label></td>
+              </tr>
+            </table>
+
+		</td>
+	</tr>
+</table>
+<div id="documents" style="display:{if $node.show_documents=='1'}all{else}none{/if};">
+<table width=100% class=content_table>
+<th colspan="2" style="background: #ccc;"><strong>Список документы</strong></th>
+	<tr>
+		<td width=15% class=td2_left><b>Шаблон:</b></td>
+		<td class=td2_right>
+			<select name="edit_node_documents_template" style="width:50%;" class=field>
+				{foreach from=$documents_templates item=item}
+					<option value="{$item}" {if $node.documents_template==$item}selected{/if}>{$item}</option>
+				{/foreach}
+			</select>
+
+		</td>
+	</tr>
+	<tr>
+		<td width=15% class=td1_left><b>Сортировать по:</b></td>
+		<td class=td1_right>
+		<select name=edit_node_show_documents_orderby style="width:50%;" class=field>
+			<option value="0"></option>
+			{foreach from=$documents_orderby_list item=item}
+				<option value="{$item.id}" {if $node.show_documents_orderby==$item.id}selected{/if}>{$item.name} (в {if $item.orderbysc=="ASC"}прямом{else}обратном{/if} порядке)</option>
+			{/foreach}
+		</select>
+		</td>
+	</tr>
+	<tr>
+		<td width=15% class=td2_left><b>Показать:</b></td>
+		<td class=td2_right>
+			<input type="text" name="edit_node_show_documents_number" value="{$node.show_documents_number}" style="width: 60px;"> документов
+		</td>
+	</tr>
+</table></div>{/if}{if $mode=="edit"}</div>
+<table width=100% class=content_table>
+	<tr>
+		<th bgcolor=#99CCFF onClick="show('metas', this);" class="button plus" style="border-bottom: none; text-align: left; padding-left: 30px;"><b>Metas</b></th>
+	</tr>
+ </table>
+    <div id="metas" style="display:{if $node.meta_keywords!='' or $node.meta_description!='' or $node.title}all{else}none{/if};">
+<table width=100% class=content_table>
+	<tr>
+		<td width=15% class=td1_left><b>Title:</b><br><small>(заголовок страницы)</small></td>
+		<td class=td1_right><input type=text name=edit_node_title style="width: 500px;" class=field value="{$node.title}">
+	</tr>
+	<tr>
+		<td width=15% class=td1_left><b>Кeywords:</b><br><small>(ключевые слова)</small></td>
+		<td class=td1_right><textarea name=edit_node_keywords class=field rows="4" style="width: 500px;">{$node.meta_keywords}</textarea></td>
+	</tr>
+
+	<tr>
+		<td class=td1_left><b>Description:<br><small></b>(описание страницы)</small></td>
+		<td class=td1_right><textarea name=edit_node_description class=field rows="4" style="width: 500px;">{$node.meta_description}</textarea></td>
+	</tr>
+</table>
+
+</div>
+<table width=100% class=content_table>
+	<tr>
+		<th bgcolor=#99CCFF onClick="show('access', this);" class="button plus" style="text-align: left; padding-left: 30px;"><b>Права доступа</b></th>
+	</tr>
+</table>
+
+<div id="access" style="display:none;">
+<table width=100% class=content_table>
+	<tr>
+		<td width=15% class=td1_left></td>
+		<td class=td1_right>
+		<input type="hidden" name="users_list" id="users_list" value="{$users_checked}">
+		<b>Права доступа на просмотр:</b><br><br>
+		<small><font color=#666666>Если права для чтения на родительский раздел ограничены, они автоматически распространяются на дочерние разделы.</font></small><br><br>
+		<input type=radio name=access_to value="all" {if $access_mode=='all'}checked=true{/if} id="joi_01"> <label for="joi_01">Доступен для всех</label><br>
+		<input type=radio name=access_to value="registered" {if $access_mode=='registered'}checked=true{/if} id="joi_02"> <label for="joi_02">Только для зарегестрированных</label><br>
+		<input type=radio name=access_to value="list" {if $access_mode=='list'}checked=true{/if} id="joi_03"> <label for="joi_03">Доступен только для</label>&nbsp;<a href="javascript: void(getTreeTools({$smarty.get.id}));">редактировать</a>&nbsp;<span id="label"></span><br>
+		</td>
+	</tr>
+</table>
+</div>
+{/if}
+<br><br>
+<center><input type=submit {if $mode=='edit'}name=submit_edit_node value="Сохранить изменения"{else}name=submit_add_node value="Добавить узел"{/if} class=button style="width:50%;"></center>
+</form>
+
+
+
+
+
+{*if $mode=='edit'}
+<br><br>
+
+<table width=100% cellspacing=1 cellpadding=3 class=content_table>
+<tr>
+<th>Файловый контент раздела</th>
+</tr>
+</table>
+
+
+<form action="" method=post name=edit_photos>
+{if !$files_list}
+<br><br><br><center>В разделе нет файлов</center><br><br>
+{else}
+<table width=100% cellspacing=1 cellpadding=3 class=content_table>
+<tr>
+<td class=td1_single valign=top>
+
+
+
+<table width={if $photos_count=='1'}25{/if}{if $photos_count=='2'}50{/if}{if $photos_count=='3'}75{/if}{if $photos_count>3}100{/if}% cellspacing=1 cellpadding=3>
+<tr>
+{assign var="i" value=0}
+{foreach from=$files_list item=entry name=tp}
+{if $i==4}{assign var="i" value=0}</tr><tr>{/if}
+<td valign=top width="25%">
+<input type=hidden id=order_{$entry.id} name=order_changed[{$entry.id}] value="">
+<input type=hidden id=title_{$entry.id} name=title_changed[{$entry.id}] value="">
+
+<table width=100% cellspacing=1 cellpadding=3 bgcolor=#666666>
+<tr bgcolor=#ffffff>
+<td height=120 style="padding: 2px;">
+
+<div id="photo_{$entry.id}" style="display: none; height: 120px;">
+<textarea class=field style="width:100%; height: 118px;" name=edit_title[{$entry.id}] onchange="document.getElementById('title_{$entry.id}').value=1;">{$entry.title}</textarea>
+</div>
+
+<table width="100%" style="height: 120px;" border="0" cellspacing="0" cellpadding="0" id="nav_photo_{$entry.id}">
+  <tr>
+    <td align="center">
+		{if $entry.ext == 'jpg' || $entry.ext == 'jpeg' || $entry.ext == 'gif' || $entry.ext == 'png'}
+			<img src=../uploaded_files/tree_files/resized-{$entry.id}.{$entry.ext} border="0" alt=""></td>
+		{/if}
+		{if $entry.ext == 'pdf'}<img src="/templates/img/pdf_icon.png" width="32" height="32" border="0">{/if}
+  </tr>
+</table>
+
+</td></tr>
+<tr><td onClick="shows('photo_{$entry.id}');" class="button" bgcolor="#3689d8" style="height: 20px; color: white; padding-left: 10px;"><small>комментарии</small></td></tr>
+<tr bgcolor=#ffffff class=table_content>
+<td>
+
+<table width="100%" style="height: 25px;" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><input type=checkbox name=delete_photos[] value={$entry.id} id="del_photo_{$entry.id}"> <label for="del_photo_{$entry.id}">Удалить</label></td>
+    <td align="right" style="padding-right: 2px;"><input type=text size="2" class=field name=edit_order[{$entry.id}] value={$entry.sort_order} onchange="document.getElementById('order_{$entry.id}').value=1;"></td>
+  </tr>
+</table>
+
+</td></tr>
+</table>
+
+</td>
+{math equation="x + y" x=$i y=1 assign="i"}
+{/foreach}
+</tr>
+</table>
+
+
+</td></tr>
+</table>
+
+<br><br>
+<center><input type=submit name=submit_save_files value="Сохранить изменения в контенте" class=button></center>
+{/if}</form>
+<br><br>
+
+<form action="" method=post name=add_files enctype="multipart/form-data">
+<input type=hidden name=parent value={$node.id}>
+<table width=100%  class=content_table>
+<tr>
+<th colspan="2">Добавить файл в контент раздела</th></tr>
+<tr>
+<td width=20% class=td1_left>Подпись к файлу:</td><td class=td1_right><textarea name="add_file_title" class="field" style="width: 450px; height: 60px;">{$file_title}</textarea></td>
+</tr>
+<tr>
+<td class=td1_left style="height: 30px;">Файл:</td><td class=td1_right><input type=file class=field name=add_new_file style="width:450px;"><br><div style="padding-top: 5px; font-size: 10px; color: #999;">Разрешенные форматы для загрузки jpg, gif, png, pdf, doc, xls. Максимальный размер файла 2 Мб.</div></td>
+</tr></table>
+<br><br><center><input type=submit name=submit_add_file value="Добавить файл"></center>
+<br><br>
+</form>
+{/if*}

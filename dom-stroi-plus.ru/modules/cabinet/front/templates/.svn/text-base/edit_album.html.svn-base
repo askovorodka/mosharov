@@ -1,0 +1,136 @@
+<form action="" method=post name=edit_album>
+<input type=hidden name=id value={$album.id}>
+<center>
+{if $error}<font color=red><b>{$error}</b></font><br><br>{/if}
+{if $message}<font color=green><b>{$message}</b></font><br><br>{/if}
+<table width=100% cellspacing=1 cellpadding=3 class=content_table>
+<tr>
+<th>{if $mode=='edit'}Редактировать альбом{else}Создать альбом{/if}</th>
+</tr>
+</table>
+
+
+<table width=100% cellspacing=1 cellpadding=3 class=content_table>
+<tr>
+	<td class=td1_left>Название:</td><td class=td1_right><input type=text name=edit_name class=field style="width:100%;" value="{$album.name}"></td>
+</tr>
+<tr>
+	<td class=td1_left valign=top>Описание:</td><td class=td1_right><textarea name=edit_description class=field style="width:100%;" rows=3>{$album.description}</textarea></td>
+</tr>
+{if $mode=='edit'}
+<tr>
+	<td class=td1_left width=15% valign="top">Статус:</td>
+	<td class=td1_right>
+	<select name=edit_status style="width:40%;" class=field>
+		<option value="1" {if $album.status=='1'}selected=true{/if}>Активный</option>
+		<option value="0" {if $album.status=='0'}selected=true{/if}>Ждёт</option>
+	</select>
+	</td>
+</tr>
+{/if}
+	
+</table>
+<br><br>
+<center><input type=submit name={if $mode=='edit'}submit_edit_album value="Сохранить изменения"{else}submit_add_album value="Создать альбом"{/if} class=button></center>
+</form>
+
+{if $mode=='edit'}
+<br><br>
+
+<form action="" method=post name=add_photos enctype="multipart/form-data">
+<input type=hidden name=parent value={$album.id}>
+<hr size=1 color=#666666 width=100%>
+<b>Добавление новой фотографии (максимальный размер 2Mb, разрешены форматы JPG, GIF, PNG):</b><br><br>
+<table width=100% cellspacing=1 cellpadding=3 class=content_table>
+<tr>
+<td width=20%>Подпись к фотографии:</td><td><input type=text class=field name=add_photo_title style="width:60%;"></td>
+</tr>
+<tr>
+<td>Фотография:</td><td><input type=file class=field name=add_new_photo style="width:60%;"></td>
+</tr><tr>
+<td>Добавить логотип:</td><td><input type=checkbox class=field name=add_photo_watermark style="border: none;" checked></td>
+</tr></table>
+<br><br><center><input type=submit name=submit_add_photo value="Добавить фотографию"></center>
+</td>
+</tr>
+</table>
+<br><br>
+
+</center>
+</form>
+
+<br><br>
+<table width=100% cellspacing=1 cellpadding=3 class=content_table>
+<tr>
+<th>Фотографии</th>
+</tr>
+</table>
+
+<table width=100% cellspacing=1 cellpadding=3 class=content_table>
+<tr>
+<td class=td1_single valign=top>
+{* Тута мы построим город-сад из фотографий *}
+{if !$photos_list}
+<br><br><br><center>В альбоме нет фотографий</center><br><br>
+{else}
+<form action="" method=post name=edit_photos>
+<table width={if $photos_count=='1'}33{/if}{if $photos_count=='2'}66{/if}{if $photos_count>2}100{/if}% cellspacing=1 cellpadding=3>
+<tr>
+{assign var="i" value=0}
+{foreach from=$photos_list item=entry name=tp}
+{assign var="file_name" value=$entry.id}
+{assign var="ext" value=$entry.ext}
+{if $i==3}{assign var="i" value=0}</tr><tr>{/if}
+<td valign=top >
+<input type=hidden id=order_{$entry.id} name=order_changed[{$entry.id}] value="">
+<input type=hidden id=title_{$entry.id} name=title_changed[{$entry.id}] value="">
+<input type=hidden id=link_{$entry.id} name=link_changed[{$entry.id}] value="">
+{* Фотка пошла *}
+<table width=100% cellspacing=1 cellpadding=3 bgcolor=#666666>
+<tr bgcolor=#ffffff>
+<td valign=top height={$photos_height}><a href={$base_url}/{$photos_folder}/{$entry.id}.{$entry.ext} target="_blank"><img src={$base_url}/{$photos_folder}/small-{$entry.id}.{$entry.ext} align=left></a>Размер: <b>{imagesize file="$base_path/$photos_folder/$file_name.$ext"}</b><br>Вес: <b>{filesize file="$base_path/$photos_folder/$file_name.$ext" unit="kb"} Кб</b></td>
+</tr>
+<tr bgcolor=#ffffff class=table_content>
+<td>
+Описание:<br>
+<textarea class=field style="width:100%;" name=edit_title[{$entry.id}] onchange="document.getElementById('title_{$entry.id}').value=1;">{$entry.title}</textarea>
+Ссылка на файл:<br>
+<input type="text" class=field style="width:100%;" value="{$base_url}/{$photos_folder}/{$entry.id}.{$entry.ext}">
+<input type=checkbox name=delete_photos[] value={$entry.id}> Удалить<div align=right><input type=text size="2" class=field name=edit_order[{$entry.id}] value={$entry.sort_order} onchange="document.getElementById('order_{$entry.id}').value=1;"> Порядок</div>
+</td>
+</tr>
+</table>
+{* ----------- *}
+</td>
+{math equation="x + y" x=$i y=1 assign="i"}
+{/foreach}
+</tr>
+</table>
+<br><br>
+<center><input type=submit name=submit_save_photos value="Сохранить изменения" class=button></center>
+{/if}
+<br>
+</form>
+{* Дальше пошла формочка добавления фотографий *}
+<form action="" method=post name=add_photos enctype="multipart/form-data">
+<input type=hidden name=parent value={$album.id}>
+<hr size=1 color=#666666 width=100%>
+<b><center>Добавление новой фотографии (максимальный размер 2Mb, разрешены форматы JPG, GIF, PNG):</center></b><br><br>
+<table width=100% cellspacing=1 cellpadding=3 class=content_table>
+<tr>
+<td width=20%>Подпись к фотографии:</td><td><input type=text class=field name=add_photo_title style="width:60%;"></td>
+</tr>
+<tr>
+<td>Фотография:</td><td><input type=file class=field name=add_new_photo style="width:60%;"></td>
+</tr><tr>
+<td>Добавить логотип:</td><td><input type=checkbox class=field name=add_photo_watermark style="border: none;" checked></td>
+</tr></table>
+<br><br><center><input type=submit name=submit_add_photo value="Добавить фотографию"></center>
+</td>
+</tr>
+</table>
+<br><br>
+
+</center>
+</form>
+{/if}

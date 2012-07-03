@@ -1,0 +1,17 @@
+function getText(s)
+	{
+    switch(s)
+        {
+		case "Folder deleted.": return "\u041F\u0430\u043F\u043A\u0430 \u0443\u0434\u0430\u043B\u0435\u043D\u0430.";
+		case "Folder does not exist.": return "\u0422\u0430\u043A\u0430\u044F \u043F\u0430\u043F\u043A\u0430 \u043D\u0435 \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u0435\u0442.";
+		case "Cannot delete Asset Base Folder.": return "\u041D\u0435\u043B\u044C\u0437\u044F \u0443\u0434\u0430\u043B\u0438\u0442\u044C \u043A\u043E\u0440\u043D\u0435\u0432\u0443\u044E \u043F\u0430\u043F\u043A\u0443 \u0444\u0430\u0439\u043B\u043E\u0432.";
+        }
+    }
+function loadText()
+	{
+	document.getElementById("btnCloseAndRefresh").value = "\u0437\u0430\u043A\u0440\u044B\u0442\u044C \u0438 \u043E\u0431\u043D\u043E\u0432\u0438\u0442\u044C";
+	}
+function writeTitle()
+	{
+	document.write("<title>\u0423\u0434\u0430\u043B\u0435\u043D\u0438\u0435 \u043F\u0430\u043F\u043A\u0438</title>")
+	}

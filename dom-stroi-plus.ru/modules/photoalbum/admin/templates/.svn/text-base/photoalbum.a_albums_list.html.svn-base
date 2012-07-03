@@ -1,0 +1,123 @@
+{literal}
+<DIV id=dhtmltooltip></DIV>
+<SCRIPT language=JavaScript>
+<!--
+function confirm_delete(delete_id)
+{
+if (confirm("Дейтсвительно удалить этот альбом? Все фотографии из альбома будут удалены!")) {
+parent.location.href = "?mod=photoalbum&action=delete_album&id=" + delete_id;
+}
+}
+function show(name, elem)
+{
+if(document.getElementById(name).style.display!="none") {
+		document.getElementById(name).style.display="none";
+		elem.className = "plus";
+	}
+	else {
+		document.getElementById(name).style.display="";
+		elem.className = "minus";
+	}
+}
+-->
+</SCRIPT>
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/tooltips.js'></script>
+{/literal}
+
+<table width=100%>
+<tr>
+<td>
+<form action="" method=GET name=cat_sort>
+<input type=hidden name=mod value=photoalbum>
+<input type=hidden name=action value=albums_list>
+<input type=hidden name=page value={$current_page}>
+Сортировать по разделу: <br>
+<select name=cat class=field style="width: 100%;" onChange="document.cat_sort.submit();">
+{foreach from=$cat_list item=entry}
+<option value={$entry.id} {if $cat==$entry.id}selected=true{/if}>{$entry.full_title}</option>
+{/foreach}
+</select>
+</form>
+</td>
+</tr></table>
+<br>
+{if $albums_list}
+<table width=100% class=content_table>
+
+	<tr>
+	<th>Альбом</th>
+	<th width=10%>Фотографий</th>
+	<th width=8%>Статус <a href="?mod=photoalbum&action=albums_list&cat={$cat}&sort=status&order=asc&page={$current_page}" class=img_link><img src=templates/img/cat_up.gif border=0></a>&nbsp;<a href="?mod=photoalbum&action=albums_list&cat={$cat}&sort=status&order=desc&search={$search}&page={$current_page}" class=img_link><img src=templates/img/cat_down.gif border=0></a></th>
+	<th width=10%>Действия</th>
+	</tr>
+
+	{foreach name=tree from=$albums_list item=entry}
+
+	{if $col==1}
+	{assign var="td" value='td1'}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value='td2'}
+	{assign var="col" value=1}
+	{/if}
+	<tr onmouseover="flatlinkOver(this)" {if $smarty.foreach.tree.iteration%2==1}onmouseout="flatlinkOut(this)"{else}onmouseout="flatlinkOut1(this)"{/if}>
+			<td class={$td}_left>
+				<small><font color=#666666>{$entry.cat_title}</font></small><br><img src="templates/img/tree.gif"><a href="?mod=photoalbum&action=edit_album&id={$entry.id}"><b>{$entry.name}</b></a>
+			</td>
+			<td align=center class={$td}_middle>
+			<b><font color=red>{$entry.photos}</font></b>
+			</td>
+			<td class={$td}_middle align=center>
+			<a href="?mod=photoalbum&action=change_album_status&id={$entry.id}" title="Изменить статус"><img src=templates/img/status_{$entry.status}.gif border=0></a>
+			</td>
+			<td align=center class={$td}_right>
+				<a href="javascript:confirm_delete('{$entry.id}');" class=img_link onmouseover="ddrivetip('Удалить альбом')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
+				<a href=?mod=photoalbum&action=edit_album&id={$entry.id} class=img_link onmouseover="ddrivetip('Редактировать альбом')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>
+			</td>
+		</tr>
+
+	{/foreach}
+{else}
+	<tr>
+			<td class=td1_middle style="height: 25px;" colspan="4">
+<center>В этом разделе нет альбомов</center></td></tr>
+{/if}
+</table>
+
+<table width=100% class=content_table>
+	<tr>
+		<th bgcolor=#99CCFF onClick="show('metas', this);" class="button plus" style="border-bottom: none; text-align: left; padding-left: 30px;"><b>Дополнительно</b></th>
+	</tr>
+ </table>
+    <div id="metas" style="display: none;">
+<table width=100% class=content_table>
+	<tr>
+		<td width=15% class=td2_left><strong>Фотографии:</strong></td>
+		<td class=td2_right><a href=index.php?mod=photoalbum&action=delete_previews style="text-decoration: underline;"><strong>Удалить уменьшенные копии фотографий продукции</strong></a><br>
+        <small style="color: #999;">данная процедура занимает некоторое время, просьба подождать</small>
+	</tr>
+</table>
+
+</div>
+
+
+
+
+<br>
+<div class="add_but" style="float: left;" onClick="location.href='?mod=photoalbum&action=add_album{if $cat}&cat={$cat}{/if}'"><div><a href="?mod=photoalbum&action=add_album{if $cat}&cat={$cat}{/if}">добавить фотоальбом</a></div></div>
+
+{if $total_pages>1}
+<br><br>
+<div class="listing">
+<li class="str">
+<ul>
+<li class="center"><a href="?mod=photoalbum&action=albums_list&cat={$cat}&sort={$sort}&order={$order}&page=1">&laquo;</a>
+{section name=p loop=$pages}
+  {if $pages[p]==$current_page}
+  <a class="active" href="?mod=photoalbum&action=albums_list&cat={$cat}&sort={$sort}&order={$order}&page={$pages[p]}">{$pages[p]}</a>
+  {else}
+  <a href="?mod=photoalbum&action=albums_list&cat={$cat}&sort={$sort}&order={$order}&page={$pages[p]}">{$pages[p]}</a>
+  {/if}
+{/section}
+<a href="?mod=photoalbum&action=albums_list&cat={$cat}&sort={$sort}&order={$order}&page={$total_pages}">&raquo;</a></li>
+</ul></li></div>{/if}

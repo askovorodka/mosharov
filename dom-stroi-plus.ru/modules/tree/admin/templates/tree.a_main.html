@@ -1,0 +1,77 @@
+<DIV id=dhtmltooltip></DIV>
+{literal}
+<SCRIPT language=JavaScript>
+<!--
+function confirm_delete(delete_id)
+{
+if (confirm("Дейтсвительно удалить этот узел?")) {
+parent.location.href = "index.php?mod=tree&action=delete&id=" + delete_id;
+}
+}
+-->
+</SCRIPT>
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/tooltips.js'></script>
+{/literal}
+	<table width=100% class="content_table">
+
+	<tr><th>Название</th><th width=10%>Документов</th><th width=10%>Модуль</th><th width=6%>Меню</th>{*<th width=6%>Левое меню</th>*}<th width=6%>Статус</th><th  width="6%" nowrap>Действия</th></tr>
+
+	{foreach name=tree from=$content item=entry}
+	<tr onmouseover="flatlinkOver(this)" {if $smarty.foreach.tree.iteration%2==1}onmouseout="flatlinkOut(this)"{else}onmouseout="flatlinkOut1(this)"{/if}>
+	{if $col==1}
+	{assign var="td" value="td1"}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value="td2"}
+	{assign var="col" value=1}
+	{/if}
+
+			<td class={$td}_left>
+				<table cellpadding="0" cellspacing="0" border="0" width="100%">
+					<tr>
+						<td width="1%" valign="top" align="right">{str_repeat str="&nbsp;" num=$entry.param_level mod="4"}<img src=templates/img/tree.gif></td>
+						<td style="height: 25px;">
+							{if $entry.param_level=='0'}
+								{$base_url}
+							{else}
+								{$entry.name}
+								<div style="margin-top: 3px"><a href="{$base_url}/{$entry.full_url}" target="_blank" class="gray" id="mini">{$base_url}/{$entry.full_url}</a></div>
+							{/if}
+						</td>
+					</tr>
+				</table>
+				
+			</td>
+			<td align=center class={$td}_middle>
+			{if $entry.module=="page"}<small>[ <a href="?mod=tree&action=documents_list&parent={$entry.id}"><strong>{$entry.documents}</strong></a> ]</small>{/if}
+			</td>
+			<td align=center class={$td}_middle>
+			{$entry.module}
+			</td>
+			<td align=center class={$td}_middle>
+			{if $entry.param_level!='0'}<a href="?mod=tree&action=change_in_menu&id={$entry.id}" title="Изменить статус"><img src=templates/img/status_{$entry.in_menu}.gif border=0></a>{/if}
+			</td>
+			{*<td align=center class={$td}_middle>
+			{if $entry.param_level!='0'}<a href="?mod=tree&action=change_in_left_menu&id={$entry.id}" title="Изменить статус"><img src=templates/img/status_{$entry.in_left_menu}.gif border=0></a>{/if}
+			</td>*}
+			<td align=center class={$td}_middle>
+			{if $entry.param_level!='0'}<a href="?mod=tree&action=change_status&id={$entry.id}"><img src=templates/img/status_{$entry.status}.gif border=0></a>{/if}
+			</td>
+			<td class={$td}_right nowrap>
+			{if $smarty.foreach.tree.iteration==1}
+			<div style="text-align: left;"><a href=?mod=tree&action=add&parent={$entry.id} class=img_link onmouseover="ddrivetip('Добавить подузел')" onmouseout=hideddrivetip()><img src=templates/img/add_cat.gif border=0 style="margin-left: 2px;"></a></div>
+			{else}
+            	{if $entry.module=='page'}<a href=?mod=tree&action=add&parent={$entry.id} class=img_link onmouseover="ddrivetip('Добавить подузел')" onmouseout=hideddrivetip()><img src=templates/img/add_cat.gif border=0></a>{else}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{/if}
+            	<a href=?mod=tree&action=edit&id={$entry.id} class=img_link onmouseover="ddrivetip('Редактировать узел')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>&nbsp;
+				<a href=?mod=tree&action=edit_elements&id={$entry.id} onmouseover="ddrivetip('Редактировать шаблон узла')" onmouseout=hideddrivetip()><img src=templates/img/elements.gif border=0></a>&nbsp;
+                <a href="javascript:confirm_delete('{$entry.id}');" class=img_link onmouseover="ddrivetip('Удалить узел')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
+				<a href=?mod=tree&action=move_up&id={$entry.id} class=img_link onmouseover="ddrivetip('Переместить узел вверх')" onmouseout=hideddrivetip()><img src=templates/img/ico_up.gif border=0></a><a href=?mod=tree&action=move_down&id={$entry.id} class=img_link onmouseover="ddrivetip('Переместить узел вниз')" onmouseout=hideddrivetip()><img src=templates/img/ico_down.gif border=0></a>
+			{/if}
+			</td>
+		</tr>
+
+	{/foreach}
+
+	</table>
+    <br>
+<div class="add_but" onClick="location.href='index.php?mod=tree&action=add'"><div><a href="index.php?mod=tree&action=add">добавить раздел</a></div></div>

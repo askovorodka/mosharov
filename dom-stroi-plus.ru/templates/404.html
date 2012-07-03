@@ -1,0 +1,40 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>{$page_title}</title>
+<meta name="Keywords" content="{$meta_keywords}">
+<meta name="Description" content="{$meta_description}">
+{foreach from=$css item=css}
+<link rel="stylesheet" type="text/css" href="{$css}">
+{/foreach}
+{foreach from=$js item=js}
+<script src="{$js}" type="text/javascript"></script>
+{/foreach}
+</head>
+<body>
+<table class="mtbl" align="center">
+  <tr>
+    <td class="toper"><a href="/"><img src="{$template_image}logo.gif" width="261" height="108"></a><div class="cln"></div><div class="big"></div></td>
+  </tr>
+  <tr>
+    <td class="tmenu">
+    {include file="../templates/top_menu_block.tpl"}
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align:top;">
+    <div class="left">
+    <div class="leftmenu"><img src="{$template_image}lmenu_t.gif" width="261" height="18">
+    	{include file="../templates/left_menu_block.tpl"}
+    	<img src="{$template_image}lmenu_b.gif" width="261" height="18"></div>
+    	<br><br>
+    </div>
+    <div class="cont">
+	    <center>Запрашиваемая страница не найдена.</center>
+    </div>
+    </td>
+  </tr>
+  {include file="../templates/footer_block.html"}
+</table>
+</body>
+</html>

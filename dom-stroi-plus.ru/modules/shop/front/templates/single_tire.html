@@ -1,0 +1,14 @@
+<table width="100%" height="264" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td class="catbigpct">{$cat_content.image}{if trim($cat_content.image) != ""}<img src="/uploaded_files/shop_images/{$cat_content.image}" width="215" height="236">{/if}</td>
+                <td class="catopis">
+                <div id="catopisb"><span id="linec">Бренд:</span>  {$cat_parent_info.name}<br>
+                <span id="linec">Модель:</span>  {$cat_content.name}<br>
+                {*<span id="linec">Шипованная:</span>  {if $cat_content.tire_spike == '1'}шип.{else}нешип.{/if}<br>
+                <span id="linec">Сезон:</span>  {if $cat_content.tire_season == '0'}зимняя{elseif $cat_content.tire_season == '1'}летняя{else}всесезон{/if}*}
+                
+                </div>
+                <p>{$cat_content.text}</p>
+                </td>
+              </tr>
+</table>
