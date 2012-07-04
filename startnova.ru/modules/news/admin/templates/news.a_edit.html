@@ -1,0 +1,187 @@
+{literal}
+<script language=JavaScript src='{/literal}{$base_url}/{literal}javascript/editor/scripts/language/russian/editor_lang.js'></script>
+<script language=JavaScript src='{/literal}{$base_url}/{literal}javascript/editor/scripts{/literal}/{$editor_mode}{literal}'></script>
+
+<script language="JavaScript">
+function check_form() {
+	if (({/literal}{if $editor_style=='html'}document.getElementById('news_small_text').value{else}news_small_text.getHTMLBody(){/if}{literal}=='')) {
+		alert("Заполните, пожалуйста, обязательные поля");
+		return false;
+	}
+	else {
+		{/literal}
+		{if $editor_style!='html'}
+		{literal}
+			document.edit_news.edit_news_small_text.value = news_small_text.getHTMLBody();
+			document.edit_news.edit_news_text.value = news_text.getHTMLBody();
+		{/literal}
+		{else}
+		{literal}
+			document.edit_news.edit_news_small_text.value = document.getElementById('news_small_text').value;
+			document.edit_news.edit_news_text.value = document.getElementById('news_text').value;
+		{/literal}
+		{/if}
+		{literal}
+		return true;
+	}
+}
+</script>
+{/literal}
+
+{if $success_message}<center><font color=green>{$success_message}</font></center><br>{/if}
+{if $error_message}<center><font color=red>{$error_message}</font></center><br>{/if}
+<form action="" name=edit_news method=POST enctype="multipart/form-data" onSubmit="return check_form();">
+<input type=hidden name=id value={$news.id}>
+{if $mode=='edit'}
+<input type=hidden name=time value={$news.publish_date}>
+<input type=hidden name=old_image value={$news.image}>
+{/if}
+<table width=100% class="content_table">
+<tr><th>{if $mode=='edit'}Редактируем новость{else}Добавить новость{/if}</th></tr>
+</table>
+
+<table width=100% class="content_table">
+<tr>
+<td width=20% class=td1_left>&nbsp;&nbsp;Заголовок:</td><td class=td1_right><input type=text name=edit_news_title style="width:100%" value="{$news.title}" class=field></td>
+</tr>
+<tr>
+<td class=td1_single colspan=2>
+
+<input type=hidden name=edit_news_small_text value="">
+<p><font color=red>*</font> Короткий текст:</p>
+
+{if $editor_style!='html'}
+{literal}
+<script language="JavaScript">
+				var news_small_text = new InnovaEditor("news_small_text");
+
+					news_small_text.btnStyles=true;
+
+					news_small_text.width="100%";
+					news_small_text.height="400";
+
+					news_small_text.css="style.css";
+					news_small_text.cmdAssetManager="modalDialogShow('{/literal}{$base_url}/{literal}javascript/editor/assetmanager/assetmanager.php?lang=russian',640,465)";
+
+					news_small_text.features=["FullScreen","Search",
+						"Cut","Copy","Paste","PasteWord","PasteText","|","Undo","Redo","|",
+						"ForeColor","BackColor","|","Bookmark","Hyperlink",
+						"XHTMLSource","Numbering","Bullets","|","Indent","Outdent","|","Image","|",
+						"Table","Guidelines","Absolute","|","Characters","Line",
+						"Clean","ClearAll","BRK",
+						"Paragraph","FontSize","|",
+						"Bold","Italic",
+						"Underline","Strikethrough","|","Superscript","Subscript","|",
+						"JustifyLeft","JustifyCenter","JustifyRight","JustifyFull"];
+
+
+					news_small_text.RENDER('{/literal}{$news.small_text|replace:"\r\n":""}{literal}');
+</script>
+{/literal}
+{else}
+
+
+<div class=tag_box>
+<a href="add_tag" onclick="return insert_tag(document.edit_news.news_small_text,'<b>','</b>')" class=tag_button><b>B</b></a>
+<a href="add_tag" onclick="return insert_tag(document.edit_news.news_small_text,'<i>','</i>')" class=tag_button><i>I</i></a>
+<a href="add_tag" onclick="return insert_tag(document.edit_news.news_small_text,'<u>','</u>')" class=tag_button><u>U</u></a>
+<a href="add_tag" onclick="return insert_tag(document.edit_news.news_small_text,'<img src=>','</img>')" class=tag_button>IMG</a>
+<a href="add_tag" onclick="return insert_tag(document.edit_news.news_small_text,'<a href=>','</a>')" class=tag_button>URL</a>
+<a href="add_tag" onclick="return insert_tag(document.edit_news.news_small_text,'<br>','')" class=tag_button>BR</a>
+</div>
+
+<textarea id=news_small_text class=field style="width:100%" rows=20>{$news.small_text|replace:"\r\n":""}</textarea>
+
+{/if}
+</td>
+</tr>
+<tr>
+<td colspan="2" valign=top class=td1_single>&nbsp;&nbsp;Полный текст:
+<input type=hidden name=edit_news_text value="">
+{if $editor_style!='html'}
+{literal}
+<script language="JavaScript">
+				var news_text = new InnovaEditor("news_text");
+
+					news_text.btnStyles=true;
+
+					news_text.width="100%";
+					news_text.height="400";
+
+					news_text.css="style.css";
+					news_text.cmdAssetManager="modalDialogShow('{/literal}{$base_url}/{literal}javascript/editor/assetmanager/assetmanager.php?lang=russian',640,465)";
+
+					news_text.features=["FullScreen","Search",
+						"Cut","Copy","Paste","PasteWord","PasteText","|","Undo","Redo","|",
+						"ForeColor","BackColor","|","Bookmark","Hyperlink",
+						"XHTMLSource","Numbering","Bullets","|","Indent","Outdent","|","Image","|",
+						"Table","Guidelines","Absolute","|","Characters","Line",
+						"Clean","ClearAll","BRK",
+						"Paragraph","FontSize","|",
+						"Bold","Italic",
+						"Underline","Strikethrough","|","Superscript","Subscript","|",
+						"JustifyLeft","JustifyCenter","JustifyRight","JustifyFull","|","Tables","Photo","Mail"];
+
+
+					news_text.RENDER('{/literal}{$news.text|replace:"\r\n":""}{literal}');
+</script>
+{/literal}
+{else}
+
+
+<div class=tag_box>
+<a href="add_tag" onclick="return insert_tag(document.edit_news.news_text,'<b>','</b>')" class=tag_button><b>B</b></a>
+<a href="add_tag" onclick="return insert_tag(document.edit_news.news_text,'<i>','</i>')" class=tag_button><i>I</i></a>
+<a href="add_tag" onclick="return insert_tag(document.edit_news.news_text,'<u>','</u>')" class=tag_button><u>U</u></a>
+<a href="add_tag" onclick="return insert_tag(document.edit_news.news_text,'<img src=>','</img>')" class=tag_button>IMG</a>
+<a href="add_tag" onclick="return insert_tag(document.edit_news.news_text,'<a href=>','</a>')" class=tag_button>URL</a>
+<a href="add_tag" onclick="return insert_tag(document.edit_news.news_text,'<br>','')" class=tag_button>BR</a>
+</div>
+
+<textarea id=news_text class=field style="width:100%" rows=20>{$news.text|replace:"\r\n":""}</textarea>
+
+{/if}
+</td>
+</tr>
+<tr>
+<td width=20% valign=top class=td1_left>&nbsp;&nbsp;Картинка:</td><td class=td1_right>{if $mode=='edit' and $news.image!=''}<img src={$base_url}/uploaded_files/news/{$news.image}><br><input type=checkbox name=delete_image> Удалить картинку<br><br>{/if}<input type=file name=edit_news_image style="width:50%" class=field></td>
+</tr>
+
+{if $mode=='edit'}
+    <tr>
+    <td class=td1_left>&nbsp;&nbsp;Статус:</td>
+    <td class=td1_right><select name=edit_news_status style="width: 50%;" class=field>
+					<option value="1">Активный</option>
+					<option value="0" {if $news.status=='0'}selected=true{/if}>Ждёт</option>
+					</select></td>
+    </tr>
+<tr>
+<td width=20% valign=top class=td1_left>&nbsp;&nbsp;Дата публикации:</td>
+	<td class=td1_right>
+		<input type="text" size="3" value="{$news.publish_date|date_format:"%d"}" class=field name="edit_news_date_day">
+		<select name="edit_news_date_month" class=field>
+			<option value="1"{if $news.publish_date|date_format:"%m"=="01"}selected{/if}>январь</option>
+			<option value="2"{if $news.publish_date|date_format:"%m"=="02"}selected{/if}>февраль</option>
+			<option value="3"{if $news.publish_date|date_format:"%m"=="03"}selected{/if}>март</option>
+			<option value="4"{if $news.publish_date|date_format:"%m"=="04"}selected{/if}>апрель</option>
+			<option value="5"{if $news.publish_date|date_format:"%m"=="05"}selected{/if}>май</option>
+			<option value="6"{if $news.publish_date|date_format:"%m"=="06"}selected{/if}>июнь</option>
+			<option value="7"{if $news.publish_date|date_format:"%m"=="07"}selected{/if}>июль</option>
+			<option value="8"{if $news.publish_date|date_format:"%m"=="08"}selected{/if}>август</option>
+			<option value="9"{if $news.publish_date|date_format:"%m"=="09"}selected{/if}>сентябрь</option>
+			<option value="10"{if $news.publish_date|date_format:"%m"=="10"}selected{/if}>октябрь</option>
+			<option value="11"{if $news.publish_date|date_format:"%m"=="11"}selected{/if}>ноябрь</option>
+			<option value="12"{if $news.publish_date|date_format:"%m"=="12"}selected{/if}>декабрь</option>
+		</select>
+		<input type="text" size="5" value="{$news.publish_date|date_format:"%Y"}" class=field name="edit_news_date_year">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Время:
+		<input type="text" size="3" value="{$news.publish_date|date_format:"%H"}" class=field name="edit_news_date_hour">:<input type="text" size="3" value="{$news.publish_date|date_format:"%M"}" class=field name="edit_news_date_minutes">
+	</td>
+</tr>
+{/if}
+
+</table>
+<br>
+<center><input type=submit {if $mode=='edit'}name=submit_edit_news value="Сохранить изменения"{else}name=submit_add_news value="Добавить новость"{/if}></center>
+
+</form>

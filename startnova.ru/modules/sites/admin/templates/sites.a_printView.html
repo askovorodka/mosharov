@@ -1,0 +1,55 @@
+{literal}
+<script language='JavaScript'>
+<!--//
+     print();
+//-->
+</script>
+{/literal}
+
+
+{if $products_list}
+<form action="" method=post name='frm_prod'>
+{if $smarty.get.cat}
+<input type='hidden' name='cat' value='{$smarty.get.cat}'>
+{/if}
+<input type='hidden' name='cat_id' value='{$smarty.get.cat}'>
+<table width=100% class=content_table>
+
+  <tr>
+  <td width='15%' align='center'>Продукт нулевой ценой</td>
+  </tr>
+
+  {foreach name=tree from=$products_list item=entry}
+
+  {if $col==1}
+  {assign var="td" value='td1'}
+  {assign var="col" value=0}
+  {else}
+  {assign var="td" value='td2'}
+  {assign var="col" value=1}
+  {/if}
+  <tr>
+      <td class={$td}_middle>
+        {foreach from=$entry.cat_list item=cat name=cl}
+        <small><font color=#666666>{$cat.name}</font>{if !$smarty.foreach.cl.last}, {/if}</small>
+
+        {/foreach}
+        <br>
+
+        <b>{$entry.name}</b>
+      </td>
+
+
+
+
+
+    </tr>
+
+  {/foreach}
+
+</table>
+</form>
+
+{else}
+<center>{if !$search}В этой категории нет продуктов{else}Ничего не найдено!{/if}</center>
+{/if}

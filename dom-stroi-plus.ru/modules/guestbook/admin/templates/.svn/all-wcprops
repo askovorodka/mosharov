@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/45/branches/dom/modules/guestbook/admin/templates
+END
+guestbook.a_edit.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/45/branches/dom/modules/guestbook/admin/templates/guestbook.a_edit.html
+END
+guestbook.a_main.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/45/branches/dom/modules/guestbook/admin/templates/guestbook.a_main.html
+END
+guestbook.a_edit_message.html
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/45/branches/dom/modules/guestbook/admin/templates/guestbook.a_edit_message.html
+END

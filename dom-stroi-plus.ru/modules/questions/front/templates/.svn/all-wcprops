@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/45/branches/dom/modules/questions/front/templates
+END
+show_single_questions.html
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/45/branches/dom/modules/questions/front/templates/show_single_questions.html
+END
+questions_cat.html
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/45/branches/dom/modules/questions/front/templates/questions_cat.html
+END
+questions_list.html
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/45/branches/dom/modules/questions/front/templates/questions_list.html
+END
+questions_support.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/45/branches/dom/modules/questions/front/templates/questions_support.html
+END

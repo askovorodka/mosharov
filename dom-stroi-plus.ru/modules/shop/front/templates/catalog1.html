@@ -1,0 +1,3 @@
+{foreach from=$folders_list item=folder name=folder}
+	<h2><a href="{$base_url}/catalog/{$folder.full_url}" class="Categories">{$folder.name|strip_tags}</a></h2><br>
+{/foreach}

@@ -1,0 +1,8 @@
+<table class="topban">
+	{foreach from=$shop_menu item=smenu name=iter1}
+      	{if $smarty.foreach.iter1.first}<tr>{elseif !$smarty.foreach.iter1.first && $smarty.foreach.iter1.iteration%4==0}</tr><tr>{/if}
+        <td><a href="{$base_url}/catalog/{$smenu.url}/">{$smenu.name|strip_tags}</a>
+        <br><a href="{$base_url}/catalog/{$smenu.url}/"><img src="{if $smenu.image}/uploaded_files/categor_images/small-{$smenu.image}{else}{$template_image}ban_t.jpg{/if}" width="240" height="162"></a></td>
+      	{if $smarty.foreach.iter1.last}</tr>{/if}
+     {/foreach}
+</table><br><br>

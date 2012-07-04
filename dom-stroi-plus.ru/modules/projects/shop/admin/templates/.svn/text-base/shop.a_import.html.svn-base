@@ -1,0 +1,22 @@
+{if $error_message}<center><font color=red><b>{$error_message}</b></font></center><br><br>{/if}
+
+<form action="" name=edit_cat method=post enctype="multipart/form-data">
+
+<table width=100% class=content_table>
+
+	<tr class=table_content>
+		<td class=td1_left>Тип:</td>
+		<td class=td1_right><input type="radio" name="type" value="disk" id="disk"><label for="disk">Диски</label>
+		<input type="radio" name="type" value="tires" id="tires" checked><label for="tires">Шины</label></td>
+	</tr>
+
+	<tr class=table_content>
+		<td class=td1_left>Выберите файл импорта:</td>
+		<td class=td1_right><input type=file name=import_file></td>
+	</tr>
+</table>
+
+
+<br>
+<center><input type=submit name=submit_import value="Загрузить"></center>
+</form>

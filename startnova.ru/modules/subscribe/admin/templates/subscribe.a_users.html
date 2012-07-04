@@ -1,0 +1,119 @@
+{literal}
+<SCRIPT language=JavaScript>
+<!--
+function show(name, elem)
+{
+if(document.getElementById(name).style.display!="none") {
+		document.getElementById(name).style.display="none";
+		elem.className = "plus";
+	}
+	else {
+		document.getElementById(name).style.display="";
+		elem.className = "minus";
+	}
+}
+-->
+</SCRIPT>
+{/literal}
+
+<table width=100% class=content_table>
+<tr>
+<th>Добавить электронную почту</th>
+</tr>
+<tr>
+<td valign="top" class="td1_middle">
+<form action="" method=post>
+
+<table width="100%" style="height: 30px;" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="150">Электронная почта:</td>
+    <td width="320"><input type=text name=new_user class=field style="width: 300px;"></td>
+    <td><input type=submit name=submit_new_user value="Добавить" class="hand ten"></td>
+  </tr>
+</table>
+</form>
+
+</td>
+</tr></table>
+<br><br>
+
+
+{if $users_list}
+<center>
+<form action="" method=post>
+<table width=100% class=content_table>
+	<tr><th>Электронная почта</th><th width=200 align=center>Группа</th><th width=10% align=center>Статус</th><th width=10% align=center>Удалить</th></tr>
+	{foreach from=$users_list item=user name=tree}
+	{if $col==1}
+	{assign var="td" value='td1'}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value='td2'}
+	{assign var="col" value=1}
+	{/if}
+	<tr onmouseover="flatlinkOver(this)" {if $smarty.foreach.tree.iteration%2==1}onmouseout="flatlinkOut(this)"{else}onmouseout="flatlinkOut1(this)"{/if}>
+	<td class={$td}_left><input type=text name=edit_user[{$user.id}] class=field style="width:100%" value="{$user.mail}"></td>
+	<td class={$td}_middle>
+		<select name=edit_group[{$user.id}] class=field style="width:100%">
+			<option value=0></option>
+			{foreach from=$groups_list item=group}
+				<option {if $user.group_id==$group.id}selected=true{/if} value={$group.id}>{$group.name}</option>
+			{/foreach}
+		</select>
+	</td>
+	<td class={$td}_middle align=center><a href="?mod=subscribe&action=change_user_status&id={$user.id}" title="Изменить статус"><img src=templates/img/status_{$user.status}.gif border=0></a></td>
+	<td class={$td}_right align=center><input type=checkbox name=delete_user[{$user.id}]></td>
+	</tr>
+	{/foreach}
+    </table>
+    <table width=100% class=content_table>
+	<tr>
+		<th bgcolor=#99CCFF onClick="show('metas', this);" class="button plus" style="border-bottom: none; text-align: left; padding-left: 30px;"><b>Дополнительно</b></th>
+	</tr>
+ </table>
+    <div id="metas" style="display: none;">
+<table width=100% class=content_table>
+	<tr>
+		<td width=15% class=td2_left><strong>Почта:</strong></td>
+		<td class=td2_right><a href=index.php?mod=subscribe&action=delete_inactive_users style="text-decoration: underline;"><strong>Удалить все адреса, неподтверждённые в течении недели</strong></a><br>
+        <small style="color: #999;">данная процедура занимает некоторое время, просьба подождать</small></td>
+	</tr>
+    <tr>
+  		<td width=15% class=td2_left><strong>Скачать:</strong></td>
+		<td class=td2_right><a href="index.php?mod=subscribe&action=viewUsersMial" onClick="javascript: window.open('index.php?mod=subscribe&action=viewUsersMial','','width=600,height=600,resizable=yes,scrollbars=yes'); return false;" style="text-decoration: underline;"><strong>Вывести все адреса почтовых ящиков</strong></a><br>
+        <small style="color: #999;">данная процедура занимает некоторое время, просьба подождать</small></td>    
+    </tr>
+</table>
+
+</div>
+</center>
+    
+    
+<table width=100% class=content_table>    
+	<tr>
+	<td align=center style="padding-top: 20px;"><input type=submit name=submit_save_users value="Сохранить изменения"></td>
+	</tr></table>
+    {else}
+  <table width=100% class=content_table> 
+    	<tr><th>Электронная почта</th><th width=200 align=center>Группа</th><th width=10% align=center>Статус</th><th width=10% align=center>Удалить</th></tr> 
+    <tr>
+	<td colspan="4" class="td1_middle" align=center style="height: 30px;">Нет ниодного подписчика.</td></tr>
+</table>
+{/if}
+</form>
+
+{if $total_pages>1}
+<br><br>
+<div class="listing">
+<li class="str">
+<ul>
+<li class="center"><a href="?mod=subscribe&action=users&page=1">&laquo;</a>
+{section name=p loop=$pages}
+  {if $pages[p]==$current_page}
+  <a class="active" href="?mod=subscribe&action=users&page={$pages[p]}">{$pages[p]}</a>
+  {else}
+  <a href="?mod=subscribe&action=users&page={$pages[p]}">{$pages[p]}</a>
+  {/if}
+{/section}
+<a href="?mod=subscribe&action=users&page={$total_pages}">&raquo;</a></li>
+</ul></li></div>{/if}

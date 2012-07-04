@@ -1,0 +1,44 @@
+
+<table width="99%" cellspacing="0" cellpadding="5" border="0" >
+<tr height=55>
+	<td>
+		<h2>Описание</h2>
+	</td>
+	<td>
+		<h2>Кол-во (шт)</h2>
+	</td>
+	<td>
+		<h2>Стоимость</h2>
+	</td>
+	<td>
+		<h2>Дата</h2>
+	</td>
+	<td>
+		<h2>Статус</h2>
+	</td>
+</tr>
+
+{foreach from=$orders_list item=item}
+<!--ITEM-->
+<tr valign="top">
+  <td width="313" height="33" class="pad_top7 font10" style="padding-right : 55px;"><h2 class="font10">({$item.article}) | <a href="javascript:void(0);" style="font-size:10px;cursor:default;">{$item.name}</a></h2></td>
+  <td width="55" class="pad_top7 font10"><strong>{$item.product_count}</strong></td>
+  <td width="160" class="pad_top7 font10">
+  <table cellspacing=0 cellpadding=0 border=0>
+    <tr><td><strong>{math equation="x * y" x=$item.price y=$item.product_count format="%.2f"}</strong> {$currency_site.znak}</td></tr>
+    <tr><td><strong>{math equation="x * y" x=$item.price2 y=$item.product_count format="%.2f"}</strong> {$currency_site2.znak}</td></tr>
+    </table>
+  </td>
+  <td class="pad_top7 font10"><strong>{$item.insert_date|date_format:"%d.%m.%Y"}</strong></td>
+  <td class="pad_top7 font10"><strong>{if $item.status==0}<font color='red'>ожидание</font>{elseif $item.status==1}<font color='blue'>выполняется</font>{else}<font color='green'>выполнен</font>{/if}</strong></td>
+</tr>
+<tr valign="top">
+  <td width="313" style="padding-right : 55px; padding-bottom : 6px;" class="font10">{$item.small_description}</td><td colspan="4"></td>
+</tr>
+
+<tr><td colspan=4 style="border-top : 1px solid #EBE9E9; margin-top : 3px;">&nbsp;</td></tr>
+{/foreach}
+<!--ITEM-->
+</table>
+<!--CABINET-->
+<br><br>Чтобы покинуть систему нажмите <a href="{$module_url}/logout/" style="text-decoration: underline;">выход</a>.

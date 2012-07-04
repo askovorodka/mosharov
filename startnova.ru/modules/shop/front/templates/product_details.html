@@ -1,0 +1,12 @@
+<h1>{$product.name}</h1>
+
+{if $photos}
+    <div class="pictures">
+    	{foreach from=$photos item=photo}
+    		<a class="gallery" href="/uploaded_files/shop_images/big-{$photo.id}.{$photo.ext}"><img src="/uploaded_files/shop_images/small-{$photo.id}.{$photo.ext}" width="167" height="112"></a>
+    	{/foreach}
+    </div>
+    <div class="cln"></div>
+{/if}
+
+<p>{$product.description}</p>

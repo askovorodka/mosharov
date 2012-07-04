@@ -1,0 +1,60 @@
+	
+
+		<h1>{if $cat_content.param_level == 0}Каталог продукции{else}{$cat_content.name}{/if}</h1>
+
+		<div class="proj"><div class="projin">
+		{foreach from=$categories item=cat name=iter_cat}
+			{if $cat_content.id == $cat.id}
+			{$cat.name|strip_tags}
+			{else}
+			<a href="{$base_url}/catalog/{$cat.url}/" title="{$cat.name|strip_tags}">{$cat.name|strip_tags}</a>
+			{/if}
+			{if !$smarty.foreach.iter_cat.last}<span class="vert">|</span>{/if}
+		{/foreach}
+		</div></div>
+
+
+{if $products_list}
+
+	{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/products_list.html"}
+	
+{/if}
+
+{literal}
+<script type="text/javascript" language="javascript">
+	// <![CDATA[
+	
+	
+	$("A.addToBasket").click(function(){
+		
+		this.response = function(response){
+			$("DIV#loading-layer").hide();
+			$("DIV#basket").removeClass("basketContentHide").addClass("basketContentShow");
+			var floor = response.split(";");
+			$("#basket_number").html(floor[0]);
+			$("#basket_currency").html(floor[1]);
+		};
+		
+		var product_count = parseInt($($($($(this).parent()).prev()).children()).val());
+		var product_id = parseInt($(this).attr("id"));
+		if (product_count && product_count)
+		{
+			var left = $(this).offset().left;
+			var top = $(this).offset().top;
+			$("DIV#loading-layer").css({"top": top, "left" : left-200}).show();
+			
+			$.post('http://' + location.hostname + '/shop/basket/add/', {product_id : product_id, product_count : product_count}, this.response );
+		}
+		return false;
+	});
+	
+		$("INPUT.BasketCountInput").keyup(function(){
+			if (!parseInt($(this).val()))
+				return false;
+			return true;
+		});
+		
+// ]]>
+	</script>
+{/literal}
+

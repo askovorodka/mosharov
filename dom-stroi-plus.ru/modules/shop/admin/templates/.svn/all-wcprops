@@ -1,0 +1,167 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/72/branches/dom/modules/shop/admin/templates
+END
+shop.a_sortProducts.html
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/shop.a_sortProducts.html
+END
+shop.a_products_properties.html
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/shop.a_products_properties.html
+END
+shop.a_edit_cat.html
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/72/branches/dom/modules/shop/admin/templates/shop.a_edit_cat.html
+END
+shop.a_tire_properties.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/shop.a_tire_properties.html
+END
+shop.a_products_types.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/shop.a_products_types.html
+END
+shop.a_cur_list.html
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/shop.a_cur_list.html
+END
+shop.a_files_product.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/shop.a_files_product.html
+END
+shop.a_edit_product.html
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/72/branches/dom/modules/shop/admin/templates/shop.a_edit_product.html
+END
+shop.a_main.html
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/50/branches/dom/modules/shop/admin/templates/shop.a_main.html
+END
+shop.a_products_print.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/shop.a_products_print.html
+END
+shop.a_import_details.htm
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/shop.a_import_details.htm
+END
+shop.a_print_order.html
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/shop.a_print_order.html
+END
+coupon.html
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/coupon.html
+END
+shop.a_import_log.htm
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/shop.a_import_log.htm
+END
+shop.a_import_error.html
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/shop.a_import_error.html
+END
+statistics.html
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/statistics.html
+END
+shop.a_products_list.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/50/branches/dom/modules/shop/admin/templates/shop.a_products_list.html
+END
+mini_catalogue.html
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/mini_catalogue.html
+END
+move_product.html
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/move_product.html
+END
+shop.a_import_log.html
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/shop.a_import_log.html
+END
+shop.a_disk_properties.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/shop.a_disk_properties.html
+END
+shop.a_cur_edit.html
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/shop.a_cur_edit.html
+END
+shop.a_import_details.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/shop.a_import_details.html
+END
+shop.a_printView.html
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/shop.a_printView.html
+END
+shop.a_import.html
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/shop.a_import.html
+END
+shop.a_order_details.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/shop.a_order_details.html
+END
+shop.a_orders.html
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/45/branches/dom/modules/shop/admin/templates/shop.a_orders.html
+END
