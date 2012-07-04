@@ -1,0 +1,50 @@
+<strong>Редактировать соответствия категорий</strong>
+
+{if $matches}
+<form action="" name=edit_matches method=post>
+<table width=100% class=content_table>
+	  <tr>
+	    <th>Название в прайсе</th>
+	    <th>Название в каталоге</th>
+	    <th>Уровень</th>
+	    <th></th>
+	  </tr>
+
+	{foreach from=$matches item=item}
+	  <tr>
+	    <td><input type="text" name="name_feed[{$item.id}]" value="{$item.name_feed|strip_tags}" /></td>
+	    <td><input type="text" name="name_db[{$item.id}]" value="{$item.name_db|strip_tags}" /></td>
+	    <td><select name="param_level[{$item.id}]"><option value="2" {if $item.param_level == 2}selected{/if}>Категория<option value="3" {if $item.param_level == 3}selected{/if}>Подкатегория</select></td>
+	    <td><a href="/admin/index.php?mod=shop&action=delete_match&id={$item.id}" onClick="return confirm('Удалить категорию: {$item.name_feed}');">Удалить</a>
+	  </tr>
+	{/foreach}
+
+	  <tr>
+	    <td colspan="3"><input name=submit_edit_matches type=submit value="Изменить соответствия"></td>
+	  </tr>
+
+</table>
+</form>
+
+{else}
+<center>Соответствий нет</center>
+{/if}
+<br>
+
+<strong>Добавить новое соответствие</strong>
+<form action="" name=edit_matches method=post>
+<table width=100% class=content_table>
+	  <tr>
+	    <th>Название в прайсе</th>
+	    <th>Название в каталоге</th>
+	    <th>Уровень</th>
+	    <th></th>
+	  </tr>
+	  <tr>
+	    <td><input type="text" name="name_feed" value="" /></td>
+	    <td><input type="text" name="name_db" value="" /></td>
+	    <td><select name="param_level"><option value="2">Категория<option value="3">Подкатегория</select></td>
+	    <td><input name=submit_add_match type=submit value="Добавить соответствие"></td>
+	  </tr>
+</table>
+</form>
