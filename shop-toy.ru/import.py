@@ -25,7 +25,7 @@ for row in imported_rows:
         cat1_name_db = row['group_prod']
     else:
         cat1_name_db = str(cat1['name_db'])
-        
+    
     #находим соответствие категории уровня 2
     print row['nomen']
     cat2 = db.selectrow("select * from matches_category where name_feed='%s' and param_level=%d" % (db.escape(str(row['nomen'])), 3))
