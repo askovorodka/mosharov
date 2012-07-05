@@ -18,7 +18,7 @@ def search_category(name, param_level, parent = None):
         and b.param_right >= a.param_right and b.param_level = 1
         left join fw_catalogue as c on c.param_left < a.param_left and c.param_right > a.param_right and c.param_level = %d
         where a.name = '%s' and a.param_level = '%d' 
-        and c.id = %d ''' % ((int(param_level)-1), str(name), int(param_level), int(parent))
+        and c.id = %d ''' % ((int(param_level)-1), db.escape(str(name)), int(param_level), int(parent))
     else:
         sql = ''' select a.* from fw_catalogue as a 
         where a.name = '%s' and a.param_level = '%d' ''' % (db.escape(str(name)), int(param_level))
@@ -91,9 +91,6 @@ for row in imported_rows:
     #далее находим такую категорию, если ее нету, то добавляем
     brand = search_category(cat1_name_db, 1)
     
-    brand = db.selectrow("select * from fw_catalogue where name = '%s' and param_level=%d" % (db.escape(str(cat1_name_db)), 1))
-    
-    
     if brand == None:
     	brand_id = insert(rootcat)
     	status = 1
@@ -103,6 +100,18 @@ for row in imported_rows:
     
     brand_url = "brand" + str(brand_id)
     db.query("update fw_catalogue set name = '%s', url = '%s', status = '%d' where id='%d' " % (db.escape(str(cat1_name_db)), brand_url, status, brand_id))
+    
+    
+    model = search_category(cat2_name_db, 2, brand_id)
+    if model == None:
+    	model_id = insert(brand)
+    	status = 1
+    else:
+    	model_id = int(model['id'])
+    	status = int(model['status'])
+    model_url = "model" + str(model_id)
+    db.query("update fw_catalogue set name = '%s', url = '%s', status = '%d' where id='%d' " % (db.escape(str(cat2_name_db)), model_url, status, model_id))
+    
     
 
 db.close()
