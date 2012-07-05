@@ -1,37 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <buildpath>
-	<buildpathentry kind="src" path="admin"/>
-	<buildpathentry kind="src" path="conf"/>
-	<buildpathentry kind="src" path="javascript/editor/assetmanager"/>
-	<buildpathentry kind="src" path="javascript/tinymce/jscripts/tiny_mce/plugins/imagemanager"/>
-	<buildpathentry kind="src" path="lib"/>
-	<buildpathentry kind="src" path="modules/banners/admin"/>
-	<buildpathentry kind="src" path="modules/banners/front"/>
-	<buildpathentry kind="src" path="modules/cabinet"/>
-	<buildpathentry kind="src" path="modules/categors"/>
-	<buildpathentry kind="src" path="modules/edit_conf"/>
-	<buildpathentry kind="src" path="modules/ferms"/>
-	<buildpathentry kind="src" path="modules/file_manager"/>
-	<buildpathentry kind="src" path="modules/forms"/>
-	<buildpathentry kind="src" path="modules/forum"/>
-	<buildpathentry kind="src" path="modules/guestbook"/>
-	<buildpathentry kind="src" path="modules/modules"/>
-	<buildpathentry kind="src" path="modules/news"/>
-	<buildpathentry kind="src" path="modules/otr"/>
-	<buildpathentry kind="src" path="modules/page"/>
-	<buildpathentry kind="src" path="modules/photoalbum"/>
-	<buildpathentry kind="src" path="modules/polls"/>
-	<buildpathentry kind="src" path="modules/projects"/>
-	<buildpathentry kind="src" path="modules/questions"/>
-	<buildpathentry kind="src" path="modules/regions"/>
-	<buildpathentry kind="src" path="modules/search"/>
-	<buildpathentry kind="src" path="modules/select_date"/>
-	<buildpathentry kind="src" path="modules/shop"/>
-	<buildpathentry kind="src" path="modules/site_map"/>
-	<buildpathentry kind="src" path="modules/sites"/>
-	<buildpathentry kind="src" path="modules/subscribe"/>
-	<buildpathentry kind="src" path="modules/tables"/>
-	<buildpathentry kind="src" path="modules/tree"/>
-	<buildpathentry kind="src" path="modules/users"/>
+	<buildpathentry kind="src" path=""/>
 	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
 </buildpath>
