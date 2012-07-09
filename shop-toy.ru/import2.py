@@ -11,6 +11,14 @@ DB_HOST, DB_NAME, DB_USER, DB_PASS = "localhost", "shop-toy", "demo", "gthtgenmt
 db = DataBase.Db(DB_NAME,DB_HOST,DB_USER,DB_PASS)
 db.query("set CHARACTER SET cp1251")
 
+def search_product(parent_id, article):
+    query = "select * from fw_products where parent = '%d' and article = '%s'" % (int(parent_id), str(article))
+    row = db.selectrow(query)
+    if (row == None):
+        return
+    else:
+        return row
+
 def search_category(name, param_level, parent = None):
     if parent != None:
         sql = ''' select a.*, c.id from fw_catalogue as a 
@@ -87,6 +95,14 @@ for row in imported_rows:
         url = 'category' + str(cat2_id)
         status = 1
         db.query("update fw_catalogue set name = '%s', url = '%s', status = '%d' where id='%d' " % (db.escape(str(cat1['group_prod'])), url, status, cat2_id))
+        cat_param_2 = get_category(cat2_id)
 
+    #находим продукт, если его нет, то добавляем, иначе обновляем
+    product = search_product(cat_param_2['id'], row['article'])
+    if (product == None):
+        db.query("insert into fw_products (parent, name, article, price, status) values ('%d', '%s', '%s', '%f', '1')" % (int(cat_param_2['id']), db.escape(str(row['nomen'])), str(row['article']), float(row['price'])))
+    else:
+        db.query("update fw_products set price = '%f' where id = '%d'" % (float(row['price']), int(product['id'])))
+    
 
 db.close()

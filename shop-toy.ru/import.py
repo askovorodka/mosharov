@@ -11,6 +11,14 @@ DB_HOST, DB_NAME, DB_USER, DB_PASS = "localhost", "shop-toy", "demo", "gthtgenmt
 db = DataBase.Db(DB_NAME,DB_HOST,DB_USER,DB_PASS)
 db.query("set CHARACTER SET cp1251")
 
+def search_product(parent_id, article):
+    query = "select * from fw_products where parent = '%d' and article = '%s'" % (int(parent_id), str(article))
+    row = db.selectrow(query)
+    if (row == None):
+        return
+    else:
+        return row
+
 def search_category(name, param_level, parent = None):
     if parent != None:
         sql = ''' select a.*, c.id from fw_catalogue as a 
