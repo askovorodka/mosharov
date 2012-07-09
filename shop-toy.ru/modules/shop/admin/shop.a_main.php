@@ -59,12 +59,19 @@ else $action='';
 
 if (isset($_POST['submit_add_match']))
 {
-	$name_feed = trim($_POST['name_feed']);
-	$name_db = trim($_POST['name_db']);
-	$param_level = intval($_POST['param_level']);
-	$db->query("insert into matches_category (name_feed, name_db, param_level) values('{$name_feed}','{$name_db}','{$param_level}')");
+	
+	$items = array();
+	$cat_id = intval($_POST['category']);
+	foreach ($_POST['imported'] as $key=>$val)
+	{
+		$items[] = "(" . intval($cat_id) . ",'" . mysql_real_escape_string($key) . "','" . mysql_real_escape_string($key) . "')";
+	}
+	$db->query("delete from matches_category2 where cat_id=".intval($cat_id));
+	$db->query("replace into matches_category2 (cat_id, group_prod, group_prod_change) values " . implode(",", $items));
+	
 	header("Location: " . $_SERVER['HTTP_REFERER']);
 	die();
+	
 }
 
 if (isset($_POST['submit_edit_matches']))
@@ -130,9 +137,9 @@ if (isset($_POST['submit_sort_products']) && isset($_POST['sortArray']) ){
 		$smarty->assign("message","Продукция отсортирована");
 }
 
-if ($action=="delete_match" && isset($_GET['id'])) {
-  $id=intval($_GET['id']);
-  $db->query("delete from matches_category where id='{$id}'");
+if ($action=="delete_match" && isset($_GET['cat_id'])) {
+  $cat_id=intval($_GET['cat_id']);
+  $db->query("delete from matches_category2 where cat_id='{$cat_id}'");
 
   $location=$_SERVER['HTTP_REFERER'];
   header ("Location: $location");
@@ -1604,8 +1611,29 @@ SWITCH (TRUE) {
 	
     $navigation[] = array("url" => BASE_URL."/admin/?mod=shop","title" => 'Соответствие категорий');
 	
-    $matches = $db->get_all("SELECT * FROM matches_category");
-	
+    $imported_rows = $db->get_all("select group_prod from _imported_rows group by group_prod order by group_prod");
+    
+    $matches_category = $db->get_all("select fw_catalogue.name, matches_category2.* from matches_category2 left join fw_catalogue on matches_category2.cat_id=fw_catalogue.id order by fw_catalogue.name");
+    
+    $checked_imported_rows = array();
+    foreach ($cat_list as $key=>$val)
+    {
+		foreach ($matches_category as $key2=>$val2)
+		{
+			if ($cat_list[$key]['id'] == $matches_category[$key2]['cat_id'])
+			{
+				$cat_list[$key]['matches'][] = array(
+					"group_prod" => $matches_category[$key2]['group_prod'],
+					"group_prod_change"=>$matches_category[$key2]['group_prod_change']);
+				$checked_imported_rows[] = $matches_category[$key2]['group_prod'];
+			}
+		}
+    }
+    
+    $smarty->assign('cat_list', $cat_list);
+    $smarty->assign('imported_rows', $imported_rows);
+    $smarty->assign('checked_imported_rows', $checked_imported_rows);
+    
     $smarty->assign("matches", $matches);
     $template = 'shop.a_matches.html';
 	
