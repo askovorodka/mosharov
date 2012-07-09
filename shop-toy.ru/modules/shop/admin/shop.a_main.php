@@ -432,6 +432,17 @@ if (isset($_POST['submit_edit_cat'])) {
 	$keywords=String::secure_format($_POST['edit_cat_keywords']);
 	$description=String::secure_format($_POST['edit_cat_description']);
 
+	$category = $db->get_single("select * from fw_catalogue where id=".intval($id));
+	if ($category['param_level'] == 2)
+	{
+		$import = $db->get_single("select * from matches_category2 where group_prod_change='{$category['name']}'");
+		if (!empty($import))
+		{
+			$db->query("update matches_category2 set group_prod_change='{$name}' where group_prod_change='{$category['name']}'");
+		}
+	}		
+	
+	
 	if (!empty($_POST['show_in_menu']) && $_POST['show_in_menu'] == 1)
 		$show_in_menu = 1;
 	else 
@@ -515,6 +526,8 @@ if (isset($_POST['submit_edit_cat'])) {
 
 			if($move===false) $move=-2;
 		}
+		
+		
 		$location=$_SERVER['HTTP_REFERER'];
 		header("Location: $location");
 		die();
