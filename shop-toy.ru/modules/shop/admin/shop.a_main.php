@@ -82,13 +82,14 @@ if (isset($_POST['submit_import']))
 		@chmod(BASE_PATH."/price.xls", 0777);
 	}
 	
-	$fh = fopen(BASE_PATH."/price.xls",'r');
+	/*$fh = fopen(BASE_PATH."/price.xls",'r');
 	fclose($fh);
 	//запускаем импорт
 	system("/usr/local/bin/python /home/alex/data/www/shop-toy.mosharov.com/excel_to_db.py");
-	exit();
-	//header("Location: " . $_SERVER['HTTP_REFERER']);
-	//die();
+	exit();*/
+	$db->query("update fw_conf set conf_value='1' where conf_key='XLS_UPDATE'");
+	header("Location: " . $_SERVER['HTTP_REFERER']);
+	die();
 	
 }
 

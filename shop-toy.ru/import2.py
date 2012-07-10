@@ -108,6 +108,7 @@ for row in imported_rows:
         print "Обновлен продукт: %s" % str(row['nomen'])
     
 db.query("truncate _imported_rows")
+db.query("update fw_conf set conf_value = '0' where conf_key = 'XLS_UPDATE' ")
 print "Очищена таблица _imported_rows"
 print "Импорт завершен"
 db.close()

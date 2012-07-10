@@ -22,6 +22,12 @@ root = path.get_path()
 db = DataBase.Db(DB_NAME,DB_HOST,DB_USER,DB_PASS)
 db.query("set CHARACTER SET cp1251")
 
+conf = db.selectrow("select conf_value from fw_conf where conf_key='XLS_UPDATE'")
+
+if (conf == None or int(conf['conf_value']) == 0):
+    print "Импорт не требуется"
+    sys.exit()
+
 xls = xlrd.open_workbook(root + "/price.xls", encoding_override="cp1251")
 sheet = xls.sheet_by_index(0)
 
