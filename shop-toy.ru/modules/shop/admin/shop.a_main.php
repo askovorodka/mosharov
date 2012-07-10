@@ -57,6 +57,41 @@ else $action='';
 
 /*------------------------- ВЫПОЛНЯЕМ РАЗЛИЧНЫЕ ДЕЙСТВИЯ ---------------------*/
 
+if (isset($_POST['submit_import']))
+{
+	
+	if ($_FILES['import_file']['name']!='')
+	{
+
+		$file_name=$_FILES['import_file']['name'];
+		$tmp=$_FILES['import_file']['tmp_name'];
+		$trusted_formats=array('xls');
+		$check_file_name=explode(".",$file_name);
+		$ext=strtolower($check_file_name[count($check_file_name)-1]);
+		if (!in_array($ext,$trusted_formats)) {
+			die("Разрешены картинки форматов jpg, jpeg, gif и png");
+		}
+
+	}
+	
+	if (file_exists(BASE_PATH."/price.xls"))
+		@unlink(BASE_PATH."/price.xls");
+	
+	if (move_uploaded_file($tmp, BASE_PATH."/price.xls"))
+	{
+		@chmod(BASE_PATH."/price.xls", 0777);
+	}
+	
+	$fh = fopen(BASE_PATH."/price.xls",'r');
+	fclose($fh);
+	//запускаем импорт
+	system("/usr/local/bin/python /home/alex/data/www/shop-toy.mosharov.com/excel_to_db.py");
+	exit();
+	//header("Location: " . $_SERVER['HTTP_REFERER']);
+	//die();
+	
+}
+
 if (isset($_POST['submit_add_match']))
 {
 	
@@ -942,7 +977,7 @@ SWITCH (TRUE) {
 	BREAK;
 	
 	//лог импорта
-	CASE ($action == 'import_log'):
+	/*CASE ($action == 'import_log'):
 		
 		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=import_log","title" => 'Лог импорта');
 		$import = new Import($db, $tree, $string);
@@ -950,12 +985,12 @@ SWITCH (TRUE) {
 		$smarty->assign('imports', $imports);
 		$template='shop.a_import_log.htm';
 		
-	BREAK;
+	BREAK;*/
 	
 	
-	CASE ($action == 'import'):
+	CASE ($action == 'import_price'):
 		
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=import","title" => 'Импорт');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=import_price","title" => 'Импорт прайс-листа');
 		$template='shop.a_import.html';
 		
 	BREAK;

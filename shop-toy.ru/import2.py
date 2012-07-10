@@ -96,13 +96,18 @@ for row in imported_rows:
         status = 1
         db.query("update fw_catalogue set name = '%s', url = '%s', status = '%d' where id='%d' " % (db.escape(str(cat1['group_prod'])), url, status, cat2_id))
         cat_param_2 = get_category(cat2_id)
+        print "Добавлена категория: %s" % str(cat1['group_prod'])
 
     #находим продукт, если его нет, то добавляем, иначе обновляем
     product = search_product(cat_param_2['id'], row['article'])
     if (product == None):
         db.query("insert into fw_products (parent, name, article, price, status) values ('%d', '%s', '%s', '%f', '1')" % (int(cat_param_2['id']), db.escape(str(row['nomen'])), str(row['article']), float(row['price'])))
+        print "Добавлен продукт: %s" % str(row['nomen']) 
     else:
         db.query("update fw_products set price = '%f' where id = '%d'" % (float(row['price']), int(product['id'])))
+        print "Обновлен продукт: %s" % str(row['nomen'])
     
-
+db.query("truncate _imported_rows")
+print "Очищена таблица _imported_rows"
+print "Импорт завершен"
 db.close()

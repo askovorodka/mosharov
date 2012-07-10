@@ -45,4 +45,8 @@ for rownum in range(sheet.nrows):
         values('%s','%s', '%s', '%s', '%s', '%f', '%s', '%f', '%s', '%f')''' % (db.escape(code), db.escape(article), db.escape(nom), db.escape(group),db.escape(metka),price,db.escape(ed),pack,db.escape(image),ostatok))
 
 print "Сделано"
+print "Старт скрипта импорта..."
+cmd = "/usr/local/bin/python /home/alex/data/www/shop-toy.mosharov.com/import2.py"
+os.system(cmd)
+
 db.close()

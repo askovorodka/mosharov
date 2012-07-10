@@ -20,6 +20,11 @@ $sub[]= array(
 			"name"=>"Соответствия категорий",
 			"link"=>"?mod=shop&action=matches_category"
 	   );
+
+$sub[]= array(
+			"name"=>"Импорт",
+			"link"=>"?mod=shop&action=import_price"
+	   );
 	   
 /*$sub[]= array(
 			"name"=>"Свойства продуктов",
