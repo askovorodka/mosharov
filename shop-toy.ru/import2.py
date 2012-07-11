@@ -71,7 +71,7 @@ imported_rows = db.select("select * from _imported_rows")
 
 
 
-if len(imported_rows) == 0:
+if imported_rows == None:
     print "Импортировать нечего"
     sys.exit()
 
@@ -102,6 +102,8 @@ for row in imported_rows:
     product = search_product(cat_param_2['id'], row['article'])
     if (product == None):
         db.query("insert into fw_products (parent, name, article, price, status) values ('%d', '%s', '%s', '%f', '1')" % (int(cat_param_2['id']), db.escape(str(row['nomen'])), str(row['article']), float(row['price'])))
+        product_id = int(last_insert_id())
+        db.query("replace into _import_product_links (product_id, product_from) values('%d', '%s')" % (product_id, str(row['image'])))
         print "Добавлен продукт: %s" % str(row['nomen']) 
     else:
         db.query("update fw_products set price = '%f' where id = '%d'" % (float(row['price']), int(product['id'])))
