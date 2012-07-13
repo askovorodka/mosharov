@@ -301,8 +301,9 @@ if  ($main_module=='on')
 
 
 			$body = $smarty->fetch($templates_path.'/fast_order.txt');
-			Mail::send_mail("goodrims@yandex.ru","info@goodrims.ru","Быстрый заказ интернет магазине #{$order_id}",$body,'','html','standard','Windows-1251');
+			//Mail::send_mail("goodrims@yandex.ru","info@goodrims.ru","Быстрый заказ интернет магазине #{$order_id}",$body,'','html','standard','Windows-1251');
 			Mail::send_mail("ai@avtozeon.ru","info@goodrims.ru","Быстрый заказ интернет магазине #{$order_id}",$body,'','html','standard','Windows-1251');
+			Mail::send_mail("rifshina@mail.ru","info@goodrims.ru","Быстрый заказ интернет магазине #{$order_id}",$body,'','html','standard','Windows-1251');
 			
 			header("Location: /bistriy_zakaz_ok/");
 			die();
@@ -1057,8 +1058,9 @@ if  ($main_module=='on')
 
 					$admin_body=$smarty->fetch($templates_path.'/admin_order_notice.txt');
 
-					Mail::send_mail("goodrims@yandex.ru",$user['mail'],"Новый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
+					//Mail::send_mail("goodrims@yandex.ru",$user['mail'],"Новый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
 					Mail::send_mail("ai@avtozeon.ru",$user['mail'],"Новый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
+					Mail::send_mail("rifshina@mail.ru",$user['mail'],"Новый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
 					
 					//$page_found = true;
 					//$template = 'order_done.html';

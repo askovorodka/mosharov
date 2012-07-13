@@ -303,9 +303,10 @@ if (!empty($_POST['fast_order']) && $_POST['fast_order'] == 1)
 		
 		
 		$body = $smarty->fetch($templates_path.'/fast_order.txt');
-		Mail::send_mail("cccp-tire@yandex.ru","info@".$_SERVER['SERVER_NAME'],"Быстрый заказ интернет магазине #{$order_id}",$body,'','html','standard','Windows-1251');
-		Mail::send_mail("snegovik3@gmail.com","info@".$_SERVER['SERVER_NAME'],"Быстрый заказ интернет магазине #{$order_id}",$body,'','html','standard','Windows-1251');
+		//Mail::send_mail("cccp-tire@yandex.ru","info@".$_SERVER['SERVER_NAME'],"Быстрый заказ интернет магазине #{$order_id}",$body,'','html','standard','Windows-1251');
+		//Mail::send_mail("snegovik3@gmail.com","info@".$_SERVER['SERVER_NAME'],"Быстрый заказ интернет магазине #{$order_id}",$body,'','html','standard','Windows-1251');
 		Mail::send_mail("ai@avtozeon.ru","info@".$_SERVER['SERVER_NAME'],"Быстрый заказ интернет магазине #{$order_id}",$body,'','html','standard','Windows-1251');
+		Mail::send_mail("rifshina@mail.ru","info@".$_SERVER['SERVER_NAME'],"Быстрый заказ интернет магазине #{$order_id}",$body,'','html','standard','Windows-1251');
 		
 		header("Location: /fast_order/");
 		die();
@@ -1039,9 +1040,10 @@ SWITCH (TRUE) {
 				$admin_body=$smarty->fetch($templates_path.'/admin_order_notice.txt');
 
 				//Mail::send_mail("ai@avtozeon.ru,avtozeon@gmail.com,rifshina@mail.ru,itire@ya.ru",$user['login'],"Новый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
-				Mail::send_mail("cccp-tire@yandex.ru",$user['mail'],"Новый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
-				Mail::send_mail("snegovik3@gmail.com",$user['mail'],"Новый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
+				//Mail::send_mail("cccp-tire@yandex.ru",$user['mail'],"Новый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
+				//Mail::send_mail("snegovik3@gmail.com",$user['mail'],"Новый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
 				Mail::send_mail("ai@avtozeon.ru",$user['mail'],"Новый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
+				Mail::send_mail("rifshina@mail.ru",$user['mail'],"Новый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
 				
 				//$page_found = true;
 				//$template = 'order_done.html';

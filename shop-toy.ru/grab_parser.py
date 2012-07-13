@@ -7,9 +7,8 @@ import DataBase
 import datetime
 
 
-
 def get_abs_path():
-    path = os.path.abspath(os.path.dirname(__file__)) 
+    path = os.path.abspath(os.path.dirname(__file__))
     return path
 
 def main():
@@ -32,4 +31,3 @@ db.query("set CHARACTER SET cp1251")
 
 if __name__ == "__main__":
     main()
-    
