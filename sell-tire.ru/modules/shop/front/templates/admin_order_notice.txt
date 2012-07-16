@@ -1,0 +1,62 @@
+<p>Вас приветствует сайт http://sell-tire.ru</p>
+
+<p>В Вашем онлайн магазине появился новый заказ от {$date|date_format:"%d.%m.%Y в %T"}</p>
+
+<p>Номер заказа: {$order_id}</p>
+
+<p>{$name} заказал {$number} товаров на сумму {$total_sum|format_price} {$currency}, 
+подробности смотрите в администраторской панели, раздел "Управление заказами".</p>
+
+<p><b>Детализация заказа:</b></p>
+
+<table>
+<tr><th>№</th><th>Артикул</th>
+<th>Наименование</th><th>Количество</th><th>Стоимость за единицу</th><th>Сумма</th></tr>
+{foreach from=$products item=product name=for1}
+<tr>
+<td>{$smarty.foreach.for1.iteration}</td>
+<td>{$product.details.article}</td>
+<td>{$product.details.name}</td>
+<td>{$product.count}</td>
+<td>{$product.details.price|format_price} руб.</td>
+<td>{$product.sum|format_price} руб.</td>
+</tr>
+{/foreach}
+
+<tr>
+<td colspan="4" align="right">Стоимость доставки:</td>
+<td>{$order_price|format_price} руб.</td>
+</tr>
+
+<tr>
+<td colspan="4" align="right">Итого:</td>
+<td>{$total_sum|format_price} руб.</td>
+</tr>
+
+</table>
+
+<table>
+<tr><td colspan="2">Информация о пользователе:</td></tr>
+
+<tr><td>ФИО:</td><td>{$name}</td></tr>
+
+<tr><td>Телефон:</td><td>{$user.tel}</td></tr>
+
+<tr><td>Email:</td><td>{$user.mail}</td></tr>
+
+<tr><td>Адрес доставки:</td><td>{$user.address}</td></tr>
+
+<tr><td>Способ доставки:</td><td>{if $dostavka == 1}Доставка{elseif $dostavka == 2}Самовывоз{elseif $dostavka > 2}Доставка до транспортной компании - {$company_dost}{/if}</td></tr>
+
+<tr><td>Способ оплаты:</td><td>{if $payment == 1}Наличные{else}Безналчиный расчет{/if}</td></tr>
+
+<tr><td>Название компании:</td><td>{$company}</td></tr>
+
+<tr><td>ИНН:</td><td>{$inn}</td></tr>
+
+<tr><td>КПП:</td><td>{$kpp}</td></tr>
+
+<tr><td>Текст пожелания:</td><td>{$comment}</td></tr>
+</table>
+
+<p>До скорых встреч!</p>

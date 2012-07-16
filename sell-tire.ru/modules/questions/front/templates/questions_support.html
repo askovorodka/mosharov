@@ -1,0 +1,8 @@
+{foreach from=$news_list_support item=news}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr valign="top">
+<td align="left" id="ob"><h2>{$news.title}</h2><p>{$news.small_text|strip_tags|truncate:200}</p><div class="mommy"><a class="mommyhref" href="news/archive/{$news.id}/">Подробнее</a></div></td>
+</tr>
+</table>
+<br>
+{/foreach}

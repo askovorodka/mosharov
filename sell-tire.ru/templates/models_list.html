@@ -1,0 +1,5 @@
+        <div class="lister">
+        	{foreach from=$models item=model}
+        	<a href="/katalog{$model.full_url}" {if $cat_content.id==$model.id}style="color:#C70D4A; font-weight:bold; font-size:14px;"{/if} title="{$model.name|strip_tags}">{$model.name|strip_tags}</a><br />
+        	{/foreach}
+        </div>

@@ -1,0 +1,42 @@
+<h1>Диск {$product.name}</h1>
+
+                <table class="itemtbl">
+                  <tr>
+                    <td class="itembigpict">{if trim($product.image) != ""}<img src="{$product.image}" />{else}<img src="{$template_image}nophoto.jpg" />{/if}</td>
+                    <td class="itemopis">
+                    <strong>Бренд:</strong>  {$cat_parent_info.name}<br>
+                    <strong>Модель:</strong>  {$cat_content.name}<br>
+                    <strong>Ширина:</strong> {$product.disk_width|format_number}<br>
+                    <strong>Диаметр:</strong> {$product.disk_diameter|format_number}<br>
+                    <strong>Крепеж:</strong> {$product.disk_krep|format_number}<br>
+                    <strong>PCD:</strong> {$product.disk_pcd|format_number}<br>
+                    <strong>PCD (двойной):</strong> {$product.disk_pcd2|format_number}<br>
+                    <strong>ET:</strong> {$product.disk_et|format_number}<br>
+                    <strong>Dia:</strong> {$product.disk_dia|format_number}<br>
+                    <strong>Цвет:</strong> {$product.disk_color}<br>
+                    <strong>Тип диска:</strong> {$disk_type.name}<br>
+					{include file="../templates/yandex_share.html"}
+					
+					<form action="" name="order_product" method="POST" id="form_order_single">
+					<input type="hidden" name="product_id" value="{$product.id}">
+                    <table class="itemopiscena">
+                      <tr>
+                        <td>{$product.price|format_price} руб.</td>
+                        <td class="itemopiscenaltl">кол-во: </td>
+                        <td><input {if !$product.disk_sklad}disabled{/if} type="text" value="{if $product.disk_sklad > 3}4{elseif $product.disk_sklad > 1}{$product.disk_sklad}{else}1{/if}" class="tableinpb" name="count"></td>
+                        {if $product.disk_sklad > 0}
+                        	<td><input type="image" src="{$template_image}b_basket.gif" class="itembut" title="В корзину"></td>
+                        {else}
+                        	<td>Нет в наличии</td>
+                        {/if}
+                      </tr>
+                    </table>
+                    </form>
+                    
+                    </td>
+                  </tr>
+                </table>
+                    
+                {if $product.disk_sklad > 0}
+                	{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/fast_order_form.html"}
+				{/if}

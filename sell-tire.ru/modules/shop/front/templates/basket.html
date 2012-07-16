@@ -1,0 +1,138 @@
+
+<h1>Ваша корзина</h1>
+{if $basket}
+{if $error_msg}<div style="color:red;">{section loop=$error_msg name=item}{$error_msg[item]}<br />{/section}</div>{/if}
+
+<form action="" method="post" id="form_basket_recount">
+<input type="hidden" name="basket_recount" value="1" />
+                <table class="itemlt">
+                   <tr class="itemltcapt">
+                   	<td class="itemltcapti"><img src="{$template_image}tbl_l.gif" /></td>
+                    <td></td>
+                    <td>Наименование</td>
+                    <td>Артикул</td>
+                    <td>Цена</td>
+                    <td>Сумма</td> 
+                    <td>Кол-во</td>
+                    <td></td>
+                     <td class="itemltcapti"><img src="{$template_image}tbl_r.gif" /></td>
+                  </tr>
+                  {foreach from=$basket item=product name=basket_foreach}
+                  <tr>
+                  	<td class="itemltcapti"></td>
+                    <td>{if $product.image}<a class="CatalogImages" href="{$base_url}/{$current_url}/{$item.id}/" image="/uploaded_files/shop_images/{$product.image}"><img src="{$template_image}photo.png"></a>{else}&mdash;{/if}</td>
+                    <td class="itemlistname"><a href="{$product.full_url}">{$product.name}</a></td>
+                    <td>{$product.article}</td>
+                    <td>{$product.price|format_price} руб.</td>
+                    <td>{$product.price_number|format_price} руб.</td>
+                    <td><input type="text" value="{$product.number}" name="edit_number[{$product.id}]" class="tableinp"></td>
+                    <td><a title="Удалить" href="{$module_url}/basket/delete/{$product.id}/" onclick="return confirm('Удалить продукт из корзины');">удалить</a></td>
+                     <td class="itemltcapti"></td>
+                  </tr>
+                  {/foreach}
+                </table>
+                
+                <table align="right" class="basketr">
+                  <tr>
+                    <td>Доставка: <span id="dostavka_ajax">{if $total_price|format_number < $smarty.const.SHOP_DOSTAVKA_LIMIT}{$smarty.const.SHOP_DOSTAVKA_PRICE}{else}0{/if}</span> руб.<br />Итого: <span id="total_ajax">{$total_price_dostavka|format_price}</span> руб.</td>
+                    <td><br /><a href="#" onClick="$('#form_basket_recount').submit(); return false;" title="Пересчитать">Пересчитать</a></td>
+                  </tr>
+                </table><br clear="all" />
+</form>
+
+
+				{if $error_auth_message}<label class="error">Ошибка авторизации: {$error_auth_message}</label>{/if}
+				
+				{*if !$user}
+                <div class="basketpart1"><a href="#" title="ЖМИ ЗДЕСЬ!" id="for_basketpart2"><img src="{$template_image}button_jmi-zdes.jpg" width="166" height="39" class="basketpartin"></a></div>
+                
+                <div class="basketpart2" style="display:none;">
+                	<form action="" method="post" id="form_login">
+                	<input type="hidden" name="submit_login" value="1" />
+	                <table align="right" class="basketparttbl">
+	                  <tr>
+	                    <td>Email:</td>
+	                    <td><input type="text" value="" name="email"></td>
+	                    <td rowspan="2"><input type="image" src="{$template_image}button_vhod.png" title="Вход" class="basketpartbut"></td>
+	                  </tr>
+	                  <tr>
+	                    <td>Пароль:</td>
+	                    <td><input type="password" value="" name="password"></td>
+	                  </tr>
+	                </table>
+	                </form>
+                </div>	
+                {/if*}
+                	
+                <form action="/katalog/basket/submit/" method="post" id="form_order">
+                <input type="hidden" name="submit_order" value="1" />
+               	{*if !$user*}
+               	 <h2>Проверьте, что Вы правильно указали телефон и e-mail</h2>
+               	<input type="hidden" name="submit_register" value="1" />
+                <div class="basketform1">
+                <div><input type="text" name="name"> ФИО</div>
+                <div><input type="text" name="phone"> Телефон</div>
+                <div><input type="text" name="email"> Email</div>
+                <div><input type="text" name="address"> Адрес</div>
+                {*<div><input type="password" class="basketformpwd" name="password"> Пароль (если нужен партбилет)</div>*}
+                </div>
+                {*/if*}
+                
+                <h2>Способ доставки</h2>
+                
+                <select name="dostavka" id="dostavka">
+                	<option value="1" selected caption="Выезд за МКАД - 30 руб/км, но не менее 100км.">Доставка по Москве и Подмосковью</option>
+                	<option value="2" caption="Стоимость 0 руб.">Забрать самостоятельно</option>
+                	<option value="3" caption="Стоимость доставки до транспортной компании - {$order_price} руб. Стоимость доставки из Москвы до Вашего города рассчитывает транспортной компании.">Доставка до транспортной компании ПЭК</option>
+                	<option value="4" caption="Стоимость доставки до транспортной компании - {$order_price} руб. Стоимость доставки из Москвы до Вашего города рассчитывает транспортной компании.">Доставка до транспортной компании Желдорэкспедиция</option>
+                	<option value="5" caption="Стоимость доставки до транспортной компании - {$order_price} руб. Стоимость доставки из Москвы до Вашего города рассчитывает транспортной компании.">Доставка до транспортной компании Автотрейдинг</option>
+                </select>
+                
+                <div id="dostavka_caption" style="margin-top:10px; width:385px; font-weight:bold;">Выезд за МКАД - 30 руб/км, но не менее 100км.</div>
+                
+                <h2>Способ оплаты</h2>
+                <table>
+	              <tr>
+	                <td><input type="radio" name="payment" value="1" id="rb1" checked></td>
+	                <td class="fcgrey"><div class="fs14"><label for="rb1">Наличные</label></div>
+	                Оплата при получении товара<br></td>
+	              </tr>
+	              <tr>
+	                <td><input type="radio" name="payment" value="2" id="rb2"></td>
+	                <td class="fcgrey"><div class="fs14"><label for="rb2">Безналичный расчет (для юр. лиц и регионов)</label></div>
+	                Оплата с банковского счета</td>
+	              </tr>
+	            </table>
+                <div class="basketform2">
+                <div><input type="text" name="company"> Название компании</div>
+                <div><input type="text" name="inn"> ИНН</div>
+                <div><input type="text" name="kpp"> КПП</div>
+                </div>
+                <h2>Дополнительные пожелания</h2>
+                <textarea name="comment" class="basketformt"></textarea><br>
+                <input type="image" src="{$template_image}b_utverdit.gif" title="Утвердить заказ" class="basketformendbut">
+
+				</form>
+{else}
+<center>Ваша корзина пуста.</center>
+{/if}
+
+		{literal}
+		<script>
+			$(document).ready(function(){
+
+				$("select[name='dostavka']").change(function(){
+					var dostavka = $(this).val();
+					$.post('http://' + location.hostname + '/katalog/', {ajax:1, dostavka : dostavka}, 
+							function(response){  
+								var array = eval(response); 
+								$("#dostavka_ajax").html(array[0]);
+								$("#total_ajax").html(array[1]);
+							});
+					$("#dostavka_caption").html( $("select[name='dostavka'] option:selected").attr("caption") );
+				});
+
+			});
+
+		</script>
+		{/literal}

@@ -1,0 +1,52 @@
+{literal}
+<DIV id=dhtmltooltip></DIV>
+<SCRIPT language=JavaScript>
+<!--
+function confirm_delete(delete_id)
+{
+if (confirm("Дейтсвительно удалить этот регион?")) {
+parent.location.href = "index.php?mod=regions&action=delete_reg&id=" + delete_id;
+}
+}
+-->
+</SCRIPT>
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/tooltips.js'></script>
+{/literal}
+	<table width=100% class=content_table>
+
+	<tr><th>Название региона</th><th width=10%>Городов</th><th width=10%>Статус</th><th width=120>Действия</th></tr>
+
+	{foreach name=tree from=$reg_list item=entry}
+
+	{if $col==1}
+	{assign var="td" value='td1'}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value='td2'}
+	{assign var="col" value=1}
+	{/if}
+	<tr onmouseover="flatlinkOver(this)" {if $smarty.foreach.tree.iteration%2==1}onmouseout="flatlinkOut(this)"{else}onmouseout="flatlinkOut1(this)"{/if}>
+			<td class={$td}_left>
+				{str_repeat str="&nbsp;" num=$entry.param_level mod="4"}<img src=templates/img/tree.gif>{$entry.name}
+			</td>
+
+      <td class={$td}_middle align=center style="font-size: 10px;">
+        {if $entry.citys>0}[ <a href=index.php?mod=regions&action=citys_list&reg={$entry.id}><b>{$entry.citys}</b></a> ]{/if}
+      </td>
+			<td align=center class={$td}_middle>
+			{if $entry.param_level!=0}<a href="?mod=regions&action=change_reg_status&id={$entry.id}" title="Изменить статус"><img src=templates/img/status_{$entry.status}.gif border=0></a>{/if}
+			</td>
+
+			<td align=left class={$td}_right nowrap width="120">
+				<a href=?mod=regions&action=add_reg&parent={$entry.id} class=img_link {if $smarty.foreach.tree.iteration=='1'}onmouseover="ddrivetip('Добавить регион')"{else}onmouseover="ddrivetip('Добавить подрегион')"{/if} onmouseout=hideddrivetip()><img src=templates/img/add_cat.gif border=0></a>
+				{if $entry.param_level!=0}<a href=?mod=regions&action=edit_reg&id={$entry.id} class=img_link onmouseover="ddrivetip('Редактировать регион')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>{/if}
+                {if $entry.param_level!=0}<a href="javascript:confirm_delete('{$entry.id}');" class=img_link onmouseover="ddrivetip('Удалить регион')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>{/if}
+				{if $entry.param_level!=0}<a href=?mod=regions&action=reg_move_up&id={$entry.id} class=img_link onmouseover="ddrivetip('Переместить регион вверх')" onmouseout=hideddrivetip()><img src=templates/img/ico_up.gif border=0></a><a href=?mod=regions&action=reg_move_down&id={$entry.id} class=img_link onmouseover="ddrivetip('Переместить регион вниз')" onmouseout=hideddrivetip()><img src=templates/img/ico_down.gif border=0></a>{/if}
+			</td>
+		</tr>
+
+	{/foreach}
+
+	</table>
+    <br>
+<div class="add_but" style="float: left;" onClick="location.href='?mod=regions&action=add_reg&parent={$entry.id}'"><div><a href="?mod=regions&action=add_reg&parent={$entry.id}">добавить регион</a></div></div>

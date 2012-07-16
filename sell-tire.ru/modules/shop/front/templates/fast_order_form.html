@@ -1,0 +1,59 @@
+
+        {if $error_fast_order}<label class="error">{$error_fast_order}</label>{/if}
+        <form action="" method="post" id="fast_order_form">
+                <input type="hidden" name="product_id" value="{$product.id}" />
+                <input type="hidden" name="fast_order" value="1" />
+                
+       			<table class="itemfz">
+                  <tr>
+                    <td class="itemfzf"><img src="{$template_image}line.gif" class="line" />
+                    <span style="line-height:27px;">Быстрый заказ {if $product.tire_width > 0}шин{else}дисков{/if} {$cat_parent_info.name} {$cat_content.name}</span>
+                    <table class="itemfztbl">
+                      <tr>
+                        <td style="width:230px;" class="itemfzkoli"><input type="text" name="product_count" class="itemfzkol" value="{if $values.product_count}{$values.product_count}{elseif $product.disk_sklad}{if $product.disk_sklad > 3}4{elseif $product.disk_sklad > 1}{$product.disk_sklad}{else}1{/if}{elseif $product.tire_sklad}{if $product.tire_sklad > 3}4{elseif $product.tire_sklad > 1}{$product.tire_sklad}{else}1{/if}{/if}"></td>
+                        <td> Количество</td>
+                      </tr>
+                      <tr>
+                        <td style="width:230px;"><input type="text" name="name" value="{if $values.name}{$values.name}{elseif $user}{$user.name}{/if}"></td>
+                        <td> ФИО</td>
+                      </tr>
+                      <tr>
+                        <td style="width:230px;"><input type="text" name="phone" value="{if $values.phone}{$values.phone}{elseif $user}{$user.tel}{/if}"></td>
+                        <td> Телефон</td>
+                      </tr>
+                      <tr>
+                        <td>
+			                <select name="dostavka">
+			                	<option value="1" selected>Доставка по Москве и Подмосковью</option>
+			                	<option value="2" {if $values.dostavka == 2}selected{/if}>Забрать самостоятельно</option>
+			                	<option value="3" {if $values.dostavka == 3}selected{/if}>Доставка транспортной компанией ГРУЗОВОЗОФФ</option>
+			                	<option value="4" {if $values.dostavka == 4}selected{/if}>Доставка транспортной компанией Деловые линии</option>
+			                	<option value="5" {if $values.dostavka == 5}selected{/if}>Доставка транспортной компанией ПЭК</option>
+			                </select>
+                        </td>
+                        <td> Тип доставки</td>
+                      </tr>
+                      <tr>
+                        <td style="width:230px;"><input type="text" name="address" value="{if $values.address}{$values.address}{elseif $user}{$user.address}{/if}"></td>
+                        <td> Адрес (если доставка)</td>
+                      </tr>
+                      <tr>
+                        <td class="itemfzyell">Москва и МО - адрес доставки<br />Регионы - название транспортной компании</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td><a href="#" onClick="$('#fast_order_form').submit(); return false;" title="Заказать" class="itemfzbut">Заказать</a></td>
+                        <td></td>
+                      </tr>
+                    </table>
+                    </td>
+                    <td class="itemfzceni">
+                    Заказ: <span id="fast_order_total_price"></span> руб.<br>
+                    Доставка: <span id="fast_order_order_price"></span> руб.<br>
+                    Всего: <span id="fast_order_total_sum"></span> руб.<br>
+                    </td>
+                  </tr>
+                </table>
+         </form>
+         
+         

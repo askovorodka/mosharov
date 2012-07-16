@@ -1,0 +1,25 @@
+<DIV id=dhtmltooltip></DIV>
+{literal}
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/tooltips.js'></script>
+{/literal}
+<center>
+<table width=100% class=content_table>
+<tr>
+<th width=60%>Имя файла</th><th width=30%>Размер</th><th width=10%>Действия</th>
+</tr>
+{foreach from=$current_file_list item=file}
+	{if $col==1}
+	{assign var="td" value='td1'}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value='td2'}
+	{assign var="col" value=1}
+	{/if}
+	<tr>
+<td class={$td}_left>&nbsp;&nbsp;{if $file.file_name=='..'}<a href=index.php?mod=file_manager&dir={$prev_dir}>..</a>{else}{if $file.file_type=='file'}{$file.file_name}{else}<a href=index.php?mod=file_manager&dir={$current_dir}/{$file.file_name}>{$file.file_name}</a>{/if}{/if}</td>
+<td class={$td}_middle>{if $file.file_type=='file'}{$file.file_size} bytes{/if}</td>
+<td class={$td}_right>&nbsp;{if $file.file_type=='file'}<a href=?mod=file_manager&action=edit&file={$current_dir}/{$file.file_name} class=img_link onmouseover="ddrivetip('Редактировать файл')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>{/if}</td>
+</tr>
+{/foreach}
+</table>
+</center>

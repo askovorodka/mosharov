@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>{$page_title}</title>
+<meta name="Keywords" content="{$meta_keywords}">
+<meta name="Description" content="{$meta_description}">
+{foreach from=$css item=css}
+<link rel="stylesheet" type="text/css" href="{$css}">
+{/foreach}
+
+{foreach from=$js item=js}
+<script src="{$js}" type="text/javascript"></script>
+{/foreach}
+
+{assign var=curnav value=$navigation.1.url|replace:"$base_url":""|replace:"/":""}
+{assign var=curnav2 value=$navigation.2.url|replace:"$base_url":""|replace:"/":""|replace:"$curnav":""}
+
+</head>
+<body>
+
+<div style="position:absolute; z-index:90; border:1px solid #A01C08; background:#FFF; display:none;" id="ImageLayout"></div>
+<div id='loading-layer'><div>Загрузка. Пожалуйста, подождите...</div></div>
+
+<table class="maintable" align="center">
+  <tr>
+    <td class="maintop">
+    	<img src="{$template_image}logo.png" class="logo" />
+    	{include file="`$TEMP`form_search.html"}
+    	<h1>Продажа шин и дисков</h1>
+    	<div class="toptel"><span class="toptelm">менеджеры ждут:</span><br /><span class="toptelsmall">{$smarty.const.PHONE_CODE1}</span> {$smarty.const.PHONE1}<div class="topteltime">Ежедневно с 9:00 до 22:00</div></div>
+    </td>
+  </tr>
+  <tr>
+    <td class="topmenu">
+    	<a href="/shop/tires/">ШИНЫ</a> / <a href="/shop/disk/">ДИСКИ</a> / <a href="/actions/">АКЦИИ</a>
+        <span class="topmenur">
+        {foreach from=$main_menu item=item name=main_menu}
+        	<a href="{$base_url}/{$item.url|urlencode}/">{$item.name|strip_tags}</a>{if !$smarty.foreach.main_menu.last} / {/if}
+        {/foreach}
+        </span>
+    </td>
+  </tr>
+  <tr>
+    <td class="main">
+    <table class="mainbody">
+      <tr>
+        <td class="mainbodybig">
+        <center><h2>Ошибка 404. Такой страницы нет.</h2></center>
+        </td>
+        
+        <td class="mainbodyside">
+        
+        {include file="`$TPL`basket.html"}
+        
+        {if !$models}
+        	{include file="`$TPL`home_news_block.html"}
+        {else}
+        	{include file="`$TPL`models_list.html"}
+        {/if}
+        
+        </td>
+      </tr>
+	</table>
+    </td>
+  </tr>
+  <tr>
+    <td class="footer">
+    Информация о ценах и наличии является справочной! Указанные цены не являются офертой в понятии ст. 435 <span class="footerr">&copy; 2012 &ndash; Шины и Диски</span>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<table width='100%'>
+<tr height="3"><td colspan="2"></td></tr>
+{foreach from=$otr_list item=otr name=f1}
+      {if $smarty.foreach.f1.iteration>1}      
+      <tr><td height="10" colspan="2">&nbsp;</td></tr>
+	<tr height="1"><td colspan="2" background="/templates/img/hr.gif"></td></tr>
+	<tr><td height="10" colspan="2">&nbsp;</td></tr>
+	{/if}
+<tr height="12">
+<td valign="middle">
+<a href={$current_url}/{$otr.id}><strong>{$otr.title}</strong></a><br>
+</td>
+<td align="left">{$otr.small_text}</td>
+</tr>
+{/foreach}
+
+<tr>
+<td colspan=2 align=center width=100%><br><br>
+{if trim($send_msg) == ""}
+      <form action="" method=post onSubmit="return validateOtr(this);">
+      <table width=100%>
+            <tr><td colspan=2>Вы можете послать нам  предложение,  вопрос, задачу,  описать производственную проблему, заполнив нижеследующую форму:</td></tr>
+            <tr><td>Ваше имя:</td><td><input type=text name=user_name id=otr_inp></td></tr>
+            <tr><td>Ваше e-mail:</td><td><input type=text name=user_mail id=otr_inp></td></tr>
+            <tr><td colspan=2>Ваше сообщение:</td></tr>
+            <tr><td colspan=2><textarea name=user_msg id=otr_txt></textarea></td></tr>
+            <tr><td colspan=2 align=center><input type=submit name=submit_otr_comment value=Послать id=sOtr></td></tr>
+      </table>
+      </form>
+</td>
+{else}
+      <center><strong>{$send_msg}</strong></center>
+{/if}
+</tr>
+</table>
+

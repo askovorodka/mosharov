@@ -1,0 +1,33 @@
+<p>Вы сделали заказ на сайте http://sell-tire.ru</p>
+
+<p>Дата: {$date|date_format:"%d.%m.%Y в %T"}</p> 
+
+<p>Номер вашего заказа: {$order_id}</p>
+
+<p>Вы заказали {$number} товаров на сумму {$total_sum|format_price} {$currency}.</p> 
+
+<p>Способ доставки: {if $dostavka == 1}Доставка по Москве и Подмосковью{elseif $dostavka == 2}Самовывоз{elseif $dostavka > 2}Доставка до транспортной компании - {$company_dost}{/if}</p>
+
+<p>Способ оплаты: {if $payment == 1}Наличные{else}Безналчиный расчет{/if}</p>
+
+<p><b>Список заказанных товаров</b></p>
+
+<table>
+<tr><th>№</th><th>Наименование</th><th>Количество</th><th>Стоимость за единицу</th><th>Сумма</th></tr>
+{foreach from=$products item=product name=for1}
+<tr><td>{$smarty.foreach.for1.iteration}</td><td>{$product.details.name}</td><td>{$product.count}</td><td>{$product.details.price|format_price} руб.</td><td>{$product.sum|format_price} руб.</td></tr>
+{/foreach}
+
+<tr>
+<td colspan="4" align="right">Стоимость доставки:</td>
+<td>{$order_price|format_price} руб.</td>
+</tr>
+
+<tr>
+<td colspan="4" align="right">Итого:</td>
+<td>{$total_sum|format_price} руб.</td>
+</tr>
+
+</table>
+
+До скорых встреч!

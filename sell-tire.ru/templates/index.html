@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>{$page_title}</title>
+<meta name="Keywords" content="{$meta_keywords}">
+<meta name="Description" content="{$meta_description}">
+{foreach from=$css item=css}
+<link rel="stylesheet" type="text/css" href="{$css}">
+{/foreach}
+
+{foreach from=$js item=js}
+<script src="{$js}" type="text/javascript"></script>
+{/foreach}
+
+{assign var=curnav value=$navigation.1.url|replace:"$base_url":""|replace:"/":""}
+{assign var=curnav2 value=$navigation.2.url|replace:"$base_url":""|replace:"/":""|replace:"$curnav":""}
+
+</head>
+<body>
+
+<div style="position:absolute; z-index:90; border:1px solid #A01C08; background:#FFF; display:none;" id="ImageLayout"></div>
+<div id='loading-layer'><div>Загрузка. Пожалуйста, подождите...</div></div>
+
+<table class="maintable" align="center">
+  <tr>
+    <td class="maintop">
+    	{if $current_url != "home"}<a title="шины-купить.рф - продажа шин и дисков" href="/"><img alt="шины-купить.рф - продажа шин и дисков" src="{$template_image}logo.png" class="logo" /></a>
+    	{else}<img src="{$template_image}logo.png" class="logo" />{/if}
+    	{include file="`$TEMP`form_search.html"}
+    	<h1>Продажа шин и дисков</h1>
+    	<div class="toptel"><span class="toptelm">менеджеры ждут:</span><br /><span class="toptelsmall">{$smarty.const.PHONE_CODE1}</span> {$smarty.const.PHONE1}<div class="topteltime">Ежедневно с 10:00 до 20:00</div></div>
+    </td>
+  </tr>
+  <tr>
+    <td class="topmenu">
+    	<a href="/katalog/shini/">ШИНЫ</a> / <a href="/katalog/diski/">ДИСКИ</a> / <a href="/akcii/">АКЦИИ</a>
+        <span class="topmenur">
+        {foreach from=$main_menu item=item name=main_menu}
+        	{if $item.url == "home"}
+        		<a href="/">{$item.name|strip_tags}</a>{if !$smarty.foreach.main_menu.last} / {/if}
+        	{else}
+        		<a href="{$base_url}/{$item.url|urlencode}/">{$item.name|strip_tags}</a>{if !$smarty.foreach.main_menu.last} / {/if}
+        	{/if}
+        {/foreach}
+        </span>
+    </td>
+  </tr>
+  <tr>
+    <td class="main">
+    <table class="mainbody">
+      <tr>
+        <td class="mainbodybig">
+	        {if $current_url == 'home'}
+	        	{include file="`$TEMP`top_filter.html"}
+	        	{include file="`$TPL`popular_disk.html"}
+	        	{include file="`$TPL`popular_tires.html"}
+	        	{include file="`$TPL`home_manufacturer_tires.html"}
+	        	{include file="`$TPL`home_manufacturer_disk.html"}
+	        {/if}
+			{if $content=='' or !$content}
+				{assign var="content" value=""}
+				{fetch file=$template assign="content"}
+			{/if}
+			{eval var=$content}
+        </td>
+
+        <td class="mainbodyside">
+        {include file="`$TPL`basket.html"}
+        {if !$models}
+        	{if $cat_content.param_level == 2}
+        		{include file="`$TPL`brand_list.html"}
+        	{else}
+        		{include file="`$TPL`home_news_block.html"}
+        	{/if}
+        {else}
+        	{include file="`$TPL`models_list.html"}
+        {/if}
+        </td>
+      </tr>
+	</table>
+    </td>
+  </tr>
+  <tr>
+    <td class="footer">
+    Информация о ценах и наличии является справочной! Указанные цены не являются офертой в понятии ст. 435 <span class="footerr">&copy; 2012 &ndash; Шины и Диски</span>
+    <a href="{$base_url}/karta_saita/" style="color:#999;">Карта сайта</a>
+    <br />
+    
+    <div>
+<a href="http://torg.mail.ru/?prtnr=1&pid=11912&click=1"><img height="31" border="0" width="88" alt="Товары@Mail.ru" src="http://upload.torg.mail.ru/prtnr/?pid=11912"/></a>
+
+<a href="http://www.horoshop.ru"><img src="http://www.horoshop.ru/images/horoshop88x31.gif" alt="Samsung, Nokia, Sony - каталог низких цен" title ="Хорошоп - каталог низких цен" border="1" width=88 height=31></a>
+
+
+{literal}
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+var yaParams = {/*Здесь параметры визита*/};
+</script>
+
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter14231680 = new Ya.Metrika({id:14231680, enableAll: true, webvisor:true,params:window.yaParams||{ }});
+        } catch(e) {}
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+{/literal}
+<noscript><div><img src="//mc.yandex.ru/watch/14231680" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+    
+    </div>
+    
+    </td>
+  </tr>
+</table>
+</body>
+</html>

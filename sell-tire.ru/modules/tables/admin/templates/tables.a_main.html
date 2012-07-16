@@ -1,0 +1,86 @@
+{literal}
+<DIV id=dhtmltooltip></DIV>
+<SCRIPT language=JavaScript>
+
+function confirm_delete(delete_id)
+{
+if (confirm("Дейтсвительно удалить эту таблицу?")) {
+parent.location.href = "?mod=tables&action=delete&id=" + delete_id;
+}
+}
+</SCRIPT>
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/tooltips.js'></script>
+{/literal}
+
+{if $tables_list}
+<table width=100% class=content_table>
+
+	<tr>
+	<th width=50>ID</th>
+	<th>Таблица</th>
+	<th width=10%>Формат</th>
+	<th width=10%>Действия</th>
+	</tr>
+
+	{foreach from=$tables_list item=table name=tabla}
+
+	{if $col==1}
+	{assign var="td" value='td1'}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value='td2'}
+	{assign var="col" value=1}
+	{/if}
+	<tr onmouseover="flatlinkOver(this)" {if $smarty.foreach.tabla.iteration%2==1}onmouseout="flatlinkOut(this)"{else}onmouseout="flatlinkOut1(this)"{/if}>
+			<td width="50" class={$td}_left align=center>
+				{$table.id}
+			</td>
+			<td class={$td}_middle>
+				{$table.name}
+			</td>
+			<td class={$td}_middle align=center>
+				{$table.format}
+			</td>
+			<td align=center class={$td}_right>
+				<a href="javascript:confirm_delete('{$table.id}');" class=img_link onmouseover="ddrivetip('Удалить таблицу')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
+				<a href=?mod=tables&action=edit&id={$table.id} class=img_link onmouseover="ddrivetip('Редактировать альбом')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>
+			</td>
+		</tr>
+
+	{/foreach}
+
+</table>
+{else}
+<table width=100% class=content_table>
+
+	<tr>
+	<th width=50>ID</th>
+	<th>Таблица</th>
+	<th width=10%>Формат</th>
+	<th width=10%>Действия</th>
+	</tr>
+    <tr>
+<td class=td2_middle colspan="4" style="height: 30px;">
+<center>В системе нет ни одной таблицы.</center></td></tr></table>
+{/if}
+<br>
+<div class="add_but" onClick="location.href='?mod=tables&action=add'"><div><a href="?mod=tables&action=add">добавить таблицу</a></div></div>
+
+{if $total_pages>1}
+<br><br>
+<div class="listing">
+<li class="str">
+<ul>
+<li class="center"><a href="?mod=tables&page=1">&laquo;</a>
+{section name=p loop=$pages}
+  {if $pages[p]==$current_page}
+  <a class="active" href="?mod=tables&page={$pages[p]}">{$pages[p]}</a>
+  {else}
+  <a href="?mod=tables&page={$pages[p]}">{$pages[p]}</a>
+  {/if}
+{/section}
+<a href="?mod=tables&page={$total_pages}">&raquo;</a></li>
+</ul>
+</li>
+</div>
+{/if}

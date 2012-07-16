@@ -1,0 +1,44 @@
+
+<form action="" method="POST" id="form_order_products">
+
+                <table class="itemlt">
+                  <tr class="itemltcapt">
+                  	<td class="itemltcapti"><img src="{$template_image}tbl_l.gif" /></td>
+                  	<td></td>
+                    <td nowrap><a href="{$base_url}/{$current_url}/?sort=name&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Наименование</a> {if $sort == "name"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td>
+                    <td></td>
+                    <td nowrap><a href="{$base_url}/{$current_url}/?sort=tire_width&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Типоразмер</a>{if $sort == "tire_width"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td>
+                    <td nowrap><a href="{$base_url}/{$current_url}/?sort=tire_in&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">ИН</a>{if $sort == "tire_in"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td>
+                    <td nowrap><a href="{$base_url}/{$current_url}/?sort=tire_is&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">ИС</a>{if $sort == "tire_is"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td>
+                    <td nowrap><a href="{$base_url}/{$current_url}/?sort=price&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Цена</a>{if $sort == "price"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td> 
+                    <td nowrap>Кол-во</td>
+                    <td></td>
+                    <td class="itemltcapti"><img src="{$template_image}tbl_r.gif" /></td>
+                  </tr>
+                  <form action="" method="POST" id="form_order_products">
+                  {foreach from=$products item=item name=product}
+	                  <tr>
+	                  	<td class="itemltcapti"></td>
+	                  	<td>{if $item.image}<a class="CatalogImages" href="{$base_url}/katalog{$item.full_url}" image="/uploaded_files/shop_images/{$item.image}"><img src="{$template_image}photo.png"></a>{/if}</td>
+	                    <td class="itemlname"><a href="{$base_url}/katalog/{$item.full_url}">{$item.name}</a></td>
+	                    <td>{if $item.tire_season == '1'}<img src="{$template_image}iwinter.jpg" />{elseif $item.tire_season == '2'}<img src="{$template_image}isummer.jpg" />{elseif $item.tire_season == '3'}<img src="{$template_image}imixed.jpg" />{/if}</td>
+	                    <td>{$item.tire_width}/{$item.tire_height} R{$item.tire_diameter}</td>
+	                    <td>{$item.tire_in}</td>
+	                    <td>{$item.tire_is}</td>
+	                    <td>{$item.price|format_price} руб.</td>
+	                    <td>{if $item.tire_sklad > 0}<input {if !$item.tire_sklad}disabled{/if} type="text" name="{$item.id}" value="{if $item.tire_sklad > 3}4{elseif $item.tire_sklad > 1}{$item.tire_sklad}{else}1{/if}">{/if}</td>
+	                    {if $item.tire_sklad > 0}
+	                    	<td><a href="" name="add_order" title="В корзину">в корзину</a></td>
+	                    {else}
+	                    	<td>Нет в наличии</td>
+	                    {/if}
+	                    <td class="itemltcapti"></td>
+	                  </tr>
+	              {/foreach}
+                  </form>
+                </table>
+</form>
+
+{if $other_products && ($smarty.get.tire_season == 1 || $smarty.get.tire_season == 2)}
+{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/other_tires.html"}
+{/if}

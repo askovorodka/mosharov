@@ -1,0 +1,11 @@
+{if $top_tires}
+            <h2>Популярные шины</h2>
+            <table class="popular">
+              <tr>
+              {foreach from=$top_tires item=ttires}
+                <td><strong>{$ttires.manufacture_name}</strong>
+                	<div><a title="{$ttires.name}" href="{$base_url}/{$ttires.full_url}">{if $ttires.image}<img src="/uploaded_files/shop_images/p{$ttires.image}" />{else}<img src="{$template_image}nophoto_72x96.jpg" />{/if}</a></div><a title="{$base_url}/{$ttires.name}" href="{$ttires.full_url}">{$ttires.tire_width}/{$ttires.tire_height} R{$ttires.tire_diameter}</a><br />{$ttires.price|format_price} руб.<br /><a href="{$base_url}/{$ttires.full_url}"><img src="{$template_image}b_kupit.gif" class="popularb" /></a></td>
+              {/foreach}
+              </tr>
+            </table>
+{/if}

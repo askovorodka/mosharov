@@ -1,0 +1,166 @@
+                {*<table class="filtermainlt">
+                  <tr>
+                    <td class="filtermainf">
+             	    <select class="mainselect" name="tire_manufacturer">
+             	    <option value="">Все</option>
+             	    {foreach from=$tires_manufacturer item=tire}
+             	    	{if trim($tire.name) != ""}
+                      		<option value="{$tire.id}">{$tire.name}</option>
+                      	{/if}
+                    {/foreach}
+                    </select>
+                	</td>
+                    <td>Производитель</td>
+                  </tr>
+                  <tr>
+                    <td class="filtermainf">
+             	    <select class="mainselect" name="tire_width">
+             	    <option value="">Любая</option>
+             	    {foreach from=$tires_width item=tire_width}
+             	    	{if trim($tire_width.tire_width) != ""}
+                      		<option value="{$tire_width.tire_width}">{$tire_width.tire_width}</option>
+                      	{/if}
+                    {/foreach}
+                    </select>
+                </td>
+                    <td>Ширина</td>
+                  </tr>
+                  <tr>
+                    <td class="filtermainf">
+             	    <select class="mainselect" name="tire_height">
+             	    <option value="">Любой</option>
+             	    {foreach from=$tires_height item=tire_height}
+             	    	{if $tire_height.tire_height > 0}
+                      		<option value="{$tire_height.tire_height}">{$tire_height.tire_height|format_number}</option>
+                      	{/if}
+                    {/foreach}
+                    </select>
+                </td>
+                    <td>Профиль</td>
+                  </tr>
+                  <tr>
+                    <td class="filtermainf">
+             	    <select class="mainselect" name="tire_diameter">
+             	    <option value="">Любой</option>
+             	    {foreach from=$tires_diameter item=tires_diameter}
+             	    	{if $tires_diameter.tire_diameter > 0}
+                      		<option value="{$tires_diameter.tire_diameter}">{$tires_diameter.tire_diameter|format_number}</option>
+                      	{/if}
+                    {/foreach}
+                    </select>
+                </td>
+                    <td>Диаметр</td>
+                  </tr>
+                  <tr>
+                    <td class="filtermainf">
+             	    <select class="mainselect" name="tire_season">
+             	    	<option value="">Любой</option>
+                      	<option value="0">Лето</option>
+                      	<option value="1">Зима</option>
+                      	<option value="2">Всесезон</option>
+                    </select>
+                </td>
+                    <td>Сезон</td>
+                  </tr>
+                  <tr>
+                    <td class="filtermainf">
+             	    <select class="mainselect" name="tire_spike">
+                      <option value="1">Нет</option>
+                      <option value="2">Да</option>
+                    </select>
+                </td>
+                    <td>Наличие шипов</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2"><input type="checkbox" checked name="tire_sklad" value="1" id="tire_sklad"> <label for="tire_sklad">Есть на складе</label></td>
+                  </tr>
+                </table>
+
+
+            <!---- FILTER TIRE ---->
+            <form action="{$base_url}/shop/search/" method="GET">
+            	<input type="hidden" name="filter_type" value="tire">
+            	<table class="mdisktbl" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td class="mdisktblt">Производитель:</td>
+                    <td width="143" class="mainselecttd" valign="bottom">
+             	    <select class="mainselect" name="tire_manufacturer">
+             	    <option value="">Все</option>
+             	    {foreach from=$tires_manufacturer item=tire}
+             	    	{if trim($tire.name) != ""}
+                      		<option value="{$tire.id}">{$tire.name}</option>
+                      	{/if}
+                    {/foreach}
+                    </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="mdisktblt">Ширина:</td>
+                    <td class="mainselecttd">
+             	    <select class="mainselect" name="tire_width">
+             	    <option value="">Любая</option>
+             	    {foreach from=$tires_width item=tire_width}
+             	    	{if trim($tire_width.tire_width) != ""}
+                      		<option value="{$tire_width.tire_width}">{$tire_width.tire_width}</option>
+                      	{/if}
+                    {/foreach}
+                    </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="mdisktblt">Профиль:</td>
+                    <td class="mainselecttd">
+             	    <select class="mainselect" name="tire_height">
+             	    <option value="">Любой</option>
+             	    {foreach from=$tires_height item=tire_height}
+             	    	{if $tire_height.tire_height > 0}
+                      		<option value="{$tire_height.tire_height}">{$tire_height.tire_height}</option>
+                      	{/if}
+                    {/foreach}
+                    </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="mdisktblt">Диаметр:</td>
+                    <td class="mainselecttd">
+             	    <select class="mainselect" name="tire_diameter">
+             	    <option value="">Любой</option>
+             	    {foreach from=$tires_diameter item=tires_diameter}
+             	    	{if $tires_diameter.tire_diameter > 0}
+                      		<option value="{$tires_diameter.tire_diameter}">{$tires_diameter.tire_diameter}</option>
+                      	{/if}
+                    {/foreach}
+                    </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="mdisktblt">Сезон:</td>
+                    <td class="mainselecttd">
+             	    <select class="mainselect" name="tire_season">
+             	    	<option value="">Любой</option>
+                      	<option value="0">Лето</option>
+                      	<option value="1">Зима</option>
+                      	<option value="2">Всесезон</option>
+                    </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="mdisktblt">Наличие шипов:</td>
+                    <td class="mainselecttd">
+             	    <select class="mainselect" name="tire_spike">
+                      <option value="0">Нет</option>
+                      <option value="1">Да</option>
+                    </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="mdisktblt">Есть на складе:</td>
+                    <td class="mainchktd"><input type="checkbox" checked name="tire_sklad" value="1"></td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td class="filtbut"><input type="image" src="{$template_image}podobrat_blue.png" width="111" height="25"></td>
+                  </tr>
+                </table>
+            </form>
+<!---- /FILTER TIRE ---->

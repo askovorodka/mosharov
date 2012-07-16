@@ -1,0 +1,6 @@
+		<div style="display:{if $basket_number > 0}block{else}none{/if};" id="basket_block">
+        <div class="basketc"><a href="/katalog/basket/">Корзина</a></div>
+        <div class="basket"><p><span class="grcolor">Кол-во товара:</span> <span id="basket_number">{$basket_number}</span> шт.
+        <br /><span class="grcolor">Сумма:</span> <span id="basket_currency">{$basket_total|format_price}</span> руб.
+        <br /><a href="/katalog/basket/" title="Оформить заказ"><img src="{$template_image}b_oformzakaz.png" /></a></p></div>
+		</div>

@@ -1,0 +1,34 @@
+                <div style="width:830px;">
+                <table class="itemlt">
+                  <tr class="itemltcapt">
+                  	<td class="itemltcapti"><img src="{$template_image}tbl_l.gif" /></td>
+                    <td nowrap><a href="{$base_url}/{$current_url}/?sort=name&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Наименование</a> {if $sort == "name"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td>
+                    <td nowrap><a href="{$base_url}/{$current_url}/?sort=tire_width&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Типоразмер</a>{if $sort == "tire_width"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td>
+                    <td nowrap><a href="{$base_url}/{$current_url}/?sort=tire_in&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">ИН</a>{if $sort == "tire_in"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td>
+                    <td nowrap><a href="{$base_url}/{$current_url}/?sort=tire_is&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">ИС</a>{if $sort == "tire_is"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td>
+                    <td nowrap><a href="{$base_url}/{$current_url}/?sort=price&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Цена</a>{if $sort == "price"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td> 
+                    <td nowrap>Кол-во</td>
+                    <td></td>
+                    <td class="itemltcapti"><img src="{$template_image}tbl_r.gif" /></td>
+                  </tr>
+                  <form action="" method="POST" id="form_order_products">
+                  {foreach from=$products_list item=item name=product}
+	                  <tr>
+	                  	<td class="itemltcapti"></td>
+	                    <td class="itemlname"><a href="{$base_url}/{$current_url}/{$item.id}/">{$item.name}</a></td>
+	                    <td>{$item.tire_width}/{$item.tire_height} R{$item.tire_diameter}</td>
+	                    <td>{$item.tire_in}</td>
+	                    <td>{$item.tire_is}</td>
+	                    <td>{$item.price|format_price} руб.</td>
+	                    <td>{if $item.tire_sklad > 0}<input {if !$item.tire_sklad}disabled{/if} type="text" class="tableinp" name="{$item.id}" value="{if $item.tire_sklad > 3}4{elseif $item.tire_sklad > 1}{$item.tire_sklad}{else}1{/if}">{/if}</td>
+	                    {if $item.tire_sklad > 0}
+	                    	<td><a name="add_order" href="" title="В корзину">в корзину</a></td>
+	                    {else}
+	                    	<td class="itemred">Нет в наличии</td>
+	                    {/if}
+	                    <td class="itemltcapti"></td>
+	                  </tr>
+	              {/foreach}
+                  </form>
+                </table>
+</div>

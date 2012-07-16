@@ -1,0 +1,6 @@
+        <div class="news">
+        {foreach from=$news_list item=news name=news}
+        <p><a href="{$base_url}/news/archive/{$news.id}/">{$news.title|strip_tags}</a><br />
+        {$news.text|strip_tags|truncate:"100"}</p>
+        {/foreach}
+        </div>

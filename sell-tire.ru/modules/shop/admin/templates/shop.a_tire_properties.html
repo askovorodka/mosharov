@@ -1,0 +1,63 @@
+<table width=100% class=content_table>
+	<tr>
+		<th bgcolor=#99CCFF onClick="show('tire', this);" class="button plus" style="border-bottom: none; text-align: left; padding-left: 30px;"><b>Свойства шин</b></th>
+	</tr>
+ </table>
+    <div id="tire" style="display:none;">
+<table width=100% class=content_table>
+	<tr>
+		<td width=15% class=td2_left><b>Ширина:</b></td>
+		<td class=td2_right><input type=text name=tire_width class=field value="{$product.tire_width}"></td>
+	</tr>
+	
+	<tr>
+		<td width=15% class=td2_left><b>Высота:</b></td>
+		<td class=td2_right><input type=text name=tire_height class=field value="{$product.tire_height}"></td>
+	</tr>
+
+	<tr>
+		<td width=15% class=td2_left><b>Диаметр:</b></td>
+		<td class=td2_right><input type=text name=tire_diameter class=field  value="{$product.tire_diameter}"></td>
+	</tr>
+	
+	<tr>
+		<td width=15% class=td2_left><b>ИН:</b></td>
+		<td class=td2_right><input type=text name=tire_in class=field value="{$product.tire_in}"></td>
+	</tr>
+	
+	<tr>
+		<td width=15% class=td2_left><b>ИС:</b></td>
+		<td class=td2_right><input type=text name=tire_is class=field value="{$product.tire_is}"></td>
+	</tr>
+	
+	<tr>
+		<td width=15% class=td2_left><b>Усил.:</b></td>
+		<td class=td2_right><input type=text name=tire_usil class=field value="{$product.tire_usil}"></td>
+	</tr>
+	
+	<tr>
+		<td width=15% class=td2_left><b>Шип:</b></td>
+		<td class=td2_right><select name="tire_spike"><option value="1" {if $product.tire_spike == '1'}selected{/if}>Да<option value="0" {if $product.tire_spike == '0'}selected{/if}>Нет</select></td>
+	</tr>
+
+	<tr>
+		<td width=15% class=td2_left><b>Сезон:</b></td>
+		<td class=td2_right><select name="tire_season"><option value="0" {if $product.tire_season == '0'}selected{/if}>Лето<option value="1" {if $product.tire_season == '1'}selected{/if}>Зима<option value="2" {if $product.tire_season == '2'}selected{/if}>Всесезон</select></td>
+	</tr>
+
+	<tr>
+		<td width=15% class=td2_left><b>Тип ТС:</b></td>
+		<td class=td2_right><select name="tire_bodytype">
+		{foreach from=$body_types item=body}
+			<option value="{$body.id}" {if $product.tire_bodytype == $body.id}selected{/if}>{$body.name}
+		{/foreach}
+		</select></td>
+	</tr>
+
+	<tr>
+		<td width=15% class=td2_left><b>Склад:</b></td>
+		<td class=td2_right><input type=text name=tire_sklad class=field value="{$product.tire_sklad}"></td>
+	</tr>
+	
+</table>
+</div>
