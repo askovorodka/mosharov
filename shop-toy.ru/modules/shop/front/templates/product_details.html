@@ -9,10 +9,10 @@
 	<table class="itemtbl">
       <tr>
         <td class="itempict">
-        <img id="bigimage" src="/uploaded_files/shop_images/big-{$photo.id}.{$photo.ext}" width="315" height"228" class="itempb"><br>
+        <img id="bigimage" src="/images/img315x228/uploaded_files/product_images/{$product.id}/{$images[0].image}" width="315" height"228" class="itempb"><br>
         {if $images}
         	{foreach from=$images item=image}
-        	<a href="/uploaded_files/shop_images/big-{$image.id}.{$image.ext}" class="smallimage"><img src="/uploaded_files/shop_images/resized-{$image.id}.{$image.ext}" width="71" height="74" class="itemps"></a>
+        	<a href="/images/img315x228/uploaded_files/product_images/{$product.id}/{$images[0].image}" class="smallimage"><img src="/images/img71x74/uploaded_files/product_images/{$product.id}/{$image.image}" width="71" height="74" class="itemps"></a>
         	{/foreach}
         {/if}
         </td>
@@ -23,6 +23,7 @@
         <span class="itempropc">Производитель:</span> ToyMaster<br>
         <span class="itempropc">Страна:</span> {$product.country}<br>
         <span class="itempropc">Гарантия:</span> {$product.garant}<br>
+        <span class="itempropc">Описание:</span> {$product.description}<br>
         <br><span class="itempr">{$product.price} руб.</span><br><br>
         <div class="itemnumb"><span class="sprub">кол-во:</span> <input id="product_count_{$product.id}" maxlength=3 type="text" value="1"></div><div class="itembutd"><input type="image" name="add_order" product_id="{$product.id}" src="{$template_image}item_button.png" class="itembut"></div>
         </td>

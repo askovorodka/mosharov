@@ -1091,6 +1091,11 @@ SWITCH (TRUE) {
 				
 
 				foreach ($products_list as $v => $key) {
+						$image = $db->get_single("select * from product_images where product_id='{$key['id']}' limit 1");
+						if (!empty($image))
+						{
+							$products_list[$v]['image'] = $image['image'];
+						}
 						$tmp=explode("##|##",$key['properties']);
 						$products_list[$v]['properties']=array();
 						foreach ($tmp as $val => $k) {
@@ -1187,10 +1192,10 @@ SWITCH (TRUE) {
 							$images = $shop->getProductImages($product_content['id']);
 							$smarty->assign("images",$images);
 							
-							$photo = $db->get_single("SELECT * FROM fw_products_images WHERE parent='".$product_content['id']."' limit 1 ");
-							$smarty->assign('photo', $photo);
+							$images = $db->get_all("SELECT * FROM product_images WHERE product_id='".$product_content['id']."'");
+							$smarty->assign('images', $images);
 
-							if (PRODUCT_RATING=='on' or PRODUCT_COMMENTS=='on') {
+							/*if (PRODUCT_RATING=='on' or PRODUCT_COMMENTS=='on') {
 								$this_module=$db->get_single("SELECT priv FROM fw_modules WHERE name='shop' LIMIT 1");
 								if (@$_SESSION['fw_user']['priv']<=$this_module['priv']) {
 									$smarty->assign("show_admin_menu","true");
@@ -1201,15 +1206,15 @@ SWITCH (TRUE) {
 								if (isset($_SESSION['fw_user']['priv']) && $_SESSION['fw_user']['priv']<=9) {
 									$smarty->assign("allowed_user",true);
 								}
-							}
+							}*/
 
-							if (PRODUCT_RATING=='on') {
+							/*if (PRODUCT_RATING=='on') {
 
 								$check_rating=explode(",",@$_COOKIE['fw_rating']);
 								if (in_array($product_content['id'],$check_rating)) $smarty->assign("rating_done","true");
 
 								$smarty->assign("rating","on");
-							}
+							}*/
 
 							if ($cat_list[$f]['full_title']!='/') {
 								$nav_titles=explode("/",$cat_list[$f]['full_title']);

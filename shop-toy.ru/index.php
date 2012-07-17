@@ -62,7 +62,7 @@ $default_modules=$db->get_all("SELECT * FROM fw_modules WHERE default_load='1' A
 $url=Common::get_url($_SERVER['REQUEST_URI'],SCRIPT_FOLDER);
 
 $navigation=array();
-$navigation[]=array("url" => BASE_URL,"title" => 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
+$navigation[]=array("url" => BASE_URL,"title" => 'Главная страница');
 $page_found=false;
 $set_pages_url=false;
 $module_found=false;
@@ -364,7 +364,7 @@ else {
 
   $db->query("REPLACE INTO fw_urls (url_from,url_to) VALUES('".@$_SERVER['HTTP_REFERER']."','".BASE_URL.$_SERVER['REQUEST_URI']."')");
 
-  $smarty->assign("page_title","пїЅпїЅпїЅпїЅпїЅпїЅ 404. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+  $smarty->assign("page_title","Ошибка 404.");
   require_once (BASE_PATH.'/modules/site_map/front/site_map.f_main.php');
   header("HTTP/1.0 404 Not Found");
 }

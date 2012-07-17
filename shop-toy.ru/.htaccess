@@ -14,6 +14,9 @@ RewriteRule     ^(.*)/video/(.*)$			/video/$2	[L]
 RewriteCond 	%{REQUEST_FILENAME} !-f
 RewriteRule     ^(.*)/insertfiles/(.*)$		/insertfiles/$2	[L]
 
+#RewriteCond 	%{REQUEST_FILENAME} !-f
+RewriteRule     ^images/([^/]+)/(.*)$		/images.php?type=$1&image=$2	[L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 

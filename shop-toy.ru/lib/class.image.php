@@ -2,7 +2,7 @@
 
 class Image {
 
-function resize($src, $dst, $dst_width, $dst_height, $crop = true, $background = "#d3d1c4", $fix_width = false)
+function resize($src, $dst, $dst_width, $dst_height, $crop = true, $background = "#ffffff", $fix_width = false)
 {
 	if (is_file($src))
 	{

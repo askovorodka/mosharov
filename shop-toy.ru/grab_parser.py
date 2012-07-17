@@ -18,6 +18,7 @@ def main():
     items = db.select("select * from _import_product_links")
     if items == None:
         print "Парсинг не требуется"
+        sys.exit()
 
     root = get_abs_path()
     curdate = datetime.date.today()
