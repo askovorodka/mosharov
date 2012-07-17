@@ -63,7 +63,7 @@ def main():
                 
             if (description != None):
                 try:
-                    db.query("update fw_products set description = '%s' where id='%d'" % (unicode(description).encode('cp1251'), int(item['product_id'])))
+                    db.query("update fw_products set description = '%s' where id='%d'" % (db.escape(unicode(description).encode('cp1251')), int(item['product_id'])))
                 except UnicodeEncodeError:
                     print "Ошибка перекодировки текста"
             
