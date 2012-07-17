@@ -62,7 +62,10 @@ def main():
                 db.query("insert into product_images (product_id, image) values ('%d', '%s')" % (int(item['product_id']), str(imagename)))
                 
             if (description != None):
-                db.query("update fw_products set description = '%s' where id='%d'" % (str(unicode(description).encode('cp1251')), int(item['product_id'])))
+                try:
+                    db.query("update fw_products set description = '%s' where id='%d'" % (unicode(description).encode('cp1251'), int(item['product_id'])))
+                except UnicodeEncodeError:
+                    print "Ошибка перекодировки текста"
             
             db.query("delete from _import_product_links where product_id='%d'" % int(item['product_id']))
 
