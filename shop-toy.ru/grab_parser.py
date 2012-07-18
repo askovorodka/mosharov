@@ -43,33 +43,43 @@ def main():
                 if (os.path.isdir(imagedir) == False):
                     os.mkdir(imagedir,0777)
 
-                    #print "Создана категория для картинки продукта "  + str(item['product_id'])
-                    
+                #print "Создана папка для картинки продукта "  + str(item['product_id'])
+                
                 if (image_url != None and imagedir != None):
                     fileimage = os.system("/usr/local/bin/wget -c --content-disposition -P %s %s" % (imagedir, image_url))
-                    
+
+                if (imagename != None):
+                    db.query("insert into product_images (product_id, image) values ('%d', '%s')" % (int(item['product_id']), str(imagename)))
+            
             except IndexError:
                 print grab.response.url
                 print 'Ссылка на картинку не найдена'
                 
             try:
                 description = grab.xpath_text('//*[@class="catalog_list"]//tr//td[2]')
+                
+                if (description != None):
+                    try:
+                        description = unicode(description).encode('utf-8')
+                        description = re.sub("Арт.\s(.*)\sКод\s\d{1,5}", "", description)
+                        age_txt = re.search( "Возраст:(.*)\d{1,2}", description)
+                        if age_txt != None:
+                            age = re.search("\d", age_txt.group())
+                            db.query("update fw_products set age = '%d' where id='%d'" % (int(age.group()), int(item['product_id'])))
+                            #description = re.sub("^Производитель:\s(.*)","", description)
+
+                        db.query("update fw_products set description = '%s' where id='%d'" % (db.escape(description.decode('utf-8').encode('cp1251')), int(item['product_id'])))
+                    except UnicodeEncodeError:
+                        print "Ошибка перекодировки текста"
+                
             except IndexError:
                 print grab.response.url
                 print "Описание категории не найденно"
 
             
-            if (imagename != None):
-                db.query("insert into product_images (product_id, image) values ('%d', '%s')" % (int(item['product_id']), str(imagename)))
-                
-            if (description != None):
-                try:
-                    db.query("update fw_products set description = '%s' where id='%d'" % (db.escape(unicode(description).encode('cp1251')), int(item['product_id'])))
-                except UnicodeEncodeError:
-                    print "Ошибка перекодировки текста"
             
-            db.query("delete from _import_product_links where product_id='%d'" % int(item['product_id']))
-
+            #db.query("delete from _import_product_links where product_id='%d'" % int(item['product_id']))
+            
 DB_HOST, DB_NAME, DB_USER, DB_PASS = "localhost", "shop-toy", "demo", "gthtgenmt"
 db = DataBase.Db(DB_NAME,DB_HOST,DB_USER,DB_PASS)
 db.query("set CHARACTER SET cp1251")
