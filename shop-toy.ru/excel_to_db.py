@@ -41,7 +41,11 @@ for rownum in range(sheet.nrows):
         metka = unicode(row[6]).encode('cp1251')
         price = unicode(row[7]).encode('cp1251')
         price = price.replace(",", "")
-        price = float(price)
+        #print price
+        if price == None or price == "":
+            price = 0.00
+        else:
+            price = float(price)
         ed = unicode(row[8]).encode('cp1251')
         pack = float(row[9])
         image = unicode(row[10]).encode('cp1251')
@@ -51,8 +55,9 @@ for rownum in range(sheet.nrows):
         values('%s','%s', '%s', '%s', '%s', '%f', '%s', '%f', '%s', '%f')''' % (db.escape(code), db.escape(article), db.escape(nom), db.escape(group),db.escape(metka),price,db.escape(ed),pack,db.escape(image),ostatok))
 
 print "Сделано"
+db.query("update fw_conf set conf_value = '0' where conf_key = 'XLS_UPDATE' ")
 print "Старт скрипта импорта..."
-cmd = "/usr/local/bin/python /home/alex/data/www/shop-toy.mosharov.com/import2.py"
-os.system(cmd)
+#cmd = "/usr/local/bin/python /home/alex/data/www/shop-toy.mosharov.com/import2.py"
+#os.system(cmd)
 
 db.close()

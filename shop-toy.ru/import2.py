@@ -81,13 +81,29 @@ rootcat = get_category(1)
 for row in imported_rows:
     #находим привязку категории из прайса к каталогу
     cat1 = db.selectrow("select * from matches_category2 where group_prod = '%s'" % str(row['group_prod']))
+    #если нет привязки, то создаем субкатегорию и делаем привязку автоматом к ней
     if cat1 == None:
-        continue
-    cat_param_1 = db.selectrow("select * from fw_catalogue where id='%d'" % int(cat1['cat_id']))
+        #cat_param_1 = db.selectrow("select * from fw_catalogue where id=82")
+        category = search_category(str(row['group_prod']), 1)
+        if category == None:
+            new_cat_id = insert(rootcat)
+            url = 'category' + str(new_cat_id)
+            status = 1
+            db.query("update fw_catalogue set name = '%s', url = '%s', status = '%d' where id='%d' " % (db.escape(str(row['group_prod'])), url, status, new_cat_id))
+            category = get_category(new_cat_id)
+        
+        db.query("insert into matches_category2 (cat_id, group_prod, group_prod_change) values('%d', '%s', '%s')" % (int(category['id']), str(row['group_prod']), str(row['group_prod'])))
+        print "Добавлена субкатегория %s, добавлено соответствие" % str(row['group_prod'])
+        cat_param_1 = get_category(new_cat_id)
+        cat1 = db.selectrow("select * from matches_category2 where group_prod = '%s'" % str(row['group_prod']))
+    else:
+        cat_param_1 = db.selectrow("select * from fw_catalogue where id='%d'" % int(cat1['cat_id']))
+    
     if cat_param_1 == None:
-        continue;
+        continue
     
     #находим категорию в каталоге, если нет, то добавляем
+    print cat_param_1['id']
     cat_param_2 = search_category(cat1['group_prod_change'], 2, int(cat_param_1['id']))
     #если нет категории, добавлем ее
     if cat_param_2 == None:
@@ -97,7 +113,7 @@ for row in imported_rows:
         db.query("update fw_catalogue set name = '%s', url = '%s', status = '%d' where id='%d' " % (db.escape(str(cat1['group_prod'])), url, status, cat2_id))
         cat_param_2 = get_category(cat2_id)
         print "Добавлена категория: %s" % str(cat1['group_prod'])
-
+    
     #находим продукт, если его нет, то добавляем, иначе обновляем
     product = search_product(cat_param_2['id'], row['article'])
     if (product == None):
@@ -110,7 +126,7 @@ for row in imported_rows:
         print "Обновлен продукт: %s" % str(row['nomen'])
     
 db.query("truncate _imported_rows")
-db.query("update fw_conf set conf_value = '0' where conf_key = 'XLS_UPDATE' ")
+#db.query("update fw_conf set conf_value = '0' where conf_key = 'XLS_UPDATE' ")
 print "Очищена таблица _imported_rows"
 print "Импорт завершен"
 db.close()
