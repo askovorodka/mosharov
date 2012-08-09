@@ -26,10 +26,11 @@ def search_category(name, param_level, parent = None):
         and b.param_right >= a.param_right and b.param_level = 1
         left join fw_catalogue as c on c.param_left < a.param_left and c.param_right > a.param_right and c.param_level = %d
         where a.name = '%s' and a.param_level = '%d' 
-        and c.id = %d ''' % ((int(param_level)-1), db.escape(str(name)), int(param_level), int(parent))
+        and c.id = %d limit 1 ''' % ((int(param_level)-1), db.escape(str(name)), int(param_level), int(parent))
+        #print sql.encode('utf-8')
     else:
         sql = ''' select a.* from fw_catalogue as a 
-        where a.name = '%s' and a.param_level = '%d' ''' % (db.escape(str(name)), int(param_level))
+        where a.name = '%s' and a.param_level = '%d' limit 1 ''' % (db.escape(str(name)), int(param_level))
     
     result = db.selectrow(sql)
     if (result == None):
@@ -70,7 +71,6 @@ def insert(category):
 imported_rows = db.select("select * from _imported_rows")
 
 
-
 if imported_rows == None:
     print "Импортировать нечего"
     sys.exit()
@@ -81,21 +81,8 @@ rootcat = get_category(1)
 for row in imported_rows:
     #находим привязку категории из прайса к каталогу
     cat1 = db.selectrow("select * from matches_category2 where group_prod = '%s'" % str(row['group_prod']))
-    #если нет привязки, то создаем субкатегорию и делаем привязку автоматом к ней
     if cat1 == None:
-        #cat_param_1 = db.selectrow("select * from fw_catalogue where id=82")
-        category = search_category(str(row['group_prod']), 1)
-        if category == None:
-            new_cat_id = insert(rootcat)
-            url = 'category' + str(new_cat_id)
-            status = 1
-            db.query("update fw_catalogue set name = '%s', url = '%s', status = '%d' where id='%d' " % (db.escape(str(row['group_prod'])), url, status, new_cat_id))
-            category = get_category(new_cat_id)
-        
-        db.query("insert into matches_category2 (cat_id, group_prod, group_prod_change) values('%d', '%s', '%s')" % (int(category['id']), str(row['group_prod']), str(row['group_prod'])))
-        print "Добавлена субкатегория %s, добавлено соответствие" % str(row['group_prod'])
-        cat_param_1 = get_category(new_cat_id)
-        cat1 = db.selectrow("select * from matches_category2 where group_prod = '%s'" % str(row['group_prod']))
+        continue
     else:
         cat_param_1 = db.selectrow("select * from fw_catalogue where id='%d'" % int(cat1['cat_id']))
     
@@ -103,7 +90,6 @@ for row in imported_rows:
         continue
     
     #находим категорию в каталоге, если нет, то добавляем
-    print cat_param_1['id']
     cat_param_2 = search_category(cat1['group_prod_change'], 2, int(cat_param_1['id']))
     #если нет категории, добавлем ее
     if cat_param_2 == None:
@@ -126,7 +112,8 @@ for row in imported_rows:
         print "Обновлен продукт: %s" % str(row['nomen'])
     
 db.query("truncate _imported_rows")
-#db.query("update fw_conf set conf_value = '0' where conf_key = 'XLS_UPDATE' ")
-print "Очищена таблица _imported_rows"
+db.query("update fw_conf set conf_value = '0' where conf_key = 'IMPORT_METKA' ")
+print "Очищена таблица _imported_rows, обнулена константа IMPORT_METKA"
 print "Импорт завершен"
+print "Для запуска парсера, набрать: /usr/local/bin/python /home/alex/data/www/shop-toy.mosharov.com/grab_parser.py"
 db.close()

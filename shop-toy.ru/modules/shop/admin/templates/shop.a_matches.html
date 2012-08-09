@@ -12,19 +12,25 @@
 		{if $category.matches}	
 		<tr>
 			<td>{$category.name}</td>
-			<td><ul>{foreach from=$category.matches item=match}<li>{$match.group_prod}</li>{/foreach}</ul></td>
+			<td><ul>{foreach from=$category.matches item=match}<li>{$match.group_prod}&nbsp;(<a href="/admin/index.php?mod=shop&action=delete_match_single&cat_id={$match.cat_id}&group_prod={$match.group_prod}">удалить</a>)</li>{/foreach}</ul></td>
 			<td><a href="/admin/index.php?mod=shop&action=delete_match&cat_id={$category.id}">удалить соответствие</a></td>
 		</tr>
 		{/if}
 	{/foreach}
 
+
 	<tr>
-		<td><select name="category">{foreach from=$cat_list item=category}{if $category.param_level == 1 && !$category.matches}<option value="{$category.id}">{$category.name|strip_tags}</option>{/if}{/foreach}</select></td>
+		<th colspan="3">Добавить новое соответствие</th>
+	</tr>
+
+
+	<tr>
+		<td><select name="category">{foreach from=$cat_list item=category}{if $category.param_level == 1}<option value="{$category.id}">{$category.name|strip_tags}</option>{/if}{/foreach}</select></td>
 		<td>
 			<div style="width:100%; height:300px; overflow:auto;">
 				<ul style="list-style:none;">
-					{foreach from=$imported_rows item=row}
-						<li><input type="checkbox" {if in_array($row.group_prod, $checked_imported_rows)}disabled{/if} name="imported[{$row.group_prod}]" id='{$row.group_prod}'><label for='{$row.group_prod}'>{$row.group_prod}</label></li>
+					{foreach from=$non_related item=row}
+						<li><input type="checkbox" {*if in_array($row.group_prod, $checked_imported_rows)}disabled{/if*} name="imported[{$row.name}]" id='{$row.name}'><label for='{$row.name}'>{$row.name}</label></li>
 					{/foreach}
 				</ul>
 			</div>

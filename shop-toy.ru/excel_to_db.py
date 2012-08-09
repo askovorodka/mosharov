@@ -53,10 +53,18 @@ for rownum in range(sheet.nrows):
         
         db.query('''insert into _imported_rows(code, article, nomen,group_prod, metka, price, ed, pack, image,ost) 
         values('%s','%s', '%s', '%s', '%s', '%f', '%s', '%f', '%s', '%f')''' % (db.escape(code), db.escape(article), db.escape(nom), db.escape(group),db.escape(metka),price,db.escape(ed),pack,db.escape(image),ostatok))
+        
+        print "Добавлена строка %d" % int(rownum)
+        
+        category = db.selectrow("select * from matches_category2 where group_prod = '%s'" % db.escape(group))
+        if category == None:
+            db.query("replace into categories_non_related (name) values('%s')" % db.escape(group))
+            print "Добавлена новая неопределенная категория"
 
 print "Сделано"
 db.query("update fw_conf set conf_value = '0' where conf_key = 'XLS_UPDATE' ")
-print "Старт скрипта импорта..."
+db.query("update fw_conf set conf_value = '1' where conf_key = 'IMPORT_METKA' ")
+#print "Старт скрипта импорта..."
 #cmd = "/usr/local/bin/python /home/alex/data/www/shop-toy.mosharov.com/import2.py"
 #os.system(cmd)
 

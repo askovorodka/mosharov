@@ -57,6 +57,12 @@ else $action='';
 
 /*------------------------- ÂÛÏÎËÍßÅÌ ÐÀÇËÈ×ÍÛÅ ÄÅÉÑÒÂÈß ---------------------*/
 
+if (isset($_POST['get_import']))
+{
+	shell_exec("/usr/local/bin/python /home/alex/data/www/shop-toy.mosharov.com/import2.py");
+	exit();
+}
+
 if (isset($_POST['submit_import']))
 {
 	
@@ -83,7 +89,9 @@ if (isset($_POST['submit_import']))
 	}
 	
 	$db->query("update fw_conf set conf_value='1' where conf_key='XLS_UPDATE'");
-	header("Location: " . $_SERVER['HTTP_REFERER']);
+	//header("Location: " . $_SERVER['HTTP_REFERER']);
+	header("Location: /admin/index.php?mod=shop&action=matches_category");
+	
 	die();
 	
 }
@@ -96,9 +104,11 @@ if (isset($_POST['submit_add_match']))
 	foreach ($_POST['imported'] as $key=>$val)
 	{
 		$items[] = "(" . intval($cat_id) . ",'" . mysql_real_escape_string($key) . "','" . mysql_real_escape_string($key) . "')";
+		$db->query("delete from categories_non_related where name = '{$key}' ");
 	}
-	$db->query("delete from matches_category2 where cat_id=".intval($cat_id));
+	//$db->query("delete from matches_category2 where cat_id=".intval($cat_id));
 	$db->query("replace into matches_category2 (cat_id, group_prod, group_prod_change) values " . implode(",", $items));
+	
 	
 	header("Location: " . $_SERVER['HTTP_REFERER']);
 	die();
@@ -170,8 +180,31 @@ if (isset($_POST['submit_sort_products']) && isset($_POST['sortArray']) ){
 
 if ($action=="delete_match" && isset($_GET['cat_id'])) {
   $cat_id=intval($_GET['cat_id']);
+  $items = $db->get_all("select group_prod from matches_category2 where cat_id={$cat_id}");
   $db->query("delete from matches_category2 where cat_id='{$cat_id}'");
 
+  if (count($items))
+  {
+  	foreach ($items as $key=>$val)
+  	{
+  		$db->query("replace into categories_non_related (name) values('{$val['group_prod']}')");
+  	}
+  }
+  
+  $location=$_SERVER['HTTP_REFERER'];
+  header ("Location: $location");
+  die();
+}
+
+
+if ($action=="delete_match_single" && isset($_GET['cat_id']) && isset($_GET['group_prod'])) {
+  $cat_id=intval($_GET['cat_id']);
+  $group_prod=$_GET['group_prod'];
+  
+  $db->query("delete from matches_category2 where cat_id='{$cat_id}' and group_prod='{$group_prod}'");
+
+  $db->query("replace into categories_non_related (name) values('{$group_prod}')");
+  
   $location=$_SERVER['HTTP_REFERER'];
   header ("Location: $location");
   die();
@@ -793,6 +826,8 @@ if ($action=='delete_cat' && isset($_GET['id'])) {
 	$tree->deleteAll($id);
 	unlink(BASE_PATH.'/uploaded_files/shop_images/'.$cat['image']);
 
+	$db->query("delete from fw_products where parent='$id'");
+	
 	header ("Location: ?mod=shop&action=catalogue");
 	die();
 
@@ -987,6 +1022,10 @@ SWITCH (TRUE) {
 	CASE ($action == 'import_price'):
 		
 		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=import_price","title" => 'Èìïîðò ïðàéñ-ëèñòà');
+		
+		$conf = $db->get_single("select * from fw_conf where conf_key='IMPORT_METKA' ");
+		$smarty->assign("conf", $conf);
+		
 		$template='shop.a_import.html';
 		
 	BREAK;
@@ -1655,7 +1694,7 @@ SWITCH (TRUE) {
 	
     $navigation[] = array("url" => BASE_URL."/admin/?mod=shop","title" => 'Ñîîòâåòñòâèå êàòåãîðèé');
 	
-    $imported_rows = $db->get_all("select group_prod from _imported_rows group by group_prod order by group_prod");
+    $non_related = $db->get_all("select name from categories_non_related");
     
     $matches_category = $db->get_all("select fw_catalogue.name, matches_category2.* from matches_category2 left join fw_catalogue on matches_category2.cat_id=fw_catalogue.id order by fw_catalogue.name");
     
@@ -1667,6 +1706,7 @@ SWITCH (TRUE) {
 			if ($cat_list[$key]['id'] == $matches_category[$key2]['cat_id'])
 			{
 				$cat_list[$key]['matches'][] = array(
+					"cat_id" => $matches_category[$key2]['cat_id'],
 					"group_prod" => $matches_category[$key2]['group_prod'],
 					"group_prod_change"=>$matches_category[$key2]['group_prod_change']);
 				$checked_imported_rows[] = $matches_category[$key2]['group_prod'];
@@ -1675,7 +1715,7 @@ SWITCH (TRUE) {
     }
     
     $smarty->assign('cat_list', $cat_list);
-    $smarty->assign('imported_rows', $imported_rows);
+    $smarty->assign('non_related', $non_related);
     $smarty->assign('checked_imported_rows', $checked_imported_rows);
     
     $smarty->assign("matches", $matches);
