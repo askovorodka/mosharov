@@ -35,6 +35,11 @@ switch ($_GET['type'])
 		$width = 71;
 		$height = 74;
 	break;
+
+	case 'img80x80':
+		$width = 80;
+		$height = 80;
+	break;
 	
 	default:
 		die("Error type");

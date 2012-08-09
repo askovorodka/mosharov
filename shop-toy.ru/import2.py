@@ -70,7 +70,6 @@ def insert(category):
 
 imported_rows = db.select("select * from _imported_rows")
 
-
 if imported_rows == None:
     print "Импортировать нечего"
     sys.exit()
@@ -115,5 +114,13 @@ db.query("truncate _imported_rows")
 db.query("update fw_conf set conf_value = '0' where conf_key = 'IMPORT_METKA' ")
 print "Очищена таблица _imported_rows, обнулена константа IMPORT_METKA"
 print "Импорт завершен"
-print "Для запуска парсера, набрать: /usr/local/bin/python /home/alex/data/www/shop-toy.mosharov.com/grab_parser.py"
+
+print "Запустить парсер ? (1-да)"
+a = sys.stdin.readline()
+if int(a) == 1:
+    cmd = "/usr/local/bin/python /home/alex/data/www/shop-toy.mosharov.com/grab_parser.py"
+    os.system(cmd)
+
+
+#print "Для запуска парсера, набрать: /usr/local/bin/python /home/alex/data/www/shop-toy.mosharov.com/grab_parser.py"
 db.close()

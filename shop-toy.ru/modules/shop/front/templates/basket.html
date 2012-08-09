@@ -18,7 +18,7 @@
   </tr>
   {foreach from=$basket item=item}
   <tr>
-    <td class="basketimg"><img src="/uploaded_files/shop_images/resized-{$item.image}" width="80" height="80"></td>
+    <td class="basketimg"><img src="/images/img80x80/uploaded_files/product_images/{$item.id}/{$item.image}" width="80" height="80"></td>
     <td class="basketinf"><a href="{$base_url}/{$item.full_url}/">{$item.name}</a>
     <br><span class="catcap">Артикул:</span> {$item.article}</td>
     <td class="basketprice">{$item.price_number} р.</td>

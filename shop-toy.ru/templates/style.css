@@ -311,7 +311,7 @@ h3 {
 .lmenucos div {
 	margin-left:60px;
 	font-size:12px;
-	height:22px;
+	/*height:22px;*/
 }
 .lmenucos div a {
 	font-size:12px;

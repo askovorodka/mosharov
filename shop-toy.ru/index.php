@@ -264,7 +264,9 @@ if ($shop_menu)
 		if ($shop_menu[$key]['children'])
 		{
 			foreach ($shop_menu[$key]['children'] as $key2=>$val2)
+			{
 				$shop_menu[$key]['children'][$key2]['full_url'] = $shop->getFullUrlCategory($val2['id'], "catalog");
+			}
 			$shop_menu[$key]['full_url'] = $shop_menu[$key]['children'][0]['full_url'];
 		}
 	}
