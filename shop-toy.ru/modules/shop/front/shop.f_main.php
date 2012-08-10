@@ -455,7 +455,7 @@ SWITCH (TRUE) {
 	BREAK;
 
 
-	CASE ($url[$n]=='submit' && $url[$n-1]=='basket' && count($url)==3):
+	/*CASE ($url[$n]=='submit' && $url[$n-1]=='basket' && count($url)==3):
 
 		if (isset($_POST['submit_order'])) {
 			
@@ -466,10 +466,10 @@ SWITCH (TRUE) {
 				$users->setName($_POST['name']);
 				$users->setPhone1($_POST['phone']);
 				$users->setPhone2($_POST['phone2']);
-				$user->register();
+				$users->register();
 
 			}
-			exit();
+			//exit();
 
 			if (count($_SESSION['fw_basket'])<1)
 			{
@@ -480,18 +480,17 @@ SWITCH (TRUE) {
 				//exit();
 				$navigation[]=array("url" => 'basket',"title" => 'ћо€ корзина');
 				$navigation[]=array("url" => 'confirm',"title" => '¬аш заказ выполнен');
-
+				
 				$products_list='';
 				$total_number=0;
-
+				
 				$user = $shop->getUser($_SESSION['fw_user']['id']);
 				$name=$user['name'];
 				//$mail=$_POST['login'];
 				//$tel=$_POST['phone'];
-				$company=iconv('utf-8','windows-1251',$_POST['company']);
+				
 				$comments=iconv('utf-8','windows-1251',$_POST['comment']);
-				$inn = $_POST['inn'];
-				$kpp = $_POST['kpp'];
+				
 				$dostavka = $_POST['dostavka'];
 				if ($dostavka == 1)
 				{
@@ -502,36 +501,28 @@ SWITCH (TRUE) {
 					$order_price = 0;
 				}
 				
-				$payment = $_POST['payment'];
-
+				//$payment = $_POST['payment'];
+				
 				$total_price=0;
 				for ($i=0;$i<count($_SESSION['fw_basket']);$i++)
 				{
 					$total_price+=$_SESSION['fw_basket'][$i]['price']*$_SESSION['fw_basket'][$i]['number'];
 				}
-
+				
 				$db->query("INSERT INTO fw_orders (
 					user,
 					comments,
 					total_price,
 					insert_date,
-					inn,
-					kpp,
-					company,
 					dostavka,
-					payment,
 					order_price) 
 					VALUES('".$user['id']."',
 					'$comments',
 					'$total_price',
 					'".time()."',
-					'{$inn}',
-					'{$kpp}',
-					'{$company}',
 					'{$dostavka}',
-					'{$payment}',
 					'{$order_price}')");
-
+				
 				$order_id = mysql_insert_id();
 				$rel_prod = array();
 				for ($i=0;$i<count($_SESSION['fw_basket']);$i++) {
@@ -539,11 +530,11 @@ SWITCH (TRUE) {
 					$total_number=$total_number+$_SESSION['fw_basket'][$i]['number'];
 					$rel_prod[] = "('".$_SESSION['fw_basket'][$i]['id']."','".$order_id."','".$_SESSION['fw_basket'][$i]['number']."')";
 				}
-
+				
 				$db->query("INSERT INTO fw_orders_products (product_id,order_id,product_count) VALUES ".implode(",",$rel_prod));
-
+				
 				$_SESSION['fw_basket']=array();
-
+				
 				$smarty->assign("name",$user['name']);
 				$smarty->assign("site_url",BASE_URL);
 				$smarty->assign("date",time());
@@ -552,12 +543,12 @@ SWITCH (TRUE) {
 				$smarty->assign("currency",DEFAULT_CURRENCY);
 
 				$body=$smarty->fetch($templates_path.'/order_notice.txt');
-				Mail::send_mail($user['login'],"noreply@".$_SERVER['SERVER_NAME'],"Ќовый заказ в интернет магазине",$body,'','text','standard','Windows-1251');
+				Mail::send_mail($_POST['email'],"noreply@".$_SERVER['SERVER_NAME'],"Ќовый заказ в интернет магазине",$body,'','text','standard','Windows-1251');
 
 				$admin_body=$smarty->fetch($templates_path.'/admin_order_notice.txt');
 				Mail::send_mail(ADMIN_MAIL,"noreply@".$_SERVER['SERVER_NAME'],"Ќовый заказ в интернет магазине",$admin_body,'','text','standard','WIndows-1251');
 
-				echo 1;
+				//echo 1;
 				$page_found = true;
 				$template = 'order_done.html';
 			}
@@ -568,7 +559,213 @@ SWITCH (TRUE) {
 			header("Location: ".BASE_URL);
 		}
 
+	BREAK;*/
+	
+	
+	
+	CASE ($url[$n]=='submit' && $url[$n-1]=='basket' && count($url)==3):
+
+		if (isset($_POST['submit_order'])) 
+		{
+
+			if (count($_SESSION['fw_basket'])<1)
+			{
+				header("Location: ".BASE_URL);
+			}
+			else
+			{
+				
+				$navigation[]=array("url" => 'basket',"title" => 'ћо€ корзина');
+				$navigation[]=array("url" => 'confirm',"title" => '¬аш заказ выполнен');
+				
+				$products_list='';
+				$total_number=0;
+				
+				//если пользователь зареген, берем данные из таблицы
+				if ($user_id = $users->is_auth_user())
+				{
+					$user = $users->get_user($user_id);
+				}
+				//иначе если он хочет быть зареген, регистрируем и берем данные из таблицы
+				elseif (!empty($_POST['password']))
+				{
+					$users->setEmail($_POST['email']);
+					$users->setName($_POST['name']);
+					$users->setTel($_POST['phone']);
+					$users->setAddress($_POST['address']);
+					$users->setPassword($_POST['password']);
+
+					if (!$users->get_user_by_email($_POST['email']))
+					{
+						$user = $users->register();
+					}
+					else
+					{
+						$smarty->assign('error_register_message','ѕользователь с тами email уже зарегистрирован');
+						$error_register = true;
+						echo "ѕользователь с тами email уже зарегистрирован";
+						header("Location: /catalog/basket/?error=email");
+						die();
+					}
+				}
+				//иначе без регистрации
+				else
+				{
+					$user = array();
+					$user['name'] = $_POST['name'];
+					$user['mail'] = $_POST['email'];
+					$user['id'] = null;
+					$user['tel'] = $_POST['phone'];
+					$user['address'] = $_POST['address'];
+				}
+				
+				$name=$user['name'];
+				//$company=$_POST['company'];
+				$comments=$_POST['comment'];
+				//$inn = $_POST['inn'];
+				//$kpp = $_POST['kpp'];
+				$dostavka = $_POST['dostavka'];
+				//$payment = $_POST['payment'];
+				
+				
+				if ($dostavka == 1 || $dostavka > 2)
+				{
+					$order_price = SHOP_DOSTAVKA_PRICE;
+				}
+				else 
+				{
+					$order_price = 0;
+				}
+				
+				
+				$total_price=0;
+				for ($i=0;$i<count($_SESSION['fw_basket']);$i++)
+				{
+					
+					$p_info = $shop->getProductInfo($_SESSION['fw_basket'][$i]['id']);
+					if (!empty($p_info['tire_width']))
+						if ($_SESSION['fw_basket'][$i]['number'] > $p_info['tire_sklad'])
+							$_SESSION['fw_basket'][$i]['number'] = $p_info['tire_sklad'];
+					
+					if (!empty($p_info['disk_width']))
+						if ($_SESSION['fw_basket'][$i]['number'] > $p_info['disk_sklad'])
+							$_SESSION['fw_basket'][$i]['number'] = $p_info['disk_sklad'];
+					
+					$total_price+=$_SESSION['fw_basket'][$i]['price']*$_SESSION['fw_basket'][$i]['number'];
+					
+				}
+				
+				$total_sum = $total_price;
+				if ($dostavka != 2 && $total_price < SHOP_DOSTAVKA_LIMIT)
+					$total_sum += $order_price;
+				else
+					$order_price = 0;
+				
+				
+				
+				$db->query("INSERT INTO fw_orders (
+					user,
+					name,
+					tel,
+					mail,
+					address,
+					comments,
+					total_price,
+					insert_date,
+					dostavka,
+					order_price)
+					VALUES('".$user['id']."','".$user['name']."','".$user['tel']."',
+					'".$user['mail']."','".$user['address']."',
+					'$comments',
+					'$total_price',
+					'".time()."',
+					'{$dostavka}',
+					'{$order_price}')");
+				
+				
+				
+				$order_id = mysql_insert_id();
+				$rel_prod = array();
+				for ($i=0;$i<count($_SESSION['fw_basket']);$i++) {
+					$products_list.=$_SESSION['fw_basket'][$i]['id'].'|'.$_SESSION['fw_basket'][$i]['number'].',';
+					$total_number=$total_number+$_SESSION['fw_basket'][$i]['number'];
+					$rel_prod[] = "('".$_SESSION['fw_basket'][$i]['id']."','".$order_id."','".$_SESSION['fw_basket'][$i]['number']."', '".$_SESSION['fw_basket'][$i]['price']."')";
+				}
+				
+				$db->query("INSERT INTO fw_orders_products (product_id,order_id,product_count, product_price) VALUES ".implode(",",$rel_prod));
+				
+				
+				
+				//$shop = new Shop($db);
+				//формируем список продуктов
+				if ($_SESSION['fw_basket'])
+				{
+					$products = array();
+					foreach ($_SESSION['fw_basket'] as $key=>$val)
+					{
+						$products[$key]['details'] = $shop->getProductInfo($_SESSION['fw_basket'][$key]['id']);
+						$products[$key]['count'] = $_SESSION['fw_basket'][$key]['number'];
+						$products[$key]['sum'] = $products[$key]['details']['price'] * $products[$key]['count']; 
+					}
+					$smarty->assign("products",$products);
+				}
+
+				$_SESSION['fw_basket']=array();
+				$companies = unserialize(COMPANY_ORDERS);
+				
+				if ($dostavka > 2)
+				{
+					$smarty->assign("company_dost",$companies[$dostavka]);
+				}
+				
+				/*if ($company_dost > 0)
+					$smarty->assign("company_dost",$companies[$company_dost]);*/
+
+				$smarty->assign("name",$user['name']);
+				$smarty->assign("site_url",BASE_URL);
+				$smarty->assign("order_id",$order_id);
+				$smarty->assign("date",time());
+				$smarty->assign("order_total",$total_price);
+				$smarty->assign("number",$total_number);
+				$smarty->assign("currency",DEFAULT_CURRENCY);
+				$smarty->assign("user",$user);
+				$smarty->assign("dostavka",$dostavka);
+				
+				$smarty->assign("payment",$payment);
+				$smarty->assign("company",$company);
+				$smarty->assign("order_price",$order_price);
+				$smarty->assign("total_sum",$total_sum);
+				$smarty->assign("inn",$inn);
+				$smarty->assign("kpp",$kpp);
+				$smarty->assign("comment",$comments);
+
+				$body=$smarty->fetch($templates_path.'/order_notice.txt');
+
+				
+				Mail::send_mail($user['mail'],$_SERVER['SERVER_NAME'],"Ќовый заказ в интернет магазине",$body,'','html','standard','Windows-1251');
+
+				$admin_body=$smarty->fetch($templates_path.'/admin_order_notice.txt');
+
+				//Mail::send_mail("ai@avtozeon.ru,avtozeon@gmail.com,rifshina@mail.ru,itire@ya.ru",$user['login'],"Ќовый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
+				//Mail::send_mail("cccp-tire@yandex.ru",$user['mail'],"Ќовый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
+				//Mail::send_mail("snegovik3@gmail.com",$user['mail'],"Ќовый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
+				Mail::send_mail("aschmitz@yandex.ru",$user['mail'],"Ќовый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
+				//Mail::send_mail("rifshina@mail.ru",$user['mail'],"Ќовый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
+				
+				//$page_found = true;
+				//$template = 'order_done.html';
+				header("Location: /catalog/basket/final/");
+				die();
+			}
+
+		}
+		else
+		{
+			header("Location: ".BASE_URL);
+		}
+
 	BREAK;
+	
 
 	
 	/**
