@@ -62,9 +62,15 @@ def main():
                     try:
                         description = unicode(description).encode('utf-8')
                         description = re.sub("Арт.\s(.*)\sКод\s\d{1,5}", "", description)
-                        age_txt = re.search( "Возраст:(.*)\d{1,2}", description)
+                        age_txt = re.search( "Возраст(.*):(.*)\d{1,2}", description)
                         if age_txt != None:
-                            age = re.search("\d", age_txt.group())
+                            age = re.search("\d{1,2}", age_txt.group())
+                            db.query("update fw_products set age = '%d' where id='%d'" % (int(age.group()), int(item['product_id'])))
+
+                        age_txt = ""
+                        age_txt = re.search( "детей от(.*)\d{1,2}(.*)лет", description)
+                        if age_txt != None:
+                            age = re.search("\d{1,2}", age_txt.group())
                             db.query("update fw_products set age = '%d' where id='%d'" % (int(age.group()), int(item['product_id'])))
 
                         db.query("update fw_products set description = '%s' where id='%d'" % (db.escape(description.decode('utf-8').encode('cp1251')), int(item['product_id'])))

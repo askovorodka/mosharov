@@ -34,22 +34,26 @@ sheet = xls.sheet_by_index(0)
 for rownum in range(sheet.nrows):
     row = sheet.row_values(rownum)
     if (rownum > 3):
-        code = unicode(row[1]).encode('cp1251')
-        article = unicode(row[3]).encode('cp1251')
-        nom = unicode(row[4]).encode('cp1251')
-        group = unicode(row[5]).encode('cp1251')
-        metka = unicode(row[6]).encode('cp1251')
-        price = unicode(row[7]).encode('cp1251')
+        code = unicode(row[0]).encode('cp1251')
+        article = unicode(row[1]).encode('cp1251')
+        nom = unicode(row[2]).encode('cp1251')
+        group = unicode(row[4]).encode('cp1251')
+        metka = unicode(row[5]).encode('cp1251')
+        price = unicode(row[6]).encode('cp1251')
+        
         price = price.replace(",", "")
         #print price
-        if price == None or price == "":
-            price = 0.00
-        else:
-            price = float(price)
-        ed = unicode(row[8]).encode('cp1251')
-        pack = float(row[9])
-        image = unicode(row[10]).encode('cp1251')
-        ostatok = float(row[11])
+        try:
+            if price == None or price == "":
+                price = 0.00
+            else:
+                price = float(price)
+        except ValueError:
+            print "Ошибка перевода в числовой формат цену."
+        ed = unicode(row[7]).encode('cp1251')
+        pack = float(row[8])
+        image = unicode(row[9]).encode('cp1251')
+        ostatok = float(row[10])
         
         db.query('''insert into _imported_rows(code, article, nomen,group_prod, metka, price, ed, pack, image,ost) 
         values('%s','%s', '%s', '%s', '%s', '%f', '%s', '%f', '%s', '%f')''' % (db.escape(code), db.escape(article), db.escape(nom), db.escape(group),db.escape(metka),price,db.escape(ed),pack,db.escape(image),ostatok))

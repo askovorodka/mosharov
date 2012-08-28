@@ -118,7 +118,7 @@ print "Импорт завершен"
 print "Запустить парсер ? (1-да)"
 a = sys.stdin.readline()
 if int(a) == 1:
-    cmd = "/usr/local/bin/python /home/alex/data/www/shop-toy.mosharov.com/grab_parser.py"
+    cmd = "/usr/local/bin/python /home/alex/data/www/shop-toy.com/grab_parser.py"
     os.system(cmd)
 
 

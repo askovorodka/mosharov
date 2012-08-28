@@ -1,6 +1,6 @@
 {if $error_message}<center><font color=red><b>{$error_message}</b></font></center><br><br>{/if}
 
-Готовность к импорту: {if $conf.conf_value == '1'}<span style="color:green;">Готов</span> команда: /usr/local/bin/python /home/alex/data/www/shop-toy.mosharov.com/import2.py{else}<span style="color:red;">Не готов</span>{/if}
+Готовность к импорту: {if $conf.conf_value == '1'}<span style="color:green;">Готов</span> команда: /usr/local/bin/python /home/alex/data/www/shop-toy.com/import2.py{else}<span style="color:red;">Не готов</span>{/if}
 
 <form action="/admin/?mod=shop&action=import_log" name=edit_cat method=post enctype="multipart/form-data">
 
