@@ -4,6 +4,7 @@
 import xlrd
 import os
 import sys
+import re
 
 import DataBase
 
@@ -11,8 +12,20 @@ DB_HOST, DB_NAME, DB_USER, DB_PASS = "localhost", "shop-toy", "demo", "gthtgenmt
 db = DataBase.Db(DB_NAME,DB_HOST,DB_USER,DB_PASS)
 db.query("set CHARACTER SET cp1251")
 
+def is_brand_exist(name):
+    query = "select id from brands where name='%s'" % db.escape(str(name))
+    row = db.selectrow(query)
+    if row == None:
+        return
+    else:
+        return row['id']
+
+def insert_brand(name):
+    db.query("insert into brands (name) values('%s')" % db.escape(str(name)))
+    return int(last_insert_id())
+
 def search_product(parent_id, article):
-    query = "select * from fw_products where parent = '%d' and article = '%s'" % (int(parent_id), str(article))
+    query = "select * from fw_products where parent = '%d' and article = '%s'" % (int(parent_id), db.escape(str(article)))
     row = db.selectrow(query)
     if (row == None):
         return
@@ -102,13 +115,36 @@ for row in imported_rows:
     #находим продукт, если его нет, то добавляем, иначе обновляем
     product = search_product(cat_param_2['id'], row['article'])
     if (product == None):
-        db.query("insert into fw_products (parent, name, article, price, status) values ('%d', '%s', '%s', '%f', '1')" % (int(cat_param_2['id']), db.escape(str(row['nomen'])), str(row['article']), float(row['price'])))
+        product_name_array = re.split(',', str(row['nomen']))
+        if product_name_array != None:
+            product_name = product_name_array[0]
+        else:
+            product_name = row['nomen']
+        db.query("insert into fw_products (parent, name, article, price, status) values ('%d', '%s', '%s', '%f', '1')" % (int(cat_param_2['id']), db.escape(str(product_name)), str(row['article']), float(row['price'])))
         product_id = int(last_insert_id())
         db.query("replace into _import_product_links (product_id, product_from) values('%d', '%s')" % (product_id, str(row['image'])))
-        print "Добавлен продукт: %s" % str(row['nomen']) 
+        print "Добавлен продукт: %s" % str(row['nomen'])
+        
+        brand_name = row['brand']
+        brand_id = is_brand_exist(brand_name)
+        if (brand_id == None):
+            brand_id = insert_brand(brand_name)
+            print "Добавлен новый производитель %s" % str(brand_name)
+        
+        #обновляем производителя продукта
+        if (brand_id != None):
+            db.query("update fw_products set brand_id='%d' where id='%d'" % (int(brand_id), int(product_id)))
+        
     else:
-        db.query("update fw_products set price = '%f' where id = '%d'" % (float(row['price']), int(product['id'])))
-        print "Обновлен продукт: %s" % str(row['nomen'])
+        
+        product_name_array = re.split(',', str(row['nomen']))
+        if product_name_array != None:
+            product_name = product_name_array[0]
+        else:
+            product_name = row['nomen']
+        
+        db.query("update fw_products set name='%s', price = '%f' where id = '%d'" % (str(db.escape(product_name)),float(row['price']), int(product['id'])))
+        print "Обновлен продукт: %s" % str(product_name)
     
 db.query("truncate _imported_rows")
 db.query("update fw_conf set conf_value = '0' where conf_key = 'IMPORT_METKA' ")

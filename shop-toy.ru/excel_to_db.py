@@ -33,16 +33,20 @@ sheet = xls.sheet_by_index(0)
 
 for rownum in range(sheet.nrows):
     row = sheet.row_values(rownum)
-    if (rownum > 3):
-        code = unicode(row[0]).encode('cp1251')
-        article = unicode(row[1]).encode('cp1251')
-        nom = unicode(row[2]).encode('cp1251')
-        group = unicode(row[4]).encode('cp1251')
-        metka = unicode(row[5]).encode('cp1251')
-        price = unicode(row[6]).encode('cp1251')
-        
+    if (rownum > 0):
+
+        code = unicode(row[0]).encode('cp1251','ignore')
+        article = unicode(row[1]).encode('cp1251','ignore')
+        nom = unicode(row[2]).encode('cp1251','ignore')
+        group = unicode(row[3]).encode('cp1251','ignore')
+        brand = unicode(row[4]).encode('cp1251','ignore')
+        metka = unicode(row[5]).encode('cp1251','ignore')
+        price = str(unicode(row[6]).encode('cp1251'))
+
         price = price.replace(",", "")
-        #print price
+        article = article.replace(".0","")
+        code = code.replace(".0","")
+
         try:
             if price == None or price == "":
                 price = 0.00
@@ -50,13 +54,18 @@ for rownum in range(sheet.nrows):
                 price = float(price)
         except ValueError:
             print "Ошибка перевода в числовой формат цену."
-        ed = unicode(row[7]).encode('cp1251')
-        pack = float(row[8])
-        image = unicode(row[9]).encode('cp1251')
+        ed = unicode(row[7]).encode('cp1251','ignore')
+        
+        if row[8] != None and row[8] != "":
+            pack = float(row[8])
+        else:
+            pack = 0.00
+        
+        image = unicode(row[9]).encode('cp1251','ignore')
         ostatok = float(row[10])
         
-        db.query('''insert into _imported_rows(code, article, nomen,group_prod, metka, price, ed, pack, image,ost) 
-        values('%s','%s', '%s', '%s', '%s', '%f', '%s', '%f', '%s', '%f')''' % (db.escape(code), db.escape(article), db.escape(nom), db.escape(group),db.escape(metka),price,db.escape(ed),pack,db.escape(image),ostatok))
+        db.query('''insert into _imported_rows(code, article, nomen,group_prod,brand, metka, price, ed, pack, image,ost) 
+        values('%s','%s', '%s', '%s', '%s','%s', '%f', '%s', '%f', '%s', '%f')''' % (db.escape(code), article, db.escape(nom), db.escape(group), db.escape(brand),db.escape(metka),price,db.escape(ed),pack,db.escape(image),ostatok))
         
         print "Добавлена строка %d" % int(rownum)
         

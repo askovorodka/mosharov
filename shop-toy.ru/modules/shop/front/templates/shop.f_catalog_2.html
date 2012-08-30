@@ -11,11 +11,9 @@
 	
     <td>
     <div class="catitemin">
-    
-    <a href="{$base_url}/{$product.full_url}/" title="{$product.name}"><img src="/images/img105x105/uploaded_files/product_images/{$product.id}/{$product.image}" alt="{$product.name}"></a>
+    <a href="{$base_url}/{$product.full_url}/" title="{$product.name}"><img src="/images/img105x105{if !empty($product.image)}/uploaded_files/product_images/{$product.id}/{$product.image}{else}/templates/img/nophoto.jpg{/if}" alt="{$product.name}"></a>
     <br>
     <a href="{$base_url}/{$product.full_url}/" title="{$product.name}">{$product.name}</a>
-    
     <div class="cato"><span class="catcap">Артикул:</span> {$product.article}
     <br><span class="catcap">Возраст:</span> {$product.age}
     <br><div class="catiteminp"><input type="hidden" id="product_count_{$product.id}" value="1" />

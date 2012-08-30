@@ -1,6 +1,8 @@
 
 $(document).ready( function(){
 
+	$("a.colorbox").colorbox();
+	
 	$("input[type='text']", $("#basket_form")).keyup(function(){ $("#basket_form").submit(); });
 	
 	$("a.smallimage").click(function(){

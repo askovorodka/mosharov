@@ -6,10 +6,22 @@ ini_set('display_errors','On');
 //$_SESSION['fw_basket']=array();
 
 if ($switch_default=='on' or $main_module=='on') {
-
-	//$js[]=BASE_URL.'/javascript/thickbox-3.1.js';
-	//$js[]=BASE_URL.'/lib/JsHttpRequest/Js.js';
-
+	
+	$ages = $db->get_all("select age from fw_products where age > 0 group by age");
+	$smarty->assign('ages', $ages);
+	
+	$categories = $db->get_all("select id, name, param_level from fw_catalogue where status='1' and param_level between 1 and 2 order by param_left");
+	$smarty->assign('categories', $categories);
+	
+	$brands = $db->get_all("
+		select brands.id,brands.name 
+		from brands left join fw_products on brands.id=fw_products.brand_id 
+		where fw_products.status='1' 
+		group by fw_products.brand_id 
+		having count(fw_products.id) > 0
+		order by brands.name");
+	$smarty->assign('brands', $brands);
+	
 	$basket_number=0;
 	$basket_total=0;
 	for ($i=0;$i<count(@$_SESSION['fw_basket']);$i++) {
@@ -17,11 +29,11 @@ if ($switch_default=='on' or $main_module=='on') {
 		$basket_total+=@$_SESSION['fw_basket'][$i]['price']*@$_SESSION['fw_basket'][$i]['number'];
 	}
 	$smarty->assign("basket_number",$basket_number);
-	//$smarty->assign("basket_total",sprintf("%.2f",$basket_total));
 	$smarty->assign("basket_total",$basket_total);
 	$smarty->assign("currency",DEFAULT_CURRENCY);
-
+	
 }
+
 if  ($main_module=='on')
 {
 

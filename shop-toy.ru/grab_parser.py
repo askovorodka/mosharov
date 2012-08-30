@@ -55,13 +55,16 @@ def main():
                 print grab.response.url
                 print 'Ссылка на картинку не найдена'
                 
+                
             try:
                 description = grab.xpath_text('//*[@class="catalog_list"]//tr//td[2]')
                 
                 if (description != None):
                     try:
+                        
                         description = unicode(description).encode('utf-8')
                         description = re.sub("Арт.\s(.*)\sКод\s\d{1,5}", "", description)
+                        
                         age_txt = re.search( "Возраст(.*):(.*)\d{1,2}", description)
                         if age_txt != None:
                             age = re.search("\d{1,2}", age_txt.group())
@@ -74,6 +77,17 @@ def main():
                             db.query("update fw_products set age = '%d' where id='%d'" % (int(age.group()), int(item['product_id'])))
 
                         db.query("update fw_products set description = '%s' where id='%d'" % (db.escape(description.decode('utf-8').encode('cp1251')), int(item['product_id'])))
+                        
+                        
+                        #manufacturer = grab.xpath_text('//*[@class="catalog_list"]//tr//td[2]//b*')
+                        #print unicode(manufacturer).encode('utf-8')
+                        #print manufacturer
+                        #manufacturer_txt = re.search("Производитель:(.*)", description)
+                        #if manufacturer_txt != None:
+                        #    print manufacturer_txt.group()
+                        #else:
+                        #    print "Производитель не найден"
+                        
                     except UnicodeEncodeError:
                         print "Ошибка перекодировки текста"
                 
