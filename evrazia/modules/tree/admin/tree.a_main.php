@@ -24,85 +24,6 @@ else $action='';
 /*------------------------- ВЫПОЛНЯЕМ РАЗЛИЧНЫЕ ДЕЙСТВИЯ ---------------------*/
 
 
-if (isset($_POST['submit_add_file'])) {
-
-	Common::check_priv("$priv");
-	$check=true;
-	$title=String::secure_format($_POST['add_file_title']);
-	$file_name=$_FILES['add_new_file']['name'];
-	$tmp=$_FILES['add_new_file']['tmp_name'];
-
-	$trusted_formats=array('jpg','jpeg','gif','png','pdf','doc','xls');
-
-	$check_file_name=explode(".",$file_name);
-	$ext=strtolower($check_file_name[count($check_file_name)-1]);
-	if (!in_array($ext,$trusted_formats)) {
-		$smarty->assign("error","Разрешены картинки форматов jpg, jpeg, gif, xls, doc, pdf и png");
-		$check=false;
-	}
-
-	if (filesize($tmp)>2000000) {
-		$smarty->assign("error","Размер файла не должен привышать 2Mb");
-		$check=false;
-	}
-
-	if ($check) {
-		$order=$db->get_single("SELECT MAX(sort_order)+1 AS s_order FROM fw_tree_files WHERE parent='".$_POST['parent']."'");
-		if ($order['s_order']=='') $order=1;
-		else $order=$order['s_order'];
-		$result=$db->query("INSERT INTO fw_tree_files(parent,title,ext,sort_order,insert_date) VALUES('".$_POST['parent']."','$title','$ext','".$order."','".time()."')");
-		$id=mysql_insert_id();
-		if (move_uploaded_file($tmp, BASE_PATH."/uploaded_files/tree_files/$id.$ext")) {
-			chmod(BASE_PATH."/uploaded_files/tree_files/$id.$ext",0644);
-			if ($ext == 'jpeg' || $ext=='jpg' || $ext=='gif' && $ext=='png')
-				Image::image_resize(BASE_PATH."/uploaded_files/tree_files/$id.$ext",BASE_PATH."/uploaded_files/tree_files/resized-$id.$ext",PRODUCT_PREVIEW_WIDTH,PRODUCT_PREVIEW_HEIGHT);
-		}
-		else {
-			$result=$db->query("DELETE FROM fw_tree_files WHERE id='".mysql_insert_id()."'");
-			$smarty->assign("error","Файл не был загружен");
-		}
-	}
-
-}
-
-
-if (isset($_POST['submit_save_files'])) {
-
-	Common::check_priv("$priv");
-	$check=true;
-	if (isset($_POST['delete_photos'])) {
-		$delete_photos=$_POST['delete_photos'];
-		for ($i=0;$i<count($delete_photos);$i++) {
-			$values.=$delete_photos[$i];
-			if ($i!=count($delete_photos)-1) $values.=',';
-		}
-		$db->query("DELETE FROM fw_tree_files WHERE id IN ($values)");
-		$location=$_SERVER['HTTP_REFERER'];
-		header("Location: $location");
-	}
-
-	if (@in_array('1',$_POST['order_changed'])) {
-		$order_changed=array_keys($_POST['order_changed'],"1");
-		$order=$_POST['edit_order'];
-		for ($i=0;$i<count($order_changed);$i++) {
-			$new_order=$order[$order_changed[$i]];
-			$db->query("UPDATE fw_tree_files SET sort_order='$new_order' WHERE id='".$order_changed[$i]."'");
-		}
-	}
-
-	if (@in_array('1',$_POST['title_changed'])) {
-
-		$title_changed=array_keys($_POST['title_changed'],"1");
-		$title=$_POST['edit_title'];
-
-		for ($i=0;$i<count($title_changed);$i++) {
-			$new_title=$title[$title_changed[$i]];
-			$db->query("UPDATE fw_tree_files SET title='$new_title' WHERE id='".$title_changed[$i]."'");
-		}
-	}
-}
-
-
 //редактируем статус главного меню
 if ($action=="change_in_menu" && isset($_GET['id'])) {
   $id=intval($_GET['id']);
@@ -272,6 +193,8 @@ if (isset($_POST['submit_add_node'])) {
   Common::check_priv("$priv");
   $check=true;
   $parent=$_POST['edit_node_parent'];
+  $type=$_POST['type'];
+  $link=$_POST['link'];
   $url=String::secure_format($_POST['edit_node_url']);
   $name=String::secure_format($_POST['edit_node_name']);
   $label=String::secure_format($_POST['edit_node_label']);
@@ -305,10 +228,10 @@ if (isset($_POST['submit_add_node'])) {
     $check=false;
   }
 
-  if (!preg_match("/^([a-z0-9_-]+)$/",$url)) {
+  /*if (!preg_match("/^([a-z0-9_-]+)$/",$url)) {
     $smarty->assign("error_message","В URL допустимы только символы латиницы, минус и знак подчёркивания!");
     $check=false;
-  }
+  }*/
 
   if ($check) {
     $elements=mysql_real_escape_string(file_get_contents(BASE_PATH.'/modules/'.$module.'/front/templates/elements.html'));
@@ -318,6 +241,8 @@ if (isset($_POST['submit_add_node'])) {
 		"template"=>$node_template,
 		"title"=>$title,
 		"url"=>$url,
+		"type"=>$type,
+		"link"=>$link,
 		"text"=>'',
 		"module"=>$module,
 		"support_modules"=>$support_modules,
@@ -346,6 +271,8 @@ if (isset($_POST['submit_edit_node'])) {
   $old_parent=$_POST['old_parent'];
 
   $parent=$_POST['edit_node_parent'];
+  $type=$_POST['type'];
+  $link=$_POST['link'];
   $url=String::secure_format($_POST['edit_node_url']);
   $name=String::secure_format($_POST['edit_node_name']);
   $label=String::secure_format($_POST['edit_node_label']);
@@ -461,6 +388,8 @@ if (isset($_POST['submit_edit_node'])) {
         fw_tree
       SET
         name='$name',
+        type='$type',
+        link='$link',
         label='$label',
         template='$node_template',
         title='$title',

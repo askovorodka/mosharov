@@ -79,7 +79,7 @@ if(document.getElementById(name).style.display!="none") {
 		document.getElementById(name).style.display="";
 	}
 }
-function form_check() {
+/*function form_check() {
 	if (document.edit_node.edit_node_url.value=='') {
 		alert("Заполните пожалуйста обязательные поля");
 		return false;
@@ -95,7 +95,14 @@ function form_check() {
 		{literal}
 		return true;
 	}
+}*/
+
+function form_check() {
+		document.edit_node.edit_page_text.value = document.getElementById('page_text').value;
+		return true;
+	
 }
+
 </script>
 {/literal}
 
@@ -128,18 +135,39 @@ function form_check() {
 		</td>
 	</tr>
 
+
+	<tr>
+		<td width=15% class=td1_left><b>Тип:</b></td>
+		<td class=td1_right>
+		<select name=type style="width:100%;font-weight:bold; font-size:9pt;" class=field>
+			
+			<option value="standart" {if $node.type=="standart"} selected=true{/if}>Обычная страница</option>
+			<option value="link" {if $node.type=="link"} selected=true{/if}>Ссылка</option>
+		</select>
+		</td>
+	</tr>
+
+	<tr>
+		<td width=15% class=td1_left><b>Ссылка на страницу (только для тип - ссылка):</b></td>
+		<td class=td1_right>
+		<input type=text name=link style="width:100%;" class=field value="{$node.link}">
+		</td>
+	</tr>
+
+
 	<tr>
 		<td width=15% class=td1_left><b>Название:</b></td>
 		<td class=td1_right><input type=text name=edit_node_name style="width:100%;" class=field value="{$node.name}">
 	</tr>
 
-	<tr>
+	
+	<tr{if $node.type=='link'} style="display:none;"{/if}>
 		<td width=15% class=td1_left><b>Заголовок:</b></td>
 		<td class=td1_right><input type=text name=edit_node_label style="width:100%;" class=field value="{$node.label}">
 	</tr>
 
-	<tr>
-		<td width=15% class=td1_left><b><font color=red><small>*</small></font>URL:</b></td>
+	<tr{if $node.type=='link'} style="display:none;"{/if}>
+		<td width=15% class=td1_left><b>URL:</b></td>
 		<td class=td1_right>
 		<input type=text name=edit_node_url style="width:100%;" class=field value="{$node.url}">
 		</td>
@@ -161,7 +189,7 @@ function form_check() {
 	</tr>
 </table>
 
-{if $node.module=='page'}
+{if $node.module=='page' && $node.type != 'link'}
 <br>
 <b>Текст:</b><br>
 

@@ -530,7 +530,7 @@ if (isset($_POST['submit_add_product'])) {
 	$parent=$_POST['edit_parent'];
 	$name=String::secure_format($_POST['edit_name']);
 	$title=String::secure_format($_POST['edit_title']);
-	$site_url=(isset($_POST['site_url'])) ? $_POST['edit_type'] : "";
+	$site_url=(isset($_POST['site_url'])) ? $_POST['site_url'] : "";
 	$type=$_POST['type'];
 	$small_text=(isset($_POST['small_text'])) ? $_POST['small_text'] : "";
 	

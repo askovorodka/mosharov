@@ -1,13 +1,18 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
-<head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
-<title></title>
-<meta name="description" content="" />
-<meta name="keywords" content="" />
-<link rel="stylesheet" type="text/css" href="/templates/style.css">
+<title>{$page_title}</title>
+<meta name="Keywords" content="{$meta_keywords}">
+<meta name="Description" content="{$meta_description}">
+{foreach from=$css item=css}
+<link rel="stylesheet" type="text/css" href="{$css}">
+{/foreach}
+{foreach from=$js item=js}
+<script src="{$js}" type="text/javascript"></script>
+{/foreach}
 </head>
+
 <body>
 <table class="maintbl" align="center">
   <tr>
@@ -35,6 +40,8 @@
 
 	</td>
   </tr>
+  
+  
   <tr height="377">
     <td class="sometxt">
 {if $current_url == "home"}
@@ -51,6 +58,8 @@
     <td background="/templates/img/big_pict.jpg"><img src="/templates/img/big_front.png" width="659" height="377" alt="Деловой центр «Знатъ»"></td>
 <!---- /BIG KARTINKA ---->
   </tr>
+  
+  
   <!----
   <tr>
   	<td colspan="2">
