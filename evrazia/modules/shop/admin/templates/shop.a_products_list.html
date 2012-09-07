@@ -57,19 +57,6 @@ if(document.getElementById(name).style.display!="none") {
 </td></tr>
 <tr>
 <td valign="top" width="50%">
-{*
-<form action="" method=GET name=type_sort>
-<input type=hidden name=mod value=shop>
-<input type=hidden name=action value=products_list>
-<input type=hidden name=page value={$current_page}>
-Сортировать по производителю:<br>
-<select name=type class=field onChange="document.type_sort.submit();" style="width: 100%"><option selected value=*>/
-{foreach from=$type_list item=entry}
-<option value={$entry.id} {if $type==$entry.id}selected=true{/if}>{$entry.name}</option>
-{/foreach}
-</select>
-</form>
-*}
 </td><td valign="top" style="padding-left: 10px;"><form action="" method=get>
 <input type=hidden name=mod value=shop>
 <input type=hidden name=action value=products_list>
@@ -143,25 +130,16 @@ if(document.getElementById(name).style.display!="none") {
 	</tr>
     <tr>
     <td class="td2_left" style="height: 40px;">&nbsp;</td>
-    <td colspan="5" class="td2_right"><strong>{if !$search}В этой категории нет продуктов{else}Ничего не найдено!{/if}</strong></td></tr></table>
+    <td colspan="5" class="td2_right"><strong>{if !$search}В этой категории нет предложений{else}Ничего не найдено!{/if}</strong></td></tr></table>
 {/if}
-<table width=100% class=content_table>
-	<tr>
-		<th bgcolor=#99CCFF onClick="show('metas', this);" class="button plus" style="border-bottom: none; text-align: left; padding-left: 30px;"><b>Дополнительно</b></th>
-	</tr>
- </table>
-    <div id="metas" style="display: none;">
-<table width=100% class=content_table>
-	<tr>
-		<td width=15% class=td2_left><strong>Фотографии:</strong></td>
-		<td class=td2_right><a href=index.php?mod=shop&action=delete_previews style="text-decoration: underline;"><strong>Удалить уменьшенные копии фотографий продукции</strong></a><br>
-        <small style="color: #999;">данная процедура занимает некоторое время, просьба подождать</small></td>
-	</tr>
-</table>
 
 </div>
 <br>
-<div class="add_but" style="float: left;" onClick="location.href='?mod=shop&action=add_product{if $cat}&cat={$cat}{/if}'"><div><a href="?mod=shop&action=add_product{if $cat}&cat={$cat}{/if}">добавить продукт</a></div></div>
+
+<div class="add_but" style="float: left;" onClick="location.href='?mod=shop&action=add_product{if $cat}&cat={$cat}{/if}'"><div><a href="?mod=shop&action=add_product&type=office{if $cat}&cat={$cat}{/if}">Добавить офис</a></div></div>
+
+<div class="add_but" style="float: left;" onClick="location.href='?mod=shop&action=add_product{if $cat}&cat={$cat}{/if}'"><div><a href="?mod=shop&action=add_product&type=apartment{if $cat}&cat={$cat}{/if}">Добавить квартиру</a></div></div>
+
 <br>
 {if $total_pages>1}
 <br><br>

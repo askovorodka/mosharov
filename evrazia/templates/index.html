@@ -108,7 +108,7 @@
 	<div class="dvb">
 	<p>Услуги</p>
 	{foreach from=$shop_menu item=rent}
-	<a href="{$rent.full_url}" title="{$rent.name|strip_tags}">{$rent.name|strip_tags}</a>
+	<a href="{$base_url}/{$rent.full_url}" title="{$rent.name|strip_tags}">{$rent.name|strip_tags}</a>
 	{/foreach}
 	
 	</div>

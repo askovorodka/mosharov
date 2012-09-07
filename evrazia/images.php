@@ -17,13 +17,13 @@ $db = new db(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 
 $width = 0;
 $height = 0;
-$crope = false;
+$crope = true;
 
 switch ($_GET['type'])
 {
-	case 'img105x105':
-		$width = 105;
-		$height = 105;
+	case 'img100x100':
+		$width = 100;
+		$height = 100;
 	break;
 
 	case 'img315x228':

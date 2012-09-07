@@ -1,7 +1,7 @@
 <?php
 
-//error_reporting(E_ALL);
-//ini_set('display_errors','On');
+error_reporting(E_ALL);
+ini_set('display_errors','On');
 
 require_once '../lib/class.tree.php';
 require_once '../lib/class.image.php';
@@ -56,83 +56,6 @@ else $action='';
 //exit();
 
 /*------------------------- ВЫПОЛНЯЕМ РАЗЛИЧНЫЕ ДЕЙСТВИЯ ---------------------*/
-
-if (isset($_POST['get_import']))
-{
-	shell_exec("/usr/local/bin/python /home/alex/data/www/shop-toy.mosharov.com/import2.py");
-	exit();
-}
-
-if (isset($_POST['submit_import']))
-{
-	
-	if ($_FILES['import_file']['name']!='')
-	{
-
-		$file_name=$_FILES['import_file']['name'];
-		$tmp=$_FILES['import_file']['tmp_name'];
-		$trusted_formats=array('xls');
-		$check_file_name=explode(".",$file_name);
-		$ext=strtolower($check_file_name[count($check_file_name)-1]);
-		if (!in_array($ext,$trusted_formats)) {
-			die("Разрешены форматы xls");
-		}
-
-	}
-	
-	if (file_exists(BASE_PATH."/price.xls"))
-		@unlink(BASE_PATH."/price.xls");
-	
-	if (move_uploaded_file($tmp, BASE_PATH."/price.xls"))
-	{
-		@chmod(BASE_PATH."/price.xls", 0777);
-	}
-	
-	$db->query("update fw_conf set conf_value='1' where conf_key='XLS_UPDATE'");
-	//header("Location: " . $_SERVER['HTTP_REFERER']);
-	header("Location: /admin/index.php?mod=shop&action=matches_category");
-	
-	die();
-	
-}
-
-if (isset($_POST['submit_add_match']))
-{
-	
-	$items = array();
-	$cat_id = intval($_POST['category']);
-	foreach ($_POST['imported'] as $key=>$val)
-	{
-		$items[] = "(" . intval($cat_id) . ",'" . mysql_real_escape_string($key) . "','" . mysql_real_escape_string($key) . "')";
-		$db->query("delete from categories_non_related where name = '{$key}' ");
-	}
-	//$db->query("delete from matches_category2 where cat_id=".intval($cat_id));
-	$db->query("replace into matches_category2 (cat_id, group_prod, group_prod_change) values " . implode(",", $items));
-	
-	
-	header("Location: " . $_SERVER['HTTP_REFERER']);
-	die();
-	
-}
-
-if (isset($_POST['submit_edit_matches']))
-{
-	if (!empty($_POST['name_feed']))
-	{
-		foreach ($_POST['name_feed'] as $key => $val)
-		{
-			$id = $key;
-			$name_feed = $val;
-			$name_db = $_POST['name_db'][$key];
-			$param_level = intval($_POST['param_level'][$key]);
-			$db->query("update matches_category set name_feed = '{$name_feed}', name_db='{$name_db}', param_level='{$param_level}' where id='{$id}' ");
-		}
-	}
-	
-	header("Location: " . $_SERVER['HTTP_REFERER']);
-	die();
-	
-}
 
 
 if (isset($_POST['action']) && $_POST['action']=="resort_order") {
@@ -603,23 +526,27 @@ if (isset($_POST['submit_add_product'])) {
 
 	Common::check_priv("$priv");
 
-	$article=$_POST['edit_article'];
+	//$article=$_POST['edit_article'];
 	$parent=$_POST['edit_parent'];
 	$name=String::secure_format($_POST['edit_name']);
 	$title=String::secure_format($_POST['edit_title']);
-	//$site_url=$_POST['edit_site_url'];
+	$site_url=(isset($_POST['site_url'])) ? $_POST['edit_type'] : "";
+	$type=$_POST['type'];
+	$small_text=(isset($_POST['small_text'])) ? $_POST['small_text'] : "";
+	
+	$room_count=(!empty($_POST['room_count'])) ? intval($_POST['room_count']) : 0;
+	$place=(isset($_POST['place'])) ? $_POST['place'] : "";
+	
+	$map_url=(isset($_POST['map_url'])) ? $_POST['map_url'] : "";
 	//$small_description=String::secure_format($_POST['edit_small_description']);
-	//$description=String::secure_format($_POST['edit_description']);
-	$price=String::secure_format($_POST['edit_price']);
-	//$price1=String::secure_format($_POST['edit_price1']);
-	//$price2=String::secure_format($_POST['edit_price2']);
-	//$guarantie=String::secure_format($_POST['edit_guarantie']);
-	$article=String::secure_format($_POST['edit_article']);
-	$country=String::secure_format($_POST['edit_country']);
-	$garant=String::secure_format($_POST['edit_garant']);
-	$age=String::secure_format($_POST['edit_age']);
 	$description=String::secure_format($_POST['edit_description']);
-	$sex=String::secure_format($_POST['edit_sex']);
+	$price=String::secure_format($_POST['edit_price']);
+	//$article=String::secure_format($_POST['edit_article']);
+	//$country=String::secure_format($_POST['edit_country']);
+	//$garant=String::secure_format($_POST['edit_garant']);
+	//$age=String::secure_format($_POST['edit_age']);
+	//$description=String::secure_format($_POST['edit_description']);
+	//$sex=String::secure_format($_POST['edit_sex']);
 	
 	//$sort_order=$db->get_single("SELECT MAX(sort_order) as max FROM fw_products WHERE parent='$parent'");
 	//$sort_order=$sort_order['max']+1;
@@ -628,18 +555,18 @@ if (isset($_POST['submit_add_product'])) {
 
 
 	if ($name=='') $name='Новый продукт';
-	if ($price=='') $price='0.00';
+	//if ($price=='') $price='0.00';
 
 	$db->query("INSERT INTO fw_products 
 		(
 		
-		article,parent,name,
-		title,price,insert_date,
-		country,garant,age,description,sex) 
+		parent,name,price,
+		title,insert_date,
+		description,site_url,small_text, type, room_count, place, map_url) 
 		
 		VALUES(
-			'$article','$parent','$name','$title','$price',
-			'".time()."','$country','$garant','$age','$description','$sex'
+			'$parent','$name','$price','$title',
+			'".time()."','$description','$site_url', '$small_text', '$type', '$room_count', '$place','$map_url'
 		)");
 	
 	header("Location: ?mod=shop&action=edit_product&id=".mysql_insert_id());
@@ -650,49 +577,59 @@ if (isset($_POST['submit_edit_product'])) {
 
 	Common::check_priv("$priv");
 
-	$article=$_POST['edit_article'];
+	//$article=$_POST['edit_article'];
 	$parent=$_POST['edit_parent'];
+	$type=$_POST['type'];
 	$name=String::secure_format($_POST['edit_name']);
 	$title=String::secure_format($_POST['edit_title']);
 	$meta_keywords=String::secure_format($_POST['edit_meta_keywords']);
 	$meta_description=String::secure_format($_POST['edit_meta_description']);
 	
 	$description=String::secure_format($_POST['edit_description']);
+	
 	$price=String::secure_format($_POST['edit_price']);
 	
-	$guarantie=String::secure_format($_POST['edit_guarantie']);
+	//$guarantie=String::secure_format($_POST['edit_guarantie']);
 	$status=$_POST['edit_status'];
-	$hit=isset($_POST['edit_hit'])?"1":"0";
-	$age=String::secure_format($_POST['edit_age']);
-	$country=String::secure_format($_POST['edit_country']);
-	$garant=String::secure_format($_POST['edit_garant']);
-	$sex=String::secure_format($_POST['edit_sex']);
+	//$hit=isset($_POST['edit_hit'])?"1":"0";
+	//$age=String::secure_format($_POST['edit_age']);
+	//$country=String::secure_format($_POST['edit_country']);
+	//$garant=String::secure_format($_POST['edit_garant']);
+	//$sex=String::secure_format($_POST['edit_sex']);
+	$site_url=(isset($_POST['site_url'])) ? $_POST['site_url'] : "";
+	//$site_url=String::secure_format($_POST['site_url']);
+	//$small_text=String::secure_format($_POST['small_text']);
+	$small_text=(isset($_POST['small_text'])) ? $_POST['small_text'] : "";
 	
+	$room_count=(!empty($_POST['room_count'])) ? intval($_POST['room_count']) : "";
+	$place=(isset($_POST['place'])) ? $_POST['place'] : "";
+	$map_url=(isset($_POST['map_url'])) ? $_POST['map_url'] : "";
 
 	$id=$_POST['id'];
 
-	$db->query("DELETE FROM fw_products_properties WHERE product_id='$id' LIMIT ".count($_POST['edit_properties']));
+	/*$db->query("DELETE FROM fw_products_properties WHERE product_id='$id' LIMIT ".count($_POST['edit_properties']));
 	foreach($_POST['edit_properties'] as $k => $v) {
 		$v=String::secure_format($v);
 		if ($v!="") $db->query("INSERT INTO fw_products_properties SET product_id='$id', property_id='$k', value='$v'");
-	}
+	}*/
 
 	$db->query("UPDATE 
 		fw_products SET 
-			article='$article',
+			
 			parent='$parent',
 			name='$name',
 			title='$title',
 			meta_description='$meta_description',
 			meta_keywords='$meta_keywords',
 			price='$price',
-			garant='$garant',
-			sex='$sex',
-			age='$age',
-			country='$country',
+			site_url='$site_url',
+			small_text='$small_text',
+			map_url='$map_url',
+			place='$place',
+			room_count='$room_count',
 			status='$status',
-			description='$description',
-			hit='$hit' 
+			description='$description'
+			 
 		WHERE id='$id'");
 	
 
@@ -730,9 +667,9 @@ if (isset($_POST['submit_add_photo'])) {
 		$id=mysql_insert_id();
 		if (move_uploaded_file($tmp, BASE_PATH."/uploaded_files/shop_images/$id.$ext")) {
 			chmod(BASE_PATH."/uploaded_files/shop_images/$id.$ext",0777);
-			Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/resized-$id.$ext", PRODUCT_PREVIEW_WIDTH,PRODUCT_PREVIEW_HEIGHT, false, "#FFFFFF");
-			Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/medium-$id.$ext", PRODUCT_MEDIUM_WIDTH,PRODUCT_MEDIUM_HEIGHT, false, "#FFFFFF");
-			Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/big-$id.$ext", PRODUCT_BIG_WIDTH,PRODUCT_BIG_HEIGHT, false, "#FFFFFF");
+			//Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/resized-$id.$ext", PRODUCT_PREVIEW_WIDTH,PRODUCT_PREVIEW_HEIGHT, false, "#FFFFFF");
+			//Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/medium-$id.$ext", PRODUCT_MEDIUM_WIDTH,PRODUCT_MEDIUM_HEIGHT, false, "#FFFFFF");
+			//Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/big-$id.$ext", PRODUCT_BIG_WIDTH,PRODUCT_BIG_HEIGHT, false, "#FFFFFF");
 		}
 		else {
 			$result=$db->query("DELETE FROM fw_products_images WHERE id='".mysql_insert_id()."'");
@@ -877,7 +814,8 @@ if ($action=='delete_product') {
 	$db->query("DELETE FROM fw_products WHERE id='$id'");
 	$db->query("DELETE FROM fw_products_properties WHERE product_id='$id'");
 
-	header ("Location: ?mod=shop&action=products_list");
+	//header ("Location: ?mod=shop&action=products_list");
+	header ("Location: " . $_SERVER['HTTP_REFERER']);
 	die();
 
 }
@@ -1174,27 +1112,29 @@ SWITCH (TRUE) {
 
 	CASE ($action=='add_product'):
 		
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Продукты');
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=add_product","title" => 'Добавить продукт');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Офисы,квартиры');
+		if ($_GET['type'] == 'office')
+			$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=add_product","title" => 'Добавить офис');
+		else
+			$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=add_product","title" => 'Добавить квартиру');
 
 		$cat_list=Common::get_nodes_list($cat_list);
-        $types_list=$db->get_all("SELECT * FROM fw_products_types WHERE status='1' ORDER BY name");
-        //$body_types=$db->get_all("SELECT * FROM fw_body_types ORDER BY name");
-        //$disk_types=$db->get_all("SELECT * FROM fw_disk_types ORDER BY name");
-        $smarty->assign('types_list',$types_list);
-        //$smarty->assign('body_types',$body_types);
-        //$smarty->assign('disk_types',$disk_types);
+        //$types_list=$db->get_all("SELECT * FROM fw_products_types WHERE status='1' ORDER BY name");
+        //$smarty->assign('types_list',$types_list);
 		$smarty->assign("cat_list",$cat_list);
 		$smarty->assign("mode","add");
 		$smarty->assign("cat",@$_GET['cat']);
-		$template='shop.a_edit_product.html';
+		if ($_GET['type'] == 'office')
+			$template='shop.a_edit_office.tpl';
+		else 
+			$template='shop.a_edit_apartment.html';
 
 	BREAK;
 
 	CASE ($action=='edit_product' && isset($_GET['id'])):
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Список продуктов');
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=edit_product","title" => 'Редактировать продукт');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Офисы, квартиры');
+		
 
 		$id=$_GET['id'];
 
@@ -1216,6 +1156,11 @@ SWITCH (TRUE) {
 			LEFT JOIN fw_catalogue_properties AS cp ON cp.id=cr.property_id
 		WHERE cr.cat_id = p.parent) as properties FROM fw_products AS p WHERE id='$id'");
 
+		if ($product['type'] == 'office')
+			$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=edit_product","title" => 'Редактировать офис');
+		else 
+			$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=edit_product","title" => 'Редактировать квартиру');
+		
 		$tmp=explode("##|##",$product['properties']);
 		$product['properties']=array();
 		foreach ($tmp as $val => $k) {
@@ -1233,18 +1178,18 @@ SWITCH (TRUE) {
 /****************************************************************/
 
 
-		if ($product['additional_products']!='') {
+		/*if ($product['additional_products']!='') {
 			$additional_products=$db->get_all("SELECT * FROM fw_products WHERE id IN (".$product['additional_products'].")");
 			$smarty->assign("additional_products",$additional_products);
-		}
+		}*/
 		$photos_list=$db->get_all("SELECT * FROM fw_products_images WHERE parent='$id' ORDER BY sort_order");
-        $types_list=$db->get_all("SELECT * FROM fw_products_types WHERE status='1' ORDER BY name");
+        //$types_list=$db->get_all("SELECT * FROM fw_products_types WHERE status='1' ORDER BY name");
         //$files_list=$db->get_all("SELECT * FROM fw_products_files2 where parent='$id'");
 		//$body_types=$db->get_all("SELECT * FROM fw_body_types ORDER BY name");
 		//$disk_types=$db->get_all("SELECT * FROM fw_disk_types ORDER BY name");
 		
 		$smarty->assign("currency_admin",$cur_admin);
-		$smarty->assign('types_list',$types_list);
+		//$smarty->assign('types_list',$types_list);
 		//$smarty->assign('body_types',$body_types);
 		//$smarty->assign('disk_types',$disk_types);
 		$smarty->assign('photos_list',$photos_list);
@@ -1254,7 +1199,11 @@ SWITCH (TRUE) {
 		$smarty->assign("cat_list",$cat_list);
 		$smarty->assign("product",$product);
 		$smarty->assign("mode","edit");
-		$template='shop.a_edit_product.html';
+		
+		if ($product['type'] == 'office')
+			$template='shop.a_edit_office.tpl';
+		else
+			$template='shop.a_edit_apartment.html';
 
 	BREAK;
 
