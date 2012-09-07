@@ -1,0 +1,127 @@
+<script src="{$base_url}/javascript/insert_text/insert_text_{$browser}.js"></script>
+{literal}
+<SCRIPT language=JavaScript>
+function check_form() {
+	if ((document.add_message.nm_name.value=='') || (document.add_message.nm_text.value=='')) {
+		alert("Заполните, пожалуйста, обязательные поля");
+		return false;
+	}
+	else return true;
+}
+</SCRIPT>
+{/literal}
+
+{if $show_admin_menu}
+{literal}
+<SCRIPT language=JavaScript>
+function confirm_delete(delete_id) {
+	if (confirm("Дейтсвительно удалить это сообщение?")) {
+		parent.location.href = "{/literal}{$base_url}{literal}/admin/index.php?mod=guestbook&action=delete&id=" + delete_id;
+	}
+}
+</SCRIPT>
+{/literal}
+{/if}
+
+<h1>Отзывы</h1>
+<p style="line-height: 18px;">
+{foreach from=$messages_list item=message}
+{if $message.answer!="" && $message.status=='1'}
+<a href="{$current_url}/#message_{$message.id}" class="fasthref">{$message.tema}</a><br>
+{/if}
+{/foreach}
+</p><br>
+<center>
+
+
+<br><br>
+			<table width="100%" border="0" cellspacing=0 cellpadding=0>
+{foreach from=$messages_list item=message name=pr}
+<tr>
+<td>
+<p style="line-height: 18px;">{*<font style="font-size: 10px;">Написал <b>{$message.author}</b> {$message.insert_date|date_format:"%d.%m.%Y в %H:%M"}</font><br>*}
+<font style="color: black;"><a name="message_{$message.id}"></a>{$message.message}</font>
+{if $show_admin_menu}
+<br>Администрирование: <a href="#" onclick="window.open('{$base_url}/admin/index.php?mod=guestbook&action=edit&id={$message.id}','winscript','height=600,width=700,toolbar=no,resizable=yes,scrollbars=yes,,menubar=no' ); return false;">редактировать</a> | <a href="javascript:confirm_delete('{$message.id}');">удалить</a> {if $message.status=='0'}| <a href={$base_url}/admin/index.php?mod=guestbook&action=show&id={$message.id}>показать</a>{else}| <a href={$base_url}/admin/index.php?mod=guestbook&action=hide&id={$message.id}>cкрыть</a>{/if}{/if}<br>
+</p>
+					</td>
+				</tr>
+				{if $message.answer!=''}
+				<tr>
+					<td valign="top" style="padding: 10px 0 20px 10px;"><small><b>Ответ:</b></small><p align="justify">{$message.answer}</p><div style="text-align : right; margin-top : 5px;"><a class="mommyhref" href="javascript:scroll(0,0);">Наверх</a></td></div>
+				</tr>
+				{else}
+				<tr>
+					<td valign="top" style="padding: 10px 0 0 0;">&nbsp;</td>
+				</tr>
+				{/if}
+				{/foreach}
+			</table>
+
+
+
+{if $total_pages>1}
+	<br>
+	Страницы: <a href="{$current_url}/page_1">&laquo;</a>
+
+	{section name=p loop=$pages}
+		{if $pages[p]==$current_page}
+		{$pages[p]}
+		{else}
+		<a href="{$current_url}/page_{$pages[p]}">{$pages[p]}</a>
+		{/if}
+	{/section}
+
+	<a href="{$current_url}/page_{$total_pages}">&raquo;</a>
+	<br><br>
+{else}
+<br>
+{/if}
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td valign="top" style="padding-bottom: 10px;"><div style="color: #f9621b; font-size: 12px; font-weight: bold;" align="center">{if $error_message}{$error_message}<br><br>{else}{/if}</div>
+</td>
+</tr>
+<tr>
+<td valign="top">
+
+	<form action="" method=post name=add_message onsubmit="return check_form();">
+	<table width=100% border="0" cellspacing=0 cellpadding=0>
+	<tr>
+	<td style="padding-top: 10px;"><b>Ваше имя</b></td></tr>
+	<tr>
+	<td>
+	<input type=text name=nm_name value="{$tmp.name}">
+	</td>
+	</tr>
+								<tr>
+									<td><b>Электронная почта</b></td></tr>
+									<tr>
+									<td>
+										<input type=text name=nm_mail value="{$tmp.name}">
+									</td>
+								</tr>
+						<tr>
+									<td><b>Вопрос</b></td></tr>
+					<tr>
+					<tr>
+						<td style="padding-bottom: 10px;">
+						<div class=tag_box>
+						<a href="add_tag" onclick="return insert_tag(document.add_message.nm_text,'[B]','[/B]')" class=tag_button><b>B</b></a>
+						<a href="add_tag" onclick="return insert_tag(document.add_message.nm_text,'[I]','[/I]')" class=tag_button><i>I</i></a>
+						<a href="add_tag" onclick="return insert_tag(document.add_message.nm_text,'[U]','[/U]')" class=tag_button><u>U</u></a>
+						<a href="add_tag" onclick="return insert_tag(document.add_message.nm_text,'[QUOTE]','[/QUOTE]')" class=tag_button>&laquo; Цитата &raquo;</a>
+						<a href="add_tag" onclick="return insert_tag(document.add_message.nm_text,'[URL=]','[/URL]')" class=tag_button>URL</a>
+						</div>
+
+							<textarea name=nm_text rows="10">{$tmp.text}</textarea>
+							<input type=submit name=submit_new_message value="Отправить">
+						</td>
+					</tr>
+
+				</table></form>
+
+</td></tr>
+</table>
+</center>

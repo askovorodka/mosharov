@@ -1,0 +1,45 @@
+<form action="{$DOMAIN}/catalog/products_search/" method="get" style="margin:0px; padding:0px;">
+<div class="filter">
+<div class="filterinput">
+	<div class="filterpadd">
+	Возраст:
+	<select class="filterselect" name="age">
+    <option selected value="-">Любой</option>
+    {foreach from=$ages item=age}
+    <option value="{$age.age}">от {$age.age|age_postfix}</option>
+    {/foreach}
+	</select>
+    {*
+    <div class="filtercheck"><div class="filterch">Мальчик</div> <input type="checkbox" name="sex" value="boy"></div>
+    <div class="filtercheck"><div class="filterch">Девочка</div> <input type="checkbox" name="sex" value="girl"></div>
+    *}
+    </div>
+</div>
+<div class="filterinputc">
+	<div class="filterpaddc">
+	Категория:
+	<select class="filterselect" name="category">
+    <option selected value="">Все категории</option>
+    {foreach from=$categories item=category}
+    	<option value="{$category.id}">{if $category.param_level == 2}&nbsp;&nbsp;- {/if}{$category.name|strip_tags}</option>
+    {/foreach}
+	</select>
+    </div>
+    <div class="filterpaddcb">
+    Бренд:
+	<select class="filterselect" name="manufactury">
+    <option selected value="-">Все бренды</option>
+    {foreach from=$brands item=brand}
+    <option value="{$brand.id}">{$brand.name|strip_tags}</option>
+    {/foreach}
+	</select>
+    </div>
+</div>
+<div class="filterinputr">
+	<div class="filterpadr">
+	Цена:&nbsp; <span class="filtertext">от <input type="text" name="price_start"> до <input type="text" name="price_end"></span>
+    </div>
+</div>
+<input type="image" class="filterbut" src="{$template_image}filter_button.png" value="Искать игрушки">
+</div>
+</form>

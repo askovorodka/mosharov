@@ -1,0 +1,27 @@
+#php_value session.use_only_cookies 1
+php_value session.use_trans_sid 0
+
+RewriteEngine on
+Options +FollowSymlinks
+RewriteBase /
+
+#RewriteRule     ^(.*)/video/(.*)$			/video/$2	[L]
+#RewriteRule     ^(.*)/insertfiles/(.*)$	/insertfiles/$2	[L]
+
+RewriteCond 	%{REQUEST_FILENAME} !-f
+RewriteRule     ^(.*)/video/(.*)$			/video/$2	[L]
+
+RewriteCond 	%{REQUEST_FILENAME} !-f
+RewriteRule     ^(.*)/insertfiles/(.*)$		/insertfiles/$2	[L]
+
+#RewriteCond 	%{REQUEST_FILENAME} !-f
+RewriteRule     ^images/([^/]+)/(.*)$		/images.php?type=$1&image=$2	[L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+
+
+#RewriteRule [^\.xml][^\/]$ %{REQUEST_URI}/ [R,L]
+RewriteRule ^(.*)$ /index.php [L,QSA]
+#RewriteRule ^(.*).xml$ /index.php [L,QSA]
