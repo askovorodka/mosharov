@@ -112,6 +112,7 @@ for ($f=0;$f<count($all_pages);$f++) {
 			if ($page_content['show_nodes']=="1") {
 				for ($c=0;$c<count($all_pages);$c++) if ($all_pages[$c]['param_left']>$main_page_content['param_left'] && $all_pages[$c]['param_right']<$main_page_content['param_right'] && $all_pages[$c]['param_level']==($main_page_content['param_level']+1) && $all_pages[$c]['in_menu']=='1') $subpages_list[]=$all_pages[$c];
 				if (isset($subpages_list) && count($subpages_list)>0) {
+					
 					$smarty->assign("subpages_list",$subpages_list);
 					$sl=$smarty->fetch($templates_path.'/subpages_list.html');
 					$smarty->assign("subpages",$sl);
