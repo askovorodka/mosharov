@@ -1,0 +1,11 @@
+    {if $parent1 && $children}
+    <div class="lmen"><a href="{$base_url}/{$parent1.full_url}" title="{$parent1.name|strip_tags}">{$parent1.name|strip_tags}</a><br>
+    	{if $children}
+		<div class="lmeni">
+		{foreach from=$children item=child}
+		<a href="{$base_url}/{$child.full_url}" title="{$child.name|strip_tags}">{$child.name|strip_tags}</a>
+		{/foreach}
+		</div>
+		{/if}
+	</div>
+	{/if}

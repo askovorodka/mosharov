@@ -238,11 +238,11 @@ $capt->base_path = BASE_PATH;
   }
 
 /* -------------- ���������� ������� ���� -------------- */
-$main_menu=$db->get_all("SELECT id,name,url,param_level,param_left,param_right FROM fw_tree WHERE param_level IN ('1') AND in_menu='1' and status='1' ORDER BY param_left");
+$main_menu=$db->get_all("SELECT id,name,url,param_level,param_left,param_right, type,link FROM fw_tree WHERE param_level IN ('1') AND in_menu='1' and status='1' ORDER BY param_left");
 $main_menu=String::unformat_array($main_menu,'front');
 foreach ($main_menu as $key=>$val)
 {
-	$submenu = $db->get_all("SELECT id,name,url,param_level FROM fw_tree WHERE param_left BETWEEN '{$val['param_left']}' AND '{$val['param_right']}' AND param_level = '" . ($val['param_level'] + 1) . "' AND in_menu = '1' ORDER BY param_left");
+	$submenu = $db->get_all("SELECT id,name,url,param_level, type, link FROM fw_tree WHERE param_left BETWEEN '{$val['param_left']}' AND '{$val['param_right']}' AND param_level = '" . ($val['param_level'] + 1) . "' AND in_menu = '1' ORDER BY param_left");
 	if (isset($submenu) && count($submenu) > 0)
 	{
 		$main_menu[$key]['submenu'] = $submenu;
@@ -375,6 +375,8 @@ else {
   require_once (BASE_PATH.'/modules/site_map/front/site_map.f_main.php');
   header("HTTP/1.0 404 Not Found");
 }
+
+$smarty->assign('module_name',$module_name);
 
 $smarty->display($smarty_display);
 

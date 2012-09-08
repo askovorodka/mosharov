@@ -18,38 +18,17 @@
     <td class="lft"><img src="/templates/img/logo.png" alt="Деловой центр «Знатъ»"></td>
     <td class="topt">
 <!---- TOP MENU ---->
-		<div class="maind"><a href="#" title="О центре">О центре</a><br>
-		<div class="innd">
-			<a href="#" title="Расположение">Расположение</a>
-			<a href="#" title="Удобства">Удобства</a>
-		</div></div>
-		<div class="maind"><a href="#" title="Фотографии">Фотографии</a><br>
-		<div class="innd">
-			<a href="#" title="Здание">Здание</a>
-			<a href="#" title="Помещения">Помещения</a>
-		</div></div>
-		<div class="maind"><a href="#" title="Пресс-центр">Арендаторам</a><br>
-		<div class="innd">
-			<a href="#" title="Условия">Условия</a>
-			<a href="#" title="Свободные офисы">Свободные офисы</a>
-			<a href="#" title="Поэтажный план">Поэтажный план</a>
-		</div></div>
-        <div class="maind"><a href="#" title="Контакты">Контакты</a><br>
-		<div class="innd">
-			<a href="#" title="Карта проезда">Карта проезда</a>
-		</div></div>
+{include file="../templates/top_menu.html"}
 <!---- /TOP MENU ---->
 	</td>
   </tr>
   <tr height="100%">
     <td class="lftinn">
 <!---- LEFT MENU ---->
-    <div class="lmen"><a href="#" title="Название раздела">Название раздела</a><br>
-		<div class="lmeni">
-		<a href="#" title="Страница раздела первая">Страница раздела первая</a>
-		<a href="#" title="Еще страница раздела">Еще страница раздела</a>
-		<a href="#" title="Третья страница текущего раздела">Третья страница текущего раздела</a>
-		</div></div>
+    {if $module_name == "shop"}
+    {include file="`$smarty.const.TPL_SHOP_PATH`left_menu.html"}
+    {/if}
+	
 <!---- /LEFT MENU ---->
 <!---- BANNERS ---->
 	<div class="banner"><a href="#" title="Великолепное кафе">Великолепное кафе<br><img src="/templates/img/ban1.png" width="311" height="110"></a></div>
@@ -83,9 +62,9 @@
 	</div>
 	<div class="dvb">
 	<p>Услуги</p>
-	<a href="#" title="Аренда офисов">Аренда офисов</a>
-	<a href="#" title="Аренда квартир">Аренда квартир</a>
-    <a href="#" title="Санаторий">Санаторий</a>
+	{foreach from=$shop_menu item=rent}
+	<a href="{$base_url}/{$rent.full_url}" title="{$rent.name|strip_tags}">{$rent.name|strip_tags}</a>
+	{/foreach}
 	</div>
 	<div class="dvb">
 	<p>Дополнительно</p>

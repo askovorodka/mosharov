@@ -50,7 +50,7 @@ if(document.getElementById(name).style.display!="none") {
 	<td class=td1_right>
 		<select name=edit_parent class=field style="width:100%;">
 		{foreach from=$cat_list item=entry}
-			<option value={$entry.id}{if $entry.id==$product.parent or $entry.id==$cat} selected=true{/if}>{$entry.full_title}</option>
+			<option value={$entry.id}{if $entry.id==$product.parent or $entry.id==$smarty.get.cat} selected=true{/if}>{$entry.full_title}</option>
 		{/foreach}
 		</select>	</td>
 </tr>

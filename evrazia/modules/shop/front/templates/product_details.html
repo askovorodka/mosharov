@@ -1,43 +1,23 @@
-{include file="`$smarty.const.TPL_PATH`filter_green.html"}
-
-<div class="cat">
-<div class="contt">
-
 {include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
 
-<h1>{$product.name|strip_tags}</h1>
-	<table class="itemtbl">
-      <tr>
-        <td class="itempict">
-        {if !empty($images[0].image)}
-        <a href="/uploaded_files/product_images/{$product.id}/{$images[0].image}" class="colorbox">
-        {/if}
-        <img id="bigimage" src="/images/img315x228{if !empty($images[0].image)}/uploaded_files/product_images/{$product.id}/{$images[0].image}{else}/templates/img/nophoto.jpg{/if}" width="315" height"228" class="itempb"><br>
-        {if !empty($images[0].image)}
-        </a>
-        {/if}
-        
-        {if $images}
-        	{foreach from=$images item=image}
-        	<a href="/images/img315x228/uploaded_files/product_images/{$product.id}/{$images[0].image}" class="smallimage"><img src="/images/img71x74/uploaded_files/product_images/{$product.id}/{$image.image}" width="71" height="74" class="itemps"></a>
-        	{/foreach}
-        {/if}
-        </td>
-        <td class="itemprop">
-        <span class="itempropc">Название:</span> {$product.name|strip_tags}<br>
-        <span class="itempropc">Артикул:</span> {$product.article|strip_tags}<br>
-        {if $product.age > 0}<span class="itempropc">Возраст:</span> от {$product.age|strip_tags|age_postfix}<br>{/if}
-        {*<span class="itempropc">Бренд:</span> ToyMaster<br>*}
-        {*<span class="itempropc">Страна:</span> {$product.country}<br>*}
-        {*<span class="itempropc">Гарантия:</span> {$product.garant}<br>*}
-        {*<span class="itempropc">Описание:</span> {$product.description}<br>*}
-        <br><span class="itempr">{$product.price} руб.</span><br><br>
-        <div class="itemnumb"><span class="sprub">кол-во:</span> <input id="product_count_{$product.id}" maxlength=3 type="text" value="1"></div><div class="itembutd"><input type="image" name="add_order" product_id="{$product.id}" src="{$template_image}item_button.png" class="itembut"></div>
-        </td>
-      </tr>
-    </table><br>
-    {$product.description|strip_tags}
-<br><br>
-<div style="height:80px;">&nbsp;</div>
-</div>
-</div>
+    <h1>{$product.name|strip_tags}</h1>
+<!---- KVARTIRA FOTO ---->
+	{if $images}
+	<div>
+		{foreach from=$images item=image}
+    	<div class="kvfoto"><a class="colorbox" href="/uploaded_files/shop_images/{$image.id}.{$image.ext}"><img src="/images/img136x100/uploaded_files/shop_images/{$image.id}.{$image.ext}" width="136" height="100" /></a></div>
+    	{/foreach}
+    </div><br clear="all" /><br />
+    {/if}
+<!---- /KVARTIRA FOTO ---->
+	<div>{$product.description|strip_tags}</div>
+    <h2>Характеристики:</h2>
+	<p>Комнат: {$product.room_count}<br />
+	Площадь: {$product.place} м<br />
+	Цена: {$product.price|format_price} руб/мес<br /></p>
+	
+	{if $product.map_url}
+	<p>
+	<a href="{$product.map_url}" target="_blank">Посмотреть карту</a>
+	</p>
+	{/if}

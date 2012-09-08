@@ -139,7 +139,7 @@ class Shop extends db {
 			}
 		}
 		
-		return ($module_name) ? $module_name . "/" .$url : $url;
+		return ($module_name) ? $module_name . "/" .$url . "/" : $url . "/";
 		
 	}
 	

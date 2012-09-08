@@ -47,7 +47,7 @@ require_once 'lib/class.form.php';
 require_once 'lib/class.users.php';
 //require_once 'modules/shop/front/class.shop.php';
 
-//$navigation[]=array("url" => $module_url,"title" => $node_content['name']);
+$navigation[]=array("url" => $module_url,"title" => $node_content['name']);
 $smarty->assign("module_url",BASE_URL.'/'.$module_url);
 
 $cabinet_url=$db->get_single("SELECT url FROM fw_tree WHERE module='cabinet'");
@@ -1071,6 +1071,29 @@ SWITCH (TRUE) {
 				$page_found=true;
 				
 				//находим родителя уровня 1
+				if ($cat_content['param_level'] == 1)
+				{
+					$parent1 = $cat_content;
+				}
+				
+				if ($cat_content['param_level'] == 2)
+				{
+					$parent1 = $shop->getParent($cat_content);
+				}
+				
+				$parent1['full_url'] = $shop->getFullUrlCategory($parent1['id'],'rents');
+				
+				$smarty->assign('parent1', $parent1);
+				
+				
+				if ($parent1)
+				{
+					$children = $shop->getChildrenCategor($parent1, $parent1['param_level']+1);
+					foreach ($children as $key=>$val) {
+						$children[$key]['full_url'] = $shop->getFullUrlCategory($children[$key]['id'],'rents');
+					}
+					$smarty->assign('children', $children);
+				}
 				
 				if (isset($title_template)) $page_title=$title_template;
 				else if ($cat_content['name']!='/') $page_title=$cat_content['name'];
@@ -1159,10 +1182,11 @@ SWITCH (TRUE) {
 				
 
 				foreach ($products_list as $v => $key) {
-						$image = $db->get_single("select * from product_images where product_id='{$key['id']}' limit 1");
+					
+						$image = $db->get_single("select * from fw_products_images where parent='{$key['id']}' order by sort_order limit 1");
 						if (!empty($image))
 						{
-							$products_list[$v]['image'] = $image['image'];
+							$products_list[$v]['image'] = $image['id'].'.'.$image['ext'];
 						}
 						$tmp=explode("##|##",$key['properties']);
 						$products_list[$v]['properties']=array();
@@ -1173,7 +1197,7 @@ SWITCH (TRUE) {
 								if (substr_count($products_list[$v]['properties'][$val][3],"\n")>0) $products_list[$v]['properties'][$val][3]=explode("\n",$products_list[$v]['properties'][$val][3]);
 							}
 						}
-						$products_list[$v]['full_url'] = $shop->getFullUrlProduct($products_list[$v]['id'], "catalog");
+						$products_list[$v]['full_url'] = $shop->getFullUrlProduct($products_list[$v]['id'], "rents");
 				}
         
 				
@@ -1230,18 +1254,38 @@ SWITCH (TRUE) {
 						if ($cat_list[$f]['full_url'].$product_content['id'].'/'==$url_to_check && $product_content['parent']==$cat_list[$f]['id']) {
 							
 							
-							foreach ($cat_list as $key=>$val)
+							/*foreach ($cat_list as $key=>$val)
 							{
 								if ($val['param_left'] < $cat_list[$f]['param_left'] && $val['param_right'] > $cat_list[$f]['param_right'] && $val['param_level'] == $cat_list[$f]['param_level']-1) {
 								$cat_parent_info = $val;
 								$smarty->assign('cat_parent_info', $cat_parent_info);
 								$smarty->assign('cat_content', $cat_list[$f]);
 								$cat_parent = $shop->getParent($cat_parent_info);
-								$smarty->assign('parent', $cat_parent);
+								$smarty->assign('parent1', $cat_parent);
 								}								
-							}
+							}*/
 							
 							$page_found=true;
+							
+							if ($product_content['parent'])
+							{
+								$parent = $shop->getCategory($product_content['parent']);
+								if ($parent)
+								{
+									$parent1 = $shop->getParent($parent,$parent['param_level']-1);
+									$parent1['full_url'] = $shop->getFullUrlCategory($parent1['id'],'rents');
+									$smarty->assign('parent1', $parent1);
+								}
+									
+								if ($parent1)
+								{
+									$children = $shop->getChildrenCategor($parent1, $parent1['param_level']+1);
+									foreach ($children as $key=>$val) {
+										$children[$key]['full_url'] = $shop->getFullUrlCategory($children[$key]['id'],'rents');
+									}
+									$smarty->assign('children', $children);
+								}
+							}
 							
 							if ($product_content['title']!='') $page_title=$product_content['title'];
 							//if ($title_template) $page_title=$title_template;
@@ -1262,7 +1306,7 @@ SWITCH (TRUE) {
 							$images = $shop->getProductImages($product_content['id']);
 							$smarty->assign("images",$images);
 							
-							$images = $db->get_all("SELECT * FROM product_images WHERE product_id='".$product_content['id']."'");
+							$images = $db->get_all("SELECT * FROM fw_products_images WHERE parent='".$product_content['id']."' order by sort_order asc");
 							$smarty->assign('images', $images);
 
 

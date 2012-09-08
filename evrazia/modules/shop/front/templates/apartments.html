@@ -1,0 +1,13 @@
+<!---- CONTENT ---->
+    <h1>{$cat_content.name|strip_tags}</h1>
+	<p>{$cat_content.text}</p>
+<!---- /CONTENT ---->
+<!---- KVARTIRI ---->
+{if $products_list}
+	<div>
+		{foreach from=$products_list item=item}
+    	<div class="kvlist"><a href="{$base_url}/{$item.full_url}" title="{$item.name|strip_tags}"><img src="/images/img193x143/uploaded_files/shop_images/{$item.image}" width="193" height="143" /><br /><p class="kvlistlnk">{$item.name|strip_tags}</p></a>Комнат: {$item.room_count}<br />Площадь: {$item.place} м<sup class="lineh">2</sup><br />Цена: {$item.price|format_price} руб./мес.</div>
+    	{/foreach}
+    </div>
+{/if}
+<!---- /KVARTIRI ---->

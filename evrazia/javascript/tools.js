@@ -1,7 +1,7 @@
 
 $(document).ready( function(){
 
-	$("a.colorbox").colorbox();
+	$("a.colorbox").colorbox({rel:'gal'});
 	
 	$("input[type='text']", $("#basket_form")).keyup(function(){ $("#basket_form").submit(); });
 	

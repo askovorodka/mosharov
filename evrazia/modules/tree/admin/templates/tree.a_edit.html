@@ -161,10 +161,10 @@ function form_check() {
 	</tr>
 
 	
-	<tr{if $node.type=='link'} style="display:none;"{/if}>
+	{*<tr{if $node.type=='link'} style="display:none;"{/if}>
 		<td width=15% class=td1_left><b>Заголовок:</b></td>
 		<td class=td1_right><input type=text name=edit_node_label style="width:100%;" class=field value="{$node.label}">
-	</tr>
+	</tr>*}
 
 	<tr{if $node.type=='link'} style="display:none;"{/if}>
 		<td width=15% class=td1_left><b>URL:</b></td>

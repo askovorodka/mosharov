@@ -1,6 +1,9 @@
 {$cat_content.text}
+{assign var="count" value=0}
 {foreach from=$products_list item=item}
-
-<div class="firms"><p><a href="{$item.site_url}">{$item.name|strip_tags}</a> <span class="stgrey">{$item.small_text|strip_tags}</span></p><p class="borders">{$item.description|strip_tags}</p></div>
+{assign var="count" value=`$count+1`}
+<div class="firms"><p><a href="{$item.site_url}">{$item.name|strip_tags}</a> <span class="stgrey">{$item.small_text|strip_tags}</span></p>
+<p{if $count==2} class="borders"{/if}>{$item.description|strip_tags}</p></div>
+{if $count >= 3}{assign var="count" value=0}{/if}
 
 {/foreach}
