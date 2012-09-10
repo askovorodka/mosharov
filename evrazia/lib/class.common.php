@@ -16,10 +16,14 @@ class Common {
 		}
 
 		//$res=$db->get_all("SELECT * FROM fw_tree WHERE $level_str in_menu='1' AND status='1' ORDER BY param_left");
+		
 		$res=$db->get_all("SELECT * FROM fw_tree WHERE $level_str status='1' ORDER BY param_left");
-
+		
+		
 		$content=Common::generate_menu($res, $res[0]['param_left'], $res[0]['param_right']);
 
+		
+		
 		$modules = array('shop','cabinet','site_map');
 		foreach ($content as $value)
 		{ 

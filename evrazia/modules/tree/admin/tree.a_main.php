@@ -647,6 +647,7 @@ SWITCH (TRUE) {
 
     $modules=$db->get_all("SELECT name,title FROM fw_modules WHERE (section='front_additional' OR section='front_main' OR section='front_support') AND status='1'");
     $modules_support=$db->get_all("SELECT name,title FROM fw_modules WHERE section='front_support' AND status='1'");
+    
 
     $documents_orderby_list=$db->get_all("SELECT * FROM fw_documents_orderby WHERE status='1'");
 	

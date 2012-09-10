@@ -2,7 +2,6 @@
 
 	{if $banner.type=='0'}
 	<a href="{$base_url}/go.php?target={$banner.id}" target="_blank"><img src="{$base_url}/uploaded_files/banners/{$banner.id}.{$banner.image}"></a>
-	{else}
 	
 	<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" width="{$width}" height="{$height}">
 		<param name="movie" value="{$base_url}/uploaded_files/banners/{$banner.id}.{$banner.image}?clickTag={$base_url}/go.php?target={$banner.id}&clickTarget=_blank">
@@ -11,5 +10,8 @@
 		<embed src="{$base_url}/uploaded_files/banners/{$banner.id}.{$banner.image}" wmode="transparent" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="{$width}" height="{$height}"></embed>
 	</object>
 	{/if}
+
+{elseif $banner.type == "2"}
+	<div id="banner{$banner.id}">{$banner.code}</div>
 
 {/if}

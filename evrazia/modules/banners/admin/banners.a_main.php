@@ -18,6 +18,7 @@ if (isset($_POST['submit_add_banner'])) {
 	$name=String::secure_format($_POST['name']);
 	$group=String::secure_format($_POST['group']);
 	$url=String::secure_format($_POST['url']);
+	$code = "";
 	
 	$type=String::secure_format($_POST['type']);
 	$showings=String::secure_format($_POST['showings']);
@@ -61,9 +62,15 @@ if (isset($_POST['submit_add_banner'])) {
 	}
 	else $ext='';
 
+	if ($type == "2" && !empty($_POST['code']))
+	{
+		$code = $_POST['code'];
+		$code = mysql_real_escape_string($code);
+	}
+	
 	if ($check) {
 		
-		$result=$db->query("INSERT INTO fw_banners (name,`group`,target_url,type,showings,start_date,end_date,status,image) VALUES('$name','$group','$url','$type','$showings','$start_date','$end_date','$status','$ext')");
+		$result=$db->query("INSERT INTO fw_banners (name,`group`,target_url,type,showings,start_date,end_date,status,image, code) VALUES('$name','$group','$url','$type','$showings','$start_date','$end_date','$status','$ext', '$code')");
 		
 		//echo "INSERT INTO fw_banners (name,`group`,target_url,type,showings,start_date,end_date,status,image) VALUES('$name','$group','$url','$type','$showings','$start_date','$end_date','$status','$ext')"; exit();
 		
@@ -129,7 +136,7 @@ if (isset($_POST['submit_edit_banner'])) {
 	$name=String::secure_format($_POST['name']);
 	$group=String::secure_format($_POST['group']);
 	$url=String::secure_format($_POST['url']);
-	
+	$code = "";
 	$type=String::secure_format($_POST['type']);
 	$showings=String::secure_format($_POST['showings']);
 	
@@ -170,6 +177,12 @@ if (isset($_POST['submit_edit_banner'])) {
 	}
 	else $ext=$_POST['old_ext'];
 	
+	if ($type == "2")
+	{
+		$code = $_POST['code'];
+		$code = mysql_real_escape_string($code);
+	}
+	
 	if (isset($_POST['delete_image'])) {
 		foreach (glob(BASE_PATH."/uploaded_files/banners/$id.*") as $filename) {
 			unlink($filename);
@@ -188,7 +201,8 @@ if (isset($_POST['submit_edit_banner'])) {
 											status='$status',
 											start_date='$start_date',
 											end_date='$end_date',
-											image='$ext'
+											image='$ext',
+											code = '$code'
 										WHERE id='$id'");
 	
 		if (isset($file_name) && $file_name!='') {

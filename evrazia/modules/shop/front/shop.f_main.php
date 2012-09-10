@@ -5,6 +5,7 @@
 
 //$_SESSION['fw_basket']=array();
 
+
 if ($switch_default=='on' or $main_module=='on') {
 	
 	$ages = $db->get_all("select age from fw_products where age > 0 group by age");
@@ -1138,7 +1139,7 @@ SWITCH (TRUE) {
           $done=0;
           for ($c=0;$c<count($folders_list);$c++) {
 
-          	$folders_list[$c]['full_url'] = $shop->getFullUrlCategory($folders_list[$c]['id'], "catalog");
+          	$folders_list[$c]['full_url'] = $shop->getFullUrlCategory($folders_list[$c]['id'], "rents");
           	$folders_list[$c]['products'] = $shop->getProductsByCategory($folders_list[$c]['id']);
           	
           	if (isset($folders_list[$c]['products']))

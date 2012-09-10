@@ -1,5 +1,6 @@
-#Sat Sep 08 13:56:54 MSK 2012
+#Mon Sep 10 12:45:36 MSK 2012
 eclipse.preferences.version=1
+encoding//modules/banners/admin/templates/banners.a_edit.html=cp1251
 encoding//modules/news/admin/templates/news.a_edit.html=cp1251
 encoding//modules/shop/admin/templates/shop.a_cur_edit.html=cp1251
 encoding//modules/shop/admin/templates/shop.a_edit_apartment.html=cp1251

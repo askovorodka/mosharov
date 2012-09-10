@@ -31,16 +31,12 @@
     <td class="sometxt">
 {if $current_url == "home"}
 <!---- SOME TEXT ---->
-На территории офисного комплекса располагаются предприятия бытового обслуживания и точки питания, которые создают максимально приятные условия для организации рабочего времени сотрудникам Вашей компании.<br />
-Бизнес центр «ЗнатЪ» готов предложить Вам услуги, соответствующие требованиям современных компаний к организации пространства для ведения бизнеса.  Звоните и мы создадим для Вас условия Вашего дальнейшего динамичного развития.<br />
-Все наши предложения – это прямая аренда , что позволяет Вам снять офис без посредников, арендовать без комиссий любое помещение.<br /><br />
-<span style="font-size:16px;">Офисы в аренду от собственника</span><br />
-8(495) 349-99-20<br />8(495) 349-81-61<br />8(910) 446-19-49
+{banners group="7"}
 <!---- /SOME TEXT ---->
 {/if}
 	</td>
 <!---- BIG KARTINKA ---->
-    <td background="/templates/img/big_pict.jpg"><img src="/templates/img/big_front.png" width="659" height="377" alt="Деловой центр «Знатъ»"></td>
+	<td background="/templates/img/big_pict.jpg"><img src="/templates/img/big_front.png" width="659" height="377" alt="Деловой центр «Знатъ»"></td>
 <!---- /BIG KARTINKA ---->
   </tr>
   
@@ -63,9 +59,9 @@
   <tr height="100%">
     <td class="lftс">
 <!---- BANNERS ---->
-	<div class="banner"><a href="#" title="Великолепное кафе">Кафе «Успех»<br><img src="/templates/img/ban1.png" width="311" height="110"></a></div>
-    <div class="banner"><a href="#" title="Конференц зал">Конференц зал<br><img src="/templates/img/ban3.png" width="311" height="110"></a></div>
-    <div class="banner"><a href="#" title="Комната переговоров">Комната переговоров<br><img src="/templates/img/ban2.png" width="310" height="110"></a></div>
+	{banners group="1"}
+	{banners group="5"}
+	{banners group="6"}
 <!---- /BANNERS ---->
 <br /><br />
 <!---- NEWS ---->
@@ -86,7 +82,7 @@
 <!---- /CONTENT ---->
 
 <!---- MAIN BANNER ---->
-<div class="mainbannerwide"><img src="/templates/img/mainban1.jpg" width="100%" height="135" /><br /><a href="#">Санаторий на берегу азовского моря</a><br />Наш санаторий, расположенный на берегу моря и имещий собственный пляж прекрасно подходит для отдыха как маленьких детей, так и взрослых.</div>
+{banners group="8"}
 <!---- /MAIN BANNER ---->
 
 	</td>
@@ -95,23 +91,7 @@
     <td colspan="2">
 	<div class="dvbm">
 <!---- BOTTOM MENU ---->
-	<div class="dvb">
-	<p>Информация</p>
-	<a href="#" title="Лицензии">Лицензии</a>
-	</div>
-	<div class="dvb">
-	<p>Услуги</p>
-	{foreach from=$shop_menu item=rent}
-	<a href="{$base_url}/{$rent.full_url}" title="{$rent.name|strip_tags}">{$rent.name|strip_tags}</a>
-	{/foreach}
-	
-	</div>
-	
-	<div class="dvb">
-	<p>Дополнительно</p>
-	<a href="#" title="Карта проезда">Карта проезда</a>
-	<a href="#" title="Карта сайта">Карта сайта</a>
-	</div>
+{banners group="10"}
 <!---- /BOTTOM MENU ---->
 	</div>
 	<div class="dvbr">
@@ -125,73 +105,3 @@
 </table>
 </body>
 </html>
-
-
-
-{*
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
-<title>{$page_title}</title>
-<meta name="Keywords" content="{$meta_keywords}">
-<meta name="Description" content="{$meta_description}">
-{foreach from=$css item=css}
-<link rel="stylesheet" type="text/css" href="{$css}">
-{/foreach}
-{foreach from=$js item=js}
-<script src="{$js}" type="text/javascript"></script>
-{/foreach}
-</head>
-
-<div id='loading-layer'><div>Кладем в корзину. Подождите...</div></div>
-
-<body>
-<!--- toping --->
-<div class="topd">
-	
-	<div class="topt"><div class="toptel"><span class="kod">+7 (495)</span> 648-73-68</div><div class="littler">режим работы:  9:00 - 21:00  без выходных</div></div>
-
-	{include file="`$smarty.const.TPL_PATH`basket_block.html"}
-
-    <div class="tmenu">
-    {include file="../templates/top_menu.html"}
-    </div>
-
-</div>
-<!--- /toping --->
-<!--- search --->
-{include file="../templates/top_search.html"}
-<!--- /search --->
-
-<!--- special --->
-{if $current_url == "home"}{include file="../templates/top_special_block.html"}{/if}
-<!--- /special --->
-
-<!--- middle --->
-<table class="middle">
-<tr>
-<td class="lmenu">
-{include file="../templates/left_catalog_menu.html"}
-</td>
-<td class="righter">
-		
-		{if $content=='' or !$content}
-			{assign var="content" value=""}
-			{fetch file=$template assign="content"}
-		{/if}
-		{eval var=$content}
-
-</td>
-</tr>
-</table>
-<!--- /middle --->
-<!--- bottom --->
-<div class="bottom"><br><br>
-
-{include file="../templates/top_menu.html"}
-
-</div>
-<!--- /bottom --->
-</body>
-</html>
-*}

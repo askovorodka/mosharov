@@ -5,7 +5,7 @@ require_once BASE_PATH.'/lib/class.image.php';
 $smarty->register_function("banners", "show_banners");
 
 function show_banners ($params) {
-
+	
 	global $db;
 	global $smarty;
 	
@@ -18,9 +18,14 @@ function show_banners ($params) {
 	$limit="";
 	if (!isset($params['all'])) $limit="LIMIT 1";
 
-	//$banner=$db->get_all("SELECT * FROM fw_banners WHERE showings>shown AND $group_text id IN (SELECT banner_id FROM fw_banners_cat WHERE url LIKE '".$_SERVER['REQUEST_URI']."%' GROUP BY banner_id ORDER BY LENGTH(url)) AND ((end_date>'".time()."' AND start_date<'".time()."') OR (end_date='0' AND start_date='0')) ORDER BY RAND() $limit");
+	$banner=$db->get_all("SELECT * FROM fw_banners WHERE showings > shown AND $group_text id IN 
+	(SELECT banner_id FROM fw_banners_cat WHERE url LIKE '".$_SERVER['REQUEST_URI']."%' 
+	group by banner_id ORDER BY LENGTH(url)) AND ((end_date>'".time()."' 
+	AND start_date<'".time()."') OR (end_date='0' AND start_date='0')) ORDER BY RAND() $limit");
 	
-	$banner=$db->get_all("SELECT * FROM fw_banners WHERE showings>shown AND $group_text ((end_date>'".time()."' AND start_date<'".time()."') OR (end_date='0' AND start_date='0')) ORDER BY RAND() $limit");	
+	/*$banner=$db->get_all("SELECT * FROM fw_banners WHERE showings > shown AND 
+		$group_text ((end_date>'".time()."' AND start_date<'".time()."') 
+		OR (end_date='0' AND start_date='0')) ORDER BY RAND() $limit");*/	
 	
 	$global_return="";
 	foreach ($banner as $key => $banner) {
@@ -34,6 +39,10 @@ function show_banners ($params) {
 			
 				$smarty->assign("width",$output['width']);
 				$smarty->assign("height",$output['height']);
+			}
+			elseif($banner['type'] == 2)
+			{
+				$banner['code'] = stripslashes($banner['code']);
 			}
 		
 			$smarty->assign("banner",$banner);
