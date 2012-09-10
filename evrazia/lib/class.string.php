@@ -30,10 +30,13 @@ class String {
 		
 		if ($string=='') return '';
 		else {
-
+			
 			$string=trim($string);
-			$string=htmlspecialchars($string);
+			
+			//$string=htmlspecialchars($string);
+			
 			$string=mysql_real_escape_string($string);
+			echo $string;
 
 			return $string;
 		}

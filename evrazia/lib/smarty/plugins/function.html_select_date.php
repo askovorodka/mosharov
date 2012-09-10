@@ -208,6 +208,7 @@ function smarty_function_html_select_date($params, &$smarty)
                                                             'selected'   => (int)$time[1] ? strftime($month_value_format, mktime(0, 0, 0, (int)$time[1], 1, 2000)) : '',
                                                             'print_result' => false),
                                                       $smarty);
+        echo $month_result;
         $month_result .= '</select>';
     }
 

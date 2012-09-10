@@ -234,6 +234,8 @@ if (isset($_POST['submit_edit_banner'])) {
 
 if (isset($_POST['submit_add_group'])) {
 	
+	
+	
 	Common::check_priv("$priv");
 	
 	$name=String::secure_user_input($_POST['name']);

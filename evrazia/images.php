@@ -71,8 +71,10 @@ if (count($dirs_array))
 	
 	
 	$dst_image = $image_root . "/" . $dirs_array[count($dirs_array)-1];
+	
 	if (file_exists($rst_image) && !file_exists($dst_image))
 	{
+		
 		list($w,$h,$image_type) = @getimagesize($rst_image);
 		Image::resize($rst_image, $dst_image, $width, $height, $crope);
 	}

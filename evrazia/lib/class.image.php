@@ -1,5 +1,8 @@
 <?php
 
+//error_reporting(E_ALL);
+//ini_set('display_errors','On');
+
 class Image {
 
 function resize($src, $dst, $dst_width, $dst_height, $crop = true, $background = "#ffffff", $fix_width = false)

@@ -136,7 +136,7 @@ class Common {
 		foreach ($array as $value) {
 			if ($value['param_left']>$start && $value['param_right']<$finish && $value['param_level']==($level+1)) {
 				if (($value['param_right']-$value['param_left'])>1) {
-					$value['sublist']=Common::generate_menu($array, $value['param_left'], $value['param_right'], &$full_url);
+					$value['sublist']=Common::generate_menu($array, $value['param_left'], $value['param_right'], $full_url);
 				}
 				$ar[] = $value;
 			}
