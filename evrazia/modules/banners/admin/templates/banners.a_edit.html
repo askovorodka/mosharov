@@ -111,9 +111,6 @@ function check_form() {
 		</td>
 	</tr>
 
-		
-
-	
 	<tr>
 		<td width=20% valign=top class=td1_left>
 			Баннер:
@@ -138,7 +135,6 @@ function check_form() {
 				
 				{/if}
 				
-				
 				<br>
 				<input type=checkbox name=delete_image> Удалить баннер
 				<br><br>
@@ -146,6 +142,7 @@ function check_form() {
 			</div>
 		</td>
 	</tr>
+	
 	<tr>
 		<td width=20% valign=top class=td1_left>
 			<font color=red>*</font> URL страницы:
@@ -154,6 +151,7 @@ function check_form() {
 			<input type=text name=url style="width:100%" value="{$banner.target_url}" class=field>
 		</td>
 	</tr>
+	
 	<tr>
 		<td width=20% valign=top class=td1_left>&nbsp;
 			
@@ -162,6 +160,7 @@ function check_form() {
 			
 		</td>
 	</tr>
+	
 	<tr>
 		<td width=20% valign=top class=td1_left>
 			&nbsp;&nbsp;Показывать, раз:
@@ -170,6 +169,7 @@ function check_form() {
 			<input type=text name=showings style="width:50%" value="{$banner.showings}" class=field>{if $mode=="edit"} показано раз: {$banner.shown}{/if}
 		</td>
 	</tr>
+	
 	<tr>
 		<td width=20% valign=top class=td1_left>
 			&nbsp;&nbsp;Время показа:
@@ -177,12 +177,14 @@ function check_form() {
 		<td class=td1_right>
 
 			<table>
-				<tr><td>C</td><td>{html_select_date prefix='start_' start_year='2011' end_year='2021' time=$curdate}</td></tr>
+				<tr><td>C</td><td><input type="text" name="date_start" value="{$curdate|date_format:'%d-%m-%Y'}">{*html_select_date prefix='start_' start_year='2011' end_year='2021' time=$curdate*}</td></tr>
 				<tr><td colspan="2" height="10"></td></tr>
-				<tr><td>По</td><td>{html_select_date prefix='end_' start_year='2011' end_year='2021' time=$curdate2}</td></tr>
+				<tr><td>По</td><td><input type="text" name="date_end" value="{$curdate2|date_format:'%d-%m-%Y'}">{*html_select_date prefix='end_' start_year='2011' end_year='2021' time=$curdate2*}</td></tr>
 			</table>
+
 		</td>
 	</tr>
+	
 	<tr>
 		<td width=20% valign=top class=td1_left>&nbsp;</td>
 		<td class=td1_right>&nbsp;</td>
@@ -224,6 +226,12 @@ function check_form() {
 {literal}
 <SCRIPT language=JavaScript>
 <!--
+
+$(function() {
+	$( "input[name='date_start']" ).datepicker({ dateFormat: "dd-mm-yy"});
+	$( "input[name='date_end']" ).datepicker({ dateFormat: "dd-mm-yy"});
+});
+
 $("#checked_all_items").click(function(){
 	if ( $(this).attr("checked") )
 		{

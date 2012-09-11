@@ -123,14 +123,32 @@ for ($f=0;$f<count($all_pages);$f++) {
 			if (!isset($select_item)) {
 
 				$page_found=true;
+				
+				if ($page_content['param_level'] > 1)
+				{
+					$parent_page = $db->get_single("
+						SELECT * FROM fw_tree 
+						WHERE param_left < '{$page_content['param_left']}' and param_right > '{$page_content['param_right']}' 
+						and param_level = '" . ($page_content['param_level']-1) . "'");
+					if ($parent_page)
+					{
+						//echo CDBTree::get_full_url($parent_page['id']);
+						
+						$other_page = $db->get_all("SELECT * FROM fw_tree WHERE param_left BETWEEN '{$parent_page['param_left']}' 
+						and '{$parent_page['param_right']}' and status = '1' and param_level = '" . $page_content['param_level'] . "' 
+						order by param_left");
 
+						$smarty->assign('other_page', $other_page);
+						$smarty->assign('parent_page', $parent_page);
+					}
+				}
+				
 				if ($page_content['title']!='') $page_title=$page_content['title'];
 				else $page_title=$page_content['name'];
 				if ($page_content['meta_keywords']!='') $meta_keywords=$page_content['meta_keywords'];
 				if ($page_content['meta_description']!='') $meta_description=$page_content['meta_description'];
 
-
-                        $smarty->assign("content",$main_page_content['elements']);
+                $smarty->assign("content",$main_page_content['elements']);
 			}
 			else {
 				$document=$db->get_single("SELECT * FROM fw_documents WHERE id='".$select_item."' AND status='1'");
@@ -145,7 +163,7 @@ for ($f=0;$f<count($all_pages);$f++) {
 
 					$navigation[]=array("url" => "item_".$document['id'],"title" => trim($document['name']));
 
-					$photo = new Photoalbum();
+					/*$photo = new Photoalbum();
 					$document['description']= $photo->pregReplace($document['description'],BASE_PATH,PHOTOS_FOLDER,PHOTOS_PER_PAGE_SUP);
 					$document['small_description']= $photo->pregReplace($document['small_description'],BASE_PATH,PHOTOS_FOLDER,PHOTOS_PER_PAGE_SUP);
 				
@@ -155,7 +173,7 @@ for ($f=0;$f<count($all_pages);$f++) {
 
 					$form = new Form();
 					$document['description'] = $form->pregReplace($document['description'],BASE_PATH);
-					$document['small_description'] = $form->pregReplace($document['small_description'],BASE_PATH);
+					$document['small_description'] = $form->pregReplace($document['small_description'],BASE_PATH);*/
 
 					$smarty->assign("document",$document);
 					$smarty->assign("content",$smarty->fetch($templates_path."/document_elements.html"));

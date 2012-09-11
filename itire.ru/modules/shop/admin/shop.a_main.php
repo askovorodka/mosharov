@@ -1234,9 +1234,9 @@ SWITCH (TRUE) {
 	
 	CASE ($action == 'export'):
 		
-		$goodrims_last_import = file_get_contents("http://goodrims.ru/last_import_time/");
-		$selltire_last_import = file_get_contents("http://sell-tire.ru/last_import_time/");
-		$cccp_last_import = file_get_contents("http://cccp-shina.ru/last_import_time/");
+		//$goodrims_last_import = file_get_contents("http://goodrims.ru/last_import_time/");
+		//$selltire_last_import = file_get_contents("http://sell-tire.ru/last_import_time/");
+		//$cccp_last_import = file_get_contents("http://cccp-shina.ru/last_import_time/");
 		
 		$smarty->assign("goodrims_last_import",$goodrims_last_import);
 		$smarty->assign("selltire_last_import",$selltire_last_import);
@@ -1258,6 +1258,7 @@ SWITCH (TRUE) {
 		$template='shop.a_edit_cat.html';
 
 	BREAK;
+	
 	
 	CASE($action=='viewSortProducts'):
 		$items = array();

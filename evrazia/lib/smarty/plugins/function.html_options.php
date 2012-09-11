@@ -5,6 +5,9 @@
  * @subpackage plugins
  */
 
+//error_reporting(E_ALL);
+//ini_set('display_errors','On');
+
 
 /**
  * Smarty {html_options} function plugin
@@ -29,6 +32,7 @@
  */
 function smarty_function_html_options($params, &$smarty)
 {
+	
     require_once $smarty->_get_plugin_filepath('shared','escape_special_chars');
     
     $name = null;
@@ -72,7 +76,7 @@ function smarty_function_html_options($params, &$smarty)
         return ''; /* raise error here? */
 
     $_html_result = '';
-
+	
     if (isset($options)) {
         
         foreach ($options as $_key=>$_val)
@@ -90,7 +94,7 @@ function smarty_function_html_options($params, &$smarty)
     if(!empty($name)) {
         $_html_result = '<select name="' . $name . '"' . $extra . '>' . "\n" . $_html_result . '</select>' . "\n";
     }
-
+	
     return $_html_result;
 
 }

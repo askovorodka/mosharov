@@ -44,6 +44,8 @@
 			external_link_list_url : "lists/link_list.js",
 			external_image_list_url : "lists/image_list.js",
 			media_external_list_url : "lists/media_list.js",
+			extended_valid_elements : "iframe[src|width|height|name|align]",
+			
 
 			// Replace values for the template plugin
 			template_replace_values : {
@@ -110,7 +112,7 @@ function form_check() {
 
 <form action="" method=post name=edit_node onSubmit="return form_check();" enctype="multipart/form-data">
 {if $mode!='edit'}{foreach from=$templates_list item="template" name=sq}
-{if $smarty.foreach.sq.first}
+{if $smarty.foreach.sq.last}
 <input type=hidden name=edit_node_template value="{$template.file}">
 {/if}
 {/foreach}{/if}

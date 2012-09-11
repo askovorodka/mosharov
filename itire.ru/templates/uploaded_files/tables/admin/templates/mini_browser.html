@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>Администраторская панель</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<link rel="stylesheet" type="text/css" href="templates/style.css">
+</head>
+
+<body>
+
+{literal}
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/tooltips.js'></script>
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/common.js'></script>
+{/literal}
+
+
+<table width=100% class=content_table>
+
+	<tr>
+	<th>Таблица</th>
+	<th width=10%>Формат</th>
+	<th width=20%>Код</th>
+	</tr>
+
+	{foreach name=tree from=$tables_list item=entry}
+
+	{if $col==1}
+	{assign var="td" value='td1'}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value='td2'}
+	{assign var="col" value=1}
+	{/if}
+	<tr>
+			<td class={$td}_left>
+				<img src="templates/img/tree.gif"><b>{$entry.name}</b>
+			</td>
+			<td align=center class={$td}_middle>
+			<b><font color=red>{$entry.format}</font></b>
+			</td>
+			<td align=center class={$td}_right>
+			<input type=button value="Вставить" onclick="insertIntoWYSIWYG('{literal}{table id=&quot;{/literal}{$entry.id}{literal}&quot;}{/literal}')">
+			</td>
+		</tr>
+
+	{/foreach}
+
+</table>
+
+</body>
+</html>

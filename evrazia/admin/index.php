@@ -6,6 +6,7 @@ error_reporting(E_ALL);
 
 setlocale (LC_ALL, array ('ru_RU.CP1251', 'rus_RUS.1251'));
 
+
 require_once '../conf/globals.php';
 require_once '../lib/smarty/Smarty.class.php';
 require_once '../lib/class.db.php';

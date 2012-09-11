@@ -35,6 +35,8 @@
  */
 function smarty_function_html_select_date($params, &$smarty)
 {
+	//date_default_timezone_set("Europe/Moscow");
+	
     require_once $smarty->_get_plugin_filepath('shared','escape_special_chars');
     require_once $smarty->_get_plugin_filepath('shared','make_timestamp');
     require_once $smarty->_get_plugin_filepath('function','html_options');
@@ -202,13 +204,13 @@ function smarty_function_html_select_date($params, &$smarty)
             $month_result .= ' ' . $all_extra;
         }
         $month_result .= $extra_attrs . '>'."\n";
-
+		
         $month_result .= smarty_function_html_options(array('output'     => $month_names,
                                                             'values'     => $month_values,
                                                             'selected'   => (int)$time[1] ? strftime($month_value_format, mktime(0, 0, 0, (int)$time[1], 1, 2000)) : '',
                                                             'print_result' => false),
                                                       $smarty);
-        echo $month_result;
+        
         $month_result .= '</select>';
     }
 

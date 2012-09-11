@@ -1,0 +1,56 @@
+{literal}
+
+<script language="JavaScript">
+function check_form() {
+	if ((document.edit_table.edit_table_name.value=='') || (document.edit_table.edit_table_file.value=='' && document.edit_table.old_format.value=='')) {
+		alert("Заполните, пожалуйста, обязательные поля");
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+</script>
+{/literal}
+
+{if $success_message}<center><font color=green>{$success_message}</font></center><br>{/if}
+{if $error_message}<center><font color=red>{$error_message}</font></center><br>{/if}
+
+<form action="" name=edit_table method=post enctype="multipart/form-data" onSubmit="return check_form();">
+
+{if $mode=='edit'}
+<input type=hidden name=id value={$table.id}>
+{/if}
+<input type=hidden name=old_format value="{$table.format}">
+
+<table width=100% class="content_table">
+	<tr>
+		<th>
+			{if $mode=='edit'}Редактируем таблицу{else}Добавить таблицу{/if}
+		</th>
+	</tr>
+</table>
+
+<table width=100% class="content_table">
+	<tr>
+		<td width=20% class=td1_left>
+			<font color=red><sup>*</sup></font> Название:
+		</td>
+		<td class=td1_right>
+			<input type=text name=edit_table_name style="width:100%" value="{$table.name}" class=field>
+		</td>
+	</tr>
+	<tr>
+		<td width=20% valign=top class=td1_left>
+			<font color=red><sup>*</sup></font> Файл:
+		</td>
+		<td class=td1_right>
+			{if $table.format}<b>{$table.id}.{$table.format}</b><br><br>{/if}
+			<input type=file name=edit_table_file style="width:50%" class=field>
+		</td>
+	</tr>
+</table>
+<br>
+<center><input type=submit {if $mode=='edit'}name=submit_edit_table value="Сохранить изменения"{else}name=submit_add_table value="Добавить таблицу"{/if}></center>
+
+</form>

@@ -18,7 +18,7 @@ function show_banners ($params) {
 	$limit="";
 	if (!isset($params['all'])) $limit="LIMIT 1";
 
-	$banner=$db->get_all("SELECT * FROM fw_banners WHERE showings > shown AND $group_text id IN 
+	$banner=$db->get_all("SELECT * FROM fw_banners WHERE status='1' and showings > shown AND $group_text id IN 
 	(SELECT banner_id FROM fw_banners_cat WHERE url LIKE '".$_SERVER['REQUEST_URI']."%' 
 	group by banner_id ORDER BY LENGTH(url)) AND ((end_date>'".time()."' 
 	AND start_date<'".time()."') OR (end_date='0' AND start_date='0')) ORDER BY RAND() $limit");

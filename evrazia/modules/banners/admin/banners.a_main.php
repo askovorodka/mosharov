@@ -1,5 +1,8 @@
 <?php
 
+//error_reporting(E_ALL);
+//ini_set('display_errors','On');
+
 require_once '../lib/class.image.php';
 
 $navigation[]=array("url" => BASE_URL."/admin/?mod=banners","title" => 'Баннеры');
@@ -23,10 +26,17 @@ if (isset($_POST['submit_add_banner'])) {
 	$type=String::secure_format($_POST['type']);
 	$showings=String::secure_format($_POST['showings']);
 	
-	if ((strlen(trim($_POST['start_Month']))>0) && (strlen(trim($_POST['start_Day']))>0) && (strlen(trim($_POST['start_Year']))>0)){
+	/*if ((strlen(trim($_POST['start_Month']))>0) && (strlen(trim($_POST['start_Day']))>0) && (strlen(trim($_POST['start_Year']))>0)){
 		$start_date = mktime(0,0,0,$_POST['start_Month'],$_POST['start_Day'],$_POST['start_Year']);
 		$end_date = mktime(0,0,0,$_POST['end_Month'],$_POST['end_Day'],$_POST['end_Year']);
-	}
+	}*/
+
+	if (!empty($_POST['date_start']) && !empty($_POST['date_end']))
+	{
+	
+	$start_date = strtotime($_POST['date_start']);
+	$end_date = strtotime($_POST['date_end']);
+	
 	
 	/*if ($_POST['start_date']!='' && $_POST['end_date']!='') {
 		list($s_day,$s_month,$s_year)=explode(".",$_POST['start_date']);
@@ -36,6 +46,7 @@ if (isset($_POST['submit_add_banner'])) {
 		$end_date=mktime(0,0,0,$e_month,$e_day,$e_year);
 		
 	}*/
+	}
 	else {
 		$start_date=0;
 		$end_date=0;
@@ -147,11 +158,16 @@ if (isset($_POST['submit_edit_banner'])) {
 		$start_date=mktime(0,0,0,$s_month,$s_day,$s_year);
 		$end_date=mktime(0,0,0,$e_month,$e_day,$e_year);
 	}*/
-	if ((strlen(trim($_POST['start_Month']))>0) && (strlen(trim($_POST['start_Day']))>0) && (strlen(trim($_POST['start_Year']))>0)){
+	/*if ((strlen(trim($_POST['start_Month']))>0) && (strlen(trim($_POST['start_Day']))>0) && (strlen(trim($_POST['start_Year']))>0)){
 		$start_date = mktime(0,0,0,$_POST['start_Month'],$_POST['start_Day'],$_POST['start_Year']);
 		$end_date = mktime(0,0,0,$_POST['end_Month'],$_POST['end_Day'],$_POST['end_Year']);
-	}
+	}*/
 	
+	if (!empty($_POST['date_start']) && !empty($_POST['date_end']))
+	{
+		$start_date = strtotime($_POST['date_start']);
+		$end_date = strtotime($_POST['date_end']);
+	}
 	else {
 		$start_date=0;
 		$end_date=0;

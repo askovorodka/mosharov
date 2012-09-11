@@ -20,6 +20,59 @@ class CDBTree {
 	var $sqlNeedReset = true;
 	var $sql;
 
+	
+	function get_full_url($id)
+	{
+		$page = self::get_element($id);
+		$url = "";
+		if ($page)
+		{
+			$url = $page['url'];
+			for ($i = $page['param_level']; $i > 1; $i--)
+			{
+				$page = self::get_parent($page, $page['param_level']-1 );
+				$url = $page['url'] . '/' . $url;
+			}
+		}
+		return $url . "/";
+		
+	}
+		
+	
+	function get_element($id)
+	{
+		$result = $this->db->get_single("SELECT * FROM fw_tree WHERE id = '{$id}'");
+		
+		if ($result)
+		{
+			return $result;
+		}
+		else 
+		{
+			return null;
+		}
+		
+	}
+	
+	
+	function get_parent($page, $param_level = 1)
+	{
+		$result = $this->db->get_single("
+			SELECT * FROM fw_tree 
+			WHERE param_left < '{$page['param_left']}' and param_right > '{$page['param_right']}' and param_level = '{$param_level}'");
+		
+		if ($result)
+		{
+			return $result;
+		}
+		else 
+		{
+			return null;
+		}
+		
+	}
+	
+	
 	function CDBTree(&$DB, $tableName, $itemId, $fieldNames=array()) {
 		if(empty($tableName)) trigger_error("phpDbTree: Unknown table", E_USER_ERROR);
 		if(empty($itemId)) trigger_error("phpDbTree: Unknown ID column", E_USER_ERROR);

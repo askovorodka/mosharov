@@ -13,10 +13,17 @@ exit;
 
 /* ---------------------- HEADERS ----------------------- */
 
+
+
 setlocale (LC_ALL, array ('ru_RU.CP1251', 'rus_RUS.1251'));
 
 session_start();
-error_reporting(E_ALL);
+
+//error_reporting(E_ALL);
+//ini_set('display_errors','On');
+date_default_timezone_set("Europe/Moscow"); 
+
+//echo strftime('%Y-%m-%d', time());
 
 function gettime() {
   list($t_usec, $t_sec) = explode(" ",microtime());
