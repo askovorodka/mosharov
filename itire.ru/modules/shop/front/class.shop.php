@@ -9,9 +9,35 @@ class Shop extends db {
 	}
 
 	
+	function get_single_sklad($product_id)
+	{
+		$result = $this->db->get_single("select * from products_sklad where product_id='{$product_id}' ");
+		if ($result)
+			return (int)$result['sklad'];
+		else
+			return 0;
+	}
+
+	
+	function update_tire($id,$price,$tire_sklad)
+	{
+		$this->db->query("update fw_products set price='{$price}', tire_sklad = '{$tire_sklad}' where id='{$id}' ");
+	}
+	
+	
+	function insert_tire($model_id, $name, $tire_width, $tire_height, $tire_diameter, $tire_in, $tire_is, $tire_usil, $tire_spike, $price, $tire_sklad)
+	{
+		$this->db->query("insert fw_products (parent,name,tire_width,tire_height,tire_diameter,tire_in,tire_is,tire_usil,
+		tire_spike,price, tire_sklad) values ('{$model_id}', '{$name}', '{$tire_width}', '{$tire_height}',
+		'{$tire_diameter}', '{$tire_in}', '{$tire_is}', '{$tire_usil}', '{$tire_spikee}', '{$price}',
+		'{$tire_sklad}')");
+		return mysql_insert_id();
+	}
+	
+	
 	function update_disk($id,$price,$disk_sklad)
 	{
-		$this->db->query("update fw_products set price='{$price}', disk_sklad = (disk_sklad+{$disk_sklad}) where id='{$id}' ");
+		$this->db->query("update fw_products set price='{$price}', disk_sklad = '{$disk_sklad}' where id='{$id}' ");
 	}
 	
 	function insert_disk($parent,$name,$width,$diameterm,$krep,$pcd,$pcd2,$et,$dia,$color,$price,$sklad)

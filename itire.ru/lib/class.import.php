@@ -85,11 +85,6 @@ class Import
 			$f = fopen($this->csv_dir . $file, "r") or die("Ошибка!");
 			for ($i=0; $data=fgetcsv($f,1000,"¦"); $i++)
 			{
-				//$num = count($data);
-				//echo "<h3>Строка номер $i (полей: $num):</h3>";
-				//for ($c=0; $c<$num; $c++)
-				//print "[$c]: $data[$c]<br>";
-				//ÈÍ - Óñèë
 				
 				if ($data[7] == 'PCD' && $data[9] == 'ET' && $_POST['type'] == 'disk')
 				{
@@ -115,57 +110,21 @@ class Import
 	
 	function read($csvfile)
 	{
-		//header("Content-Type: text/html; charset=windows-1251");
-		//$data = array();
 
 		
 		if (file_exists($this->csv_dir . $csvfile))
 		{
 			$content = fopen($this->csv_dir . $csvfile, 'r');
 			
-			/*if (($data = fgets($content, 10000)) !== false)
-			{
-				while (($temp = fgets($content, 10000)) !== false)
-				{
-					$temp = explode('¦', $temp);
-					print_r($temp) . '<br><br>';
-					// пропускаем заголовок
-					if ($row >= 0 && count($temp) > 1)
-					{
-						//print_r($temp);
-						//echo $temp[0] . "<br>";
-						$this->data[$row - 1] = array();
-
-						if (preg_match("/([0-9]+)/", $temp[0]))
-						{
-							for ($i = 0; $i < count($temp); $i++)
-							{
-								
-								$this->data[$row - 1][$i] = trim($temp[$i], " \"\t");
-							}
-						}
-					}
-
-					$row++;
-				}
-			}*/
-			
-			
 			$f = fopen($this->csv_dir . $csvfile, "rt") or die("Ошибка!");
 			for ($i=0; $data=fgetcsv($f,1000,"¦"); $i++)
 			{
-				//$num = count($data);
-				//echo "<h3>Строка номер $i (полей: $num):</h3>";
-				//for ($c=0; $c<$num; $c++)
-				//print "[$c]: $data[$c]<br>";
-				//ÈÍ - Óñèë
 				if ($i > 0)
 				{
 					$this->data[$i - 1] = array();
 
 					if (preg_match("/([0-9]+)/", $data[0]))
 					{
-						//for ($i = 0; $i < count($temp); $i++)
 						{
 							$this->data[$i - 1] = $data;
 						}
@@ -178,21 +137,15 @@ class Import
 			
 
 		}
-		//print_r($this->data);
-		//exit();
 		return $this->data;
 	}
 
 	
 	
-	//импортируем диски
 	function importDisk($parent_id)
 	{
 		if (count($this->data))
 		{
-			//print_r($head); exit();
-			//header("Content-Type: text/html; charset=windows-1251");
-			//добавляем лог импорта диска
 			$this->_addImportLog('disk');
 			
 			foreach ($this->data as $val)
@@ -210,14 +163,12 @@ class Import
 					WHERE name = '{$brand_name}' and param_level = '2' and 
 					param_left  between '{$parent['param_left']}' 
 					and '{$parent['param_right']}' ");
-				//если такой производитель уже есть в базе
 				if (isset($brand) && isset($brand['id']))
 				{
 					$brand_id = $brand['id'];
 					$url = $this->string->string_formater($this->string->translit(strtolower($brand_name)));
 					$this->db->query("update fw_catalogue set url='$url' where id='{$brand_id}'");
 				}
-				//иначе добавляем производителя
 				else 
 				{
 					
@@ -239,7 +190,6 @@ class Import
 						"id" => $brand_id,
 						"type_import" => "insert");
 				}
-				//если готов производитель, делаем модель
 				if ($brand_id)
 				{
 					$model = $this->db->get_single("SELECT * FROM fw_catalogue
@@ -271,7 +221,6 @@ class Import
 					}
 				}
 				
-				//если есть прозиводитель и модель, загружаем продукт
 				if (!empty($brand_id) && !empty($model_id))
 				{
 					$fields = array(
@@ -293,7 +242,6 @@ class Import
 							'dictionary' => $val[20]
 					);
 					
-					//находим id типа диска
 					$disk_type = $this->db->get_single("SELECT id FROM fw_disk_types where name = '{$fields['disk_type']}'");
 					if (isset($disk_type['id']))
 					{
@@ -304,14 +252,11 @@ class Import
 						$disk_type_id = null;
 					}
 					
-					//проверяем продукт на дубликат
 					$hash = $this->getDiskHash($brand_id, $model_id, $disk_type_id, $fields);
 					
-					//если такой продукт существует, обновляем его
 					if ($product_id = $this->isProductExists($hash))
 					{
 						$product = $this->getProduct($product_id);
-						//обновляем только если отличны данные, дабы не блокировать таблицу впустую
 						if ($product['disk_sklad'] != $fields['disk_sklad'] || $product['price'] != $fields['price'] || $product['dictionary'] != $fields['dictionary'])
 						{
 							$this->updateDisk($product_id, $fields);
@@ -321,10 +266,10 @@ class Import
 								"name" => $product['name'], 
 								"id" => $product['id'],
 								"type_import" => "update");
+							$this->db->query("replace into products_sklad (product_id, sklad) values('{$product['id']}','{$fields['disk_sklad']}')");
 							
 						}
 					}
-					//иначе добавляем
 					else 
 					{
 						$id = $this->insertDisk($brand_id, $model_id, $disk_type_id, $fields);
@@ -334,6 +279,7 @@ class Import
 							"name" => $val[2], 
 							"id" => $id,
 							"type_import" => "insert");
+						$this->db->query("replace into products_sklad (product_id, sklad) values('{$id}','{$fields['disk_sklad']}')");
 						
 					}
 					
@@ -343,7 +289,6 @@ class Import
 
 		}
 		
-		//обновляем данные лога импорта
 		$this->_updateImportLog();
 		
 	}
@@ -352,12 +297,10 @@ class Import
 	
 	
 	
-	//импортируем шины
 	function importTires($parent_id)
 	{
 		if (count($this->data))
 		{
-			//создаем лог импорта
 			$this->_addImportLog('tires');
 			
 			foreach ($this->data as $val)
@@ -376,17 +319,14 @@ class Import
 					param_left between '{$parent['param_left']}' 
 					and '{$parent['param_right']}' ");
 				
-				//если такой производитель уже есть в базе
 				if (isset($brand) && isset($brand['id']))
 				{
 					$brand_id = $brand['id'];
 					$url = $this->string->string_formater($this->string->translit(strtolower($brand_name)));
 					$this->db->query("update fw_catalogue set url='$url' where id='{$brand_id}'");
 				}
-				//иначе добавляем производителя
 				else
 				{
-					//echo $this->string->translit(  strtolower($brand_name)  ); continue;
 					$this->tree->insert($parent['id'], array(
 						'name' => $brand_name,
 						'url' => $this->string->string_formater($this->string->translit(strtolower($brand_name))),
@@ -408,7 +348,6 @@ class Import
 					
 				}
 				
-				//если готов производитель, делаем модель
 				if ($brand_id)
 				{
 					
@@ -441,7 +380,6 @@ class Import
 					}
 				}
 				
-				//если есть прозиводитель и модель, загружаем продукт
 				if (!empty($brand_id) && !empty($model_id))
 				{
 					$fields = array(
@@ -463,7 +401,6 @@ class Import
 						'dictionary' => $val[20]
 					);
 					
-					//находим id типа кузова
 					$body_type = $this->db->get_single("SELECT id FROM fw_body_types where name = '{$fields['tire_bodytype']}'");
 					if (isset($body_type['id']))
 					{
@@ -474,26 +411,12 @@ class Import
 						$body_type_id = null;
 					}
 					
-					//проверяем продукт на дубликат
 					$hash = $this->getTireHash($brand_id, $model_id, $body_type_id, $fields);
-					/*if ($fields['article'] == '18007')
-					{
-						echo $hash . '<br>';
-						echo $this->isProductExists($hash);
-						exit();
-					}
-					continue;*/
-					/*echo $hash . '<br>';
-					echo $this->isProductExists($hash);
-					exit();*/
-					//если такой продукт существует, обновляем его
 					if ($product_id = $this->isProductExists($hash))
 					{
 						$product = $this->getProduct($product_id);
-						//обновляем только если отличны данные, дабы не блокировать таблицу впустую
 						if ($product['tire_sklad'] != $fields['tire_sklad'] || $product['price'] != $fields['price'] || $product['dictionary'] != $fields['dictionary'])
 						{
-							//echo $product_id . '<br>';
 							$this->updateTire($product_id, $fields);
 							$this->updated_product++;
 							$this->import_items[] = array(
@@ -501,10 +424,10 @@ class Import
 								"name" => $product['name'], 
 								"id" => $product['id'],
 								"type_import" => "update");
+							$this->db->query("replace into products_sklad (product_id, sklad) values('{$product['id']}','{$fields['tire_sklad']}')");
 						
 						}
 					}
-					//иначе добавляем
 					else 
 					{
 						$id = $this->insertTire($brand_id, $model_id, $body_type_id, $fields);
@@ -514,6 +437,7 @@ class Import
 							"name" => $val[2], 
 							"id" => $id,
 							"type_import" => "insert");
+						$this->db->query("replace into products_sklad (product_id, sklad) values('{$id}','{$fields['tire_sklad']}')");
 						
 					}
 					
@@ -523,7 +447,6 @@ class Import
 			
 		}
 		
-		//обновляем лог импорта
 		$this->_updateImportLog();
 		
 	}

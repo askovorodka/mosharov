@@ -32,8 +32,8 @@ $field_names = array(
 $tree=new CDBTree($db, $table, $id_name, $field_names);
 $string = new String();
 
-/*
-$id = $tree->clear();
+
+/*$id = $tree->clear();
 $tree->insert($id, array("name" => "Шины", "url" => "tires"));
 $tree->insert($id, array("name" => "Диски", "url" => "disk"));
 */
@@ -76,6 +76,44 @@ else $action='';
 
 if (isset($_POST['import_marketmixer']))
 {
+
+	
+	
+	//обновляем поставщиков
+	$db->query("update suppliers set itire=0, goodrims=0, selltire=0, cccpshina=0");
+	if (!empty($_POST['itire']))
+	{
+		foreach ($_POST['itire'] as $key=>$val)
+		{
+			$db->query("update suppliers set itire=1 where id='{$key}'");
+		}
+	}
+
+	if (!empty($_POST['goodrims']))
+	{
+		foreach ($_POST['goodrims'] as $key=>$val)
+		{
+			$db->query("update suppliers set goodrims=1 where id='{$key}'");
+		}
+	}
+	
+	if (!empty($_POST['selltire']))
+	{
+		foreach ($_POST['selltire'] as $key=>$val)
+		{
+			$db->query("update suppliers set selltire=1 where id='{$key}'");
+		}
+	}
+	
+	if (!empty($_POST['cccpshina']))
+	{
+		foreach ($_POST['cccpshina'] as $key=>$val)
+		{
+			$db->query("update suppliers set cccpshina=1 where id='{$key}'");
+		}
+	}
+	
+	
 	$path = ROOT . "/marketmixer/";
 	$disk_file = "36a930744eec6d2a9d09bb3497fcf4fc.xls";
 	$tire_file = "bc712b65bafddbd0de08620ece03cb55.xls";
@@ -91,16 +129,19 @@ if (isset($_POST['import_marketmixer']))
 	require_once '../lib/excel_reader2.php';
 	$data = new Spreadsheet_Excel_Reader(ROOT . "/marketmixer/" . $disk_file, true, "cp1251");
 	
-	
-	$parent0 = $shop->getCategory(DISK_ID);
+	$disk_array = array();
 	
 	for ($i=2; $i<=$data->rowcount()-1; $i++)
 	{
+		$parent0 = $shop->getCategory(DISK_ID);
 		$supplier_name = $data->val($i, "R");
 		if (!$supplier = $shop->is_supplier_exist($supplier_name))
 			$supplier = $shop->insert_supplier($supplier_name);
 		
 		
+		if ($supplier['itire'] != 1)
+			continue;
+			
 		$brand_name = $data->val($i, "M");
 		$model_name = $data->val($i, "P");
 		
@@ -112,8 +153,6 @@ if (isset($_POST['import_marketmixer']))
 				if (isset($brand) && isset($brand['id']))
 				{
 					$brand_id = $brand['id'];
-					$url = $string->string_formater($string->translit(strtolower($brand_name)));
-					$db->query("update fw_catalogue set url='$url' where id='{$brand_id}'");
 				}
 				else 
 				{
@@ -126,8 +165,9 @@ if (isset($_POST['import_marketmixer']))
 						'meta_keywords' => $brand_name,
 						'meta_description' => $brand_name
 					));
+					
 					$brand_id = mysql_insert_id();
-					$brand = $shop->getParent($brand_id);
+					$brand = $shop->getCategory($brand_id);
 					
 				}
 				
@@ -177,22 +217,186 @@ if (isset($_POST['import_marketmixer']))
 						$disk_price = str_replace(",", ".", $data->val($i, "J"));
 						$disk_sklad = (int)$data->val($i, "N");
 						$product_id = $shop->insert_disk($model_id, $disk_name, $disk_width, $disk_diameterm, $disk_krep, $disk_pcd, $disk_pcd2, $disk_et, $disk_dia, $disk_color, $disk_price, $disk_sklad);
+						$disk_array[$product_id]['sklad'] = $disk_sklad;
 						
 					}
 					else 
 					{
 						$disk_price = str_replace(",", ".", $data->val($i, "J"));
 						$disk_sklad = (int)$data->val($i, "N");
-						$shop->update_disk($product['id'], $disk_price, $disk_sklad);
+						$disk_array[intval($product['id'])]['price'] = $disk_price;
+						$disk_array[intval($product['id'])]['sklad'] += $disk_sklad;
 					}
 					
 				}
 				
-				
-				
+	}
+
+	
+	foreach ($disk_array as $key=>$val)
+	{
+		//находим кол-во продукта
+		$single_sklad = $shop->get_single_sklad($key);
+		//прибавляем новое количество 
+		$single_sklad += $val['sklad'];
+		$shop->update_disk($key, $val['price'], $single_sklad);
 	}
 	
+	
+	unset($data);
+	unset($parent0);
+	unset($brand);
+	unset($model);
+	unset($brand_name);
+	unset($model_name);
+	unset($brand_id);
+	unset($model_id);
+	unset($supplier_name);
+	unset($supplier);
+	
+	
+	
+	
+	$data = new Spreadsheet_Excel_Reader(ROOT . "/marketmixer/" . $tire_file, true, "cp1251");
+	
+	$tire_array = array();
+	for ($i=2; $i<=$data->rowcount()-1; $i++)
+	{
+		$parent0 = $shop->getCategory(TIRES_ID);
+		
+		$supplier_name = $data->val($i, "Q");
+		if (!$supplier = $shop->is_supplier_exist($supplier_name))
+			$supplier = $shop->insert_supplier($supplier_name);
+		
+		if ($supplier['itire'] != 1)
+			continue;
+		
+		$brand_name = $data->val($i, "L");
+		$model_name = $data->val($i, "O");
+		
+		
+		$brand = $db->get_single("
+			SELECT * FROM fw_catalogue 
+			WHERE name = '{$brand_name}' and param_level = '2' and 
+			param_left  between '{$parent0['param_left']}' 
+			and '{$parent0['param_right']}' ");
+			if (isset($brand) && isset($brand['id']))
+			{
+				$brand_id = $brand['id'];
+			}
+			else 
+			{
+				$tree->insert($parent0['id'], array(
+					'name' => $brand_name,
+					'url' => $string->string_formater($string->translit(strtolower($brand_name))),
+					'text' => '',
+					'status' => '1',
+					'title' => $brand_name,
+					'meta_keywords' => $brand_name,
+					'meta_description' => $brand_name
+				));
+				$brand_id = mysql_insert_id();
+				$brand = $shop->getCategory($brand_id);
+					
+			}
+		
+			
+				
+				if ($brand_id)
+				{
+					$model = $db->get_single("SELECT * FROM fw_catalogue
+					WHERE name = '{$model_name}' and param_level = '3'
+					and param_left between '{$brand['param_left']}' and '{$brand['param_right']}' ");
+					if (isset($model) && isset($model['id']))
+					{
+						$model_id = $model['id'];
+					}
+					else
+					{
+						$tree->insert($brand['id'], array(
+							'name' => $model_name,
+							'url' => $string->string_formater($string->translit(strtolower($model_name))),
+							'text' => str_replace("{brand_name}", $brand['name'], str_replace("{model_name}", $model_name, CATEGORY_TEXT_TEMPLATE) ),
+							'status' => '1',
+							'title' => "{$brand['name']} {$model_name}",
+							'meta_keywords' => "{$brand['name']} {$model_name}",
+							'meta_description' => "{$brand['name']} {$model_name}"
+						));
+						$model_id = mysql_insert_id();
+						
+					}
+				}
+				
+				
+				
+				//если товары от этого поставщика можно добавлять
+				if ($supplier['itire'] == 1)
+				{
+					$tire_name = $data->val($i, "K");
+					$product = $shop->search_product($tire_name, $model_id);
+					if (!$product)
+					{
+						$tire_width = $data->val($i, "A");
+						$tire_height = $data->val($i, "B");
+						$tire_diameter = $data->val($i, "C");
+						$tire_in = $data->val($i, "D");
+						$tire_is = $data->val($i, "E");
+						$tire_usil = $data->val($i, "F");
+						if ($data->val($i, "G") == "шип")
+							$tire_spike = 2;
+						else
+							$tire_spike = 1;
+						
+						$tire_price = str_replace(",", ".", $data->val($i, "I"));
+						$tire_sklad = $data->val($i, "M");
+						
+						$product_id = $shop->insert_tire($model_id, $tire_name, 
+							$tire_width, $tire_height, $tire_diameter, $tire_in, $tire_is, 
+							$tire_usil, $tire_spike, $tire_price, $tire_sklad);
+						
+						$tire_array[$product_id]['sklad'] = $tire_sklad;
+					}
+					else 
+					{
+						
+						$tire_price = str_replace(",", ".", $data->val($i, "I"));
+						$tire_sklad = (int)$data->val($i, "M");
+						
+						$tire_price = str_replace(",", ".", $data->val($i, "I"));
+						$tire_array[intval($product['id'])]['price'] = $tire_price;
+						$tire_array[intval($product['id'])]['sklad'] += $tire_sklad;
+					}
+					
+				}
+		
+		
+		
+	}
+	
+	
+	foreach ($tire_array as $key=>$val)
+	{
+		//находим кол-во продукта
+		$single_sklad = $shop->get_single_sklad($key);
+		//прибавляем новое количество 
+		$single_sklad += $val['sklad'];
+		$shop->update_tire($key, $val['price'], $single_sklad);
+	}
+	
+	
+	
+	header("Location: " . $_SERVER['HTTP_REFERER']);
+	die();
+	
+	/*echo "Команда: /usr/local/bin/wget -c --content-disposition -P {$path} http://app.marketmixer.net/content/export/{$disk_file} --Выполнена, прайс загружен<br><br>";
+	echo "Команда: /usr/local/bin/wget -c --content-disposition -P {$path} http://app.marketmixer.net/content/export/{$tire_file}  --Выполнена, прайс загружен";
+	exit();*/
+	
+	
 }
+
+
+
 
 if (isset($_POST['submit_export_set']))
 {
@@ -1362,6 +1566,7 @@ SWITCH (TRUE) {
 		$smarty->assign("goodrims_last_import",$goodrims_last_import);
 		$smarty->assign("selltire_last_import",$selltire_last_import);
 		$smarty->assign("cccp_last_import",$cccp_last_import);
+		$smarty->assign('suppliers', $db->get_all("select * from suppliers"));
 		
 		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=export","title" => 'Экспорт');
 		$template='shop.a_export.html';
