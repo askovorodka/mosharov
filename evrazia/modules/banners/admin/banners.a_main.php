@@ -20,7 +20,10 @@ if (isset($_POST['submit_add_banner'])) {
 	
 	$name=String::secure_format($_POST['name']);
 	$group=String::secure_format($_POST['group']);
-	$url=String::secure_format($_POST['url']);
+	if (!empty($_POST['url']))
+		$url=String::secure_format($_POST['url']);
+	else
+		$url="";
 	$code = "";
 	
 	$type=String::secure_format($_POST['type']);
@@ -146,7 +149,10 @@ if (isset($_POST['submit_edit_banner'])) {
 	
 	$name=String::secure_format($_POST['name']);
 	$group=String::secure_format($_POST['group']);
-	$url=String::secure_format($_POST['url']);
+	if (!empty($_POST['url']))
+		$url=String::secure_format($_POST['url']);
+	else 
+		$url="";
 	$code = "";
 	$type=String::secure_format($_POST['type']);
 	$showings=String::secure_format($_POST['showings']);

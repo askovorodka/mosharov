@@ -14,7 +14,7 @@ parent.location.href = "index.php?mod=tree&action=delete&id=" + delete_id;
 {/literal}
 	<table width=100% class="content_table">
 
-	<tr><th>Название</th><th width=10%>Документов</th><th width=10%>Модуль</th><th width=6%>Меню</th>{*<th width=6%>Левое меню</th>*}<th width=6%>Статус</th><th  width="6%" nowrap>Действия</th></tr>
+	<tr><th>Название</th>{*<th width=10%>Документов</th>*}<th width=10%>Модуль</th><th width=6%>Меню</th><th width=6%>Левое меню</th><th width=6%>Статус</th><th  width="6%" nowrap>Действия</th></tr>
 
 	{foreach name=tree from=$content item=entry}
 	<tr onmouseover="flatlinkOver(this)" {if $smarty.foreach.tree.iteration%2==1}onmouseout="flatlinkOut(this)"{else}onmouseout="flatlinkOut1(this)"{/if}>
@@ -42,18 +42,21 @@ parent.location.href = "index.php?mod=tree&action=delete&id=" + delete_id;
 				</table>
 				
 			</td>
+			{*
 			<td align=center class={$td}_middle>
 			{if $entry.module=="page"}<small>[ <a href="?mod=tree&action=documents_list&parent={$entry.id}"><strong>{$entry.documents}</strong></a> ]</small>{/if}
-			</td>
+			</td>*}
 			<td align=center class={$td}_middle>
 			{$entry.module}
 			</td>
 			<td align=center class={$td}_middle>
 			{if $entry.param_level!='0'}<a href="?mod=tree&action=change_in_menu&id={$entry.id}" title="Изменить статус"><img src=templates/img/status_{$entry.in_menu}.gif border=0></a>{/if}
 			</td>
-			{*<td align=center class={$td}_middle>
+			
+			<td align=center class={$td}_middle>
 			{if $entry.param_level!='0'}<a href="?mod=tree&action=change_in_left_menu&id={$entry.id}" title="Изменить статус"><img src=templates/img/status_{$entry.in_left_menu}.gif border=0></a>{/if}
-			</td>*}
+			</td>
+			
 			<td align=center class={$td}_middle>
 			{if $entry.param_level!='0'}<a href="?mod=tree&action=change_status&id={$entry.id}"><img src=templates/img/status_{$entry.status}.gif border=0></a>{/if}
 			</td>

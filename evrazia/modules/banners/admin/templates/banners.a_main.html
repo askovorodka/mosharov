@@ -13,7 +13,7 @@ function confirm_delete(delete_id) {
 
 <table width=100% class="content_table">
 <tr>
-<th>Название баннера</th><th width=10%>Кликов</th><th width=15%>Показано</th><th width=10%>Статус</th><th width=5%>Действия</th>
+<th>Название баннера</th>{*<th width=10%>Кликов</th>*}<th width=15%>Показано</th><th width=10%>Статус</th><th width=5%>Действия</th>
 </tr>
 {foreach from=$banners_list item=banners name=br}
 {if $col==1}
@@ -25,7 +25,7 @@ function confirm_delete(delete_id) {
 {/if}
 <tr onmouseover="flatlinkOver(this)" {if $smarty.foreach.br.iteration%2==1}onmouseout="flatlinkOut(this)"{else}onmouseout="flatlinkOut1(this)"{/if}>
 <td class={$td}_left><b>{$banners.name}</b></td>
-<td class={$td}_middle align="center" nowrap><b>{$banners.clicks}</b></td>
+{*<td class={$td}_middle align="center" nowrap><b>{$banners.clicks}</b></td>*}
 <td class={$td}_middle align="center" nowrap>{$banners.shown} из {$banners.showings} раз</td>
 <td align=center class={$td}_middle><img src=templates/img/status_{$banners.status}.gif border=0></td>
 <td class={$td}_right align="center"><a href="javascript:confirm_delete('{$banners.id}');" class=img_link onmouseover="ddrivetip('Удалить баннер')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a><a href=?mod=banners&action=edit_banner&id={$banners.id} class=img_link onmouseover="ddrivetip('Редактировать баннер')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a></td>

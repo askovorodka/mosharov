@@ -791,9 +791,10 @@ SWITCH (TRUE) {
       FROM fw_tree t
       ORDER BY t.param_left ASC
     ");
-
+    
     $content=String::unformat_array($content);
     $smarty->assign("content",Common::get_nodes_list($content));
+    //$smarty->assign("content",$content);
 
 }
 ?>

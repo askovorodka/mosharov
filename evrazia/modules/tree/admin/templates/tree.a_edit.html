@@ -174,7 +174,8 @@ function form_check() {
 		<input type=text name=edit_node_url style="width:100%;" class=field value="{$node.url}">
 		</td>
 	</tr>
-
+	
+	
 	<tr>
 		<td width=15% class=td1_left><b>Модуль:</b></td>
 		<td class=td1_right>
@@ -189,6 +190,7 @@ function form_check() {
 		{/if}
 		</td>
 	</tr>
+	
 </table>
 
 {if $node.module=='page' && $node.type != 'link'}
@@ -252,7 +254,8 @@ function form_check() {
 </table>
 <div id="editor" style="display: none;">
 <table width=100% class=content_table>
-<tr>
+	{*
+	<tr>
 		<td width=15% class=td1_left><b>Дополнительные модули:</b></td>
 		<td class=td1_right>
 		<select multiple=multiple size="4" name=edit_node_supmodules[] style="width:50%;" class=field>
@@ -262,6 +265,7 @@ function form_check() {
 		</select>
 		</td>
 	</tr>
+	*}
 	<tr>
 		<td width=15% class=td1_left><b>Шаблон страницы:</b></td>
 		<td class=td1_right>
@@ -282,7 +286,7 @@ function form_check() {
 		</td>
 	</tr>
 	
-	{*
+
 	<tr>
 		<td width=15% class=td1_left><b>В левом меню:</b></td>
 		<td class=td1_right><select name=edit_node_left_menu style="width: 50%;" class=field>
@@ -291,7 +295,7 @@ function form_check() {
 					</select>
 		</td>
 	</tr>
-	*}
+
 	
     <tr>
     <td class=td1_left><strong>Статус:</strong></td>
@@ -300,6 +304,7 @@ function form_check() {
 					<option value="0" {if $node.status=='0'}selected=true{/if}>Ждёт</option>
 					</select></td>
     </tr>
+	{*
 	<tr>
 		<td width=15% class=td1_left><b>Картинка:</b></td>
 		<td class=td1_right>
@@ -312,10 +317,11 @@ function form_check() {
 		{/if}
 		</td>
 	</tr>
+	*}
 </table>
 {/if}
 {if $mode=="edit" && $node.module=='page'}
-<table width=100% class=content_table>
+{*<table width=100% class=content_table>
 	<tr>
 		<td width=15% class=td1_left style="border-bottom: none;"><b>Показывать:</b></td>
 		<td class=td1_right   style="border-bottom: none;">
@@ -331,7 +337,7 @@ function form_check() {
 
 		</td>
 	</tr>
-</table>
+</table>*}
 <div id="documents" style="display:{if $node.show_documents=='1'}all{else}none{/if};">
 <table width=100% class=content_table>
 <th colspan="2" style="background: #ccc;"><strong>Список документы</strong></th>
@@ -387,6 +393,10 @@ function form_check() {
 </table>
 
 </div>
+
+<input type=hidden name=access_to value="all" />
+
+{*
 <table width=100% class=content_table>
 	<tr>
 		<th bgcolor=#99CCFF onClick="show('access', this);" class="button plus" style="text-align: left; padding-left: 30px;"><b>Права доступа</b></th>
@@ -408,6 +418,7 @@ function form_check() {
 	</tr>
 </table>
 </div>
+*}
 {/if}
 <br><br>
 <center><input type=submit {if $mode=='edit'}name=submit_edit_node value="Сохранить изменения"{else}name=submit_add_node value="Добавить узел"{/if} class=button style="width:50%;"></center>

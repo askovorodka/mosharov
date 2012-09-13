@@ -1,7 +1,8 @@
-#Tue Sep 11 13:19:19 MSK 2012
+#Thu Sep 13 12:42:29 MSK 2012
 eclipse.preferences.version=1
 encoding//admin/templates/index.html=windows-1251
 encoding//modules/banners/admin/templates/banners.a_edit.html=cp1251
+encoding//modules/banners/admin/templates/banners.a_main.html=cp1251
 encoding//modules/news/admin/templates/news.a_edit.html=cp1251
 encoding//modules/shop/admin/templates/shop.a_cur_edit.html=cp1251
 encoding//modules/shop/admin/templates/shop.a_edit_apartment.html=cp1251
@@ -22,6 +23,7 @@ encoding//modules/shop/front/templates/product_details.html=cp1251
 encoding//modules/shop/front/templates/shop.f_catalog_1.html=cp1251
 encoding//modules/shop/front/templates/shop.f_catalog_2.html=cp1251
 encoding//modules/tree/admin/templates/tree.a_edit.html=cp1251
+encoding//modules/tree/admin/templates/tree.a_main.html=windows-1251
 encoding//templates/filter_green.html=cp1251
 encoding//templates/top_menu.html=cp1251
 encoding/<project>=cp1251

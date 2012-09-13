@@ -27,7 +27,6 @@ $all_pages=$db->get_all("
 
 $all_pages=Common::get_nodes_list($all_pages);
 
-//echo count($all_pages);
 
 if (preg_match("/^page_[0-9]+$/",$url[$n])) {
 	list(,$page)=explode("_",$url[$n]);
@@ -132,10 +131,9 @@ for ($f=0;$f<count($all_pages);$f++) {
 						and param_level = '" . ($page_content['param_level']-1) . "'");
 					if ($parent_page)
 					{
-						//echo CDBTree::get_full_url($parent_page['id']);
 						
 						$other_page = $db->get_all("SELECT * FROM fw_tree WHERE param_left BETWEEN '{$parent_page['param_left']}' 
-						and '{$parent_page['param_right']}' and status = '1' and param_level = '" . $page_content['param_level'] . "' 
+						and '{$parent_page['param_right']}' and status = '1' and in_left_menu = '1' and param_level = '" . $page_content['param_level'] . "' 
 						order by param_left");
 
 						$smarty->assign('other_page', $other_page);
@@ -162,18 +160,6 @@ for ($f=0;$f<count($all_pages);$f++) {
 					if ($document['meta_description']!='') $meta_description=$document['meta_description'];
 
 					$navigation[]=array("url" => "item_".$document['id'],"title" => trim($document['name']));
-
-					/*$photo = new Photoalbum();
-					$document['description']= $photo->pregReplace($document['description'],BASE_PATH,PHOTOS_FOLDER,PHOTOS_PER_PAGE_SUP);
-					$document['small_description']= $photo->pregReplace($document['small_description'],BASE_PATH,PHOTOS_FOLDER,PHOTOS_PER_PAGE_SUP);
-				
-					$table = new Table();
-					$document['description'] = $table->pregReplace($document['description'],BASE_PATH);
-					$document['small_description'] = $table->pregReplace($document['small_description'],BASE_PATH);
-
-					$form = new Form();
-					$document['description'] = $form->pregReplace($document['description'],BASE_PATH);
-					$document['small_description'] = $form->pregReplace($document['small_description'],BASE_PATH);*/
 
 					$smarty->assign("document",$document);
 					$smarty->assign("content",$smarty->fetch($templates_path."/document_elements.html"));

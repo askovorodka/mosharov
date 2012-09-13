@@ -48,8 +48,7 @@
 {literal}
 <script language="JavaScript">
 function check_form() {
-	if ((document.edit_banner.name.value=='') ||
-		(document.edit_banner.url.value=='')) {
+	if ((document.edit_banner.name.value=='')) {
 		alert("Заполните, пожалуйста, обязательные поля");
 		return false;
 	}
@@ -143,7 +142,7 @@ function check_form() {
 		</td>
 	</tr>
 	
-	<tr>
+	<tr id="url" style="display:{if $banner.type==2}none{/if};">
 		<td width=20% valign=top class=td1_left>
 			<font color=red>*</font> URL страницы:
 		</td>
@@ -166,7 +165,7 @@ function check_form() {
 			&nbsp;&nbsp;Показывать, раз:
 		</td>
 		<td class=td1_right>
-			<input type=text name=showings style="width:50%" value="{$banner.showings}" class=field>{if $mode=="edit"} показано раз: {$banner.shown}{/if}
+			<input type=text name=showings style="width:50%" value="{if !$banner}10000{else}{$banner.showings}{/if}" class=field>{if $mode=="edit"} показано раз: {$banner.shown}{/if}
 		</td>
 	</tr>
 	
@@ -190,11 +189,11 @@ function check_form() {
 		<td class=td1_right>&nbsp;</td>
 	</tr>
 	
-	{if $mode=="edit"}
+	{*if $mode=="edit"}
 	<tr>
 		<td width=20% valign=top class=td1_left>&nbsp;&nbsp;Кликов:</td><td class=td1_right>{$banner.clicks}</td>
 	</tr>
-	{/if}
+	{/if*}
 	
 	<tr>
 		<td width=20% valign=top class=td1_left>&nbsp;&nbsp;Статус:</td><td class=td1_right>
@@ -247,13 +246,13 @@ $("select[name='type']").change(function(){
 	if ($(this).val() == 2)
 	{
 		
-		$("#imagefile").hide();
+		$("#imagefile,#url").hide();
 		$("#code").show();
 	}
 	else
 	{
 		$("#code").hide();
-		$("#imagefile").show();
+		$("#imagefile,#url").show();
 	}
 });
 
