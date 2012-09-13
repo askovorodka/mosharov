@@ -1,4 +1,4 @@
-#Thu May 10 16:32:53 MSD 2012
+#Thu Sep 13 13:20:19 MSK 2012
 eclipse.preferences.version=1
 encoding//admin/templates/main.html=cp1251
 encoding//lib/class.import.php=cp1251
@@ -11,6 +11,7 @@ encoding//modules/cabinet/front/templates/restore_pwd.html=cp1251
 encoding//modules/edit_conf/admin/templates/edit_conf.a_main.html=cp1251
 encoding//modules/news/front/templates/news_list.html=cp1251
 encoding//modules/shop/admin/templates/shop.a_edit_cat.html=cp1251
+encoding//modules/shop/admin/templates/shop.a_export.html=cp1251
 encoding//modules/shop/admin/templates/shop.a_import.html=cp1251
 encoding//modules/shop/admin/templates/shop.a_import_details.html=cp1251
 encoding//modules/shop/admin/templates/shop.a_import_error.html=cp1251
@@ -45,4 +46,5 @@ encoding//templates/home_filter_disk.html=cp1251
 encoding//templates/home_filter_tire.html=cp1251
 encoding/<project>=cp1251
 encoding/export.py=utf-8
+encoding/modules=cp1251
 encoding/yandex.php=UTF-8

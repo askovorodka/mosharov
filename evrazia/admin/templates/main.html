@@ -7,11 +7,11 @@
 <tr>
 <td width="280" class="td2_left">Документов:</td><td class="td2_right">{$count_documents}</td>
 </tr>
-<tr>
-<td width="280" class="td1_left">Пользователей:</td><td class="td1_right">{$count_users}</td>
+{*<tr>
+<td width="280" class="td1_left">Пользователей:</td><td class="td1_right">{$count_users}</td>*}
 </table>
 
-{if count($last_orders)>0}
+{*if count($last_orders)>0}
 <br><br>
 <table width=100% class="content_table">
 <tr>
@@ -32,9 +32,9 @@
 	</tr>
 {/foreach}
 </table>
-{/if}
+{/if*}
 
-{if count($last_faq)>0}
+{*if count($last_faq)>0}
 <br><br>
 <table width=100% class="content_table">
 <tr>
@@ -55,9 +55,9 @@
 	</tr>
 {/foreach}
 </table>
-{/if}
+{/if*}
 
-{if count($last_forum)>0}
+{*if count($last_forum)>0}
 <br><br>
 <table width=100% class="content_table">
 
@@ -78,4 +78,4 @@
 	<td width="120" class="{$td}_left" nowrap>{$item.date|date_format:"%d"}&nbsp;{$item.date|date_format:"%B"}&nbsp;{$item.date|date_format:"%Y"}</td><td class="{$td}_middle" width="150"><a href="/forum/{$item.url}/thread_{$item.thread_id}" target="_blank"><strong>{$item.author}</strong></a></td><td class="{$td}_right">{$item.text|strip_tags|truncate:180}</td>
 	</tr>
 {/foreach}
-</table>{/if}
+</table>{/if*}

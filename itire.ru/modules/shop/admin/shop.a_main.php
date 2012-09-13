@@ -7,6 +7,7 @@ require_once '../lib/class.tree.php';
 require_once '../lib/class.image.php';
 require_once '../lib/class.import.php';
 require_once('../lib/class.string.php');
+require_once('../modules/shop/front/class.shop.php');
 require_once 'order_status.php';
 
 $smarty->assign("currency",DEFAULT_CURRENCY);
@@ -72,6 +73,126 @@ else $action='';
 {
 	@exec("/usr/local/bin/php /home/alex/data/www/2.mosharov.com/yandex.php");
 }*/
+
+if (isset($_POST['import_marketmixer']))
+{
+	$path = ROOT . "/marketmixer/";
+	$disk_file = "36a930744eec6d2a9d09bb3497fcf4fc.xls";
+	$tire_file = "bc712b65bafddbd0de08620ece03cb55.xls";
+	$shop = new Shop($db);
+	//чистим директорию
+	system("rm -rf " . $path . "*");
+	//грузим файл с дисками
+	system("/usr/local/bin/wget -c --content-disposition -P {$path} http://app.marketmixer.net/content/export/{$disk_file}");
+	//грузим файл с шинами
+	system("/usr/local/bin/wget -c --content-disposition -P {$path} http://app.marketmixer.net/content/export/{$tire_file}");
+	
+	//работаем с дисками
+	require_once '../lib/excel_reader2.php';
+	$data = new Spreadsheet_Excel_Reader(ROOT . "/marketmixer/" . $disk_file, true, "cp1251");
+	
+	
+	$parent0 = $shop->getCategory(DISK_ID);
+	
+	for ($i=2; $i<=$data->rowcount()-1; $i++)
+	{
+		$supplier_name = $data->val($i, "R");
+		if (!$supplier = $shop->is_supplier_exist($supplier_name))
+			$supplier = $shop->insert_supplier($supplier_name);
+		
+		
+		$brand_name = $data->val($i, "M");
+		$model_name = $data->val($i, "P");
+		
+		$brand = $db->get_single("
+					SELECT * FROM fw_catalogue 
+					WHERE name = '{$brand_name}' and param_level = '2' and 
+					param_left  between '{$parent0['param_left']}' 
+					and '{$parent0['param_right']}' ");
+				if (isset($brand) && isset($brand['id']))
+				{
+					$brand_id = $brand['id'];
+					$url = $string->string_formater($string->translit(strtolower($brand_name)));
+					$db->query("update fw_catalogue set url='$url' where id='{$brand_id}'");
+				}
+				else 
+				{
+					$tree->insert($parent0['id'], array(
+						'name' => $brand_name,
+						'url' => $string->string_formater($string->translit(strtolower($brand_name))),
+						'text' => '',
+						'status' => '1',
+						'title' => $brand_name,
+						'meta_keywords' => $brand_name,
+						'meta_description' => $brand_name
+					));
+					$brand_id = mysql_insert_id();
+					$brand = $shop->getParent($brand_id);
+					
+				}
+				
+				
+				
+				if ($brand_id)
+				{
+					$model = $db->get_single("SELECT * FROM fw_catalogue
+					WHERE name = '{$model_name}' and param_level = '3'
+					and param_left between '{$brand['param_left']}' and '{$brand['param_right']}' ");
+					if (isset($model) && isset($model['id']))
+					{
+						$model_id = $model['id'];
+					}
+					else
+					{
+						$tree->insert($brand['id'], array(
+							'name' => $model_name,
+							'url' => $string->string_formater($string->translit(strtolower($model_name))),
+							'text' => str_replace("{brand_name}", $brand['name'], str_replace("{model_name}", $model_name, CATEGORY_TEXT_TEMPLATE) ),
+							'status' => '1',
+							'title' => "{$brand['name']} {$model_name}",
+							'meta_keywords' => "{$brand['name']} {$model_name}",
+							'meta_description' => "{$brand['name']} {$model_name}"
+						));
+						$model_id = mysql_insert_id();
+						
+					}
+				}
+				
+				
+				//если товары от этого поставщика можно добавлять
+				if ($supplier['itire'] == 1)
+				{
+					$disk_name = $data->val($i, "L");
+					$product = $shop->search_product($disk_name, $model_id);
+					if (!$product)
+					{
+						$disk_width = str_replace(",", ".", $data->val($i, "A"));
+						$disk_diameter = str_replace(",", ".", $data->val($i, "B"));
+						$disk_krep = (int)$data->val($i, "C");
+						$disk_pcd = str_replace(",", ".", $data->val($i, "D"));
+						$disk_pcd2 = str_replace(",", ".", $data->val($i, "F"));
+						$disk_et = str_replace(",",".",$data->val($i, "G"));
+						$disk_dia = str_replace(",", ".", $data->val($i, "H"));
+						$disk_color = $data->val($i, "I");
+						$disk_price = str_replace(",", ".", $data->val($i, "J"));
+						$disk_sklad = (int)$data->val($i, "N");
+						$product_id = $shop->insert_disk($model_id, $disk_name, $disk_width, $disk_diameterm, $disk_krep, $disk_pcd, $disk_pcd2, $disk_et, $disk_dia, $disk_color, $disk_price, $disk_sklad);
+						
+					}
+					else 
+					{
+						$disk_price = str_replace(",", ".", $data->val($i, "J"));
+						$disk_sklad = (int)$data->val($i, "N");
+						$shop->update_disk($product['id'], $disk_price, $disk_sklad);
+					}
+					
+				}
+				
+				
+				
+	}
+	
+}
 
 if (isset($_POST['submit_export_set']))
 {

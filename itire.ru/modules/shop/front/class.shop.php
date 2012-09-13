@@ -8,7 +8,55 @@ class Shop extends db {
 		$this->db = &$db;
 	}
 
+	
+	function update_disk($id,$price,$disk_sklad)
+	{
+		$this->db->query("update fw_products set price='{$price}', disk_sklad = (disk_sklad+{$disk_sklad}) where id='{$id}' ");
+	}
+	
+	function insert_disk($parent,$name,$width,$diameterm,$krep,$pcd,$pcd2,$et,$dia,$color,$price,$sklad)
+	{
+		$this->db->query("insert fw_products (parent,name,disk_width,disk_diameter,disk_krep,
+		disk_pcd,disk_pcd2,disk_et,disk_dia,disk_color,price,disk_sklad,status)
+		values ('$parent','$name','$width','$diameterm','$krep','$pcd','$pcd2','$et','$dia','$color','$price','$sklad','1')");
+		return mysql_insert_id();
+	}
+	
+	function search_product($name, $parent)
+	{
+		$result = $this->db->get_single("select * from fw_products where name='{$name}' and parent='{$parent}'");
+		
+		if ($result)
+			return $result;
+		else
+			return null;
+	}
+	
+	function is_supplier_exist($name)
+	{
+		$result = $this->db->get_single("select * from suppliers where name='{$name}'");
+		
+		if ($result)
+			return $result;
+		else
+			return null;
+	}
+	
+	function insert_supplier($name)
+	{
+		$this->db->query("insert into suppliers (name) values('{$name}')");
+		return $this->get_supplier(mysql_insert_id());
+	}
 
+	function get_supplier($id)
+	{
+		$result = $this->db->get_single("select * from suppliers where id='{$id}'");
+		if ($result)
+			return $result;
+		else
+			return null;
+	}
+	
 	function getProductsByFeed($cat_id)
 	{
 		$result = $this->db->get_single("
