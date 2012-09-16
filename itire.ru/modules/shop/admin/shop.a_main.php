@@ -113,6 +113,9 @@ if (isset($_POST['import_marketmixer']))
 		}
 	}
 	
+	$insert_categories = array();
+	$insert_products = array();
+	$update_products = array();
 	
 	$path = ROOT . "/marketmixer/";
 	$disk_file = "36a930744eec6d2a9d09bb3497fcf4fc.xls";
@@ -195,8 +198,13 @@ if (isset($_POST['import_marketmixer']))
 						));
 						$model_id = mysql_insert_id();
 						
+						$insert_categories[] = array("brand" => $brand['name'],
+													 "model" => $model_name);
+						
 					}
 				}
+				
+				
 				
 				
 				//если товары от этого поставщика можно добавлять
@@ -219,6 +227,8 @@ if (isset($_POST['import_marketmixer']))
 						$product_id = $shop->insert_disk($model_id, $disk_name, $disk_width, $disk_diameterm, $disk_krep, $disk_pcd, $disk_pcd2, $disk_et, $disk_dia, $disk_color, $disk_price, $disk_sklad);
 						$disk_array[$product_id]['sklad'] = $disk_sklad;
 						
+						$insert_products[] = array("name" =>$disk_name,"sklad" => $disk_sklad, "id" => $product_id);
+						
 					}
 					else 
 					{
@@ -226,6 +236,8 @@ if (isset($_POST['import_marketmixer']))
 						$disk_sklad = (int)$data->val($i, "N");
 						$disk_array[intval($product['id'])]['price'] = $disk_price;
 						$disk_array[intval($product['id'])]['sklad'] += $disk_sklad;
+						
+						$update_products[] = array("name" => $disk_name, "sklad" => $disk_array[intval($product['id'])]['sklad'], "id" => $product['id']);
 					}
 					
 				}
@@ -286,6 +298,7 @@ if (isset($_POST['import_marketmixer']))
 			}
 			else 
 			{
+				
 				$tree->insert($parent0['id'], array(
 					'name' => $brand_name,
 					'url' => $string->string_formater($string->translit(strtolower($brand_name))),
@@ -297,7 +310,7 @@ if (isset($_POST['import_marketmixer']))
 				));
 				$brand_id = mysql_insert_id();
 				$brand = $shop->getCategory($brand_id);
-					
+				
 			}
 		
 			
@@ -324,6 +337,7 @@ if (isset($_POST['import_marketmixer']))
 						));
 						$model_id = mysql_insert_id();
 						
+						$insert_categories[] = array("model" => $model_name,"brand"=>$brand['name']);
 					}
 				}
 				
@@ -355,6 +369,7 @@ if (isset($_POST['import_marketmixer']))
 							$tire_usil, $tire_spike, $tire_price, $tire_sklad);
 						
 						$tire_array[$product_id]['sklad'] = $tire_sklad;
+						$insert_products[] = array("name" => $tire_name, "sklad" => $tire_sklad, "id" => $product_id);
 					}
 					else 
 					{
@@ -365,6 +380,8 @@ if (isset($_POST['import_marketmixer']))
 						$tire_price = str_replace(",", ".", $data->val($i, "I"));
 						$tire_array[intval($product['id'])]['price'] = $tire_price;
 						$tire_array[intval($product['id'])]['sklad'] += $tire_sklad;
+						
+						$update_products[] = array("name" => $tire_name, "sklad" => $tire_array[intval($product['id'])]['sklad'], "id" => $product['id']);
 					}
 					
 				}
@@ -385,8 +402,9 @@ if (isset($_POST['import_marketmixer']))
 	
 	
 	
-	header("Location: " . $_SERVER['HTTP_REFERER']);
-	die();
+	//header("Location: " . $_SERVER['HTTP_REFERER']);
+	//$template='shop.a_export_result.html';
+	//die();
 	
 	/*echo "Команда: /usr/local/bin/wget -c --content-disposition -P {$path} http://app.marketmixer.net/content/export/{$disk_file} --Выполнена, прайс загружен<br><br>";
 	echo "Команда: /usr/local/bin/wget -c --content-disposition -P {$path} http://app.marketmixer.net/content/export/{$tire_file}  --Выполнена, прайс загружен";
@@ -1357,6 +1375,9 @@ if ($action=='delete_cat' && isset($_GET['id'])) {
 
 	$tree->deleteAll($id);
 	unlink(BASE_PATH.'/uploaded_files/shop_images/'.$cat['image']);
+	
+	$shop = new Shop($db);
+	$shop->delete_products_by_parent(intval($id));
 
 	header ("Location: ?mod=shop&action=catalogue");
 	die();
@@ -1568,6 +1589,14 @@ SWITCH (TRUE) {
 		$smarty->assign("cccp_last_import",$cccp_last_import);
 		$smarty->assign('suppliers', $db->get_all("select * from suppliers"));
 		
+		if (!empty($update_products))
+			$smarty->assign("update_products", $update_products);
+		if (!empty($insert_products))
+			$smarty->assign("insert_products", $insert_products);
+		if (!empty($insert_categories))
+			$smarty->assign("insert_categories", $insert_categories);
+			
+			
 		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=export","title" => 'Экспорт');
 		$template='shop.a_export.html';
 		

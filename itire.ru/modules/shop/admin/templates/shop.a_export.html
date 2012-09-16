@@ -51,7 +51,7 @@
 
 <br><br><br>
 
-<form action="/admin/?mod=shop&action=import_marketmixer" method="post">
+<form action="" method="post">
 {if $suppliers}
 <table>
 	<tr>
@@ -95,3 +95,44 @@
 <br>
 <input type="submit" value="Импортировать marketmixer" name="import_marketmixer"/>
 </form>
+
+
+{if $insert_categories}
+<br><br>
+<div><strong>Добавлены категории:</strong></div>
+<table>
+	<tr>
+		<th>Название модели</th><th>Производитель</th>
+	</tr>
+	{foreach from=$insert_categories item=item}
+		<tr><td>{$item.model}</td><td>{$item.brand}</td></tr>
+	{/foreach}
+</table>
+{/if}
+
+
+{if $insert_products}
+<br><br><br>
+<div><strong>Добавлены продукты:</strong></div>
+<table>
+	<tr>
+		<th style="width:60px;">ID</th><th>Название</th><th>Кол-во на складе</th>
+	</tr>
+	{foreach from=$insert_products item=item}
+		<tr><td>{$item.id}</td><td>{$item.name}</td><td>{$item.sklad}</td></tr>
+	{/foreach}
+</table>
+{/if}
+
+{if $update_products}
+<br><br><br>
+<div><strong>Обновлены продукты:</strong></div>
+<table>
+	<tr>
+		<th style="width:60px;">ID</th><th>Название</th><th>Кол-во на складе</th>
+	</tr>
+	{foreach from=$update_products item=item}
+		<tr><td>{$item.id}</td><td>{$item.name}</td><td>{$item.sklad}</td></tr>
+	{/foreach}
+</table>
+{/if}

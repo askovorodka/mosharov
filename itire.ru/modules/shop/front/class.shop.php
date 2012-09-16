@@ -9,6 +9,11 @@ class Shop extends db {
 	}
 
 	
+	function delete_products_by_parent($parent_id)
+	{
+		$this->db->query("delete from fw_products where parent='{$parent_id}'");
+	}
+	
 	function get_single_sklad($product_id)
 	{
 		$result = $this->db->get_single("select * from products_sklad where product_id='{$product_id}' ");
@@ -28,9 +33,9 @@ class Shop extends db {
 	function insert_tire($model_id, $name, $tire_width, $tire_height, $tire_diameter, $tire_in, $tire_is, $tire_usil, $tire_spike, $price, $tire_sklad)
 	{
 		$this->db->query("insert fw_products (parent,name,tire_width,tire_height,tire_diameter,tire_in,tire_is,tire_usil,
-		tire_spike,price, tire_sklad) values ('{$model_id}', '{$name}', '{$tire_width}', '{$tire_height}',
+		tire_spike,price, tire_sklad,status) values ('{$model_id}', '{$name}', '{$tire_width}', '{$tire_height}',
 		'{$tire_diameter}', '{$tire_in}', '{$tire_is}', '{$tire_usil}', '{$tire_spikee}', '{$price}',
-		'{$tire_sklad}')");
+		'{$tire_sklad}','1')");
 		return mysql_insert_id();
 	}
 	
