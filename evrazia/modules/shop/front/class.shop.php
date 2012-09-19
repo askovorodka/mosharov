@@ -184,7 +184,7 @@ class Shop extends db {
 			$where = "";
 		}
 		$result = $this->db->get_all("SELECT * FROM fw_catalogue WHERE param_left BETWEEN '{$categor['param_left']}' 
-					and '{$categor['param_right']}' and status = '1' " . $where);
+					and '{$categor['param_right']}' and status = '1' " . $where . " order by param_left");
 		if ($result)
 		{
 			return $result;

@@ -6,8 +6,11 @@ $smarty->register_function("banners", "show_banners");
 
 function show_banners ($params) {
 	
+	
+	
 	global $db;
 	global $smarty;
+	global $module_name;
 	
 	$group_text="";
 	if (isset($params['group'])) {
@@ -18,8 +21,18 @@ function show_banners ($params) {
 	$limit="";
 	if (!isset($params['all'])) $limit="LIMIT 1";
 
+	$request_uri = $_SERVER['REQUEST_URI'];
+	
+	if ($module_name == "shop")
+	{
+		if (preg_match("/\/\d{1,4}\/$/i", $request_uri))
+		{
+			$request_uri = preg_replace("/\d{1,4}\/$/i", "", $request_uri);
+		}
+	}
+	
 	$banner=$db->get_all("SELECT * FROM fw_banners WHERE status='1' and showings > shown AND $group_text id IN 
-	(SELECT banner_id FROM fw_banners_cat WHERE url LIKE '".$_SERVER['REQUEST_URI']."%' 
+	(SELECT banner_id FROM fw_banners_cat WHERE url LIKE '".$request_uri."%' 
 	group by banner_id ORDER BY LENGTH(url)) AND ((end_date>'".time()."' 
 	AND start_date<'".time()."') OR (end_date='0' AND start_date='0')) ORDER BY RAND() $limit");
 	

@@ -3,11 +3,15 @@
 	<p>{$cat_content.text}</p>
 <!---- /CONTENT ---->
 <!---- KVARTIRI ---->
+
 {if $products_list}
-	<div>
-		{foreach from=$products_list item=item}
-    	<div class="kvlist"><a href="{$base_url}/{$item.full_url}" title="{$item.name|strip_tags}"><img src="/images/img193x143/uploaded_files/shop_images/{$item.image}" width="193" height="143" /><br /><p class="kvlistlnk">{$item.name|strip_tags}</p></a>Комнат: {$item.room_count}<br />Площадь: {$item.place} м<sup class="lineh">2</sup><br />Цена: {$item.price|format_price} руб./мес.</div>
+	<table style="padding:0;border:0; border-collapse:collapse;">
+		{foreach from=$products_list item=item name=for1}
+			{if $smarty.foreach.for1.first}<tr>{/if}
+			{if $smarty.foreach.for1.iteration % 4 == 0}</tr><tr>{/if}
+    			<td class="kvlist"><a href="{$base_url}/{$item.full_url}" title="{$item.name|strip_tags}"><img src="/images/img193x143/uploaded_files/shop_images/{$item.image}" width="193" height="143" /><br /><p class="kvlistlnk">{$item.name|strip_tags}</p></a>Комнат: {$item.room_count}<br />Площадь: {$item.place} м<sup class="lineh">2</sup><br />Цена: {$item.price|format_price} руб./мес.</td>
+    		{if $smarty.foreach.for1.last}</tr>{/if}
     	{/foreach}
-    </div>
+    </table>>
 {/if}
 <!---- /KVARTIRI ---->
