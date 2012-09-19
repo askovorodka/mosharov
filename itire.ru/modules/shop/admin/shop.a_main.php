@@ -113,6 +113,8 @@ if (isset($_POST['import_marketmixer']))
 		}
 	}
 	
+	
+	
 	$insert_categories = array();
 	$insert_products = array();
 	$update_products = array();
@@ -1117,6 +1119,15 @@ if (isset($_POST['submit_edit_product'])) {
 		if ($v!="") $db->query("INSERT INTO fw_products_properties SET product_id='$id', property_id='$k', value='$v'");
 	}
 
+	if ($disk_sklad > 0)
+		$sklad = intval($disk_sklad);
+	elseif ($tire_sklad > 0)
+		$sklad = intval($tire_sklad);
+	else
+		$sklad = 0;
+	
+	$db->query("replace into products_sklad (product_id, sklad) values ('{$id}', '{$sklad}')");
+	
 	$db->query("UPDATE 
 		fw_products SET 
 			article='$article',
@@ -1158,7 +1169,7 @@ if (isset($_POST['submit_edit_product'])) {
 	
 	
 	//обновляем цену/склад на goodrims.ru с помощью cUrl методом POST
-	/*$curl = curl_init();
+	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_URL, "http://goodrims.ru/catalog/?update_price_from_itire=1");
 	curl_setopt($curl, CURLOPT_USERPWD, "itire:ckj;ysqgfhjkm");
 	curl_setopt($curl, CURLOPT_POST, 1);
@@ -1184,10 +1195,10 @@ if (isset($_POST['submit_edit_product'])) {
 	
 	$result = curl_exec($curl);
 	curl_close($curl);
-	*/
+	
 	
 	//обновляем цену/склад на selltire.ru с помощью cUrl методом POST
-	/*$curl = curl_init();
+	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_URL, "http://sell-tire.ru/katalog/?update_price_from_itire=1");
 	curl_setopt($curl, CURLOPT_USERPWD, "itire:ckj;ysqgfhjkm");
 	curl_setopt($curl, CURLOPT_POST, 1);
@@ -1213,10 +1224,10 @@ if (isset($_POST['submit_edit_product'])) {
 	
 	$result = curl_exec($curl);
 	curl_close($curl);
-	*/
+	
 	
 	//обновляем цену/склад на cccp-shina.ru с помощью cUrl методом POST
-	/*$curl = curl_init();
+	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_URL, "http://cccp-shina.ru/catalog/?update_price_from_itire=1");
 	curl_setopt($curl, CURLOPT_USERPWD, "itire:ckj;ysqgfhjkm");
 	curl_setopt($curl, CURLOPT_POST, 1);
@@ -1242,7 +1253,7 @@ if (isset($_POST['submit_edit_product'])) {
 	
 	$result = curl_exec($curl);
 	curl_close($curl);
-	*/
+	
 	//echo $result; exit();
 	
 	
