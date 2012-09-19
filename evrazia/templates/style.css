@@ -11,7 +11,7 @@
 body {
 	margin:15px 0 30px 0;
 	padding:0;
-	background:#f6f6f6;
+	background:#fff;
 	vertical-align:top;
 }
 body, td {
@@ -72,7 +72,7 @@ h2 {
 }
 .topt {
 	width:659px;
-	padding:0 0 45px 0;
+	padding:40px 0 45px 0;
 }
 .reklam {
 	width:1000px;
@@ -108,7 +108,7 @@ h2 {
 .cont {
 	width:659px;
 	padding:0 0 50px 0;
-	font-size:12px;
+	font-size:14px;
 	/*text-align:justify;*/
 }
 .cont a {
@@ -196,21 +196,21 @@ h2 {
 	line-height:22px;
 }
 .maind {
-	margin:20px 50px 0 0;
+	margin:20px 35px 0 0;
 	display:inline;
 	float:left;
 }
 .maind a {
 	display:block;
 	float:left;
-	font-size:16px;
+	font-size:20px;
 	color:#232323;
 	text-decoration:underline;
 }
 .maind a:hover {
 	display:block;
 	float:left;
-	font-size:16px;
+	font-size:20px;
 	color:#232323;
 	text-decoration:none;
 }
@@ -219,14 +219,14 @@ h2 {
 	padding:0 0 0 20px;
 }
 .innd a {
-	font-size:12px;
+	font-size:14px;
 	color:#232323;
 	line-height:18px;
 	display:block;
 	float:none;
 }
 .innd a:hover {
-	font-size:12px;
+	font-size:14px;
 	color:#b30b0b;
 	display:block;
 	float:none;

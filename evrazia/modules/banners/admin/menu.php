@@ -3,12 +3,12 @@
 $sub='';
 
 $sub[]= array(
-			"name"=>"Рекламная кампании",
+			"name"=>"Рекламные кампании",
 			"link"=>"?mod=banners"
 	   );
 	   
 $sub[]= array(
-			"name"=>"Группы",
+			"name"=>"Группы баннеров",
 			"link"=>"?mod=banners&action=groups_list"
 	   );
 

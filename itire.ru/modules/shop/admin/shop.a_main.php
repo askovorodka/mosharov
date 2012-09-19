@@ -44,7 +44,7 @@ $tree->insert($id, array("name" => "Диски", "url" => "disk"));
 	(SELECT COUNT(*) FROM fw_catalogue_relations WHERE cat_id=p.id) AS properties 
 	FROM fw_catalogue p ORDER BY param_left");*/
 
-$cat_list=$db->get_all("SELECT *
+$cat_list=$db->get_all("SELECT *, (SELECT COUNT(*) FROM fw_products WHERE parent=p.id) AS products
 	FROM fw_catalogue p ORDER BY param_left");
 
 $cat_list=String::unformat_array($cat_list);
@@ -1158,7 +1158,7 @@ if (isset($_POST['submit_edit_product'])) {
 	
 	
 	//обновляем цену/склад на goodrims.ru с помощью cUrl методом POST
-	$curl = curl_init();
+	/*$curl = curl_init();
 	curl_setopt($curl, CURLOPT_URL, "http://goodrims.ru/catalog/?update_price_from_itire=1");
 	curl_setopt($curl, CURLOPT_USERPWD, "itire:ckj;ysqgfhjkm");
 	curl_setopt($curl, CURLOPT_POST, 1);
@@ -1184,10 +1184,10 @@ if (isset($_POST['submit_edit_product'])) {
 	
 	$result = curl_exec($curl);
 	curl_close($curl);
-
+	*/
 	
 	//обновляем цену/склад на selltire.ru с помощью cUrl методом POST
-	$curl = curl_init();
+	/*$curl = curl_init();
 	curl_setopt($curl, CURLOPT_URL, "http://sell-tire.ru/katalog/?update_price_from_itire=1");
 	curl_setopt($curl, CURLOPT_USERPWD, "itire:ckj;ysqgfhjkm");
 	curl_setopt($curl, CURLOPT_POST, 1);
@@ -1213,10 +1213,10 @@ if (isset($_POST['submit_edit_product'])) {
 	
 	$result = curl_exec($curl);
 	curl_close($curl);
-
+	*/
 	
 	//обновляем цену/склад на cccp-shina.ru с помощью cUrl методом POST
-	$curl = curl_init();
+	/*$curl = curl_init();
 	curl_setopt($curl, CURLOPT_URL, "http://cccp-shina.ru/catalog/?update_price_from_itire=1");
 	curl_setopt($curl, CURLOPT_USERPWD, "itire:ckj;ysqgfhjkm");
 	curl_setopt($curl, CURLOPT_POST, 1);
@@ -1242,7 +1242,7 @@ if (isset($_POST['submit_edit_product'])) {
 	
 	$result = curl_exec($curl);
 	curl_close($curl);
-	
+	*/
 	//echo $result; exit();
 	
 	
