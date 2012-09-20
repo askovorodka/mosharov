@@ -357,6 +357,7 @@ class Import
 					if (isset($model) && isset($model['id']))
 					{
 						$model_id = $model['id'];
+						$model_name = $model['name'];
 					}
 					else
 					{
@@ -370,6 +371,7 @@ class Import
 							'meta_description' => "{$brand['name']} {$val[2]}"
 						));
 						$model_id = mysql_insert_id();
+						$model_name = $val[2];
 						$this->inserted_category++;
 						$this->import_items[] = array(
 							"type" => "category", 
@@ -438,8 +440,11 @@ class Import
 							"id" => $id,
 							"type_import" => "insert");
 						$this->db->query("replace into products_sklad (product_id, sklad) values('{$id}','{$fields['tire_sklad']}')");
-						
+						$product = $this->db->get_single("select * from fw_products where id='{$id}'");
 					}
+					
+					
+					$this->db->query("insert into exported_products")
 					
 				}
 				

@@ -77,8 +77,6 @@ else $action='';
 if (isset($_POST['import_marketmixer']))
 {
 
-	
-	
 	//обновляем поставщиков
 	$db->query("update suppliers set itire=0, goodrims=0, selltire=0, cccpshina=0");
 	if (!empty($_POST['itire']))
@@ -205,7 +203,6 @@ if (isset($_POST['import_marketmixer']))
 						
 					}
 				}
-				
 				
 				
 				

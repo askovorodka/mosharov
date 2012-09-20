@@ -654,10 +654,10 @@ if (isset($_POST['submit_add_photo'])) {
 		$check=false;
 	}
 
-	if (filesize($tmp)>2000000) {
+	/*if (filesize($tmp)>2000000) {
 		$smarty->assign("error","Размер фотографии не должен привышать 2Mb");
 		$check=false;
-	}
+	}*/
 
 	if ($check) {
 		$order=$db->get_single("SELECT MAX(sort_order)+1 AS s_order FROM fw_products_images WHERE parent='".$_POST['parent']."'");
