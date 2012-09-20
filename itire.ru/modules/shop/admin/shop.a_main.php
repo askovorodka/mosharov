@@ -142,8 +142,8 @@ if (isset($_POST['import_marketmixer']))
 			$supplier = $shop->insert_supplier($supplier_name);
 		
 		
-		if ($supplier['itire'] != 1)
-			continue;
+		/*if ($supplier['itire'] != 1)
+			continue;*/
 			
 		$brand_name = $data->val($i, "M");
 		$model_name = $data->val($i, "P");
@@ -159,6 +159,7 @@ if (isset($_POST['import_marketmixer']))
 				}
 				else 
 				{
+					
 					$tree->insert($parent0['id'], array(
 						'name' => $brand_name,
 						'url' => $string->string_formater($string->translit(strtolower($brand_name))),
@@ -205,27 +206,26 @@ if (isset($_POST['import_marketmixer']))
 				}
 				
 				
+				$disk_name = $data->val($i, "L");
+				$disk_width = str_replace(",", ".", $data->val($i, "A"));
+				$disk_diameter = str_replace(",", ".", $data->val($i, "B"));
+				$disk_krep = (int)$data->val($i, "C");
+				$disk_pcd = str_replace(",", ".", $data->val($i, "D"));
+				$disk_pcd2 = str_replace(",", ".", $data->val($i, "F"));
+				$disk_et = str_replace(",",".",$data->val($i, "G"));
+				$disk_dia = str_replace(",", ".", $data->val($i, "H"));
+				$disk_color = $data->val($i, "I");
+				$disk_price = str_replace(",", ".", $data->val($i, "J"));
+				$disk_sklad = (int)$data->val($i, "N");
 				
 				//если товары от этого поставщика можно добавлять
 				if ($supplier['itire'] == 1)
 				{
-					$disk_name = $data->val($i, "L");
 					$product = $shop->search_product($disk_name, $model_id);
 					if (!$product)
 					{
-						$disk_width = str_replace(",", ".", $data->val($i, "A"));
-						$disk_diameter = str_replace(",", ".", $data->val($i, "B"));
-						$disk_krep = (int)$data->val($i, "C");
-						$disk_pcd = str_replace(",", ".", $data->val($i, "D"));
-						$disk_pcd2 = str_replace(",", ".", $data->val($i, "F"));
-						$disk_et = str_replace(",",".",$data->val($i, "G"));
-						$disk_dia = str_replace(",", ".", $data->val($i, "H"));
-						$disk_color = $data->val($i, "I");
-						$disk_price = str_replace(",", ".", $data->val($i, "J"));
-						$disk_sklad = (int)$data->val($i, "N");
 						$product_id = $shop->insert_disk($model_id, $disk_name, $disk_width, $disk_diameterm, $disk_krep, $disk_pcd, $disk_pcd2, $disk_et, $disk_dia, $disk_color, $disk_price, $disk_sklad);
 						$disk_array[$product_id]['sklad'] = $disk_sklad;
-						
 						$insert_products[] = array("name" =>$disk_name,"sklad" => $disk_sklad, "id" => $product_id);
 						
 					}
@@ -235,17 +235,24 @@ if (isset($_POST['import_marketmixer']))
 						$disk_sklad = (int)$data->val($i, "N");
 						$disk_array[intval($product['id'])]['price'] = $disk_price;
 						$disk_array[intval($product['id'])]['sklad'] += $disk_sklad;
-						
 						$update_products[] = array("name" => $disk_name, "sklad" => $disk_array[intval($product['id'])]['sklad'], "id" => $product['id']);
 					}
 					
 				}
+				
+				$db->query("insert into exported_products (brand,model,type,dealer,name,price,
+				disk_width,disk_diameter,disk_krep,disk_pcd,disk_pcd2,disk_et,disk_dia,disk_color,sklad)
+				values ('{$brand_name}','{$model_name}','disk','{$supplier_name}','{$disk_name}','{$disk_price}',
+				'{$disk_width}','{$disk_diameter}','{$disk_krep}','{$disk_pcd}','{$disk_pcd2}',
+				'{$disk_et}','{$disk_dia}','{$disk_color}','{$disk_sklad}') ");
+				
 				
 	}
 
 	
 	foreach ($disk_array as $key=>$val)
 	{
+		
 		//находим кол-во продукта
 		$single_sklad = $shop->get_single_sklad($key);
 		//прибавляем новое количество 
@@ -279,8 +286,8 @@ if (isset($_POST['import_marketmixer']))
 		if (!$supplier = $shop->is_supplier_exist($supplier_name))
 			$supplier = $shop->insert_supplier($supplier_name);
 		
-		if ($supplier['itire'] != 1)
-			continue;
+		/*if ($supplier['itire'] != 1)
+			continue;*/
 		
 		$brand_name = $data->val($i, "L");
 		$model_name = $data->val($i, "O");
@@ -311,8 +318,8 @@ if (isset($_POST['import_marketmixer']))
 				$brand = $shop->getCategory($brand_id);
 				
 			}
-		
-			
+				
+				
 				
 				if ($brand_id)
 				{
@@ -341,27 +348,28 @@ if (isset($_POST['import_marketmixer']))
 				}
 				
 				
+				$tire_name = $data->val($i, "K");
+				$tire_width = $data->val($i, "A");
+				$tire_height = $data->val($i, "B");
+				$tire_diameter = $data->val($i, "C");
+				$tire_in = $data->val($i, "D");
+				$tire_is = $data->val($i, "E");
+				$tire_usil = $data->val($i, "F");
+				if ($data->val($i, "G") == "шип")
+					$tire_spike = 2;
+				else
+					$tire_spike = 1;
+						
+				$tire_price = str_replace(",", ".", $data->val($i, "I"));
+				$tire_sklad = $data->val($i, "M");
 				
 				//если товары от этого поставщика можно добавлять
 				if ($supplier['itire'] == 1)
 				{
-					$tire_name = $data->val($i, "K");
+					
 					$product = $shop->search_product($tire_name, $model_id);
 					if (!$product)
 					{
-						$tire_width = $data->val($i, "A");
-						$tire_height = $data->val($i, "B");
-						$tire_diameter = $data->val($i, "C");
-						$tire_in = $data->val($i, "D");
-						$tire_is = $data->val($i, "E");
-						$tire_usil = $data->val($i, "F");
-						if ($data->val($i, "G") == "шип")
-							$tire_spike = 2;
-						else
-							$tire_spike = 1;
-						
-						$tire_price = str_replace(",", ".", $data->val($i, "I"));
-						$tire_sklad = $data->val($i, "M");
 						
 						$product_id = $shop->insert_tire($model_id, $tire_name, 
 							$tire_width, $tire_height, $tire_diameter, $tire_in, $tire_is, 
@@ -384,6 +392,12 @@ if (isset($_POST['import_marketmixer']))
 					}
 					
 				}
+				
+				
+				$db->query("insert into exported_products (brand,model,type,dealer,name,price,tire_width,tire_height,tire_diameter,
+				tire_in,tire_is,tire_usil,tire_spike,sklad)
+				values ('{$brand_name}','{$model_name}','tire','{$supplier_name}','{$tire_name}','{$tire_price}',
+				'{$tire_width}','{$tire_height}','{$tire_diameter}','{$tire_in}','{$tire_is}','{$tire_usil}','{$tire_spike}','{$tire_sklad}')");
 		
 		
 		
@@ -463,6 +477,13 @@ if (isset($_POST['submit_export_set']))
 	header ("Location: " . $_SERVER['HTTP_REFERER']);
 }
 
+if (isset($_POST['submit_truncate_exported']))
+{
+	$db->query("truncate exported_products");
+	header("location: " . $_SERVER['HTTP_REFERER']);
+	die();
+}
+
 //импорт прайс-листов
 if (isset($_POST['submit_import']))
 {
@@ -470,6 +491,7 @@ if (isset($_POST['submit_import']))
 	//require_once('../lib/class.string.php');
 	
 	$string = new String();
+	
 	
 	if ($_FILES['import_file']['name']!='') {
 

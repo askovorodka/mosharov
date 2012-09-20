@@ -166,6 +166,7 @@ class Import
 				if (isset($brand) && isset($brand['id']))
 				{
 					$brand_id = $brand['id'];
+					$brand_name = $brand['name'];
 					$url = $this->string->string_formater($this->string->translit(strtolower($brand_name)));
 					$this->db->query("update fw_catalogue set url='$url' where id='{$brand_id}'");
 				}
@@ -183,6 +184,7 @@ class Import
 					));
 					$brand_id = mysql_insert_id();
 					$brand = $this->getParent($brand_id);
+					$brand_name = $brand['name'];
 					$this->inserted_category++;
 					$this->import_items[] = array(
 						"type" => "category", 
@@ -198,9 +200,11 @@ class Import
 					if (isset($model) && isset($model['id']))
 					{
 						$model_id = $model['id'];
+						$model_name = $model['name'];
 					}
 					else
 					{
+						$model_name = $val[2];
 						$this->tree->insert($brand['id'], array(
 							'name' => $val[2],
 							'url' => $this->string->string_formater($this->string->translit(strtolower($val[2]))),
@@ -267,7 +271,7 @@ class Import
 								"id" => $product['id'],
 								"type_import" => "update");
 							$this->db->query("replace into products_sklad (product_id, sklad) values('{$product['id']}','{$fields['disk_sklad']}')");
-							
+							$product = $this->getProduct($product_id);
 						}
 					}
 					else 
@@ -280,8 +284,15 @@ class Import
 							"id" => $id,
 							"type_import" => "insert");
 						$this->db->query("replace into products_sklad (product_id, sklad) values('{$id}','{$fields['disk_sklad']}')");
-						
+						$product = $this->getProduct($id);
 					}
+
+					$this->db->query("insert into exported_products (brand,model,type,dealer,name,price,article,
+					disk_width,disk_diameter,disk_krep,disk_pcd,disk_pcd2,disk_et,disk_dia,disk_color,disk_type,sklad)
+					values ('{$brand_name}','{$model_name}','disk','itire.ru','{$product['name']}','{$product['price']}',
+					'{$product['article']}','{$product['disk_width']}','{$product['disk_diameter']}',
+					'{$product['disk_krep']}','{$product['disk_pcd']}','{$product['disk_pcd2']}',
+					'{$product['disk_et']}','{$product['disk_dia']}','{$product['disk_color']}','{$product['disk_type']}','{$product['disk_sklad']}')");
 					
 				}
 				
@@ -413,6 +424,7 @@ class Import
 						$body_type_id = null;
 					}
 					
+					
 					$hash = $this->getTireHash($brand_id, $model_id, $body_type_id, $fields);
 					if ($product_id = $this->isProductExists($hash))
 					{
@@ -427,7 +439,7 @@ class Import
 								"id" => $product['id'],
 								"type_import" => "update");
 							$this->db->query("replace into products_sklad (product_id, sklad) values('{$product['id']}','{$fields['tire_sklad']}')");
-						
+							$product = $this->getProduct($product_id);
 						}
 					}
 					else 
@@ -441,10 +453,17 @@ class Import
 							"type_import" => "insert");
 						$this->db->query("replace into products_sklad (product_id, sklad) values('{$id}','{$fields['tire_sklad']}')");
 						$product = $this->db->get_single("select * from fw_products where id='{$id}'");
+						
 					}
 					
 					
-					$this->db->query("insert into exported_products")
+					$this->db->query("insert into exported_products (brand,model,type,dealer,name,price,article,
+					tire_width,tire_height,tire_diameter,tire_in,tire_is,tire_usil,tire_spike,tire_season,tire_bodytype, sklad)
+					values ('{$brand_name}','{$model_name}','tire','itire.ru','{$product['name']}','{$product['price']}',
+					'{$product['article']}','{$product['tire_width']}','{$product['tire_height']}','{$product['tire_diameter']}',
+					'{$product['tire_in']}','{$product['tire_is']}','{$product['tire_usil']}','{$product['tire_spike']}',
+					'{$product['tire_season']}','{$product['tire_bodytype']}','{$product['tire_sklad']}')");
+					
 					
 				}
 				
