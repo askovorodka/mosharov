@@ -1,7 +1,5 @@
 <?php 
 
-//require_once './conf/globals.php';
-
 $path = dirname(__FILE__) . "/";
 
 $link = mysql_connect("localhost", "itire", "gthtgenmt", true);
@@ -30,11 +28,10 @@ $suppliers['cccpshina']['itire.ru'] = 1;
 
 $res = mysql_query("select * from exported_products", $link);
 
-@unlink($path . "goodrims.xml");
-@unlink($path . "selltire.xml");
-@unlink($path . "cccpshina.xml");
+@unlink($path . "xml/goodrims.xml");
 
 $dom = new domDocument("1.0", "utf-8");
+
 $root = $dom->createElement("export");
 $root->setAttribute("date", date("d.m.Y H:i"));
 $dom->appendChild($root);
@@ -144,7 +141,7 @@ while ($item = mysql_fetch_assoc($res))
 
 $root->appendChild($rims);
 $root->appendChild($tires);
-$dom->save($path."goodrims.xml");
+$dom->save($path."xml/goodrims.xml");
 
 
 
