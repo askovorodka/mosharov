@@ -8,7 +8,7 @@ RewriteBase /
 RewriteCond %{HTTP_HOST} ^www.dom-stroi-plus.ru$ [NC]
 RewriteRule ^(.*)$ http://dom-stroi-plus.ru/$1 [R=301,L]
 
-RewriteCond %{REQUEST_URI} ^/home$ [OR]
+RewriteCond %{REQUEST_URI} ^/home$ [NC]
 RewriteCond %{REQUEST_URI} ^/home/$ [NC]
 RewriteRule ^(.*)$ http://dom-stroi-plus.ru/ [R=301,L]
 

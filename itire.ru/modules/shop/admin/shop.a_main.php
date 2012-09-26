@@ -60,12 +60,10 @@ $cur_admin=$db->get_single("SELECT kurs,znak FROM fw_currency WHERE id=".CURRENC
 $cur_admin=String::unformat_array($cur_admin);
 
 $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Ìàãàçèí');
-//UPDATE `fw_products` SET sort_order=id-2 WHERE 1
+
 if (isset($_GET['action']) && $_GET['action']!='') $action=$_GET['action'];
 else $action='';
 
-//print_r($_POST);
-//exit();
 
 /*------------------------- ÂÛÏÎËÍßÅÌ ÐÀÇËÈ×ÍÛÅ ÄÅÉÑÒÂÈß ---------------------*/
 
@@ -224,7 +222,7 @@ if (isset($_POST['import_marketmixer']))
 					$product = $shop->search_product($disk_name, $model_id);
 					if (!$product)
 					{
-						$product_id = $shop->insert_disk($model_id, $disk_name, $disk_width, $disk_diameterm, $disk_krep, $disk_pcd, $disk_pcd2, $disk_et, $disk_dia, $disk_color, $disk_price, $disk_sklad);
+						$product_id = $shop->insert_disk($model_id, $disk_name, $disk_width, $disk_diameter, $disk_krep, $disk_pcd, $disk_pcd2, $disk_et, $disk_dia, $disk_color, $disk_price, $disk_sklad);
 						$disk_array[$product_id]['sklad'] = $disk_sklad;
 						$insert_products[] = array("name" =>$disk_name,"sklad" => $disk_sklad, "id" => $product_id);
 						

@@ -8,7 +8,47 @@ class Shop extends db {
 		$this->db = &$db;
 	}
 
-
+	function update_tire($id,$price,$tire_sklad)
+	{
+		$this->db->query("update fw_products set price='{$price}', tire_sklad = tire_sklad + '{$tire_sklad}', status='1' where id='{$id}' ");
+	}
+	
+	
+	function insert_tire($model_id, $name, $tire_width, $tire_height, $tire_diameter, $tire_in, $tire_is, $tire_usil, $tire_spike, $price, $tire_sklad)
+	{
+		$this->db->query("insert fw_products (parent,name,tire_width,tire_height,tire_diameter,tire_in,tire_is,tire_usil,
+		tire_spike,price, tire_sklad,status) values ('{$model_id}', '{$name}', '{$tire_width}', '{$tire_height}',
+		'{$tire_diameter}', '{$tire_in}', '{$tire_is}', '{$tire_usil}', '{$tire_spike}', '{$price}',
+		'{$tire_sklad}','1')");
+		return mysql_insert_id();
+	}
+	
+	
+	function update_disk($id,$price,$disk_sklad)
+	{
+		$this->db->query("update fw_products set price='{$price}', disk_sklad = disk_sklad + '{$disk_sklad}', status='1' where id='{$id}' ");
+	}
+	
+	function insert_disk($parent,$name,$width,$diameterm,$krep,$pcd,$pcd2,$et,$dia,$color,$price,$sklad)
+	{
+		$this->db->query("insert fw_products (parent,name,disk_width,disk_diameter,disk_krep,
+		disk_pcd,disk_pcd2,disk_et,disk_dia,disk_color,price,disk_sklad,status)
+		values ('$parent','$name','$width','$diameterm','$krep','$pcd','$pcd2','$et','$dia','$color','$price','$sklad','1')");
+		return mysql_insert_id();
+	}
+	
+	
+	function search_product($name, $parent)
+	{
+		$result = $this->db->get_single("select * from fw_products where name='{$name}' and parent='{$parent}'");
+		
+		if ($result)
+			return $result;
+		else
+			return null;
+	}
+	
+	
 	function getProductsByFeed($cat_id)
 	{
 		$result = $this->db->get_single("
