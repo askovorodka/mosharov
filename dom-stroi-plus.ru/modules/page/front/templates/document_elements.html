@@ -1,4 +1,4 @@
-<h1>{$document.title|strip_tags|stripslashes}</h1>
+<h1>{$document.label|strip_tags|stripslashes}</h1>
 <p>
 	{if $document.image!=''}<img src="uploaded_files/documents_images/resized-{$document.image}" align="left">{/if}
 	{$document.description}

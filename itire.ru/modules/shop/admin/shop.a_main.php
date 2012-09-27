@@ -140,9 +140,6 @@ if (isset($_POST['import_marketmixer']))
 			$supplier = $shop->insert_supplier($supplier_name);
 		
 		
-		/*if ($supplier['itire'] != 1)
-			continue;*/
-			
 		$brand_name = $data->val($i, "M");
 		$model_name = $data->val($i, "P");
 		
@@ -284,12 +281,8 @@ if (isset($_POST['import_marketmixer']))
 		if (!$supplier = $shop->is_supplier_exist($supplier_name))
 			$supplier = $shop->insert_supplier($supplier_name);
 		
-		/*if ($supplier['itire'] != 1)
-			continue;*/
-		
 		$brand_name = $data->val($i, "L");
 		$model_name = $data->val($i, "O");
-		
 		
 		$brand = $db->get_single("
 			SELECT * FROM fw_catalogue 
@@ -316,7 +309,6 @@ if (isset($_POST['import_marketmixer']))
 				$brand = $shop->getCategory($brand_id);
 				
 			}
-				
 				
 				
 				if ($brand_id)
@@ -413,14 +405,29 @@ if (isset($_POST['import_marketmixer']))
 	
 	
 	
-	//header("Location: " . $_SERVER['HTTP_REFERER']);
-	//$template='shop.a_export_result.html';
-	//die();
-	
 	/*echo "Команда: /usr/local/bin/wget -c --content-disposition -P {$path} http://app.marketmixer.net/content/export/{$disk_file} --Выполнена, прайс загружен<br><br>";
 	echo "Команда: /usr/local/bin/wget -c --content-disposition -P {$path} http://app.marketmixer.net/content/export/{$tire_file}  --Выполнена, прайс загружен";
 	exit();*/
+
+	$goodrims_conf = $db->get_single("select conf_value from fw_conf where conf_key='GOODRIMS_ENABLE'");
+	$selltire_conf = $db->get_single("select conf_value from fw_conf where conf_key='SELLTIRE_ENABLE'");
+	$cccp_conf = $db->get_single("select conf_value from fw_conf where conf_key='CCCP_ENABLE'");
 	
+	if ($cccp_conf['conf_value'] == 1)
+		//system("/usr/local/bin/php /home/itire/data/www/demo.itire.ru/cccpshina.php");
+		$db->query("update fw_conf set conf_value='1' where conf_key='CCCP_EXPORT'");
+	
+	if ($goodrims_conf['conf_value'] == 1)
+		//system("/usr/local/bin/php /home/itire/data/www/demo.itire.ru/goodrims.php");
+		$db->query("update fw_conf set conf_value='1' where conf_key='GOODRIMS_EXPORT'");
+	
+	if ($selltire_conf['conf_value'] == 1)
+		//system("/usr/local/bin/php /home/itire/data/www/demo.itire.ru/selltire.php");
+		$db->query("update fw_conf set conf_value='1' where conf_key='SELLTIRE_EXPORT'");
+	
+		
+	header("Location: " . $_SERVER['HTTP_REFERER']);
+	die();
 	
 }
 
@@ -468,9 +475,9 @@ if (isset($_POST['submit_export_set']))
 	
 	//общие параметры
 	//метка для обновления файла экспорта
-	$db->query("update fw_conf set conf_value='1' where conf_key='EXPORT_RUNNING' ");
+	//$db->query("update fw_conf set conf_value='1' where conf_key='EXPORT_RUNNING' ");
 	//обнуление метки времени последнего обновления файла экспорта
-	$db->query("update fw_conf set conf_value='0' where conf_key='EXPORT_LAST_TIME' ");
+	//$db->query("update fw_conf set conf_value='0' where conf_key='EXPORT_LAST_TIME' ");
 	
 	header ("Location: " . $_SERVER['HTTP_REFERER']);
 }
@@ -543,8 +550,8 @@ if (isset($_POST['submit_import']))
 		}
 
 		$db->query("update fw_conf set conf_value='1' where conf_key='MARKET_RUNNING' ");
-		$db->query("update fw_conf set conf_value='1' where conf_key='EXPORT_RUNNING' ");
-		$db->query("update fw_conf set conf_value='0' where conf_key='EXPORT_LAST_TIME' ");
+		//$db->query("update fw_conf set conf_value='1' where conf_key='EXPORT_RUNNING' ");
+		//$db->query("update fw_conf set conf_value='0' where conf_key='EXPORT_LAST_TIME' ");
 		//echo 123;
 		header ("Location: http://" . $_SERVER['SERVER_NAME'] . "/admin/index.php?mod=shop&action=import_log");
 		//die();
@@ -1608,13 +1615,9 @@ SWITCH (TRUE) {
 	
 	CASE ($action == 'export'):
 		
-		//$goodrims_last_import = file_get_contents("http://goodrims.ru/last_import_time/");
-		//$selltire_last_import = file_get_contents("http://sell-tire.ru/last_import_time/");
-		//$cccp_last_import = file_get_contents("http://cccp-shina.ru/last_import_time/");
-		
-		$smarty->assign("goodrims_last_import",$goodrims_last_import);
+		/*$smarty->assign("goodrims_last_import",$goodrims_last_import);
 		$smarty->assign("selltire_last_import",$selltire_last_import);
-		$smarty->assign("cccp_last_import",$cccp_last_import);
+		$smarty->assign("cccp_last_import",$cccp_last_import);*/
 		$smarty->assign('suppliers', $db->get_all("select * from suppliers"));
 		
 		if (!empty($update_products))
@@ -1624,7 +1627,10 @@ SWITCH (TRUE) {
 		if (!empty($insert_categories))
 			$smarty->assign("insert_categories", $insert_categories);
 			
-			
+		
+		$cccp = $db->get_single("select conf_value from fw_conf where conf_key='CCCP_EXPORT_RESULT'");
+		$smarty->assign('cccp_export_result', $cccp['conf_value']);	
+		
 		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=export","title" => 'Экспорт');
 		$template='shop.a_export.html';
 		

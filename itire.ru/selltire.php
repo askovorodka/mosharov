@@ -11,6 +11,10 @@ mysql_select_db("demo", $link);
 
 mysql_set_charset("cp1251", $link);
 
+$SELLTIRE_EXPORT = get_koef('SELLTIRE_EXPORT');
+if ($SELLTIRE_EXPORT != 1)
+	exit();
+
 $res = mysql_query("select * from suppliers", $link);
 
 $suppliers = array();
@@ -142,7 +146,15 @@ $root->appendChild($tires);
 $dom->save($path."xml/selltire.xml");
 
 
-
+$cccpurl = "http://sell-tire.ru/xml/import.php";
+$ch = curl_init();  
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);   
+curl_setopt($ch, CURLOPT_URL,$cccpurl);
+curl_setopt($ch, CURLOPT_USERPWD, "demon:gthtgenmt");
+$result = curl_exec($ch);
+curl_close($ch);
+mysql_query("update fw_conf set conf_value='{$result}' where conf_key='SELLTIRE_EXPORT_RESULT'", $link);
+mysql_query("update fw_conf set conf_value='0' where conf_key='SELLTIRE_EXPORT'", $link);
 
 
 //вспомогательная функция для доступа к настройкам и коефициентам

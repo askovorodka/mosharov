@@ -2,9 +2,7 @@
 ob_start("ob_gzhandler");
 session_start();
 
-/*session_start();
 error_reporting(E_ALL);
-ini_set('display_errors','On');*/
 
 setlocale (LC_ALL, array ('ru_RU.CP1251', 'rus_RUS.1251'));
 
@@ -15,7 +13,6 @@ require_once '../lib/class.common.php';
 require_once '../lib/class.string.php';
 require_once '../lib/class.rss.php';
 require_once '../lib/class.array.php';
-require_once '../lib/class.users.php';
 
 
 $_SESSION['db_connections'] = 0;
@@ -28,8 +25,7 @@ $smarty->compile_dir = '../lib/smarty/admin_templates_c/';
 $smarty->cache_dir = '../lib/smarty/admin_cache/';
 
 /* ------------ ÏÎÄÊËÞ×ÀÅÌÑß Ê ÁÀÇÅ ÄÀÍÍÛÕ -------------- */
-$db=new db();
-$users = new Users();
+$db=new db(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 
 //$smarty->debugging=true;
 

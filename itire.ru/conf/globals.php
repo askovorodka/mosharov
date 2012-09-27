@@ -12,7 +12,7 @@
   define("SHOP_IMAGE", DOMAIN . 'uploaded_files/shop_images/');
   define("SHOP_IMAGE_PATH", ROOT . 'uploaded_files/shop_images/');
   define("COMPANY_ORDERS", serialize(
-  										array(1=>"ÃÐÓÇÎÂÎÇÎÔÔ",2=>"Äåëîâûå ëèíèè",3=>"ÏÝÊ")
-  	));
+  		array(1=>"ÆåëäîðÀëüÿíñ",2=>"Äåëîâûå ëèíèè",3=>"ÏÝÊ")
+  ));
   
 ?>

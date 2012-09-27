@@ -11,6 +11,14 @@ mysql_select_db("demo", $link);
 
 mysql_set_charset("cp1251", $link);
 
+$CCCP_EXPORT = get_koef('CCCP_EXPORT');
+
+if ($CCCP_EXPORT != 1)
+{
+	print "not imported";
+	exit();
+}
+
 $res = mysql_query("select * from suppliers", $link);
 
 $suppliers = array();
@@ -141,6 +149,17 @@ $root->appendChild($rims);
 $root->appendChild($tires);
 $dom->save($path."xml/cccpshina.xml");
 
+
+$cccpurl = "http://cccp-shina.ru/xml/import.php";
+$ch = curl_init();  
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);   
+curl_setopt($ch, CURLOPT_URL,$cccpurl);
+curl_setopt($ch, CURLOPT_USERPWD, "demon:gthtgenmt");
+$result = curl_exec($ch);
+curl_close($ch);
+mysql_query("update fw_conf set conf_value='{$result}' where conf_key='CCCP_EXPORT_RESULT'", $link);
+mysql_query("update fw_conf set conf_value='0' where conf_key='CCCP_EXPORT'", $link);
+mysql_query("truncate exported_products", $link);
 
 
 

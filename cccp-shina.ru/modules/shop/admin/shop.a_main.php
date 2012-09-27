@@ -38,6 +38,7 @@ $id = $tree->clear();
 $tree->insert($id, array("name" => "Шины", "url" => "tyres"));
 $tree->insert($id, array("name" => "Диски", "url" => "rims"));
 */
+
 //echo date("Y-m-d H:i:s");
 /*$cat_list=$db->get_all("SELECT *,
 	(SELECT COUNT(*) FROM fw_products WHERE parent=p.id) AS products, 
@@ -59,18 +60,18 @@ $smarty->assign("currency_site",$cur_site);
 $cur_admin=$db->get_single("SELECT kurs,znak FROM fw_currency WHERE id=".CURRENCY_ADMIN);
 $cur_admin=String::unformat_array($cur_admin);
 
-$navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Магазин');
+$navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'РњР°РіР°Р·РёРЅ');
 //UPDATE `fw_products` SET sort_order=id-2 WHERE 1
 if (isset($_GET['action']) && $_GET['action']!='') $action=$_GET['action'];
 else $action='';
 
 
-/*------------------------- ВЫПОЛНЯЕМ РАЗЛИЧНЫЕ ДЕЙСТВИЯ ---------------------*/
+/*------------------------- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ---------------------*/
 
 if ($action == 'text_generate')
 {
 	$shop = new Shop($db);
-	//достаем все модели
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	$models = $shop->getCategories(3);
 	foreach ($models as $model)
 	{
@@ -85,7 +86,7 @@ if ($action == 'text_generate')
 							{
 								foreach ($matches[$key] as $key2=>$val2)
 								{
-									//почему-то повторяется два раза данные паттерн поэтому делаю еще одно условия
+									//пїЅпїЅпїЅпїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 									if (preg_match("/\[(.*)\]/", $matches[$key][$key2], $str) )
 									{
 										if (isset($str[1]))
@@ -116,7 +117,7 @@ if (isset($_POST['send_admin_mail']))
 	die();
 }
 
-//импорт прайс-листов
+//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅ
 if (isset($_POST['submit_import']))
 {
 	//require_once('../lib/class.import.php');
@@ -134,35 +135,35 @@ if (isset($_POST['submit_import']))
 		$check_file_name=explode(".",$file_name);
 		$ext=strtolower($check_file_name[count($check_file_name)-1]);
 		if (!in_array($ext,$trusted_formats)) {
-			die("Можно загружать только файлы с разрешение *.xls");
+			die("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ *.xls");
 		}
 
 		if (filesize($tmp) > 5000000) {
-			die("Размер файла не больше 5 Мб");
+			die("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 5 пїЅпїЅ");
 		}
 
 		$import = new Import($db, $tree, $string);
-		//грузим xls
+		//пїЅпїЅпїЅпїЅпїЅпїЅ xls
 		$xlsfile = $import->upload($_FILES['import_file']);
-		//называем csv файл также как и xls
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ csv пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ xls
 		$tocsv = explode('.', $xlsfile);
 		$csvfile = $tocsv[0] . '.csv';
-		//конвертируем xls
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ xls
 		if ($import->convert($xlsfile, $csvfile))
 		{
 			
-			//если выбран не тот файл
+			//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 			if (!$import->getImportTypeByFile($csvfile))
 			{
 				header ("Location: http://" . $_SERVER['SERVER_NAME'] . "/admin/index.php?mod=shop&action=import_error");
 				die();
 			}
 			
-			//получаем данные в массив
+			//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 			$import->read($csvfile);
 			if ($_POST['type'] == 'tires')
 			{
-				//обнуляем все шины
+				//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 				$db->query("update fw_products set tire_sklad = '0'");
 				$import->importTires(TIRES_ID);
 			}
@@ -222,7 +223,7 @@ if (isset($_POST['submit_sort_products']) && isset($_POST['sortArray']) ){
 		$sort= $key + 1;
 		$db->query("UPDATE fw_products SET sort_order='$sort' WHERE id='$val' ");
 	}
-		$smarty->assign("message","Продукция отсортирована");
+		$smarty->assign("message","пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 }
 
 
@@ -430,16 +431,16 @@ if (isset($_POST['submit_add_cat'])) {
 	$keywords=String::secure_format($_POST['edit_cat_keywords']);
 	$description=String::secure_format($_POST['edit_cat_description']);
 
-	if ($name=='') $name="Новая безымянная категория";
+	if ($name=='') $name="пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
 
 	$check_if_exists=$db->get_all("SELECT id FROM fw_catalogue WHERE url='$url' AND param_left>(SELECT param_left FROM fw_catalogue WHERE id='$parent') AND param_right<(SELECT param_right FROM fw_catalogue WHERE id='$parent') AND param_level=(SELECT param_level FROM fw_catalogue WHERE id='$parent')");
 	if (count($check_if_exists)>0) {
-		$smarty->assign("error_message","Категория с таким урлом уже существует!");
+		$smarty->assign("error_message","пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!");
 		$check=false;
 	}
 
 	if (!preg_match("/^([a-z0-9_-]+)$/",$url)) {
-		$smarty->assign("error_message","В URL допустимы только символы латиницы, минус и знак подчёркивания!");
+		$smarty->assign("error_message","пїЅ URL пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!");
 		$check=false;
 	}
 
@@ -453,12 +454,12 @@ if (isset($_POST['submit_add_cat'])) {
 		$check_file_name=explode(".",$file_name);
 		$ext=strtolower($check_file_name[count($check_file_name)-1]);
 		if (!in_array($ext,$trusted_formats)) {
-			$smarty->assign("error_message","Разрешены картинки форматов jpg, jpeg, gif и png");
+			$smarty->assign("error_message","пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ jpg, jpeg, gif пїЅ png");
 			$check=false;
 		}
 
 		if (filesize($tmp)>2000000) {
-			$smarty->assign("error_message","Размер фотографии не должен привышать 2Mb");
+			$smarty->assign("error_message","пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 2Mb");
 			$check=false;
 		}
 	}
@@ -477,7 +478,7 @@ if (isset($_POST['submit_add_cat'])) {
 			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext)) {
 				chmod(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext, 0644);
 				$details = Image::image_details(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext);
-				//превьюшка
+				//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 				
 				Image::resize(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext,BASE_PATH.'/uploaded_files/shop_images/cat-'.$id.'.'.$ext,215,236, false);
 				Image::resize(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext,BASE_PATH.'/uploaded_files/shop_images/pcat-'.$id.'.'.$ext,139,100, false);
@@ -522,18 +523,18 @@ if (isset($_POST['submit_edit_cat'])) {
 		$db->query("INSERT INTO fw_catalogue_relations (cat_id,property_id,sort_order) VALUES('$id', '$k','".intval($_POST['edit_cat_properties_sort_order'][$k])."')");
 	}
 
-	if ($name=='') $name="Новая безымянная категория";
+	if ($name=='') $name="пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
 
 	if ($url!=$old_url or $parent!=$old_parent) {
 		$check_if_exists=$db->get_all("SELECT id FROM fw_catalogue WHERE url='$url' AND param_left>(SELECT param_left FROM fw_catalogue WHERE id='$parent') AND param_right<(SELECT param_right FROM fw_catalogue WHERE id='$parent') AND param_level=(SELECT param_level FROM fw_catalogue WHERE id='$parent')");
 		if (count($check_if_exists)>0) {
-			$smarty->assign("error_message","Узел с таким урлом уже существует!");
+			$smarty->assign("error_message","пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!");
 			$check=false;
 		}
 	}
 
 	if (!preg_match("/^([a-z0-9_-]+)$/",$url)) {
-		$smarty->assign("error_message","В URL допустимы только символы латиницы, минус и знак подчёркивания!");
+		$smarty->assign("error_message","пїЅ URL пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!");
 		$check=false;
 	}
 
@@ -547,12 +548,12 @@ if (isset($_POST['submit_edit_cat'])) {
 		$check_file_name=explode(".",$file_name);
 		$ext=strtolower($check_file_name[count($check_file_name)-1]);
 		if (!in_array($ext,$trusted_formats)) {
-			$smarty->assign("error_message","Разрешены картинки форматов jpg, jpeg, gif и png");
+			$smarty->assign("error_message","пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ jpg, jpeg, gif пїЅ png");
 			$check=false;
 		}
 
 		if (filesize($tmp)>2000000) {
-			$smarty->assign("error_message","Размер фотографии не должен привышать 2Mb");
+			$smarty->assign("error_message","пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 2Mb");
 			$check=false;
 		}
 	}
@@ -610,7 +611,7 @@ if (isset($_POST['submit_add_product'])) {
 	$guarantie=String::secure_format($_POST['edit_guarantie']);
 	$sale=String::secure_format($_POST['edit_sale']);
 	
-	//св-ва шин/дисков
+	//пїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅ
 	$tire_width = $_POST['tire_width'];
 	$tire_height = $_POST['tire_height'];
 	$tire_diameter = $_POST['tire_diameter'];
@@ -639,7 +640,7 @@ if (isset($_POST['submit_add_product'])) {
   	$type=($_POST['edit_type']!='')?intval($_POST['edit_type']):"NULL";
 
 
-	if ($name=='') $name='Новый продукт';
+	if ($name=='') $name='пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
 	if ($price=='') $price='0.00';
 
 	$db->query("INSERT INTO fw_products 
@@ -734,7 +735,7 @@ if (isset($_POST['submit_edit_product'])) {
 	$hit=isset($_POST['edit_hit'])?"1":"0";
 	$type=($_POST['edit_type']!='')?intval($_POST['edit_type']):"NULL";
 
-	//св-ва шин/дисков
+	//пїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅ
 	$tire_width = $_POST['tire_width'];
 	$tire_height = $_POST['tire_height'];
 	$tire_diameter = $_POST['tire_diameter'];
@@ -821,12 +822,12 @@ if (isset($_POST['submit_add_photo'])) {
 	$check_file_name=explode(".",$file_name);
 	$ext=strtolower($check_file_name[count($check_file_name)-1]);
 	if (!in_array($ext,$trusted_formats)) {
-		$smarty->assign("error","Разрешены картинки форматов jpg, jpeg, gif и png");
+		$smarty->assign("error","пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ jpg, jpeg, gif пїЅ png");
 		$check=false;
 	}
 
 	if (filesize($tmp)>2000000) {
-		$smarty->assign("error","Размер фотографии не должен привышать 2Mb");
+		$smarty->assign("error","пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 2Mb");
 		$check=false;
 	}
 
@@ -844,7 +845,7 @@ if (isset($_POST['submit_add_photo'])) {
 		}
 		else {
 			$result=$db->query("DELETE FROM fw_products_images WHERE id='".mysql_insert_id()."'");
-			$smarty->assign("error","Файл не был загружен");
+			$smarty->assign("error","пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 		}
 	}
 
@@ -1084,23 +1085,23 @@ if ($action=='delete_previews') {
 }
 
 
-/*--------------------------------- ОТОБРАЖЕНИЕ ------------------------------*/
+/*--------------------------------- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ------------------------------*/
 
 SWITCH (TRUE) {
 	
-	//ошибка импорта
+	//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	CASE ($action == 'import_error'):
 		
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=import_error","title" => 'Ошибка импорта импорта');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=import_error","title" => 'Ошибка импорта');
 		$template='shop.a_import_error.html';
 		
 	BREAK;
 	
 
-	//детализация импорта
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	CASE ($action == 'import_details'):
 		
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=import_details","title" => 'Детализация импорта');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=import_details","title" => 'Детали импорта');
 		$import = new Import($db, $tree, $string);
 		$import = $import->getImportById($_GET['id']);
 		if ($import)
@@ -1113,7 +1114,7 @@ SWITCH (TRUE) {
 		
 	BREAK;
 	
-	//лог импорта
+	//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	CASE ($action == 'import_log'):
 		
 		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=import_log","title" => 'Лог импорта');
@@ -1187,7 +1188,7 @@ SWITCH (TRUE) {
 
 	CASE ($action=='products_list'):
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Товары');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Список подуктов');
 
 
 		if (isset($_GET['page']) && $_GET['page']!='') 
@@ -1275,7 +1276,7 @@ SWITCH (TRUE) {
 
 	CASE ($action=='add_product'):
 		
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Продукты');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Список продуктов');
 		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=add_product","title" => 'Добавить продукт');
 
 		$cat_list=Common::get_nodes_list($cat_list);
@@ -1416,7 +1417,7 @@ SWITCH (TRUE) {
 
 	CASE ($action=='order_details'):
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=orders","title" => 'Список заказов');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=orders","title" => 'Заказы');
 
 		$id=$_GET['id'];
 
@@ -1428,7 +1429,7 @@ SWITCH (TRUE) {
 									WHERE a.id=(SELECT user FROM fw_orders WHERE id='$id' LIMIT 0,1)");*/
 		$order_info = $db->get_single("select * from fw_orders where id='{$id}'");
 		
-		//$companies =  array(1=>"ГРУЗОВОЗОФФ",2=>"Деловые линии",3=>"ПЭК");
+		//$companies =  array(1=>"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",2=>"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ",3=>"пїЅпїЅпїЅ");
 		$companies = unserialize(COMPANY_ORDERS);
 		
 		if ($order_info['dostavka'] > 2)
@@ -1471,7 +1472,7 @@ SWITCH (TRUE) {
 			}
 		}
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=order_details","title" => 'Заказ номер '.$id);
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=order_details","title" => 'Заказ '.$id);
 		
 		for ($i=0;$i<count($status_value);$i++) {
 			$status_list[$i]['value']=$status_value[$i];
@@ -1521,7 +1522,7 @@ SWITCH (TRUE) {
 		$properties_list=$db->get_all("SELECT * FROM fw_catalogue_properties ORDER BY name");
 		$properties_list=String::unformat_array($properties_list);
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Свойства товаров');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
 
 		$smarty->assign("properties_list",$properties_list);
 		$template='shop.a_products_properties.html';
@@ -1530,7 +1531,7 @@ SWITCH (TRUE) {
 
 	CASE ($action=='add_property'):
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Свойства товаров');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
 
 		$smarty->assign("mode","add");
 		$template='shop.a_products_properties.html';
@@ -1539,7 +1540,7 @@ SWITCH (TRUE) {
 
 	CASE ($action=='edit_property' && isset($_GET['id'])):
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Редактирование свойства');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
 
 		$id=$_GET['id'];
 
@@ -1743,7 +1744,7 @@ SWITCH (TRUE) {
 
     $types_list=$db->get_all("SELECT *, (SELECT COUNT(*) FROM fw_products WHERE product_type=fw_products_types.id) as tovars FROM fw_products_types ORDER BY name");
     $types_list=String::unformat_array($types_list);
-    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Типы продуктов');
+    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
     $smarty->assign("types_list",$types_list);
     $template='shop.a_products_types.html';
 
@@ -1752,7 +1753,7 @@ SWITCH (TRUE) {
 
   CASE ($action=='add_type'):
 
-    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Добавить тип продукта');
+    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
 
     $smarty->assign("mode","add");
     $template='shop.a_products_types.html';
@@ -1761,7 +1762,7 @@ SWITCH (TRUE) {
 
   CASE ($action=='edit_type' && isset($_GET['id'])):
 
-    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Редактировать тип продукта');
+    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
 
     $id=$_GET['id'];
 
@@ -1780,7 +1781,7 @@ SWITCH (TRUE) {
 
   CASE ($action=='currency'):
 
-    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=currency","title" => 'Курсы валют');
+    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=currency","title" => 'пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ');
 
     $cur_list=$db->get_all("SELECT * FROM fw_currency");
     $cur_list=String::unformat_array($cur_list);
@@ -1794,7 +1795,7 @@ SWITCH (TRUE) {
 
   CASE ($action=='add_cur'):
 
-    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Курс валют');
+    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ');
 
     $smarty->assign("mode","add");
     $template='shop.a_cur_edit.html';
@@ -1803,7 +1804,7 @@ SWITCH (TRUE) {
 
   CASE ($action=='edit_cur' && isset($_GET['id'])):
 
-    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Редактирование валюты');
+    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ');
 
     $id=$_GET['id'];
 

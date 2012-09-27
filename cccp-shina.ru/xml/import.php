@@ -2,10 +2,10 @@
 
 
 
-//error_reporting(E_ALL);
-//ini_set('display_errors','On');
+error_reporting(E_ALL);
+ini_set('display_errors','On');
 
-$path = dirname(__FILE__) . "/";
+$path = dirname(__FILE__) . "/../";
 
 require_once $path.'conf/globals.php';
 require_once $path.'lib/class.db.php';
@@ -30,8 +30,8 @@ $string = new String();
 $shop = new Shop($db);
 
 /*$id = $tree->clear();
-$tree->insert($id, array("name" => "Шины", "url" => "tires"));
-$tree->insert($id, array("name" => "Диски", "url" => "disk"));*/
+$tree->insert($id, array("name" => "пїЅпїЅпїЅпїЅ", "url" => "tires"));
+$tree->insert($id, array("name" => "пїЅпїЅпїЅпїЅпїЅ", "url" => "disk"));*/
 
 $conf = $db->get_single("select conf_value from fw_conf where conf_key='CATEGORY_TEXT_TEMPLATE'");
 $cat_text_template = $conf['conf_value'];
@@ -40,15 +40,26 @@ $db->query("update fw_products set disk_sklad=0, tire_sklad=0");
 
 system("/usr/local/bin/wget --user=demon --password=gthtgenmt -c --content-disposition -P {$path}xml/ http://demo.itire.ru/xml/cccpshina.xml");
 
+print "Start export: ".date("d-m-Y H:i:s")."\n";
+print "Upload exported xml: http://demo.itire.ru/xml/cccpshina.xml\n";
+
+$insert_cats = 0;
+$update_cats = 0;
+$insert_products = 0;
+$update_products = 0;
+
 $xml = simplexml_load_file($path.'xml/cccpshina.xml');
 $rims = $xml->rims->rim;
 
 foreach ($rims as $rim)
 {
+	echo flush();
 	$parent0 = $shop->getCategory(DISK_ID);
 	$brand_name = mysql_real_escape_string(iconv("utf-8", "windows-1251", $rim->brand));
 	$model_name = mysql_real_escape_string(iconv("utf-8", "windows-1251", $rim->model));
 	$name = mysql_real_escape_string(iconv("utf-8", "windows-1251", $rim->name));
+	if ($model_name == "AirBlade")
+		print $model_name;
 	$price = $rim->price;
 	$article = $rim->article;
 	$disk_width = $rim->disk_width;
@@ -87,7 +98,8 @@ foreach ($rims as $rim)
 					
 		$brand_id = mysql_insert_id();
 		$brand = $shop->getCategory($brand_id);
-					
+		$insert_cats++;
+		//print "Insert new brand: " . $brand_name . "\n";
 	}
 	
 	
@@ -105,27 +117,29 @@ foreach ($rims as $rim)
 			$tree->insert($brand['id'], array(
 				'name' => $model_name,
 				'url' => $string->string_formater($string->translit(strtolower($model_name))),
-				'text' => str_replace("{brand_name}", $brand['name'], str_replace("{model_name}", $model_name, $cat_text_template) ),
+				'text' => str_replace("{brand_name}", $brand['name'], str_replace("{model_name}", $model_name, "") ),
 				'status' => '1',
 				'title' => "{$brand['name']} {$model_name}",
 				'meta_keywords' => "{$brand['name']} {$model_name}",
 				'meta_description' => "{$brand['name']} {$model_name}"
 			));
 			$model_id = mysql_insert_id();
+			$insert_cats++;
 		}
 	}
 	
 	
-	$product = $shop->search_product($name, $model_id);
+	//$product = $shop->search_product($name, $model_id);
+	$product = $shop->search_disk($model_id, $disk_width, $disk_diameter, $disk_krep, $disk_pcd, $disk_pcd2, $disk_dia, $disk_color);
 	if (!$product)
 	{
 		$product_id = $shop->insert_disk($model_id, $name, $disk_width, $disk_diameter, $disk_krep, $disk_pcd, $disk_pcd2, $disk_et, $disk_dia, $disk_color, $price, $disk_sklad);
-		print "insert rim " . $product_id . "\n";
+		$insert_products++;
 	}
 	else 
 	{
 		$shop->update_disk($product['id'], $price, $disk_sklad);
-		print "update rim " . $product['id'] . "\n";
+		$update_products++;
 	}
 	
 	
@@ -143,13 +157,14 @@ $tires = $xml->tires->tire;
 
 foreach ($tires as $tire)
 {
+	echo flush();
 	$parent0 = $shop->getCategory(TIRES_ID);
 	$brand_name = mysql_real_escape_string(iconv("utf-8", "windows-1251", $tire->brand));
 	$model_name = mysql_real_escape_string(iconv("utf-8", "windows-1251", $tire->model));
 	$name = mysql_real_escape_string(iconv("utf-8", "windows-1251", $tire->name));
 	$price = $tire->price;
 	$article = $tire->article;
-	$tire_width = $tire->tiree_width;
+	$tire_width = $tire->tire_width;
 	$tire_height = $tire->tire_height;
 	$tire_diameter = $tire->tire_diameter;
 	$tire_in = $tire->tire_in;
@@ -185,7 +200,7 @@ foreach ($tires as $tire)
 					
 		$brand_id = mysql_insert_id();
 		$brand = $shop->getCategory($brand_id);
-					
+		$insert_cats++;
 	}
 	
 	
@@ -203,33 +218,40 @@ foreach ($tires as $tire)
 			$tree->insert($brand['id'], array(
 				'name' => $model_name,
 				'url' => $string->string_formater($string->translit(strtolower($model_name))),
-				'text' => str_replace("{brand_name}", $brand['name'], str_replace("{model_name}", $model_name, $cat_text_template) ),
+				'text' => str_replace("{brand_name}", $brand['name'], str_replace("{model_name}", $model_name, "") ),
 				'status' => '1',
 				'title' => "{$brand['name']} {$model_name}",
 				'meta_keywords' => "{$brand['name']} {$model_name}",
 				'meta_description' => "{$brand['name']} {$model_name}"
 			));
 			$model_id = mysql_insert_id();
+			$insert_cats++;
 		}
 	}
 	
 	
-	$product = $shop->search_product($name, $model_id);
+	//$product = $shop->search_product($name, $model_id);
+	$product = $shop->search_tire($model_id, $tire_width, $tire_height, $tire_diameter, $tire_in, $tire_is, $tire_usil, $tire_spike);
 	if (!$product)
 	{
 		$product_id = $shop->insert_tire($model_id, $name, 
 			$tire_width, $tire_height, $tire_diameter, $tire_in, $tire_is, 
 			$tire_usil, $tire_spike, $price, $tire_sklad);
-		print "insert tire " . $product_id . "\n";
+		$insert_products++;
 	}
 	else 
 	{
 		$shop->update_tire($product['id'], $price, $tire_sklad);
-		print "update tire " . $product['id'] . "\n";
+		$update_products++;
 	}
 	
 	
+	 
 }
 
+print "Insert category: $insert_cats\n";
+print "Insert products: $insert_products\n";
+print "Update products: $update_products\n";
+print "End export: ".date("d-m-Y H:i:s")."\n";
 
 ?>

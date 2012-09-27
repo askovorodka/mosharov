@@ -7,7 +7,7 @@ class Shop extends db {
 	{
 		$this->db = &$db;
 	}
-
+	
 	function update_tire($id,$price,$tire_sklad)
 	{
 		$this->db->query("update fw_products set price='{$price}', tire_sklad = tire_sklad + '{$tire_sklad}', status='1' where id='{$id}' ");
@@ -23,6 +23,18 @@ class Shop extends db {
 		return mysql_insert_id();
 	}
 	
+	function search_tire($parent, $width,$height,$diameter,$in,$is,$usil,$spike)
+	{
+		$result = $this->db->get_single("select * from fw_products where parent='{$parent}'
+		and tire_width='{$width}' and tire_height='{$height}' and tire_diameter='{$diameter}'
+		and tire_in='{$in}' and tire_is='{$is}' and tire_usil='{$usil}' and tire_spike='{$spike}' limit 1");
+		
+		if ($result)
+			return $result;
+		else
+			return null;
+		
+	}
 	
 	function update_disk($id,$price,$disk_sklad)
 	{
@@ -48,6 +60,19 @@ class Shop extends db {
 			return null;
 	}
 	
+	function search_disk($parent, $width, $diameter,$krep,$pcd,$pcd2,$dia,$color)
+	{
+		$result = $this->db->get_single("select * from fw_products 
+		where parent = '{$parent}' and
+		disk_width={$width} and disk_diameter={$diameter} and disk_krep={$krep}
+		and disk_pcd = {$pcd} and disk_pcd2={$pcd2} and disk_dia={$dia} and disk_color='{$color}' limit 1");
+		
+		if ($result)
+			return $result;
+		else
+			return null;
+		
+	}
 	
 	function getProductsByFeed($cat_id)
 	{
