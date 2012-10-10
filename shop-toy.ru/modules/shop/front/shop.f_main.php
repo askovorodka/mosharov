@@ -906,30 +906,25 @@ SWITCH (TRUE) {
 	BREAK;
 	
 	
-	CASE ((count($url)==2 && preg_match("/\?search_product=(.+)$/",$url[$n])) or (count($url)==2 && preg_match("/\?search_product=(.+)&page=([1-9]+)$/",$url[$n]))):
+	CASE ($url[$n-1] == "search_product" && preg_match("/\?search=(.+)/",$url[$n]) ):
 
 		$navigation[]=array("url" => 'search',"title" => 'Поиск');
 
-		$search=mysql_real_escape_string($_GET['search_product']);
-		$search=urldecode($search);
+		$search=mysql_real_escape_string($_GET['search']);
 
-		$current_url_pages[$n]=eregi_replace("&page=([1-9]+)","",$current_url_pages[$n]);
-
-		if (isset($_GET['page']) && $_GET['page']!='') $page=$_GET['page'];
-		else $page=1;
-		
-		//$result=$db->query("SELECT COUNT(*) FROM fw_products WHERE name LIKE '%$search%' AND status='1' and (tire_sklad = 1 or disk_sklad = 1)");
-		//$pager=Common::pager($result,SEARCH_RESULTS_PER_PAGE,$page);
-
-		$search_results=$db->get_all("SELECT fw_products.*, fw_catalogue.image FROM fw_products left join fw_catalogue on fw_products.parent = fw_catalogue.id WHERE fw_products.name LIKE '%$search%' AND fw_products.status='1' ");
-		//echo "SELECT * FROM fw_products WHERE name LIKE '%$search%' AND status='1' and (tire_sklad > 0 or disk_sklad > 0) ";
+		if (trim($search) != "")
+		{
+			$search_results=$db->get_all("SELECT fw_products.* FROM fw_products WHERE fw_products.name LIKE '%$search%' AND fw_products.status='1' ");
+		}
 
 		if ($search_results)
 		{
 			foreach ($search_results as $key=>$val)
 			{
-				$search_results[$key]['full_url'] = $shop->getFullUrlProduct($val['id']);
-				$model = $shop->getCategory($val['parent']);
+				$search_results[$key]['full_url'] = $shop->getFullUrlProduct($val['id'],'catalog');
+				$search_results[$key]['image'] = $shop->getProductImage($val['id']);
+				
+				/*$model = $shop->getCategory($val['parent']);
 				if ($model)
 				{
 					$search_results[$key]['model'] = $model;
@@ -938,35 +933,102 @@ SWITCH (TRUE) {
 					{
 						$search_results[$key]['manufacturer'] = $manufacturer;
 					}
-				}
+				}*/
 			}
+			
+
+			$smarty->assign("search_results",$search_results);
+			
 		}
 		
-		/*
-		$cat_list=Common::get_nodes_list($cl);
-		for ($a=0;$a<count($search_results);$a++) {
-			for ($a1=0;$a1<count($cat_list);$a1++) {
-				if ($search_results[$a]['parent']==$cat_list[$a1]['id']) {
-					$search_results[$a]['full_url']=$cat_list[$a1]['full_url'];
-					$search_results[$a]['price']=number_format(($search_results[$a]['price'] * $cur_admin['kurs'])/$cur_site['kurs'],2);
-				}
-			}
-		}
-		*/
-
 		$smarty->assign("search_string",$search);
-
-		$smarty->assign("search_results",$search_results);
-
-		$smarty->assign("total_pages",$pager['total_pages']);
-		$smarty->assign("current_page",$pager['current_page']);
-		$smarty->assign("pages",$pager['pages']);
+		
 
 		$page_found=true;
-		$template='search_products.html';
+		$template='search.html';
 
 	BREAK;
 
+	
+	
+	CASE ($url[$n-1] == "product_filter" ):
+
+		$navigation[]=array("url" => 'product_filter',"title" => 'Поиск по параметрам');
+
+		$where = array();
+		$order = "";
+		
+		if (intval($_GET['age']) > 0)
+		{
+			$where[] = " fw_products.age = '".intval($_GET['age'])."'";
+			$smarty->assign("filter_age",intval($_GET['age']));
+		}
+
+		if (intval($_GET['category']) > 0)
+		{
+			$where[] = " fw_products.parent = '".intval($_GET['category'])."'";
+			$smarty->assign("filter_category",intval($_GET['category']));
+		}
+		
+
+		if (intval($_GET['manufactury']) > 0)
+		{
+			$where[] = " brands.id = '".intval($_GET['manufactury'])."'";
+			$smarty->assign("filter_manufactury",intval($_GET['manufactury']));
+		}
+		
+		if (intval($_GET['price_start']) > 0)
+		{
+			$where[] = " fw_products.price >= '".intval($_GET['price_start'])."'";
+			$smarty->assign("price_start",intval($_GET['price_start']));
+			$order = " order by fw_products.price asc ";
+		}
+		
+		if (intval($_GET['price_end']) > 0)
+		{
+			$where[] = " fw_products.price <= '".intval($_GET['price_end'])."'";
+			$smarty->assign("price_end",intval($_GET['price_end']));
+			$order = " order by fw_products.price asc ";
+		}
+		
+		
+		if (count($where) > 0)
+		{
+			$where_str = "and " . implode(" and ", $where);
+
+			$search_results = $db->get_all("
+			
+			select fw_products.* from fw_products
+			left join fw_catalogue as model on fw_products.parent = model.id
+			left join brands on fw_products.brand_id = brands.id
+			where fw_products.status = '1' " . $where_str . $order);
+			
+			
+			if ($search_results)
+			{
+				foreach ($search_results as $key=>$val)
+				{
+					$search_results[$key]['full_url'] = $shop->getFullUrlProduct($val['id'],'catalog');
+					$search_results[$key]['image'] = $shop->getProductImage($val['id']);
+				}
+				
+				$smarty->assign("search_results",$search_results);
+				
+			}
+			
+		}
+
+		
+
+
+		$page_found=true;
+		$template='search.html';
+
+	BREAK;
+	
+	
+	
+	
 	DEFAULT:
 
 		$cat_list=Common::get_nodes_list($cl);

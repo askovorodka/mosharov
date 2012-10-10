@@ -1,4 +1,4 @@
-<form action="{$DOMAIN}/catalog/products_search/" method="get" style="margin:0px; padding:0px;">
+<form action="{$DOMAIN}/catalog/product_filter/" method="get" style="margin:0px; padding:0px;">
 <div class="filter">
 <div class="filterinput">
 	<div class="filterpadd">
@@ -6,7 +6,7 @@
 	<select class="filterselect" name="age">
     <option selected value="-">Любой</option>
     {foreach from=$ages item=age}
-    <option value="{$age.age}">от {$age.age|age_postfix}</option>
+    <option value="{$age.age}"{if isset($filter_age) && $age.age == $filter_age}selected{/if}>от {$age.age|age_postfix}</option>
     {/foreach}
 	</select>
     {*
@@ -21,7 +21,7 @@
 	<select class="filterselect" name="category">
     <option selected value="">Все категории</option>
     {foreach from=$categories item=category}
-    	<option value="{$category.id}">{if $category.param_level == 2}&nbsp;&nbsp;- {/if}{$category.name|strip_tags}</option>
+    	<option {if $category.param_level == 1}disabled{/if} value="{$category.id}"{if isset($filter_category) && $category.id == $filter_category}selected{/if}>{if $category.param_level == 2}&nbsp;&nbsp;- {/if}{$category.name|strip_tags}</option>
     {/foreach}
 	</select>
     </div>
@@ -30,14 +30,14 @@
 	<select class="filterselect" name="manufactury">
     <option selected value="-">Все бренды</option>
     {foreach from=$brands item=brand}
-    <option value="{$brand.id}">{$brand.name|strip_tags}</option>
+    <option value="{$brand.id}"{if isset($filter_manufactury) && $brand.id == $filter_manufactury}selected{/if}>{$brand.name|strip_tags}</option>
     {/foreach}
 	</select>
     </div>
 </div>
 <div class="filterinputr">
 	<div class="filterpadr">
-	Цена:&nbsp; <span class="filtertext">от <input type="text" name="price_start"> до <input type="text" name="price_end"></span>
+	Цена:&nbsp; <span class="filtertext">от <input type="text" name="price_start" {if !empty($price_start)}value="{$price_start}"{/if}> до <input type="text" name="price_end" {if !empty($price_end)}value="{$price_end}"{/if}></span>
     </div>
 </div>
 <input type="image" class="filterbut" src="{$template_image}filter_button.png" value="Искать игрушки">

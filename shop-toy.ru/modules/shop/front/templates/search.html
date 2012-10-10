@@ -3,10 +3,11 @@
 <div class="cat">
 <div class="contt">
 {include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
-<h1>{$cat_content.title|strip_tags}</h1>
-{if !empty($products_list)}
+
+<h1>Результаты поиска</h1>
+{if !empty($search_results)}
 <table class="cats">
-	{foreach from=$products_list item=product name=for2}
+	{foreach from=$search_results item=product name=for2}
 	{if $smarty.foreach.for2.first}<tr>{/if}
 	
     <td>
@@ -30,13 +31,7 @@
 	{/foreach}
 </table><br>
 {else}
-<center>В этой категории пока нет продуктов.</center>
+<center>Ничего не найдено.</center>
 {/if}
-</div>
-</div>
-
-<div class="catt">
-<div class="contt">
-{$cat_content.text}
 </div>
 </div>
