@@ -16,7 +16,7 @@
 	                    <td class="itemlistname"><a href="{$base_url}/{$current_url}/{$item.id}/">{$item.name}</a></td>
 	                    <td>{if $item.tire_season == '1'}<img src="{$template_image}snow.png" />{elseif $item.tire_season == '2'}<img src="{$template_image}sun.png" />{/if}</td>
 	                    <td>{if $item.tire_spike == '2'}<img src="{$template_image}shipi.png" />{/if}</td>
-	                    <td>{$item.tire_width}/{$item.tire_height} R{$item.tire_diameter}</td>
+	                    <td>{$item.tire_width|format_number}/{$item.tire_height|format_number} R{$item.tire_diameter|format_number}</td>
 	                    <td>{$item.tire_in}</td>
 	                    <td>{$item.tire_is}</td>
 	                    <td>{$item.price|format_price} руб.</td>
