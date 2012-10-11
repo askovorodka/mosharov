@@ -1,71 +1,49 @@
+<div class="txtd">
+<div class="contt">
+
+{include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
+
+
         <h1>История заказов</h1>
 		
         {foreach from=$orders_list item=order}
-        <div id="hisp">Заказ от {$order.insert_date|date_format:"%d.%m.%y"}</div>
-           <table width="100%" border="0" cellspacing="1" cellpadding="0">
-              <tr bgcolor="#fbf3df">
-                <td colspan="6" class="tabletop"><div class="tabletop2"></div></td>
+        <div style="margin-top:25px;">Заказ от {$order.insert_date|date_format:"%d.%m.%y"}</div>
+           <table width="100%" border="0">
+              <tr>
+                <td colspan="6"><div></div></td>
               </tr>
 
-              <tr bgcolor="#fbf3df" class="tablecapt">
-                <td>№</td>
-                <td>Количество</td>
-                <td>Артикул</td>
-                <td>Наименование</td>
-                <td>Цена</td>
-                <td>Сумма</td>
+              <tr>
+                <th>№</th>
+                <th>Количество</th>
+                <th>Артикул</th>
+                <th>Наименование</th>
+                <th>Цена</th>
+                <th>Сумма</th>
               </tr>
               
               
               {foreach from=$order.products_list item=product name=products}
-              <tr bgcolor="#{if $smarty.foreach.products.iteration%2}f1f6f9{else}fbf3df{/if}" class="tablecapt">
+              <tr>
                 <td>{$order.id}</td>
-                <td>{$product.product_count} шт.</td>
-                <td><span class="tableart">{$product.article}</span></td>
-                <td><a href="{$base_url}/shop{$product.full_url}">{$product.name}</a></td>
-                <td id="nw">{$product.price|format_number} <span class="tableart">руб.</span></td>
-                <td id="nw">{$product.total_price|format_number} <span class="tableart">руб.</span></td>
+                <td style="text-align:center;">{$product.product_count} шт.</td>
+                <td style="text-align:center;">{$product.article}</td>
+                <td style="width:270px;"><a href="{$base_url}/{$product.full_url}/">{$product.name}</a></td>
+                <td id="nw">{$product.price|format_number}&nbsp;руб.</td>
+                <td id="nw">{$product.total_price|format_number}&nbsp;руб.</td>
               </tr>
               {/foreach}
               
-              <tr bgcolor="#fbf3df">
-                <td colspan="6" class="tablebot"><div class="tablebot2"></div></td>
+              <tr>
+                <td colspan="6"><div></div></td>
               </tr>
             </table>
             <div id="tar2">
-            Итого: <span style="color:#e07e13;">{$order.total_price|format_number}</span> руб.<br>
-            Доставка: {if $order.total_price < 20000}<span style="color:#e07e13;">{$order.order_price|format_number}</span> руб.{else}<span style="color:#e07e13;">Бесплатно</span>{/if}
-            <span style="color:#999999;font-size:12px;">({if $order.dostavka == 1}доставка по Москве и Области{else}Самовывоз{/if})</span><br>
-            Всего: <span style="color:#156391;">{if $order.total_price < 20000}{$order.dostavka|format_number}{else}{$order.total_price|format_number}{/if}</span> руб. 
-            <span style="color:#999999;font-size:12px;">({if $order.payment == 1}оплата наличными{else}безналичный расчет{/if})</span><br>
+            Итого: <span>{$order.total_price|format_number}</span> руб.<br>
+            Доставка: <span>{$order.order_price|format_number}</span> руб.<br>
+            Всего: <span>{$order.dostavka|format_number}</span> руб. <br>
             Статус заказа: {$order.status|get_order_status}
             </div>
             {/foreach}
 
-
-{*foreach from=$orders_list item=order}
-
-<table width=100% cellspacing=0 cellpadding=0 border="0">
-<tr>
-<td style="padding: 5px 0 5px 0;"><small>Дата заказа: <b>{$order.insert_date|date_format:"%d.%m.%Y"}</b> | Сумма заказа: <b>{$order.total_price}</b> {$currency}</small></td></tr>
-</table>
-
-<table width=100% cellspacing=0 cellpadding=0 border="0"  id="price">
-<tr>
-<th>Наименование</th>
-<th width=150>Кол-во</th>
-<th width="150">Цена</th>
-</tr>
-{foreach from=$order.products_list item=product}
-<tr>
-<td style="text-align: left;">{$product.name}</td>
-<td>{$product.number}</td>
-<td>{math equation="x * y" x=$product.price y=$product.number format="%.2f"} {$currency}</td>
-</tr>
-{/foreach}
-</table>
-
-<br><br>
-{/foreach}
-<a href="{$smarty.server.HTTP_REFERER}" onClick="history.go(-1);">вернуться в кабинет</a>
-*}
+</div></div>

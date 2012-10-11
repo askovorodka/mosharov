@@ -1,17 +1,25 @@
+{if $top_products}
 <div class="spzakl">
 	<div class="spzakli">
-    	<div class="spzaklthis">—уперпредложение</div>
-        <div class="spzaklelse">јкции</div>
-        <div class="spzaklelse">—упер-пупер!</div>
+    	<div class="spzaklthis">—пецпредложени€</div>
+        {*<div class="spzaklelse">јкции</div>
+        <div class="spzaklelse">—упер-пупер!</div>*}
     </div>
 </div>
+
 <div class="special">
 	<div class="spinner">
-    	<div class="pspitem"><div class="spitem"><a href="#" title="ћ€гка€ игрушка —мешарики ћул€, 12см">ћ€гка€ игрушка —мешарики ћул€, 12см</a><br><img src="{$template_image}toy_special.jpg" alt="ћ€гка€ игрушка —мешарики ћул€, 12см"><br><span class="splastp">1230</span><span class="sprubl"> руб.</span><br>1640<span class="sprub"> руб.</span></div></div>
-        <div class="pspitem"><div class="spitem"><a href="#" title="ћ€гка€ игрушка —мешарики ћул€, 12см">ћ€гка€ игрушка —мешарики ћул€, 12см</a><br><img src="{$template_image}toy_special.jpg" alt="ћ€гка€ игрушка —мешарики ћул€, 12см"><br><span class="splastp">1230</span><span class="sprubl"> руб.</span><br>640<span class="sprub"> руб.</span></div></div>
-        <div class="pspitem"><div class="spitem"><a href="#" title="ћ€гка€ игрушка —мешарики ћул€, 12см">ћ€гка€ игрушка —мешарики ћул€, 12см</a><br><img src="{$template_image}toy_special.jpg" alt="ћ€гка€ игрушка —мешарики ћул€, 12см"><br><span class="splastp">1230</span><span class="sprubl"> руб.</span><br>640<span class="sprub"> руб.</span></div></div>
-        <div class="pspitem"><div class="spitem"><a href="#" title="ћ€гка€ игрушка —мешарики ћул€, 12см">ћ€гка€ игрушка —мешарики ћул€, 12см</a><br><img src="{$template_image}toy_special.jpg" alt="ћ€гка€ игрушка —мешарики ћул€, 12см"><br><span class="splastp">1230</span><span class="sprubl"> руб.</span><br>640<span class="sprub"> руб.</span></div></div>
-        <div class="pspitem"><div class="spitem"><a href="#" title="ћ€гка€ игрушка —мешарики ћул€, 12см">ћ€гка€ игрушка —мешарики ћул€, 12см</a><br><img src="{$template_image}toy_special.jpg" alt="ћ€гка€ игрушка —мешарики ћул€, 12см"><br><span class="splastp">1230</span><span class="sprubl"> руб.</span><br>640<span class="sprub"> руб.</span></div></div>
-        <div class="pspiteml"><div class="spitem"><a href="#" title="ћ€гка€ игрушка —мешарики ћул€, 12см">ћ€гка€ игрушка —мешарики ћул€, 12см</a><br><img src="{$template_image}toy_special.jpg" alt="ћ€гка€ игрушка —мешарики ћул€, 12см"><br><span class="splastp">1230</span><span class="sprubl"> руб.</span><br>640<span class="sprub"> руб.</span></div></div>
+		
+		{foreach from=$top_products item=item name="top"}
+    		<div class="{if $smarty.foreach.top.last}pspiteml{else}pspitem{/if}">
+    		<div class="spitem"><a href="{$base_url}/{$item.full_url}/"><img style="margin:0px;" src="/images/img105x105{if !empty($item.image)}/uploaded_files/product_images/{$item.id}/{$item.image}{else}/templates/img/nophoto.jpg{/if}" alt="{$item.name|strip_tags}"></a>
+    		<br><a href="{$base_url}/{$item.full_url}/" title="{$item.name|strip_tags}">{$item.name|strip_tags}</a>
+    		{if $item.price2 > 0}<div style="margin-top:7px;"><span class="splastp">{$item.price2|format_price}</span><span class="sprubl"> руб.</span></div>{/if}
+    		<div style="margin-top:5px;">{$item.price|format_price}<span class="sprub"> руб.</span></div></div></div>
+    	{/foreach}
+        
+        
     </div>
 </div>
+
+{/if}

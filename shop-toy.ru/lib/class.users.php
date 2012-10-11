@@ -71,9 +71,9 @@ class Users extends db
 		
 		$user = $this->get_user($user_id);
 		
-		setcookie('fw_login_cookie',$user['mail']."|".sha1($user['password']),time()+LOGIN_LIFETIME,'/','');
+		setcookie('shop_login_cookie',$user['mail']."|".sha1($user['password']),time()+LOGIN_LIFETIME,'/','');
 		
-		$_SESSION['fw_user'] = $user;
+		$_SESSION['shop_user'] = $user;
 		
 		return $user;
 		
@@ -92,7 +92,8 @@ class Users extends db
 	
 	function is_auth_user()
 	{
-		return Common::check_auth('user');
+		//return Common::check_auth('user');
+		return Common::check_user('user');
 	}
 	
 	
@@ -102,7 +103,7 @@ class Users extends db
 		$this->rst = parent::get_single("select * from fw_users where login='{$this->email}' and password='". $this->password ."'");
 		if (!empty($this->rst['id']))
 		{
-			setcookie('fw_login_cookie',$this->rst['login']."|".sha1($this->rst['password']),time()+LOGIN_LIFETIME,'/','');
+			setcookie('shop_login_cookie',$this->rst['login']."|".sha1($this->rst['password']),time()+LOGIN_LIFETIME,'/','');
 			$_SESSION['fw_user'] = $this->rst;
 			return true;
 		}

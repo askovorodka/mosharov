@@ -224,6 +224,13 @@ SWITCH (TRUE) {
 		$page_found=true;
 		$navigation[]=array("url" => 'basket',"title" => 'Ваша корзина');
 		$navigation[]=array("url" => 'step1',"title" => 'Оформление заказа');
+		
+		if ($user_id = $users->is_auth_user())
+		{
+			$user = $users->get_user($user_id);
+			$smarty->assign('user', $user);
+		}
+		
 		$title="Оформление заказа";
 		$template='basket_step1.html';
 
@@ -288,7 +295,7 @@ SWITCH (TRUE) {
 	BREAK;
 
 
-	CASE (@$url[$n-1]=='search_product' && preg_match("/\?keyword=(.+)$/",$url[$n]) && count($url)==3):
+	/*CASE (@$url[$n-1]=='search_product' && preg_match("/\?keyword=(.+)$/",$url[$n]) && count($url)==3):
 
   		$patterns = array('/\s+/', '/"+/', '/%+/');
   		$replace = array('');
@@ -313,7 +320,7 @@ SWITCH (TRUE) {
   		echo $output;
 		die();
 
-	BREAK;
+	BREAK;*/
 
 
 
@@ -593,6 +600,9 @@ SWITCH (TRUE) {
 				$products_list='';
 				$total_number=0;
 				
+				//echo $users->is_auth_user();
+				//exit();
+				
 				//если пользователь зареген, берем данные из таблицы
 				if ($user_id = $users->is_auth_user())
 				{
@@ -632,15 +642,11 @@ SWITCH (TRUE) {
 				}
 				
 				$name=$user['name'];
-				//$company=$_POST['company'];
 				$comments=$_POST['comment'];
-				//$inn = $_POST['inn'];
-				//$kpp = $_POST['kpp'];
 				$dostavka = $_POST['dostavka'];
-				//$payment = $_POST['payment'];
+				$address = $_POST['address'];
 				
-				
-				if ($dostavka == 1 || $dostavka > 2)
+				if ($dostavka == 2)
 				{
 					$order_price = SHOP_DOSTAVKA_PRICE;
 				}
@@ -654,7 +660,7 @@ SWITCH (TRUE) {
 				for ($i=0;$i<count($_SESSION['fw_basket']);$i++)
 				{
 					
-					$p_info = $shop->getProductInfo($_SESSION['fw_basket'][$i]['id']);
+					/*$p_info = $shop->getProductInfo($_SESSION['fw_basket'][$i]['id']);
 					if (!empty($p_info['tire_width']))
 						if ($_SESSION['fw_basket'][$i]['number'] > $p_info['tire_sklad'])
 							$_SESSION['fw_basket'][$i]['number'] = $p_info['tire_sklad'];
@@ -662,16 +668,13 @@ SWITCH (TRUE) {
 					if (!empty($p_info['disk_width']))
 						if ($_SESSION['fw_basket'][$i]['number'] > $p_info['disk_sklad'])
 							$_SESSION['fw_basket'][$i]['number'] = $p_info['disk_sklad'];
-					
+					*/
 					$total_price+=$_SESSION['fw_basket'][$i]['price']*$_SESSION['fw_basket'][$i]['number'];
 					
 				}
 				
 				$total_sum = $total_price;
-				if ($dostavka != 2 && $total_price < SHOP_DOSTAVKA_LIMIT)
-					$total_sum += $order_price;
-				else
-					$order_price = 0;
+				$total_sum += $order_price;
 				
 				
 				
@@ -743,12 +746,9 @@ SWITCH (TRUE) {
 				$smarty->assign("user",$user);
 				$smarty->assign("dostavka",$dostavka);
 				
-				$smarty->assign("payment",$payment);
-				$smarty->assign("company",$company);
 				$smarty->assign("order_price",$order_price);
 				$smarty->assign("total_sum",$total_sum);
-				$smarty->assign("inn",$inn);
-				$smarty->assign("kpp",$kpp);
+				$smarty->assign("address",$address);
 				$smarty->assign("comment",$comments);
 
 				$body=$smarty->fetch($templates_path.'/order_notice.txt');
@@ -758,11 +758,7 @@ SWITCH (TRUE) {
 
 				$admin_body=$smarty->fetch($templates_path.'/admin_order_notice.txt');
 
-				//Mail::send_mail("ai@avtozeon.ru,avtozeon@gmail.com,rifshina@mail.ru,itire@ya.ru",$user['login'],"Новый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
-				//Mail::send_mail("cccp-tire@yandex.ru",$user['mail'],"Новый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
-				//Mail::send_mail("snegovik3@gmail.com",$user['mail'],"Новый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
 				Mail::send_mail("aschmitz@yandex.ru",$user['mail'],"Новый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
-				//Mail::send_mail("rifshina@mail.ru",$user['mail'],"Новый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
 				
 				//$page_found = true;
 				//$template = 'order_done.html';
@@ -878,10 +874,6 @@ SWITCH (TRUE) {
 			$order = "desc";
 		}
 		
-		//echo $current_url;
-		//$current_url = preg_replace("/&sort=([a-z]+)/i","",$current_url);
-		//$current_url = preg_replace("/&order=([a-z]+)/i","",$current_url);
-		
 		$products = $shop->search($where, $pager, $sort, $order);
 		
 		if ($products)
@@ -923,20 +915,8 @@ SWITCH (TRUE) {
 			{
 				$search_results[$key]['full_url'] = $shop->getFullUrlProduct($val['id'],'catalog');
 				$search_results[$key]['image'] = $shop->getProductImage($val['id']);
-				
-				/*$model = $shop->getCategory($val['parent']);
-				if ($model)
-				{
-					$search_results[$key]['model'] = $model;
-					$manufacturer = $shop->getParent($model, $model['param_level']-1);
-					if ($manufacturer)
-					{
-						$search_results[$key]['manufacturer'] = $manufacturer;
-					}
-				}*/
 			}
 			
-
 			$smarty->assign("search_results",$search_results);
 			
 		}
@@ -954,7 +934,7 @@ SWITCH (TRUE) {
 	CASE ($url[$n-1] == "product_filter" ):
 
 		$navigation[]=array("url" => 'product_filter',"title" => 'Поиск по параметрам');
-
+		
 		$where = array();
 		$order = "";
 		

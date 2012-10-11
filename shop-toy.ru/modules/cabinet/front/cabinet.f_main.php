@@ -14,6 +14,7 @@ if ($url[$n]!='login' && $url[$n]!='register' && count($url)!=2) {
 require_once 'lib/class.mail.php';
 require_once 'lib/class.replace.php';
 require_once 'lib/class.password.php';
+require_once 'lib/class.users.php';
 require_once 'modules/shop/front/class.shop.php';
 $navigation[]=array("url" => $module_url,"title" => $node_content['name']);
 $smarty->assign("module_url",BASE_URL.'/'.$module_url);
@@ -40,14 +41,17 @@ $shop = new Shop($db);
 
 if (isset($_POST['submit_restore'])){
 
-      $email = $_POST['email'];
+	  if (!empty($_POST['email']))
+	  {
+      	$email = $_POST['email'];
+      	$item = $db->get_single("SELECT id,login FROM fw_users WHERE mail='".$email."'");
+	  }
 
-      $item = $db->get_single("SELECT id,login FROM fw_users WHERE mail='".$email."'");
 
-      if ($item['id'] != ""){
+      if (!empty($item['id'])){
             $pwd = new Password();
             $password = $pwd->generate();
-            $db->query("UPDATE fw_users SET password='".md5($password)."' WHERE id=".intval($item['id']));
+            $db->query("UPDATE fw_users SET password='".sha1($password)."' WHERE id=".intval($item['id']));
 
             $subject = "Регистрационные данные http://www." . $_SERVER['SERVER_NAME'];
             $message = 'Ваш логин: ' . $item['login'] . '<br>Ваш пароль: ' .$password;
@@ -58,11 +62,11 @@ if (isset($_POST['submit_restore'])){
 
             mail($_POST['email'], $subject, $message, $headers);
 
-            $smarty->assign("error_message",'На ваш E-mail выслан новый пароль');
+            $smarty->assign("error_message",'На ваш email выслан новый пароль');
       }
 
       else
-            $smarty->assign("error_message",'Такой e-mail отсутствует');
+            $smarty->assign("error_message",'Такой email отсутствует');
 
 }
 
@@ -70,10 +74,8 @@ if (isset($_POST['submit_restore'])){
 if (isset($_POST['submit_login'])) {
 
 	$check = true;
-
-	$login=String::secure_format($_POST['email']);
-	if (isset($_POST['submit_login_top']))$top=$_POST['submit_login_top'];
-	if (isset($_POST['submit_login_basket']))$basket=$_POST['submit_login_basket'];
+	
+	$email=String::secure_format($_POST['email']);
 	$password=$_POST['password'];
 
 
@@ -83,35 +85,27 @@ if (isset($_POST['submit_login'])) {
 		$check=false;
 	}
 
-	if (trim($login) == "") {
+	if (trim($email) == "") {
 		$smarty->assign("error_message",'Введите пожалуйста ваш логин');
 		$check=false;
 	}
 	
 	if ($check==true) {
 
-		$content=$db->get_single("SELECT * FROM fw_users WHERE login='$login' AND status='1'");
+		$content=$db->get_single("SELECT * FROM fw_users WHERE mail='$email' AND status='1'");
 		$password_to_check = @$content['password'];
 		if (empty($password_to_check)) {
 			$smarty->assign("error_message",'Такого пользователя не существует');
 			$smarty->assign("email",$login);
-			//echo 'Такого пользователя не существует';
-			//echo "error2";
-			//die();
 		}
 		else {
-
 			if (sha1($password) != $password_to_check) {
 				$smarty->assign("error_message",'Неправильный пароль');
-				$smarty->assign("email",$login);
-				//echo 'Неправильный пароль';
-				//echo sha1($password) . " - " . $password_to_check;
-				//echo "error2";
-				//die();
+				$smarty->assign("email",$email);
 			}
 			else {
-				setcookie('fw_login_cookie',$login."|".sha1($password),time()+LOGIN_LIFETIME,'/','');
-				$_SESSION['fw_user'] = $content;
+				setcookie('shop_login_cookie',$email."|".sha1($password),time()+LOGIN_LIFETIME,'/','');
+				$_SESSION['shop_user'] = $content;
 				
 				if (!empty($_SESSION['fw_basket']))
 				{
@@ -119,9 +113,6 @@ if (isset($_POST['submit_login'])) {
 					die();
 				}
 				
-				//header("Location: ".BASE_URL.'/cabinet/');
-				//echo 1;
-				//die();
 				if ($_SERVER['HTTP_REFERER']==BASE_URL.'/'.$module_url.'/login') header ("Location:". BASE_URL.'/'.$module_url);
 				else {
 					$location=$_SERVER['HTTP_REFERER'];
@@ -139,7 +130,7 @@ if (isset($_POST['submit_login'])) {
 
 if ($url[$n]=='logout' && count($url)==2) {
 
-	setcookie('fw_login_cookie',"",time()-5555,'/','');
+	setcookie('shop_login_cookie',"",time()-5555,'/','');
 	session_destroy();
 	$location=$_SERVER['HTTP_REFERER'];
 	header ("Location: $location");
@@ -303,7 +294,7 @@ if (isset($_POST['submit_user_register'])) {
 if (isset($_POST['submit_edit_user'])) {
 
 	$check=true;
-	$id=$_SESSION['fw_user']['id'];
+	$id=$_SESSION['shop_user']['id'];
 	//$password=String::secure_user_input($_POST['edit_user_password']);
 	//$old_password=String::secure_user_input($_POST['old_password']);
 	$mail=String::secure_user_input($_POST['mail']);
@@ -660,6 +651,15 @@ SWITCH (TRUE){
 
 	BREAK;
 
+	CASE ($url[$n]=='restore' && count($url)==2):
+
+		$navigation[]=array("url" => 'restore',"title" => 'Восстановить пароль');
+
+		$page_found=true;
+		$template='restore_pwd.html';
+
+	BREAK;
+	
 	CASE ($url[$n]=='register' && count($url)==2):
 
 		$navigation[]=array("url" => 'register',"title" => 'Стать своим');
@@ -841,7 +841,7 @@ SWITCH (TRUE){
 
     $navigation[]=array("url" => 'orders',"title" => 'История заказов');
 
-    $orders_list=$db->get_all("SELECT *, (total_price + order_price) dostavka  FROM fw_orders WHERE user='".$_SESSION['fw_user']['id']."' ORDER BY insert_date DESC");
+    $orders_list=$db->get_all("SELECT *, (total_price + order_price) dostavka  FROM fw_orders WHERE user='".$_SESSION['shop_user']['id']."' ORDER BY insert_date DESC");
     $orders_list=String::unformat_array($orders_list,'front');
 
     foreach ($orders_list as $key=>$val)
@@ -853,7 +853,7 @@ SWITCH (TRUE){
     	where a.order_id = '{$val['id']}' ");
     	foreach ($orders_list[$key]['products_list'] as $key2=>$val2)
     	{
-    		$orders_list[$key]['products_list'][$key2]['full_url'] = $shop->getFullUrlProduct( $val2['product_id'] );
+    		$orders_list[$key]['products_list'][$key2]['full_url'] = $shop->getFullUrlProduct( $val2['product_id'], 'catalog' );
     	}
     }
     
@@ -921,10 +921,16 @@ SWITCH (TRUE){
 
   DEFAULT:
 
+  		$users = new Users();
+  		if (!($user_id = $users->is_auth_user()))
+  		{
+  			header("Location: " . DOMAIN);
+  			die();
+  		}
 		if (count($url)==1) $page_found=true;
-		$profile=$db->get_single("SELECT * FROM fw_users u WHERE u.id='".$_SESSION['fw_user']['id']."'");
+		$profile=$db->get_single("SELECT * FROM fw_users u WHERE u.id='".$_SESSION['shop_user']['id']."'");
 		$profile=String::unformat_array($profile,'front');
-		$smarty->assign("temp",$profile);
+		$smarty->assign("user",$profile);
 		$main=$smarty->fetch($templates_path.'/cabinet_main_new.html');
 		$smarty->assign("main",$main);
 		$smarty->assign("content",$node_content['elements']);

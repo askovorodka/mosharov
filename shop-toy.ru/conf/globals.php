@@ -9,6 +9,7 @@
   define("DOMAIN", 'http://'.$_SERVER['SERVER_NAME'].'/');
   define("SHOP_IMAGE", DOMAIN . 'uploaded_files/product_images/');
   
+  define("SHOP_DOSTAVKA_PRICE", 200);
   
   define("TPL_PATH", ROOT . "templates/");
   define("TPL_SHOP_PATH", ROOT . "modules/shop/front/templates/");

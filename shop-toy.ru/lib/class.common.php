@@ -3,6 +3,12 @@
 class Common {
 
 	
+	function _404()
+	{
+		header("HTTP/1.0 404 Not Found");
+		die();
+	}
+	
 	function generate_main_menu($level=0) {
 
 		global $db;
@@ -189,6 +195,60 @@ class Common {
 
 				if ($where=='admin' && (!isset($_SESSION['fw_user']['priv']) || $_SESSION['fw_user']['priv']>=9)) return '0';
 				else return '1';
+			}
+		}
+	
+	}
+	
+	
+	function check_user($where='admin') {
+		
+		global $db;
+	
+		if (!@$_COOKIE['shop_login_cookie']) {
+			return '0';
+		}
+		else {
+	
+			if (!isset($_SESSION['shop_user']['login'])) {
+
+				list($logged_user,$logged_password)=explode("|",$_COOKIE['shop_login_cookie']);
+	
+				$content=$db->get_single("SELECT * FROM fw_users WHERE login='$logged_user' AND status='1'");
+				$password_to_check=@$content['password'];
+				if (empty($password_to_check)) {
+					return '0';
+				}
+				else {
+	
+					if ($logged_password!=$password_to_check) {
+						return '0';
+					}
+					else {
+						$_SESSION['shop_user']=$content;
+						if ($where=='admin' && (!isset($content['priv']) && $content['priv']>=9)) return '0';
+						else return '1';
+					}
+				}
+			}
+			else {
+
+				if ($where=='admin' && (!isset($_SESSION['shop_user']['priv']) || $_SESSION['shop_user']['priv']>=9)) return '0';
+				else 
+				{
+					$content = $db->get_single("SELECT * FROM fw_users WHERE login='{$_SESSION['shop_user']['login']}' and password='{$_SESSION['shop_user']['password']}' AND status='1'");
+					if (!empty($content['id']))
+					{
+						return $content['id'];
+						
+					}
+					else
+					{
+						$_SESSION['fw_user']="";
+						return '0';
+					}
+				}
+				
 			}
 		}
 	

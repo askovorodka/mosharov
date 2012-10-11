@@ -14,11 +14,9 @@ class Shop extends db {
 		
 		if ($result && count($result) > 0)
 		{
-			$rnd = rand(0, count($result)-1);
-			$result[$rnd]['full_url'] = $this->getFullUrlProduct($result[$rnd]['id']);
-			return $result[$rnd];
+			return $result;
 		}
-		else 
+		else
 		{
 			return null;
 		}

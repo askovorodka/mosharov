@@ -611,6 +611,7 @@ if (isset($_POST['submit_add_product'])) {
 	//$small_description=String::secure_format($_POST['edit_small_description']);
 	//$description=String::secure_format($_POST['edit_description']);
 	$price=String::secure_format($_POST['edit_price']);
+	$price2=String::secure_format($_POST['edit_price2']);
 	//$price1=String::secure_format($_POST['edit_price1']);
 	//$price2=String::secure_format($_POST['edit_price2']);
 	//$guarantie=String::secure_format($_POST['edit_guarantie']);
@@ -619,7 +620,8 @@ if (isset($_POST['submit_add_product'])) {
 	$garant=String::secure_format($_POST['edit_garant']);
 	$age=String::secure_format($_POST['edit_age']);
 	$description=String::secure_format($_POST['edit_description']);
-	$sex=String::secure_format($_POST['edit_sex']);
+	//$sex=String::secure_format($_POST['edit_sex']);
+	$sex='';
 	
 	//$sort_order=$db->get_single("SELECT MAX(sort_order) as max FROM fw_products WHERE parent='$parent'");
 	//$sort_order=$sort_order['max']+1;
@@ -634,11 +636,11 @@ if (isset($_POST['submit_add_product'])) {
 		(
 		
 		article,parent,name,
-		title,price,insert_date,
+		title,price,price2,insert_date,
 		country,garant,age,description,sex) 
 		
 		VALUES(
-			'$article','$parent','$name','$title','$price',
+			'$article','$parent','$name','$title','$price','$price2',
 			'".time()."','$country','$garant','$age','$description','$sex'
 		)");
 	
@@ -659,14 +661,15 @@ if (isset($_POST['submit_edit_product'])) {
 	
 	$description=String::secure_format($_POST['edit_description']);
 	$price=String::secure_format($_POST['edit_price']);
-	
+	$price2=String::secure_format($_POST['edit_price2']);
 	$guarantie=String::secure_format($_POST['edit_guarantie']);
 	$status=$_POST['edit_status'];
 	$hit=isset($_POST['edit_hit'])?"1":"0";
 	$age=String::secure_format($_POST['edit_age']);
 	$country=String::secure_format($_POST['edit_country']);
 	$garant=String::secure_format($_POST['edit_garant']);
-	$sex=String::secure_format($_POST['edit_sex']);
+	//$sex=String::secure_format($_POST['edit_sex']);
+	$sex='';
 	
 
 	$id=$_POST['id'];
@@ -686,6 +689,7 @@ if (isset($_POST['submit_edit_product'])) {
 			meta_description='$meta_description',
 			meta_keywords='$meta_keywords',
 			price='$price',
+			price2='$price2',
 			garant='$garant',
 			sex='$sex',
 			age='$age',

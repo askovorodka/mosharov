@@ -86,6 +86,13 @@ if(document.getElementById(name).style.display!="none") {
 </tr>
 
 <tr>
+  <td class=td1_left style="border-bottom: none;">Новая цена (спецпредложение):</td>
+  <td class=td1_right style="border-bottom: none;">
+  <input type=text name=edit_price2 class=field style="width:200px;" value="{$product.price2}">&nbsp;&nbsp;{$currency_admin.znak}
+  </td>
+</tr>
+
+<tr>
   <td class=td1_left style="border-bottom: none;">Артикул:</td>
   <td class=td1_right style="border-bottom: none;">
   <input type=text name=edit_article class=field style="width:200px;" value="{$product.article}">
@@ -106,12 +113,19 @@ if(document.getElementById(name).style.display!="none") {
   </td>
 </tr>
 
+{*
 <tr>
   <td class=td1_left style="border-bottom: none;">Пол:</td>
   <td class=td1_right style="border-bottom: none;">
   <select name="edit_sex"><option value="boy" {if $product.sex=='boy'}selected{/if}>Мальчик</option>
   <option {if $product.sex=='girl'}selected{/if} value="girl">Девочка</option></select>
   </td>
+</tr>
+*}
+
+<tr>
+  <td class=td1_left style="border-bottom: none;">Спецпредложение:</td>
+  <td class=td1_right style="border-bottom: none;"><input type=checkbox name=edit_hit {if $product.hit=='1'}checked{/if} id="hit"></td>
 </tr>
 
 <tr>

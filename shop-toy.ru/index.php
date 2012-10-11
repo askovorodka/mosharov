@@ -135,20 +135,27 @@ if ($node['id']!='') {
   $module_found=true;
 }
 
+
 $current_url_pages=$url;
 $current_url=implode("/",$url);
 $smarty->assign("current_url",$current_url);
 
-//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
-//$news=$db->get_all("SELECT * FROM fw_news WHERE status='1' ORDER BY publish_date DESC " . $limit);
-//$smarty->assign("news_list",$news);
 
-//$smarty->assign('top_product', $shop->getTopProducts(1));
+if ($current_url == "home")
+{
+	$top_products = $shop->getTopProducts(6);
+	if ($top_products)
+	{
+		foreach ($top_products as $key=>$val)
+		{
+			$top_products[$key]['full_url'] = $shop->getFullUrlProduct($val['id'],'catalog');
+			$top_products[$key]['image'] = $shop->getProductImage($val['id']);
+		}
+				
+		$smarty->assign("top_products",$top_products);
+	}
+}
 
-//пїЅпїЅпїЅпїЅпїЅпїЅ
-//$session =  new Session($db);
-//$session->setSession();
-//$smarty->assign('online_users', $session->getOnLine() );
 
 $smarty->assign("base_url",BASE_URL);
 $smarty->assign("base_path",BASE_PATH);
@@ -160,14 +167,14 @@ $smarty->assign("node_content",$node_content);
 $smarty->assign("template_image",'http://'.$_SERVER['HTTP_HOST'].'/templates/img/');
 
 
-if (!empty($_SESSION['fw_user'])) $smarty->assign('user_info',$_SESSION['fw_user']);
+if (!empty($_SESSION['shop_user'])) $smarty->assign('user_info',$_SESSION['shop_user']);
 
 
-/*--- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ ----*/
+
 $capt = new captchaZDR;
 $capt->base_path = BASE_PATH;
 
-  /* ------- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ-------- */
+
 
   for ($i=0;$i<count($default_modules);$i++) {
     $new_module=array("switch_default"=>'on',"name"=>$default_modules[$i]['name'],"file"=>'modules/'.$default_modules[$i]['name'].'/front/'.$default_modules[$i]['name'].'.f_main.php');
@@ -314,7 +321,7 @@ elseif ($page_found) {
 else {
   //$template=BASE_PATH.'/templates/404.html';
   $main_template=BASE_PATH . '/templates/404.html';
-  //$navigation[]=array("url"=>"/","title"=>"пїЅпїЅпїЅпїЅпїЅпїЅ 404. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+  $navigation[]=array("url"=>"/","title"=>"Ошибка 404. Ничего не найдено.");
 
 }
 
