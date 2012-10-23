@@ -1,9 +1,12 @@
+{if $documents_list}
+<ul>
 {foreach from=$documents_list item=page}
-	<tr>
-		<td>
-			{if $page.image}<img src="uploaded_files/documents_images/resized-{$page.image}" align="left">{/if}
-			<div><strong><a href={$page_content.full_url}item_{$page.id}/>{$page.name|stripslashes}</a></strong></div>
-			<div>{$page.small_description}</div><br />
-		</td>
-	</tr>
+	<li style="list-style-type:none; margin-left:0px; padding-left:0px;">
+			{if $page.image}<div style="float:left;"><img src="/images/img100x100/uploaded_files/documents_images/{$page.image}" /></div>{/if}
+			<div><strong><a href="{$base_url}/{$page_content.full_url}item_{$page.id}/" е >{$page.name|stripslashes}</a></strong></div>
+			<div>{$page.small_description}</div>
+			<div style="clear:both;"></div>
+	</li>
 {/foreach}
+</ul>
+{/if}

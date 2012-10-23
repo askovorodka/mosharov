@@ -537,9 +537,13 @@ h3 {
 	text-align:center;
 	border-right:1px solid #d9d9d9;
 }
+.cats td.right {
+	border-right:none;
+}
 .catnone {
 	padding:0px;
 	height:10px;
+	border-right:none!important;
 }
 .catsl {
 	border:0px !important;

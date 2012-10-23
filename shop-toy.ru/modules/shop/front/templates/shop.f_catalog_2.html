@@ -9,7 +9,7 @@
 	{foreach from=$products_list item=product name=for2}
 	{if $smarty.foreach.for2.first}<tr>{/if}
 	
-    <td>
+    <td{if $smarty.foreach.for2.iteration%4 == 0} class="right"{/if}>
     <div class="catitemin">
     <a href="{$base_url}/{$product.full_url}/" title="{$product.name}"><img src="/images/img105x105{if !empty($product.image)}/uploaded_files/product_images/{$product.id}/{$product.image}{else}/templates/img/nophoto.jpg{/if}" alt="{$product.name}"></a>
     <br>

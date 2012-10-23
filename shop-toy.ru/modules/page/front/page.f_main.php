@@ -1,7 +1,9 @@
 <?php
+
 require_once 'lib/class.photoalbum.php';
 require_once 'lib/class.table.php';
 require_once 'lib/class.form.php';
+
 
 $all_pages=$db->get_all("
 	SELECT
@@ -25,9 +27,9 @@ $all_pages=$db->get_all("
 	ORDER BY tree.param_left
 ");
 
+
 $all_pages=Common::get_nodes_list($all_pages);
 
-//echo count($all_pages);
 
 if (preg_match("/^page_[0-9]+$/",$url[$n])) {
 	list(,$page)=explode("_",$url[$n]);
@@ -70,8 +72,8 @@ for ($f=0;$f<count($all_pages);$f++) {
 
 				$limit="";
 				if ($page_content['show_documents_number']>0) {
-
-					$result=$db->query("SELECT COUNT(*) FROM fw_documents d WHERE d.parent='".$main_page_content['id']."' AND d.status='1'");
+					
+					$result=$db->query("SELECT COUNT(*) as count FROM fw_documents d WHERE d.parent='".$main_page_content['id']."' AND d.status='1'");
 					$pager=Common::pager($result,$page_content['show_documents_number'],$page);
 					$limit="LIMIT ".$pager['limit'];
 
@@ -96,6 +98,7 @@ for ($f=0;$f<count($all_pages);$f++) {
 					$limit
 				");
 
+				
 				if (count($documents_list)) {
 					$smarty->assign("documents_list",$documents_list);
 
@@ -105,6 +108,7 @@ for ($f=0;$f<count($all_pages);$f++) {
 						$documents_template="documents_list.html";
 
 					$sl=$smarty->fetch($templates_path."/".$documents_template);
+					
 					$smarty->assign("documents",$sl);
 				}
 			}

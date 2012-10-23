@@ -132,7 +132,10 @@ if(document.getElementById(name).style.display!="none") {
   <td class=td1_left style="border-bottom: none;">Возраст:</td>
   <td class=td1_right style="border-bottom: none;">
 	<select name="edit_age">
-    <option value="0" {if $product.age=='0'}selected{/if}>Менее года</option>
+    {section name=item loop=20 start=0 step=1}
+    <option value="{$smarty.section.item.index}" {if $product.age == $smarty.section.item.index}selected{/if}>{$smarty.section.item.index}</option>
+    {/section}
+    {*<option value="0" {if $product.age=='0'}selected{/if}>Менее года</option>
     <option value="1" {if $product.age=='1'}selected{/if}>1 год</option>
     <option value="2" {if $product.age=='2'}selected{/if}>2 года</option>
     <option value="3" {if $product.age=='3'}selected{/if}>3</option>
@@ -143,6 +146,12 @@ if(document.getElementById(name).style.display!="none") {
     <option value="8" {if $product.age=='8'}selected{/if}>8</option>
     <option value="9" {if $product.age=='9'}selected{/if}>9</option>
     <option value="10" {if $product.age=='10'}selected{/if}>10</option>
+    <option value="10" {if $product.age=='10'}selected{/if}>10</option>
+    <option value="10" {if $product.age=='10'}selected{/if}>10</option>
+    <option value="10" {if $product.age=='10'}selected{/if}>10</option>
+    <option value="10" {if $product.age=='10'}selected{/if}>10</option>
+    <option value="10" {if $product.age=='10'}selected{/if}>10</option>
+    <option value="10" {if $product.age=='10'}selected{/if}>10</option>*}
 	</select>
   </td>
 </tr>
