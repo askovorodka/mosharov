@@ -94,6 +94,8 @@ $smarty->assign("currency_site2",$cur_site2);
 $shop = new Shop($db);
 $users = new Users();
 
+
+
 /*-----------------РАЗЛИЧНЫЕ ДЕЙСТВИЯ-----------------*/
 
 if (isset($_POST['submit_comment'])) {
@@ -898,7 +900,7 @@ SWITCH (TRUE) {
 	BREAK;
 	
 	
-	CASE ($url[$n-1] == "search_product" && preg_match("/\?search=(.+)/",$url[$n]) ):
+	CASE (preg_match("/\?search=(.+)/",$url[$n]) && $url[$n-1] == "search_product"):
 
 		$navigation[]=array("url" => 'search',"title" => 'Поиск');
 
@@ -931,7 +933,7 @@ SWITCH (TRUE) {
 
 	
 	
-	CASE ($url[$n-1] == "product_filter" ):
+	CASE (count($url) >= 2 && $url[$n-1] == "product_filter" ):
 
 		$navigation[]=array("url" => 'product_filter',"title" => 'Поиск по параметрам');
 		
@@ -1388,7 +1390,7 @@ SWITCH (TRUE) {
 						$template = "shop.f_catalog_2.html";
 						break;
 					default:
-						$template = "shop.f_catalog_0.html";
+						$template = "shop.f_catalog_1.html";
 						break;
 				}
 				
