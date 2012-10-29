@@ -21,7 +21,9 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 
-
 #RewriteRule [^\.xml][^\/]$ %{REQUEST_URI}/ [R,L]
+#RewriteRule ^sitemap.xml$ /index.php [L,QSA]
+#RewriteRule [^\.xml][^\/]$ %{REQUEST_URI}/ [R,L]
+
 RewriteRule ^(.*)$ /index.php [L,QSA]
-#RewriteRule ^(.*).xml$ /index.php [L,QSA]
+

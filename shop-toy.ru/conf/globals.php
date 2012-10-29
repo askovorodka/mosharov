@@ -7,6 +7,7 @@
 
   define("ROOT", dirname(__FILE__) . "/../");
   define("DOMAIN", 'http://'.$_SERVER['SERVER_NAME'].'/');
+  
   define("SHOP_IMAGE", DOMAIN . 'uploaded_files/product_images/');
   
   define("SHOP_DOSTAVKA_PRICE", 200);

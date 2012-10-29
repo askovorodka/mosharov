@@ -1,0 +1,6 @@
+RewriteEngine Off
+DirectoryIndex index.php
+AuthType Basic
+AuthName "Site admin"
+AuthUserFile "/home/itirer35/.htpasswds/public_html/autozeon/admin/passwd"
+require valid-user

@@ -1,0 +1,60 @@
+Configurating PHPFM:
+-------------------------------------------------------------------------------------
+
+All configurating of PHPFM is done in the file "config.inc.php" which is located
+in the folder "conf". Just use a normal text editor like notepad for windows and
+nano or gnotepad for linux.
+
+$home_directory is the root directory of PHPFM. This is where you will start browsing
+  from. You cannot browse out of this directory. Use forward slashes instead of back-
+  slashes and remember a trailing slash! For instance "d:\path\to\root" would become
+  "d:/path/to/root/".
+
+$language chooses which language is used by PHPFM. To create a new language, you
+  will have to make a copy of "english.inc.php" in the directory "lang" and translate
+  all the strings. Then name the new file something like "german.inc.php", open
+  "config.inc.php" again and set $language to "german" or whatever you called the new
+  file.
+
+$session_save_path chooses where the session (login) data is stored. For *NIX systems
+  (i.e. LINUX, UNIX etc.) this should be set to "/tmp/". On WINDOWS based systems this
+  should be set to the temporary directory for windows. This is often "c:/windows/temp"
+  on Windows 9X systems and "c:/winnt/temp" on Windows NT, 2000 or XP systems.
+
+$phpfm_auth chooses whether you will have to enter a username and password to use PHPFM.
+  It can be set to either TRUE or FALSE.
+
+$username is the username needed to login when $phpfm_auth is set to TRUE and $password
+  is the password.
+
+$AllowCreate, $AllowEdit etc. chooses what the users of PHPFM are allowed to do. It
+  should be easy enough to guess what each variable will allow/disallow. Notice that
+  they can be set to either TRUE or FALSE.
+
+$IconArray is an array containing first an icon and then the filetypes or extensions
+  belonging to it. Each filetype or extension is seperated by a whitespace.
+
+$EditableFiles contains all the filetypes or extensions which are editable by PHPFM's
+  text editor, each seperated by a whitespace.
+
+$ViewableFiles contains all the filetypes or extensions which are viewable by PHPFM's
+  image viewer, each seperated by a whitespace.
+
+$ModifiedFormat is the format of the last modification date of files. It is in date()
+  format. See http://www.php.net/date for more information.
+
+$ZoomArray contains the different zoom levels used by PHPFM's image viewer. Notice that
+  you cannot change the base zoom level (100%).
+
+$hide_file_extension contains all the extensions of the files, which are hidden. To add
+  more extensions, just add the extensions below those, which are already there. For
+  instance if you would like to hide all ".txt" files, you would add "txt", below "bar".
+  Just remeber the trailing comma.
+
+$hide_file_string contain "strings" or parts of filenames to hide. For instance "secret"
+  would hide the files "secret.txt" or "asecretfile.php" or "file.secret".
+
+$hide_directory_string is identical to $hide_file_string except that it hides directories
+  instead of files.
+
+** Notice that hidden files will not be inaccessible, just hidden in PHPFM 0.2.0.

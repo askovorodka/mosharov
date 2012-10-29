@@ -1,0 +1,85 @@
+.admcopy {color: white; font-family: tahoma; font-size:8pt;}
+.admdevelop, A.admdevelop, A.admdevelop:link, A.admdevelop:visited {color: #FFFFFF; font-family: tahoma; font-weight: bold; font-size:11px; text-decoration: none;}
+
+
+.admtext, .admrazd {color: black; font-family: tahoma; font-size:10pt;}
+.admtextsmall {color: black; font-family: tahoma; font-size:8pt;}
+.adminmenu {background-color: #ffffff;}
+.adminmenua {background-color: #FFFFFF; cursor: hand;}
+.catadminmenu {background-color: #FFFFFF;}
+.catadminmenua {background-color: #ffffff; cursor: hand;}
+.catadminmenuactive {background-color: #CBE3FE;}
+.catadminmenuactivea {background-color: #ededed; cursor: hand;}
+.podcatadminmenu {background-color: #FFFFFF;}
+.podcatadminmenuactive {background-color: #FFFFFF;}
+.podcatadminmenua {background-color: #ffffff; cursor: hand;}
+.podcatadminmenuactivea {background-color: #ffffff; cursor: hand;}
+
+.adminmenulink, A.catadminmenulink, A.adminmenulink:link, A.adminmenulink:visited {color: #000000; font-family: tahoma; font-weight: bold; font-size:11px; text-decoration: none;}
+A.adminmenulink:hover {color: #0000ff; font-family: tahoma; font-weight: bold; font-size:11px; text-decoration: none;}
+.adminmenulinkactive, A.catadminmenulinkactive, A.adminmenulinkactive:link, A.adminmenulinkactive:hover, A.adminmenulinkactive:visited {color: #000099; font-family: tahoma; font-weight: bold; font-size:11px; text-decoration: underline;}
+.adminmenulinkdeactive, A.catadminmenulinkdeactive, A.adminmenulinkdeactive:link, A.adminmenulinkdeactive:hover, A.adminmenulinkdeactive:visited {color: #999999; font-family: tahoma; font-weight: bold; font-size:11px; text-decoration: underline;}
+
+.podadminmenulinkactive, A.podadminmenulinkactive, A.podadminmenulinkactive:link, A.podadminmenulinkactive:hover, A.podadminmenulinkactive:visited {color: #000099; font-family: tahoma; font-weight: bold; font-size:11px; text-decoration: underline;}
+.podadminmenulinkdeactive, A.podadminmenulinkdeactive, A.podadminmenulinkdeactive:link, A.podadminmenulinkdeactive:hover, A.podadminmenulinkdeactive:visited {color: #999999; font-family: tahoma; font-weight: bold; font-size:11px; text-decoration: underline;}
+
+.podadminmenulink, A.podadminmenulink:link, A.podadminmenulink:hover, A.podadminmenulink, A.podadminmenulink:visited {color: #000000; font-family: tahoma; font-weight: normal; font-size:11px; text-decoration: none;}
+.smadlink, A.smadlink:link, A.smadlink, A.smadlink:visited { font-family: tahoma; font-weight: normal; font-size:11px; text-decoration: none;}
+A.smadlink:hover { font-family: tahoma; font-weight: normal; font-size:11px; text-decoration: underline;}
+
+.smadlinkbold, A.smadlinkbold:link, A.smadlinkbold, A.smadlinkbold:visited { font-family: tahoma; font-weight: bold; font-size:11px; text-decoration: none;}
+A.smadlinkbold:hover { font-family: tahoma; font-weight: bold; font-size:11px; text-decoration: underline;}
+
+.adminlink, A.adminlink:link, A.adminlink, A.adminlink:visited { font-family: tahoma; font-weight: normal; font-size:12px; text-decoration: underline; color: #0000FF;}
+A.adminlink:hover { font-family: tahoma; font-weight: normal; font-size:12px; text-decoration: underline;}
+
+
+table.adminblackborder {border-collapse:collapse}
+table.adminblackborder td {border:1px solid #000000;}
+table.adminlinesborder {border-collapse:collapse}
+table.adminlinesborder td {border-bottom:1px solid #CCCCCC;border-top:0px; border-right:0px; border-left:0px}
+
+table.noborder {border-collapse:collapse}
+table.noborder td {border:0px;}
+.tableheader {background-color: #E0E0E0; color: #000000; font-family: tahoma; font-weight: bold; font-size:11px;}
+/* ============== Μενώ ============== */	
+
+#navcontainer ul
+{
+margin: 0px 0px 0px 0px;
+list-style-type: none;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 11px;
+padding-top: 0px; padding-left: 0px; padding-right: 0px; padding-bottom: 1px;
+
+}
+
+#navcontainer li { 
+margin-top: 0px; margin-left: 0px; margin-right: 0px; margin-bottom: 0px;
+padding-top: 0px; padding-left: 0px; padding-right: 0px; padding-bottom: 1px;
+}
+
+#navcontainer a
+{
+display: block;
+margin-top: 0px; margin-left: 0px; margin-right: 0px; margin-bottom: 0px;
+padding-top: 0px; padding-left: 0px; padding-right: 0px; padding-bottom: 1px;
+width: 100%;
+background-color: #FFFFFF;
+}
+
+#navcontainer a:link, #navlist a:visited
+{
+color: #000000;
+margin-top: 0px; margin-left: 0px; margin-right: 0px; margin-bottom: 0px;
+padding-top: 0px; padding-left: 0px; padding-right: 0px; padding-bottom: 1px;
+font: 11px Tahoma, Arial, sans-serif;
+text-decoration: none;
+}
+
+#navcontainer a:hover
+{
+background-color: #990000;
+color: #FFFFFF;
+}
+/* ============== Μενώ ============== */

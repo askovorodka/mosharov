@@ -129,7 +129,7 @@ function form_check() {
 	</tr>
 
 	<tr>
-		<td width=15% class=td1_left><b>Название:</b></td>
+		<td width=15% class=td1_left><b>Название (в меню):</b></td>
 		<td class=td1_right><input type=text name=edit_node_name style="width:100%;" class=field value="{$node.name}">
 	</tr>
 
@@ -159,6 +159,7 @@ function form_check() {
 		{/if}
 		</td>
 	</tr>
+
 </table>
 
 {if $node.module=='page'}
@@ -208,7 +209,6 @@ function form_check() {
 </div>
 
 <textarea id=page_text class=field style="width:100%" rows=20>{$node.text|replace:"\r\n":""}</textarea>
-
 
 {/if*}
 

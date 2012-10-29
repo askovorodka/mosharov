@@ -1,0 +1,23 @@
+Todo list for PHPFM:
+-------------------------------------------------------------------------------------
+
+- find work-around for permissions on GNU/Linux & UNIX systems.
+- make a login system where each user has his/hers own home directory and permissions.
+- some kind of logging system.
+- make an install script which makes it easier to install PHPFM.
+- make hidden files unaccessible by the script (again).
+- index with thumbnails of all images in the current directory (uncertain).
+- make it possible to change permissions (chmod) on files and directories.
+- make it so you can compress a directory and download it.
+- do so you can see the full size of a directory (including sub-directories) and how
+  many files that are in the directory.
+- templates for new (created) files. For instance PHP, HTML etc.
+- unix style permissions (e.g. -rw-rw-rw-)
+- create "Content-type" headers in libfile.php for all the MIME types.
+- too long directory- and filenames are shortened so they do not ruin the design.
+- templates for PHPFM. Change the look of PHPFM easily! (not provisional)
+- more languages.
+- add some nifty DHTML?
+- add some kind of check for magic_quotes_gpc.
+- add the drive browser again?
+- PDF viewer and text/PHP viewer with highlighting.

@@ -1,0 +1,35 @@
+<html>
+
+<head>
+<title>Chained Selects</title>
+
+<script language="javascript" src="chainedselects.js">
+
+/***********************************************
+* Chained Selects script- By Xin Yang (http://www.yxscripts.com/)
+* Script featured on/available at http://www.dynamicdrive.com/
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+***********************************************/
+
+</script>
+<script language="javascript" src="exampleconfig.js"></script>
+</head>
+
+<body onload="initListGroup('vehicles', document.forms[0].make, document.forms[0].type, document.forms[0].model)">
+<h2>Chained Selects Example I</h2>
+
+<table align="center" cellpadding="0" cellspacing="0" border="0" width="90%"><tr><td>
+
+<form>
+<table align="center"><tr>
+<td>Select a vehicle:&nbsp;</td>
+<td><select name="make" style="width:160px;"></select></td>
+<td><select name="type" style="width:160px;"></select></td>
+<td><select name="model" style="width:160px;"></select></td>
+<td><input type="button" value="Reset" onclick="resetListGroup('vehicles')">
+</tr></table>
+</form>
+
+</body>
+<p align="center" class="copyright">Copyright 2004&nbsp;&nbsp;&nbsp;&nbsp;Xin Yang</p>
+</html>

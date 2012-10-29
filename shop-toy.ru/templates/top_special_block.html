@@ -14,10 +14,9 @@
     		<div class="{if $smarty.foreach.top.last}pspiteml{else}pspitem{/if}">
     		<div class="spitem"><a href="{$base_url}/{$item.full_url}/"><img style="margin:0px;" src="/images/img105x105{if !empty($item.image)}/uploaded_files/product_images/{$item.id}/{$item.image}{else}/templates/img/nophoto.jpg{/if}" alt="{$item.name|strip_tags}"></a>
     		<br><a href="{$base_url}/{$item.full_url}/" title="{$item.name|strip_tags}">{$item.name|strip_tags}</a>
-    		{if $item.price2 > 0}<div style="margin-top:7px;"><span class="splastp">{$item.price2|format_price}</span><span class="sprubl"> руб.</span></div>{/if}
-    		<div style="margin-top:5px;">{$item.price|format_price}<span class="sprub"> руб.</span></div></div></div>
+    		{if $item.price2 > 0}<div style="margin-top:7px;"><span class="splastp">{$item.price|format_price}</span><span class="sprubl"> руб.</span></div>{/if}
+    		<div style="margin-top:5px;">{if $item.price2 > 0}{$item.price2|format_price}{else}{$item.price|format_price}{/if}<span class="sprub"> руб.</span></div></div></div>
     	{/foreach}
-        
         
     </div>
 </div>

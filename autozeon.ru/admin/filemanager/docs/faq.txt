@@ -1,0 +1,40 @@
+Frequently Asked Questions (FAQ) for PHPFM:
+-------------------------------------------------------------------------------------
+
+Q) If I try to upload files over 2 MB all uploads fail. What can I do?
+A) By default the maximum upload size it set to 2 MB in php.ini. Find the
+   following line ...
+   upload_max_filesize = 2M
+   ... and increase the size to something more appropriate.
+
+Q) If I upload files larger than 8 MB the script the script returns an error
+   similar to "Maximum post size reached - see docs/faq.txt for more information."
+   What is wrong?
+A) Find the line ...
+   post_max_size = 8M
+   ... in php.ini and replace 8 with the number og MB you want to be able to
+   upload.
+
+Q) The script returns the an error similar to "Fatal error: Maximum execution
+   time of XX seconds exceeded in /path/to/phpfm/index.php on line X" when I
+   upload large files. What can I do?
+A) You will have to edit the following line in php.ini ...
+   max_execution_time = 30
+   ... and increase the number of seconds to whatever you need.
+
+Q) PHPFM returns a lot of errors similar to "Notice: Undefined variable:
+   _SERVER in /path/to/phpfm/index.php on line X". What is wrong?
+A) PHPFM requires PHP 4.1.0 or higher since the $_SERVER, $_GET, $_POST
+   and $_COOKIE superglobals were introduced in 4.1.0.
+
+Q) I run PHPFM from a Linux/UNIX server and everything fails. What is wrong?
+A) PHP normally runs as user "nobody", which means that PHP has no permission
+   to alter anything unless you set public read/write access on the files and
+   folders you want PHPFM to be able to alter. This is not very smart, and I
+   am trying to find some kind of work-around for this.
+
+Q) The login system does not work. I can't log in. What is the problem?
+A) This is a know bug to me, however, I have not been able to actually test
+   on a system where the login system does not work. So if the login system
+   does not work at your webserver, please let me know if you will allow me
+   to test on your system. Thanks a lot!

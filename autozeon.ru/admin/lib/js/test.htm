@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<TITLE>Provodnik</TITLE>
+<LINK rel="stylesheet" type="text/css" HREF="comment.css">
+<SCRIPT language="javascript">
+
+function Decode(inStr) { 
+	outStr=' '; //not '' for a NS bug! 
+	for (i=0; i < inStr.length; i++) { 
+		aChar=inStr.substring (i, i+1); 
+		switch(aChar){ 
+		<?
+			for ($i=26; $i<256; $i++) {
+			$achar=chr($i);
+			//if ($achar=="'") continue;
+			//if ($achar=="\\") continue;
+			if ($achar=="/") continue; // слешь пропускаем
+			$achar=addslashes ($achar);
+			$ucode=rawurldecode (chr($i));
+			print "case '";
+			print $achar;
+			print "': outStr += \"".$ucode."\"; break;\n";
+		//	print chr($i). " = ". urlencode (chr($i))."<BR>"; 
+		}
+		?>
+		default: outStr += aChar; 
+		} 
+	  } 
+	return outStr.substring(1, outStr.length); 
+}
+
+inStr='ssss';
+alert (Decode(inStr));
+
+</script>

@@ -1,0 +1,53 @@
+Changelog for PHPFM:
+-------------------------------------------------------------------------------------
+
+PHPFM version 0.2.2:
+
+ - problems using view and download now fixed!
+ - each folder is now a link in the "Index of" path.
+ - create new folder, create new file and upload files can no longer be seen
+   when they are disabled in the configuration file.
+ - changed all occurrences of <? to <?php for compatility.
+ - (again) more languages.
+
+PHPFM version 0.2.1:
+
+ - login system now uses sessions and no longer requires the client to accept
+   cookies for it to work proberly.
+ - more languages!
+
+
+PHPFM version 0.2.0:
+ Note: The whole script has been rewritten from scratch, which virtually means
+ that everything has changed. I'll try to point out the most important changes
+ here:
+
+ - the script's design has been greatly improved (in my opinion).
+ - the script does not require globals to be registered any longer, nor does it
+   produce errors when error reporting is set to E_ALL. This means that PHPFM will
+   run perfectly on PHP 4.2.X and up now!
+ - the script is now split up in several files to make editing easier for myself
+   and others. Note: the variables used to include the new files are checked with
+   is_file() and checked for '../' and '..\', so the script is NOT vulnerable
+   in any way to a possible malicious user.
+ - language support is now included. English is the only language avalible right
+   now though.
+ - the script now uses valid HTML (4.01 transitional) and CSS. Check www.w3c.org
+   for more information.
+ - a "file library" is now included with PHPFM, which means that the download and
+   temporary directories are no longer needed.
+ - directories for temporary (images) and downloaded files are no longer needed,
+   as files are downloaded directly using a "download" library now.
+ - output from rename, delete, download etc. is now printed at the same page as
+   the filebrowser, so you don't have to click "back" any more.
+ - directories are now deleted recursively which means that they do not need to
+   be empty to delete them.
+ - you can now see permissions on each file.
+ - it is now possible to sort file data by filename, filesize, permissions and
+   last modification time both ascending and descending.
+ - you will now have to click on the respective icon instead of on the filename
+   to edit or view a file.
+ - all icons are now transparent and defined with width and height for faster
+   loading times.
+ - a message saying how many seconds the page took to produce is now displayed at
+   the bottom of every page. Pretty useless, but fun :)

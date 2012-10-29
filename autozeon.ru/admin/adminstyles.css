@@ -1,0 +1,339 @@
+body, td, p {color: black; font-family: tahoma; font-size:10pt;}
+.razd {color: #000000; font-family: tahoma; font-weight: bold; font-size:11px;}
+.razdelactive {color: #000000; font-family: tahoma; font-weight: bold; font-size:11px;}
+.razdeldeactive {color: #999999; font-family: tahoma; font-weight: bold; font-size:11px;}
+
+.adminmenubox {background-color: #0000A0;}
+.menuboxhead {background-color: #0000A0;}
+.bgrazd  {background-color: #E0E0E0; }
+.adminrazd{background-color: #E0E0E0;}
+.menulines {background-color: #0000A0;}
+.copy { font-family: arial; font-size :8pt; color: #ffffff; font-weight: bold; text-decoration: none;}
+.hidden {color: #777777; font-family: tahoma; font-size:10pt;}
+.admhiddenlink , A.admhiddenlink , A.admhiddenlink:link, A.admhiddenlink:hover, A.admhiddenlink:visited {color: #777777; }
+
+h1 {color: #000099; font-family: arial; font-size:11pt;}
+h2 {color: #000099; font-family: arial; font-size:11pt;}
+h3 {color: #000099; font-family: arial; font-size:10pt;}
+
+
+A, A:link {font-family: tahoma; font-size:10pt; color: #000066; font-weight: bold; text-decoration: underline;}
+A:hover {font-family: tahoma; font-size:10pt; color: black; font-weight: bold; text-decoration: none;}
+A:visited {font-family: tahoma; font-size:10pt; color: #000033; font-weight: bold; text-decoration: underline;}
+.actlink, A.actlink, A.actlink:active, A.actlink:link, A.actlink:visited  {color: #000099; font-family: tahoma; font-size: 8pt; font-weight: bold; text-decoration: none;}
+A.actlink:hover  {color: #990000; font-family: tahoma; font-size: 8pt; font-weight: bold; text-decoration: none;}
+
+.adminsmlink, A.adminsmlink, A.adminsmlink:link, A.adminsmlink:hover, A.adminsmlink:visited {color: #0000ff; font-family: tahoma; font-size:8pt; text-decoration: none;}
+A.adminsmlink:hover {color: #000066; font-family: tahoma; font-weight: bold; font-size:8pt; text-decoration: none;}
+
+.adminsmlinkred, A.adminsmlinkred, A.adminsmlinkred:link, A.adminsmlinkred:hover, A.adminsmlinkred:visited {color: #990000; font-family: tahoma; font-size:8pt; text-decoration: none;}
+A.adminsmlinkred:hover {color: #000066; font-family: tahoma; font-weight: bold; font-size:8pt; text-decoration: none;}
+
+
+.admincategories, A.admincategories, A.admincategories:link, A.admincategories:hover, A.admincategories:visited {color: #cccccc; font-family: tahoma; font-weight: bold; font-size:8pt; text-decoration: none;}
+.admincategoriesactive, A.admincategoriesactive, A.admincategoriesactive:link, A.admincategoriesactive:hover, A.admincategoriesactive:visited {color: #000066; font-family: tahoma; font-weight: bold; font-size:8pt; text-decoration: none;}
+.podadmincategories, A.podadmincategories, A.podadmincategories:link, A.podadmincategories:hover, A.podadmincategories:visited {color: #cccccc; font-family: tahoma; font-weight: normal; font-size:8pt; text-decoration: none;}
+.podadmincategoriesactive, A.podadmincategoriesactive, A.podadmincategoriesactive:link, A.podadmincategoriesactive:hover, A.podadmincategoriesactive:visited {color: #000066; font-family: tahoma; font-weight: normal; font-size:8pt; text-decoration: none;}
+.pod2admincategories, A.pod2admincategories, A.pod2admincategories:link, A.pod2admincategories:hover, A.pod2admincategories:visited {color: #cccccc; font-family: tahoma; font-weight: normal; font-size:8pt; text-decoration: none;}
+.pod2admincategoriesactive, A.pod2admincategoriesactive, A.pod2admincategoriesactive:link, A.pod2admincategoriesactive:hover, A.pod2admincategoriesactive:visited {color: #000066; font-family: tahoma; font-weight: normal; font-size:8pt; text-decoration: none;}
+
+table.admpricetovarlisttable {border-collapse:collapse}
+table.admpricetovarlisttable td {border:1px solid #000000}
+.admrow {color: #000000; background-color: #CCCCCC; font-family: tahoma; font-weight: bold; font-size:10pt; text-decoration: none;}
+.admcatlink, A:link.admcatlink, A:visited.admcatlink, {color: #000099}
+.admpodrow {color: #000000; background-color: #EEEEEE; font-family: tahoma; font-weight: bold; font-size:10pt; text-decoration: none;}
+.admcell {text-align: center; color: #000000;  font-family: tahoma; font-size:10pt; text-decoration: none;}
+.admlistlink, A.admlistlink:link, A.admlistlink:hover, A.admlistlink, A.admlistlink:visited {color: #000000; font-family: tahoma; font-weight: bold; font-size:10pt; text-decoration: none;}
+
+.headers {COLOR: #000000; FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica, Geneva; FONT-SIZE: 11px;FONT-WEIGHT: bold}
+#header {BACKGROUND-COLOR: #dfdfdf}
+#tablerow {BACKGROUND-COLOR: #efefef}
+.smalltahoma {FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica, Geneva; FONT-SIZE: 13px}
+.defaulttahoma {FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica, Geneva; FONT-SIZE: 16px}
+.bigtahoma {FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica, Geneva; FONT-SIZE: 18px}
+ 
+
+#menuedit            { color: blue; text-decoration:none; font-size: 10px; FONT-WEIGHT: bold; FONT-FAMILY: Tahoma; }
+
+#menuedit:hover       { color: red  }
+
+#menuedit:hover      { color: blue}
+
+
+A:link {
+
+	COLOR: blue
+
+}
+
+A:active {
+
+	COLOR: blue
+
+}
+
+A:visited {
+
+	COLOR: blue
+
+}
+
+.system {
+
+	COLOR: #000000; FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica, Geneva; FONT-SIZE: 11px
+
+}
+
+.admincategories1 {
+
+	COLOR: #ffffff; FONT-FAMILY: Tahoma; FONT-SIZE: 12px; FONT-WEIGHT: bold; TEXT-DECORATION: none
+
+}
+
+.admincategories2 {
+
+	FONT-SIZE: 13px; TEXT-DECORATION: none
+
+}
+
+#menucolor {
+
+	BACKGROUND-COLOR: #666666
+
+}
+
+
+
+.system2 {
+
+	COLOR: #000000; FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica, Geneva; FONT-SIZE: 11px;FONT-WEIGHT: bold
+
+}
+
+
+
+.auth {
+
+	COLOR: #000000; FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica, Geneva; FONT-SIZE: 13px; FONT-WEIGHT: bold
+
+}
+
+
+.smallesttahoma {
+
+	FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica, Geneva; FONT-SIZE: 11px
+
+}
+
+.smalltahoma {
+
+	FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica, Geneva; FONT-SIZE: 13px
+
+}
+
+.defaulttahoma {
+
+	FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica, Geneva; FONT-SIZE: 16px
+
+}
+
+.bigtahoma {
+
+	FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica, Geneva; FONT-SIZE: 18px
+
+}
+ 
+.forma {
+
+	FONT-FAMILY: MS Sans Serif; FONT-SIZE: 8px
+
+}
+ 
+
+#active {
+
+	COLOR: #000000
+
+}
+
+#inactive {
+
+	COLOR: #8f8f8f
+
+}
+ 
+#headlink {
+
+	COLOR: #888888
+
+}
+
+#header {
+
+	BACKGROUND-COLOR: #dfdfdf
+
+}
+
+#tablerow {
+
+	BACKGROUND-COLOR: #efefef
+
+}
+
+#top {
+
+	BACKGROUND-COLOR: #c0c0c0
+
+}
+
+#bgblack {
+
+	BACKGROUND-COLOR: #000000
+
+}
+
+#bgred {
+
+	BACKGROUND-COLOR: #888888
+
+}
+
+#bgwhite {
+
+	BACKGROUND-COLOR: #ffffff
+
+}
+
+#bgtip {
+
+	BACKGROUND-COLOR: #cfcfcf
+
+}
+
+#marking {
+
+	BACKGROUND-COLOR: #efefef
+
+}
+ 
+#cellblue {
+
+	BACKGROUND-COLOR: #003399
+
+}
+
+#cellwhite {
+
+	BACKGROUND-COLOR: #ffffff
+
+}
+
+ 
+
+#tabred {
+
+	BACKGROUND-COLOR: #888888
+
+}
+
+#tabinactive {
+
+	BACKGROUND-COLOR: #efefef
+
+}
+
+#tabredlink {
+
+	COLOR: #efefef; FONT-SIZE: 11px; FONT-WEIGHT: bold; TEXT-DECORATION: none
+
+}
+ 
+
+ 
+
+#tabinactivelink {
+
+	COLOR: #888888; FONT-SIZE: 11px; FONT-WEIGHT: bold; TEXT-DECORATION: none
+
+}
+
+
+.select {
+
+	FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica, Geneva; FONT-SIZE: 13px; WIDTH: 100%
+
+}
+
+#white {
+
+	COLOR: #ffffff
+
+}
+
+#red {
+
+	COLOR: #cc0000
+
+}
+
+#time {
+
+	COLOR: #909790
+
+}
+
+#btndefault {
+
+	WIDTH: 100%; FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica, Geneva; FONT-SIZE: 11px
+
+}
+
+#btnsmall {
+
+	WIDTH: 250px
+
+}
+
+#btnsmallest {
+
+	WIDTH: 150px
+
+}
+
+ 
+#txtdefault {
+
+	WIDTH: 100%; FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica, Geneva; FONT-SIZE: 13px
+
+}
+
+#inpdefault {
+
+	WIDTH: 100%; FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica, Geneva; FONT-SIZE: 13px
+
+}
+
+
+
+
+
+
+
+
+table.admingrayborder {
+	border-collapse:collapse
+}
+
+table.admingrayborder td {
+	border:1px solid #CCCCCC;
+}
+
+table.documentlisttable{
+	border-collapse:collapse
+}
+
+table.documentlisttable td {
+	border:1px solid #000000;
+}
+.documentlistheader {BACKGROUND-COLOR: #cccccc;}
+.adminlistheader{BACKGROUND-COLOR: #cccccc; color: #000000; font-family: tahoma; font-weight: bold; font-size:11px;}

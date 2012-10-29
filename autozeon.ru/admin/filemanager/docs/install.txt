@@ -1,0 +1,47 @@
+Installing PHPFM:
+-------------------------------------------------------------------------------------
+
+Installing on your own Windows workstation:
+-----------------------------------------------
+ 1) Make sure that your webserver has PHP 4.1.0 or higher installed.
+ 2) Go to PHPFM's website and download the ".zip" version of the script. The website
+    is located at http://phpfm.zalon.dk/
+ 3) Unzip the downloaded archive into your the document root of your webserver Make sure
+    you maintain directory structure.
+ 4) Open "config.inc.php" in the directory "conf" with a text editor and set the home
+    directory, username and password. Save the file and close the text editor.
+ 6) Start up your internet browser and input the URL to PHPFM. It should look like this:
+    "http://<your-host>/<path-to-phpfm>/". A sample URL would look like this:
+    "http://localhost/phpfm.0.2.0/".
+ 7) If you did everything right, you should see the login screen of PHPFM now.
+
+Installing remotely on a Windows server:
+-----------------------------------------------
+ 1) Make sure that the webserver has PHP 4.1.0 or higher installed.
+ 2) Go to PHPFM's website and download the ".zip" version of the script. The website
+    is located at http://phpfm.zalon.dk/
+ 3) Unzip the downloaded archive to a temporary folder. Be sure to extract subdirectories
+    as well.
+ 4) Open "config.inc.php" in the directory "conf" with a text editor and set the home
+    directory, username and password. Save the file and close the text editor.
+ 5) Upload all files including all subdirectories to the server (e.g. via FTP).
+ 6) Start up your internet browser and input the URL to PHPFM. It should look like this:
+    "http://<your-host>/<path-to-phpfm>/". A sample URL would look like this:
+    "http://www.some-site.com/phpfm.0.2.0/".
+ 7) If you did everything right, you should see the login screen of PHPFM now.
+
+Installing remotely on a Linux or Unix server:
+-----------------------------------------------
+ 1) Make sure that the webserver has PHP 4.1.0 or higher installed.
+ 2) Go to PHPFM's website and download the ".tar.gz" version of the script. The website
+    is located at http://phpfm.zalon.dk/
+ 3) Untar the downloaded archive to a temporary folder. Be sure to extract subdirectories
+    as well. Use "tar zxvvf phpfm.x.x.x.tar.gz" or similar.
+ 4) Open "config.inc.php" in the directory "conf" with a text editor and set the home
+    directory, username and password. Save the file and close the text editor.
+ 5) Upload all files including all subdirectories to the server (e.g. via FTP).
+ 6) CHMOD all files and directories to 777 (not sure).
+ 6) Start up your internet browser and input the URL to PHPFM. It should look like this:
+    "http://<your-host>/<path-to-phpfm>/". A sample URL would look like this:
+    "http://www.some-site.com/phpfm.0.2.0/".
+ 7) If you did everything right, you should see the login screen of PHPFM now.

@@ -1,0 +1,75 @@
+<?
+$pages[]=array ("type"=>"razd", "text" =>"Сайт", "image" => "/admin/imgs/pipka.gif");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Настройки сайта", "url" => "/admin/siteconfig.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Разделы", "url" => "/admin/razdels.php");
+
+$pages[]=array ("type"=>"razd", "text" =>"Страницы", "image" => "/admin/imgs/pipka.gif");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Список страниц", "url" => "/admin/pages.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Новая страница", "url" => "/admin/page_edit.php");
+
+$pages[]=array ("type"=>"razd", "text" =>"Меню", "image" => "/admin/imgs/pipka.gif");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Управление меню", "url" => "/admin/menu.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Меню слева", "url" => "/admin/menu.php?menu_id=1");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Меню под шапкой", "url" => "/admin/menu.php?menu_id=2");
+//$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Меню справа", "url" => "/admin/menu.php?menu_id=3");
+
+$pages[]=array ("type"=>"razd", "text" =>"Новости", "image" => "/admin/imgs/pipka.gif");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Редактировать", "url" => "/admin/news_list.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Добавить", "url" => "/admin/news_edit.php");
+$pages[]=array ("type"=>"razd", "text" =>"Статьи", "image" => "/admin/imgs/pipka.gif");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Редактировать", "url" => "/admin/articles_list.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Добавить", "url" => "/admin/articles_edit.php");
+
+if (SITE_HAVE_CATALOG) {
+$pages[]=array ("type"=>"razd", "text" =>"Каталоги", "image" => "/admin/imgs/pipka.gif");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Настройки", "url" => "/admin/catalogsconfig.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Список каталогов", "url" => "/admin/catalog.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Добавить каталог", "url" => 	"/admin/catalog.php?action=add_catalog");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Список категорий", "url" => 	"/admin/catalog_categories.php".(isset($catalog_id)?"?catalog_id=$catalog_id":"")."");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Добавить категорию", "url" => "/admin/catalog_categories.php?action=new".(isset($catalog_id)?"&catalog_id=$catalog_id":"")."");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Характеристики товаров", "url" => "/admin/catalog_groups.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Доп. параметры товаров", "url" => "/admin/catalog_positions.php");
+//$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Коллекции товаров", "url" => "/admin/catalog_collections.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Группы товаров", "url" => "/admin/catalog_tovgrups.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Производители", "url" => "/admin/catalog_proizvoditeli.php");
+if($CATALOG['sellers']) $pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Поставщики", "url" => "/admin/catalog_sellers.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>$CATALOG['razmer_or_value2'], "url" => "/admin/catalog_sizes.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Валюты", "url" => "/admin/catalog_valuti.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Обновление из Excell", "url" => "/admin/tovupdate.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Настройка обновления", "url" => "/admin/tovupdate_config.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Манипуляции товаром", "url" => "/admin/tovmanipul.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Статистика", "url" => "/admin/tovstat.php");
+$pages[]=array ("type"=>"razd", "text" =>"Заказы и клиенты", "image" => "/admin/imgs/pipka.gif");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Online заказы", "url" => "/admin/orders.php");
+//$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Тел. заказы", "url" => "/admin/telzakaz.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Клиенты", "url" => "/admin/users.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Партнеры", "url" => "/admin/partners.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Партнерская программа", "url" => "/admin/partnerka.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Рекламные слова", "url" => "/admin/reklama_words.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Отзывы посетителей", "url" => "/admin/responses.php");
+$pages[]=array ("type"=>"razd", "text" =>"Доставка и оплата", "image" => "/admin/imgs/pipka.gif");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Оплата", "url" => "/admin/oplata.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Доставка", "url" => "/admin/dostavka.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Пункты и зоны доставки", "url" => "/admin/zony.php");
+}
+$pages[]=array ("type"=>"razd", "text" =>"Документы", "image" => "/admin/imgs/pipka.gif");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Список раделов", "url" => "/admin/docrazdel.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Добавить раздел", "url" => "/admin/docrazdel.php?action=add_docrazdel");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Список категорий", "url" => "/admin/document_categories.php".(isset($document_id)?"?document_id=$document_id":"")."");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Добавить категорию", "url" => "/admin/document_categories.php?action=new".(isset($document_id)?"&document_id=$document_id":"")."");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Авторы", "url" => "/admin/document_authors.php");
+$pages[]=array ("type"=>"razd", "text" =>"Галерея", "image" => "/admin/imgs/pipka.gif");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Список альбомов", "url" => "/admin/gallery_alboms.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Новый альбом", "url" => "/admin/gallery_addalbom.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Список галерей", "url" => "/admin/gallery_list.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Новая галерея", "url" => "/admin/gallery_addgallery.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Список фотографий", "url" => "/admin/gallery_imageslist.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Добавить фотографию", "url" => "/admin/gallery_addimage.php");
+$pages[]=array ("type"=>"razd", "text" =>"Разное", "image" => "/admin/imgs/pipka.gif");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Рассылка", "url" => "/admin/subscribeadmin.php");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Вопросы-ответы", "url" => "/admin/faqadmin/");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Гостевая книга", "url" => "/admin/gbadmin/");
+$pages[]=array ("type"=>"url", "level"=>"1", "text" =>"Менеджер файлов", "url" => "/admin/filemanager/");
+
+
+?>

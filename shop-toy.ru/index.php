@@ -62,7 +62,7 @@ $default_modules=$db->get_all("SELECT * FROM fw_modules WHERE default_load='1' A
 $url=Common::get_url($_SERVER['REQUEST_URI'],SCRIPT_FOLDER);
 
 $navigation=array();
-$navigation[]=array("url" => BASE_URL,"title" => 'Главная страница');
+$navigation[]=array("url" => BASE_URL,"title" => 'В начало');
 $page_found=false;
 $set_pages_url=false;
 $module_found=false;

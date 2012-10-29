@@ -7,6 +7,11 @@ $navigation[]=array("url" => $module_url,"title" => "Карта сайта");
 if ($main_module=='on' || !$page_found) {
 	SWITCH (TRUE){
 		
+		CASE ($url[$n] == 'xml'):
+		
+			$page_found = true;
+		break;
+		
 		DEFAULT:
 			
 			$page_found=true;
