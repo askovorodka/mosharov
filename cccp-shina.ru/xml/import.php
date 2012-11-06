@@ -38,10 +38,10 @@ $cat_text_template = $conf['conf_value'];
 
 $db->query("update fw_products set disk_sklad=0, tire_sklad=0");
 
-system("/usr/local/bin/wget --user=demon --password=gthtgenmt -c --content-disposition -P {$path}xml/ http://demo.itire.ru/xml/cccpshina.xml");
+system("/usr/local/bin/wget --user=demon --password=gthtgenmt -c --content-disposition -P {$path}xml/ http://itire.ru/xml/cccpshina.xml");
 
 print "Start export: ".date("d-m-Y H:i:s")."\n";
-print "Upload exported xml: http://demo.itire.ru/xml/cccpshina.xml\n";
+print "Upload exported xml: http://itire.ru/xml/cccpshina.xml\n";
 
 $insert_cats = 0;
 $update_cats = 0;

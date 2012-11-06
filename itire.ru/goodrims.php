@@ -7,13 +7,17 @@ $link = mysql_connect("localhost", "itire", "gthtgenmt", true);
 if (!$link)
 	die("Error connect to db");
 
-mysql_select_db("demo", $link);
+mysql_select_db("itire", $link);
 
 mysql_set_charset("cp1251", $link);
 
 $GOODRIMS_EXPORT = get_koef('GOODRIMS_EXPORT');
+
 if ($GOODRIMS_EXPORT != 1)
+{
+	print "not imported";
 	exit();
+}
 
 $res = mysql_query("select * from suppliers", $link);
 
@@ -21,14 +25,11 @@ $suppliers = array();
 while ($row = mysql_fetch_assoc($res))
 {
 	$suppliers['goodrims'][$row['name']] = $row['goodrims'];
-	$suppliers['selltire'][$row['name']] = $row['selltire'];
-	$suppliers['cccpshina'][$row['name']] = $row['cccpshina'];
 }
 
 
 $suppliers['goodrims']['itire.ru'] = 1;
-$suppliers['selltire']['itire.ru'] = 1;
-$suppliers['cccpshina']['itire.ru'] = 1;
+
 
 $res = mysql_query("select * from exported_products", $link);
 
@@ -42,14 +43,15 @@ $dom->appendChild($root);
 $tires = $dom->createElement("tires");
 $rims = $dom->createElement("rims");
 
-$goodrims_disk_koef = get_koef('GOODRIMS_DISK_KOEF');
-$goodrims_tire_koef = get_koef('GOODRIMS_TIRE_KOEF');
-$goodrims_tire_round_koef = get_koef('GOODRIMS_TIRE_ROUND_KOEF'); 
-$goodrims_disk_round_koef = get_koef('GOODRIMS_DISK_ROUND_KOEF');
+$disk_koef = get_koef('GOODRIMS_DISK_KOEF');
+$tire_koef = get_koef('GOODRIMS_TIRE_KOEF');
+$tire_round_koef = get_koef('GOODRIMS_TIRE_ROUND_KOEF'); 
+$disk_round_koef = get_koef('GOODRIMS_DISK_ROUND_KOEF');
+
 
 while ($item = mysql_fetch_assoc($res))
 {
-	//goodrims
+
 	if ($item['type'] == 'disk' && $suppliers['goodrims'][$item['dealer']] == 1)
 	{
 		$rim = $dom->createElement("rim");
@@ -70,8 +72,8 @@ while ($item = mysql_fetch_assoc($res))
 		$disk_type = $dom->createElement("disk_type", iconv("windows-1251","utf-8",$item['disk_type']));
 		$sklad = $dom->createElement("sklad", $item['sklad']);
 		
-		$price = floatval($item['price'] + ( $item['price'] * ($goodrims_disk_koef / 100) ));
-		while ($price % $goodrims_disk_round_koef != 0)
+		$price = floatval($item['price'] + ( $item['price'] * ($disk_koef / 100) ));
+		while ($price % $disk_round_koef != 0)
 			$price++;
 		$price = $dom->createElement("price", $price);
 		
@@ -115,8 +117,8 @@ while ($item = mysql_fetch_assoc($res))
 		$tire_bodytype = $dom->createElement("tire_bodytype", iconv("windows-1251","utf-8",$item['tire_bodytype']));
 		$sklad = $dom->createElement("sklad", $item['sklad']);
 		
-		$price = floatval($item['price'] + ( $item['price'] * ($goodrims_tire_koef / 100) ));
-		while ($price % $goodrims_tire_round_koef != 0)
+		$price = floatval($item['price'] + ( $item['price'] * ($tire_koef / 100) ));
+		while ($price % $tire_round_koef != 0)
 			$price++;
 		
 		$price = $dom->createElement("price", $price);
@@ -147,6 +149,7 @@ $root->appendChild($rims);
 $root->appendChild($tires);
 $dom->save($path."xml/goodrims.xml");
 
+
 $cccpurl = "http://goodrims.ru/xml/import.php";
 $ch = curl_init();  
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);   
@@ -156,8 +159,7 @@ $result = curl_exec($ch);
 curl_close($ch);
 mysql_query("update fw_conf set conf_value='{$result}' where conf_key='GOODRIMS_EXPORT_RESULT'", $link);
 mysql_query("update fw_conf set conf_value='0' where conf_key='GOODRIMS_EXPORT'", $link);
-
-
+mysql_query("truncate exported_products", $link);
 
 
 //вспомогательная функция для доступа к настройкам и коефициентам

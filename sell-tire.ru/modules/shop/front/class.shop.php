@@ -9,6 +9,72 @@ class Shop extends db {
 	}
 
 
+	function update_tire($id,$price,$tire_sklad)
+	{
+		$this->db->query("update fw_products set price='{$price}', tire_sklad = tire_sklad + '{$tire_sklad}', status='1' where id='{$id}' ");
+	}
+	
+	
+	function insert_tire($model_id, $name, $tire_width, $tire_height, $tire_diameter, $tire_in, $tire_is, $tire_usil, $tire_spike, $price, $tire_sklad)
+	{
+		$this->db->query("insert fw_products (parent,name,tire_width,tire_height,tire_diameter,tire_in,tire_is,tire_usil,
+		tire_spike,price, tire_sklad,status) values ('{$model_id}', '{$name}', '{$tire_width}', '{$tire_height}',
+		'{$tire_diameter}', '{$tire_in}', '{$tire_is}', '{$tire_usil}', '{$tire_spike}', '{$price}',
+		'{$tire_sklad}','1')");
+		return mysql_insert_id();
+	}
+	
+	function search_tire($parent, $width,$height,$diameter,$in,$is,$usil,$spike)
+	{
+		$result = $this->db->get_single("select * from fw_products where parent='{$parent}'
+		and tire_width='{$width}' and tire_height='{$height}' and tire_diameter='{$diameter}'
+		and tire_in='{$in}' and tire_is='{$is}' and tire_usil='{$usil}' and tire_spike='{$spike}' limit 1");
+		
+		if ($result)
+			return $result;
+		else
+			return null;
+		
+	}
+	
+	function update_disk($id,$price,$disk_sklad)
+	{
+		$this->db->query("update fw_products set price='{$price}', disk_sklad = disk_sklad + '{$disk_sklad}', status='1' where id='{$id}' ");
+	}
+	
+	function insert_disk($parent,$name,$width,$diameterm,$krep,$pcd,$pcd2,$et,$dia,$color,$price,$sklad)
+	{
+		$this->db->query("insert fw_products (parent,name,disk_width,disk_diameter,disk_krep,
+		disk_pcd,disk_pcd2,disk_et,disk_dia,disk_color,price,disk_sklad,status)
+		values ('$parent','$name','$width','$diameterm','$krep','$pcd','$pcd2','$et','$dia','$color','$price','$sklad','1')");
+		return mysql_insert_id();
+	}
+	
+	
+	function search_product($name, $parent)
+	{
+		$result = $this->db->get_single("select * from fw_products where name='{$name}' and parent='{$parent}'");
+		
+		if ($result)
+			return $result;
+		else
+			return null;
+	}
+	
+	function search_disk($parent, $width, $diameter,$krep,$pcd,$pcd2,$dia,$color)
+	{
+		$result = $this->db->get_single("select * from fw_products 
+		where parent = '{$parent}' and
+		disk_width={$width} and disk_diameter={$diameter} and disk_krep={$krep}
+		and disk_pcd = {$pcd} and disk_pcd2={$pcd2} and disk_dia={$dia} and disk_color='{$color}' limit 1");
+		
+		if ($result)
+			return $result;
+		else
+			return null;
+		
+	}
+	
 	function getProductsByFeed($cat_id)
 	{
 		$result = $this->db->get_single("

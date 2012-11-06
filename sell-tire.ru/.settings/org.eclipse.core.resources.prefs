@@ -1,4 +1,4 @@
-#Wed May 16 17:28:45 MSD 2012
+#Tue Nov 06 18:03:49 MSK 2012
 eclipse.preferences.version=1
 encoding//modules/edit_conf/admin/templates/edit_conf.a_main.html=cp1251
 encoding//modules/news/front/templates/news_list.html=cp1251
@@ -33,6 +33,7 @@ encoding//templates/models_list.html=cp1251
 encoding//templates/popular_disk.html=cp1251
 encoding//templates/popular_tires.html=cp1251
 encoding//templates/top_filter.html=cp1251
+encoding//xml/import.php=UTF-8
 encoding/<project>=cp1251
 encoding/import.py=utf-8
 encoding/test.py=utf-8

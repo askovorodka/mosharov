@@ -136,10 +136,18 @@
 	{/foreach}
 </table>
 {/if}
-{*
+
 <br>
 <table>
-	<tr><th></th><th>cccp-shina.ru</th></tr>
-	<tr><th>Export log:</th><td>{$cccp_export_result|nl2br}</td></tr>
+	<tr><th></th><th>cccp-shina.ru</th>
+	<th>&nbsp;</th>
+	<th>goodrims.ru</th>
+	<th>&nbsp;</th>
+	<th>sell-tire.ru</th></tr>
+	<tr><th>Результат последнего экспорта:</th><td>{$smarty.const.CCCP_EXPORT_RESULT|nl2br}</td>
+	<td>&nbsp;</td>
+	<td>{$smarty.const.GOODRIMS_EXPORT_RESULT|nl2br}</td>
+	<td>&nbsp;</td>
+	<td>{$smarty.const.SELLTIRE_EXPORT_RESULT|nl2br}</td>
+	</tr>
 </table>
-*}

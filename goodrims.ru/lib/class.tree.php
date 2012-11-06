@@ -635,9 +635,9 @@ function interval_move(&$a,&$b,$f,$t,$l)
   for($i=$i;$i<count($b)&&($i1_f<=$i1_t||$i2_f<=$i2_t);$i++)
   {
     if($i1_f<=$i1_t)
-      $this->_interval_move($i,&$a,&$b,&$c,&$i1_f,&$i1_t,$i1_d);
+      $this->_interval_move($i,$a,$b,$c,$i1_f,$i1_t,$i1_d);
     if($i2_f<=$i2_t)
-      $this->_interval_move($i,&$a,&$b,&$c,&$i2_f,&$i2_t,$i2_d);
+      $this->_interval_move($i,$a,$b,$c,$i2_f,$i2_t,$i2_d);
   }
   //Add an unadded part of the interval, if there is
   if($i1_f<=$i1_t)

@@ -7,7 +7,7 @@ $link = mysql_connect("localhost", "itire", "gthtgenmt", true);
 if (!$link)
 	die("Error connect to db");
 
-mysql_select_db("demo", $link);
+mysql_select_db("itire", $link);
 
 mysql_set_charset("cp1251", $link);
 
@@ -26,7 +26,6 @@ while ($row = mysql_fetch_assoc($res))
 {
 	$suppliers['cccpshina'][$row['name']] = $row['cccpshina'];
 }
-
 
 
 $suppliers['cccpshina']['itire.ru'] = 1;
@@ -49,9 +48,10 @@ $tire_koef = get_koef('CCCP_TIRE_KOEF');
 $tire_round_koef = get_koef('CCCP_TIRE_ROUND_KOEF'); 
 $disk_round_koef = get_koef('CCCP_DISK_ROUND_KOEF');
 
+
 while ($item = mysql_fetch_assoc($res))
 {
-	//goodrims
+
 	if ($item['type'] == 'disk' && $suppliers['cccpshina'][$item['dealer']] == 1)
 	{
 		$rim = $dom->createElement("rim");
@@ -160,8 +160,6 @@ curl_close($ch);
 mysql_query("update fw_conf set conf_value='{$result}' where conf_key='CCCP_EXPORT_RESULT'", $link);
 mysql_query("update fw_conf set conf_value='0' where conf_key='CCCP_EXPORT'", $link);
 mysql_query("truncate exported_products", $link);
-
-
 
 
 //вспомогательная функция для доступа к настройкам и коефициентам

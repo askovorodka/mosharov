@@ -1,7 +1,7 @@
 <?php
 
   define("DB_HOST","localhost");
-  define("DB_NAME","demo");
+  define("DB_NAME","itire");
   define("DB_USER","itire");
   define("DB_PASS","gthtgenmt");
 

@@ -110,21 +110,46 @@ if (isset($_POST['import_marketmixer']))
 	}
 	
 	
-	
+
 	$insert_categories = array();
 	$insert_products = array();
 	$update_products = array();
 	
 	$path = ROOT . "/marketmixer/";
-	$disk_file = "36a930744eec6d2a9d09bb3497fcf4fc.xls";
-	$tire_file = "bc712b65bafddbd0de08620ece03cb55.xls";
+	//$disk_file = "36a930744eec6d2a9d09bb3497fcf4fc.xls";
+	//$tire_file = "bc712b65bafddbd0de08620ece03cb55.xls";
+	$disk_file = DISK_MARKETMIXER_URL;
+	$tire_file = TIRE_MARKETMIXER_URL;
+	
 	$shop = new Shop($db);
 	//чистим директорию
 	system("rm -rf " . $path . "*");
 	//грузим файл с дисками
+	
+	$headers1 = @get_headers("http://app.marketmixer.net/content/export/{$disk_file}");
+	
+	$headers2 = @get_headers("http://app.marketmixer.net/content/export/{$tire_file}");
+	
+	if(!strpos($headers1[0],'200'))
+	{
+		echo ("File http://app.marketmixer.net/content/export/{$disk_file} is not defined.");
+	}
+	
+	if(!strpos($headers2[0],'200'))
+	{
+		echo ("File http://app.marketmixer.net/content/export/{$tire_file} is not defined.");
+	}
+	
+	if(!strpos($headers1[0],'200') or !strpos($headers2[0],'200'))
+	{
+		exit();
+	}
+	
+	
 	system("/usr/local/bin/wget -c --content-disposition -P {$path} http://app.marketmixer.net/content/export/{$disk_file}");
 	//грузим файл с шинами
 	system("/usr/local/bin/wget -c --content-disposition -P {$path} http://app.marketmixer.net/content/export/{$tire_file}");
+	
 	
 	//работаем с дисками
 	require_once '../lib/excel_reader2.php';

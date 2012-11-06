@@ -1,2 +1,5 @@
 User-agent: *
-Disallow: /
+Disallow:
+Host: shop-toy.com
+Sitemap: http://shop-toy.com/sitemap.xml
+

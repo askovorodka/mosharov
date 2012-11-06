@@ -905,10 +905,11 @@ SWITCH (TRUE) {
 		$navigation[]=array("url" => 'search',"title" => 'Поиск');
 
 		$search=mysql_real_escape_string($_GET['search']);
+		$search = trim($search);
 
-		if (trim($search) != "")
+		if ($search != "")
 		{
-			$search_results=$db->get_all("SELECT fw_products.* FROM fw_products WHERE fw_products.name LIKE '%$search%' AND fw_products.status='1' ");
+			$search_results=$db->get_all("SELECT fw_products.* FROM fw_products WHERE fw_products.name LIKE '%$search%' or fw_products.article = '$search' AND fw_products.status='1' ");
 		}
 
 		if ($search_results)
