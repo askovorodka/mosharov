@@ -1,0 +1,24 @@
+{include file="`$smarty.const.TPL_PATH`filter_green.html"}
+
+<div class="cat">
+<div class="contt">
+{include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
+<h1>{$cat_content.name|strip_tags}</h1>
+	{if $folders_list}
+		<ul>
+		{foreach from=$folders_list item=folder name=for1}
+			<li style="list-style-type:none; margin-left:0px; padding-left:0px; height:35px; font-size:18px;">
+			<a href="{$base_url}/{$folder.full_url}/" title="{$folder.name|strip_tags}">{$folder.name|strip_tags}</a>
+			</li>
+		{/foreach}
+		</ul>
+	{/if}
+<br>
+</div>
+</div>
+<!--- /CAT --->
+<div class="catt">
+<div class="contt">
+<p>{$cat_content.text}</p>
+</div>
+</div>

@@ -1391,7 +1391,7 @@ SWITCH (TRUE) {
 						$template = "shop.f_catalog_2.html";
 						break;
 					default:
-						$template = "shop.f_catalog_1.html";
+						$template = "shop.f_catalog_0.html";
 						break;
 				}
 				

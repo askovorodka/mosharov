@@ -1,9 +1,3 @@
-{*Вы сделали заказа на сайте {$site_url}
-
-{$date|date_format:"%d.%m.%Y в %T"} Вы заказали {$number} товаров на сумму {$order_total} {$currency}. Подробности Вашего заказа смотрите в Вашем личном кабинете на сайте {$site_url}.
-
-До скорых встреч!
-*}
 
 <p>Добрый день, {$user.name}</p>
 
@@ -15,7 +9,7 @@
 
 <p>Вы заказали {$number} товаров на сумму {$order_total} {$currency}.</p> 
 
-<p>Историю ваших заказов смотрите на сайте {$site_url}/cabinet/orders/</p>
+{*<p>Историю ваших заказов смотрите на сайте {$site_url}/cabinet/orders/</p>*}
 
 <p>Способ доставки: {if $dostavka == 2}Доставка{else}Самовывоз{/if}</p>
 
@@ -40,6 +34,11 @@
 
 <tr>
 <td colspan="4" align="right">Итого:</td>
+<td>{$order_total} руб.</td>
+</tr>
+
+<tr>
+<td colspan="4" align="right">Итого, с учетом доставки:</td>
 <td>{$total_sum} руб.</td>
 </tr>
 

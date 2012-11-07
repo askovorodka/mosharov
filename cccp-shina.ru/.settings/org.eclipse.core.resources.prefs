@@ -1,4 +1,4 @@
-#Thu Sep 27 21:39:54 MSK 2012
+#Wed Nov 07 12:47:08 MSK 2012
 eclipse.preferences.version=1
 encoding//admin/index.php=cp1251
 encoding//admin/login.php=cp1251
@@ -6,7 +6,9 @@ encoding//lib/class.users.php=cp1251
 encoding//modules/shop/admin/shop.a_main.php=cp1251
 encoding//modules/shop/front/class.shop.php=cp1251
 encoding//modules/shop/front/templates/basket.html=cp1251
+encoding//modules/shop/front/templates/catalog1.html=cp1251
 encoding//modules/shop/front/templates/catalog2.html=cp1251
 encoding//modules/shop/front/templates/categor_products.html=cp1251
+encoding//modules/shop/front/templates/shop.f_main.html=cp1251
 encoding//modules/shop/front/templates/tire_products.html=cp1251
 encoding/import.py=utf-8

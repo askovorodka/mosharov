@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Private zone. Only for administrator!"
+AuthUserFile  /home/schmitz/data/.htpasswd
+require user demon
