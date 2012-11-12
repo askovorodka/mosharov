@@ -57,13 +57,15 @@
 	<tr>
 		<th>&nbsp;</th>
 		{foreach from=$suppliers item=item}
-			<th>{$item.name}</th>
+			<th{if $item.enabled!="1"} style="color:#999999;"{/if}>{$item.name}</th>
+			<th style="border-right:1px solid black;">&nbsp;</th>
 		{/foreach}
 
 	<tr>
 		<th align="left">itire.ru</th>
 		{foreach from=$suppliers item=item}
-			<td><input type="checkbox" name="itire[{$item.id}]" value="1" {if $item.itire == 1}checked{/if} /></td>
+			<td><center><input {if $item.enabled!="1"} disabled="true"{/if} type="checkbox" name="itire[{$item.id}]" value="1" {if $item.itire == 1}checked{/if} /></center></td>
+			<td style="border-right:1px solid black;">&nbsp;</td>
 		{/foreach}
 	</tr>
 	
@@ -71,21 +73,24 @@
 	<tr>
 		<th align="left">goodrims.ru</th>
 		{foreach from=$suppliers item=item}
-			<td><input type="checkbox" name="goodrims[{$item.id}]" value="1" {if $item.goodrims == 1}checked{/if} /></td>
+			<td><center><input {if $item.enabled!="1"} disabled="true"{/if} type="checkbox" name="goodrims[{$item.id}]" value="1" {if $item.goodrims == 1}checked{/if} /></center></td>
+			<td style="border-right:1px solid black;">&nbsp;</td>
 		{/foreach}
 	</tr>
 
 	<tr>
 		<th align="left">sell-tire.ru</th>
 		{foreach from=$suppliers item=item}
-			<td><input type="checkbox" name="selltire[{$item.id}]" value="1" {if $item.selltire == 1}checked{/if} /></td>
+			<td><center><input {if $item.enabled!="1"} disabled="true"{/if} type="checkbox" name="selltire[{$item.id}]" value="1" {if $item.selltire == 1}checked{/if} /></center></td>
+			<td style="border-right:1px solid black;">&nbsp;</td>
 		{/foreach}
 	</tr>
 
 	<tr>
 		<th align="left">cccp-shina.ru</th>
 		{foreach from=$suppliers item=item}
-			<td><input type="checkbox" name="cccpshina[{$item.id}]" value="1" {if $item.cccpshina == 1}checked{/if} /></td>
+			<td><center><input {if $item.enabled!="1"} disabled="true"{/if} type="checkbox" name="cccpshina[{$item.id}]" value="1" {if $item.cccpshina == 1}checked{/if} /></center></td>
+			<td style="border-right:1px solid black;">&nbsp;</td>
 		{/foreach}
 	</tr>
 	

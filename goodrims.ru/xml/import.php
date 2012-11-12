@@ -58,8 +58,6 @@ foreach ($rims as $rim)
 	$brand_name = mysql_real_escape_string(iconv("utf-8", "windows-1251", $rim->brand));
 	$model_name = mysql_real_escape_string(iconv("utf-8", "windows-1251", $rim->model));
 	$name = mysql_real_escape_string(iconv("utf-8", "windows-1251", $rim->name));
-	if ($model_name == "AirBlade")
-		print $model_name;
 	$price = $rim->price;
 	$article = $rim->article;
 	$disk_width = $rim->disk_width;

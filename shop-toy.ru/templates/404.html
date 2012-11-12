@@ -1,52 +1,69 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
-<title>Странице не найдена</title>
+<title>{$page_title}</title>
 <meta name="Keywords" content="{$meta_keywords}">
 <meta name="Description" content="{$meta_description}">
 {foreach from=$css item=css}
 <link rel="stylesheet" type="text/css" href="{$css}">
 {/foreach}
-
 {foreach from=$js item=js}
 <script src="{$js}" type="text/javascript"></script>
 {/foreach}
-
 </head>
+
+<div id='loading-layer'><div>Кладем в корзину. Подождите...</div></div>
+
 <body>
-<table class="mtbl" cellspacing="0" cellpadding="0">
-  <tr height="234">
-    <td width="271"><a href="{$base_url}"><img src="{$template_image}logo.png" width="271" height="234"></a></td>
-    <td colspan="2" class="rtbg"><div class="toptel" align="center">{$smarty.const.PHONE1}<br>{$smarty.const.PHONE2}</div></td>
-  </tr>
-  <tr height="36">
-    <td colspan="3" class="gline">{$smarty.const.HEADER_TITLE}</td>
-  </tr>
-  <tr height="100%">
-    <td class="leftside">
-    {include file="../templates/left_menu_block.html"}
-	<br><br>
-	<center><div class="bann"><br><a href="{$base_url}/insertfiles/price_list_2011_3k.xls">Скачать прайс-лист<br> с нашей продукцией</a></div></center>
-	<img src="{$template_image}clear.png" width="271" height="1"><br>
-	</td>
-    <td class="txt">
-    
-		<center>Запрашиваемая вами страница не найдена.</center>    
-    
-	</td>
+<!--- toping --->
+<div class="topd">
 	
-    <td class="rightside"><img src="{$template_image}clear.png" width="231" height="1"><br>
-    
-	<a href="{$base_url}/news/" id="news">Новости и акции</a><br><br>
-	
-	{foreach from=$news_list item=news name=news}
-		<span class="ndate">{$news.publish_date|date_format:"%d.%m.%Y"}</span><br>
-		<a href="{$base_url}/news/archive/{$news.id}/">{$news.title|strip_tags}</a><br><br>
-	{/foreach}
-	
-	</td>
-  </tr>
-  {include file="../templates/footer_block.html"}
+	<div class="topt"><div class="toptel"><span class="kod">+7 (495)</span> 645-16-57</div><div class="littler">режим работы:  9:00 - 21:00  без выходных</div></div>
+
+	{include file="`$smarty.const.TPL_PATH`basket_block.html"}
+
+    <div class="tmenu">
+    {include file="../templates/top_menu.html"}
+    </div>
+
+</div>
+<!--- /toping --->
+<!--- search --->
+{include file="../templates/top_search.html"}
+<!--- /search --->
+
+<!--- special --->
+{if $current_url == "home"}{include file="../templates/top_special_block.html"}{/if}
+<!--- /special --->
+
+<!--- middle --->
+<table class="middle">
+<tr>
+<td class="lmenu">
+{include file="../templates/left_catalog_menu.html"}
+</td>
+<td class="righter">
+
+{include file="`$smarty.const.TPL_PATH`filter_green.html"}
+
+<div class="cat">
+<div class="contt">
+<br><br>
+<center>Ошибка 404, такой страницы не существует.</center>		
+
+</div></div>
+
+</td>
+</tr>
 </table>
+<!--- /middle --->
+<!--- bottom --->
+<div class="bottom"><br><br>
+
+{include file="../templates/footer_menu.html"}
+{include file="../templates/counters.html"}
+</div>
+<!--- /bottom --->
+
 </body>
 </html>

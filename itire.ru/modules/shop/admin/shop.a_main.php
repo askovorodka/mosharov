@@ -76,7 +76,7 @@ if (isset($_POST['import_marketmixer']))
 {
 
 	//обновляем поставщиков
-	$db->query("update suppliers set itire=0, goodrims=0, selltire=0, cccpshina=0");
+	$db->query("update suppliers set itire=0, goodrims=0, selltire=0, cccpshina=0, enabled=0");
 	if (!empty($_POST['itire']))
 	{
 		foreach ($_POST['itire'] as $key=>$val)
@@ -162,7 +162,10 @@ if (isset($_POST['import_marketmixer']))
 		$parent0 = $shop->getCategory(DISK_ID);
 		$supplier_name = $data->val($i, "R");
 		if (!$supplier = $shop->is_supplier_exist($supplier_name))
+		{
 			$supplier = $shop->insert_supplier($supplier_name);
+		}
+		$db->query("update suppliers set enabled=1 where name='".mysql_real_escape_string($supplier_name)."'");
 		
 		
 		$brand_name = $data->val($i, "M");
@@ -305,6 +308,8 @@ if (isset($_POST['import_marketmixer']))
 		$supplier_name = $data->val($i, "Q");
 		if (!$supplier = $shop->is_supplier_exist($supplier_name))
 			$supplier = $shop->insert_supplier($supplier_name);
+		
+		$db->query("update suppliers set enabled=1 where name='".mysql_real_escape_string($supplier_name)."'");
 		
 		$brand_name = $data->val($i, "L");
 		$model_name = $data->val($i, "O");

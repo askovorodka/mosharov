@@ -168,13 +168,14 @@ ini_set('display_errors','On');
 				$name->appendChild($text);
 				$offer->appendChild($name);
 				
+				
 				/*$sales_notes = $dom->createElement('sales_notes');
 				if ($product['tire_sklad'] > 3 || $product['disk_sklad'] > 3)
-					$text = $dom->createTextNode("Заказ от 4. Менее по согласованию.");
+					$text = $dom->createTextNode("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ 4. пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.");
 				elseif ($product['tire_sklad'] > 0)
-					$text = $dom->createTextNode("Заказ от " . $product['tire_sklad'] . " штук.");
+					$text = $dom->createTextNode("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ " . $product['tire_sklad'] . " пїЅпїЅпїЅпїЅ.");
 				elseif ($product['disk_sklad'] > 0)
-					$text = $dom->createTextNode("Заказ от " . $product['disk_sklad'] . " штук.");
+					$text = $dom->createTextNode("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ " . $product['disk_sklad'] . " пїЅпїЅпїЅпїЅ.");
 				//$text = $dom->createTextNode(iconv('windows-1251','utf-8',YANDEX_XML_SALES));
 				$sales_notes->appendChild($text);
 				$offer->appendChild($sales_notes);*/
