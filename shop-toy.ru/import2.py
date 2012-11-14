@@ -81,6 +81,19 @@ def insert(category):
     db.query(sql)
     return int(last_insert_id())
 
+def _replaced_text(text):
+    #sql = "select str from _import_replaced"
+    #result = db.select(sql)
+    #for item in result:
+    #    text = text.replace(item['str'],"")
+    row = db.selectrow("select * from fw_conf where conf_key='EXCLUDE_IMPORTED_WORDS'")
+    items = row['conf_value'].split()
+    for item in items:
+        text = text.replace(item,"")
+
+    return text
+    
+
 imported_rows = db.select("select * from _imported_rows")
 
 if imported_rows == None:
@@ -120,6 +133,19 @@ for row in imported_rows:
             product_name = product_name_array[0]
         else:
             product_name = row['nomen']
+        
+        product_name_array = ""
+        product_name_array = re.split('(', product_name)
+        if product_name_array != None:
+            product_name = product_name_array[0]
+            
+        product_name = _replaced_text(product_name)
+        product_name = product_name.decode('cp1251').encode('utf-8')
+        #убераем текст в скобках
+        product_name = re.sub("\((.*?)\)","",product_name)
+        
+        product_name = product_name.decode('utf-8').encode('cp1251')
+            
         db.query("insert into fw_products (parent, name, article, price, status) values ('%d', '%s', '%s', '%f', '1')" % (int(cat_param_2['id']), db.escape(str(product_name)), str(row['article']), float(row['price'])))
         product_id = int(last_insert_id())
         db.query("replace into _import_product_links (product_id, product_from) values('%d', '%s')" % (product_id, str(row['image'])))
@@ -142,6 +168,16 @@ for row in imported_rows:
             product_name = product_name_array[0]
         else:
             product_name = row['nomen']
+        
+        product_name = _replaced_text(product_name)
+        product_name = product_name.decode('cp1251').encode('utf-8')
+        
+        
+        product_name = re.sub("\((.*?)\)","",product_name)
+        
+        
+        product_name = product_name.decode('utf-8').encode('cp1251')
+        
         
         db.query("update fw_products set name='%s', price = '%f' where id = '%d'" % (str(db.escape(product_name)),float(row['price']), int(product['id'])))
         print "Обновлен продукт: %s" % str(product_name)

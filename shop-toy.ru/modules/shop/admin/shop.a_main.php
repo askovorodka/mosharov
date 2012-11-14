@@ -8,6 +8,7 @@ require_once '../lib/class.image.php';
 require_once '../lib/class.import.php';
 require_once('../lib/class.string.php');
 require_once 'order_status.php';
+require_once '../modules/shop/front/class.shop.php';
 
 $smarty->assign("currency",DEFAULT_CURRENCY);
 
@@ -52,10 +53,19 @@ $navigation[]=array("url" => BASE_URL . "/admin/?mod=shop","title" => 'Ìàãàçèí')
 if (isset($_GET['action']) && $_GET['action']!='') $action=$_GET['action'];
 else $action='';
 
+$shop = new Shop($db);
 //print_r($_POST);
 //exit();
 
 /*------------------------- ÂÛÏÎËÍßÅÌ ÐÀÇËÈ×ÍÛÅ ÄÅÉÑÒÂÈß ---------------------*/
+
+if (!empty($_POST['exclude_words']))
+{
+	$exclude_words = $_POST['exclude_words'];
+	$db->query("update fw_conf set conf_value='{$exclude_words}' where conf_key='EXCLUDE_IMPORTED_WORDS'");
+	header("Location: " . $_SERVER['HTTP_REFERER']);
+	die();
+}
 
 if (isset($_POST['get_import']))
 {
@@ -830,8 +840,9 @@ if ($action=='delete_cat' && isset($_GET['id'])) {
 	$tree->deleteAll($id);
 	unlink(BASE_PATH.'/uploaded_files/shop_images/'.$cat['image']);
 
+	$shop->delete_products_by_category($id);
 	$db->query("delete from fw_products where parent='$id'");
-	
+
 	header ("Location: ?mod=shop&action=catalogue");
 	die();
 
@@ -870,16 +881,17 @@ if ($action=='delete_product') {
 
 	$id = $_GET['id'];
 
-	$images=$db->get_all("SELECT id,ext FROM fw_products_images WHERE parent='$id'");
+	//$images=$db->get_all("SELECT id,ext FROM fw_products_images WHERE parent='$id'");
 
-	foreach ($images as $k=>$v) {
+	/*foreach ($images as $k=>$v) {
 		@unlink(BASE_PATH.'/uploaded_files/shop_images/'.$v['id'].'.'.$v['ext']);
 		@unlink(BASE_PATH.'/uploaded_files/shop_images/resized-'.$v['id'].'.'.$v['ext']);
-	}
+	}*/
 
-	$db->get_all("DELETE FROM fw_products_images WHERE parent='$id'");
+	//$db->get_all("DELETE FROM fw_products_images WHERE parent='$id'");
+	$shop->delete_image_by_product($id);
 	$db->query("DELETE FROM fw_products WHERE id='$id'");
-	$db->query("DELETE FROM fw_products_properties WHERE product_id='$id'");
+	//$db->query("DELETE FROM fw_products_properties WHERE product_id='$id'");
 
 	header ("Location: ?mod=shop&action=products_list");
 	die();
@@ -1021,6 +1033,17 @@ SWITCH (TRUE) {
 		$template='shop.a_import_log.htm';
 		
 	BREAK;*/
+
+	CASE ($action == 'exclude_words'):
+		
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=exclude_words","title" => 'Ñëîâà-èñêëþ÷åíèÿ äëÿ èìïîðòà');
+		
+		$items = $db->get_all("select * from _import_replaced order by id");
+		$smarty->assign("items", $items);
+		
+		$template='shop.a_exclude_words.html';
+		
+	BREAK;
 	
 	
 	CASE ($action == 'import_price'):

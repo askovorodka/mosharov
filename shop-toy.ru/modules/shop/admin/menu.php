@@ -22,35 +22,15 @@ $sub[]= array(
 	   );
 
 $sub[]= array(
+			"name"=>"Слова-исключения",
+			"link"=>"?mod=shop&action=exclude_words"
+	   );
+	   
+$sub[]= array(
 			"name"=>"Импорт",
 			"link"=>"?mod=shop&action=import_price"
 	   );
 	   
-/*$sub[]= array(
-			"name"=>"Свойства продуктов",
-			"link"=>"?mod=shop&action=properties"
-	   );*/
-	   /*
-$sub[]= array(
-			"name"=>"Статистика",
-			"link"=>"?mod=shop"
-	   );
-
-$sub[]= array(
-			"name"=>"Список заказов",
-			"link"=>"?mod=shop&action=orders"
-	   );
-
-$sub[]= array(
-			"name"=>"Импорт",
-			"link"=>"?mod=shop&action=import"
-	   );
-
-$sub[]= array(
-			"name"=>"Лог импорта",
-			"link"=>"?mod=shop&action=import_log"
-	   );
-	   */
 $main_menu[]=array(
 				"link"=>"?mod=shop",
 				"name"=>"shop",

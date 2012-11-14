@@ -1,4 +1,5 @@
 <?php
+
 //вспомогательный класс
 class Shop extends db {
 
@@ -6,6 +7,30 @@ class Shop extends db {
 	function Shop($db)
 	{
 		$this->db = &$db;
+	}
+	
+	
+	function delete_products_by_category($category_id)
+	{
+		$products = $this->db->get_all("select id from fw_products where parent='{$category_id}'");
+		
+		foreach ($products as $product)
+		{
+			$this->delete_image_by_product($product['id']);
+		}
+		$this->db->query("delete from fw_products where parent='{$category_id}'");
+	}
+	
+	function delete_image_by_product($product_id)
+	{
+		//удаляем запись в БД
+		$this->db->query("delete from product_images where product_id='{$product_id}'");
+		system("rm -rf " . ROOT . '/uploaded_files/product_images/' . $product_id);
+		system("rm -rf " . ROOT . '/resized/img105x105/uploaded_files/product_images/'.$product_id);
+		system("rm -rf " . ROOT . '/resized/img100x100/uploaded_files/product_images/'.$product_id);
+		system("rm -rf " . ROOT . '/resized/img315x228/uploaded_files/product_images/'.$product_id);
+		system("rm -rf " . ROOT . '/resized/img71x74/uploaded_files/product_images/'.$product_id);
+		system("rm -rf " . ROOT . '/resized/img80x80/uploaded_files/product_images/'.$product_id);
 	}
 	
 	function getTopProducts($limit = 1)
