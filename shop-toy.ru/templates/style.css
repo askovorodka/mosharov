@@ -1,3 +1,6 @@
+li.subpages {list-style-type:none; margin-left:0px; padding-left:0px; margin-top:10px;}
+li.subpages p {margin-top:0px; padding-top:0px;}
+div.popImage	{border:1px solid #0070B1; z-index:50; position:absolute; display:none;}
 #loading-layer	{
 	font-family:Tahoma, Geneva, sans-serif;
 	position: fixed; display:none; width:200px;height:60px;background:#a3238e;

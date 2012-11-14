@@ -1,23 +1,48 @@
 
 $(document).ready( function(){
 
+	$(".rollover").hover(function(){
+		var image = $(this).attr("image");
+		if (image)
+			{
+			var position = $(this).position();
+			$(".popImage").empty();
+			$("<img></img>")
+			.css({'width' : 315, 'height' : 228})
+			.attr({"src" : image})
+			.appendTo($(".popImage"));
+			
+			if ($.browser.msie)
+				$(".popImage").css({'left' : position.left, 'top' : (position.top)}).show();
+			else
+				$(".popImage").css({'left' : position.left, 'top' : (position.top-108)}).show();
+			
+			}
+	});
+	
+	$(".popImage").mouseleave(function(){
+		$(".popImage").hide();
+	});
+	
+	
+	
+	
 	$("a.colorbox").colorbox();
 	
 	$("input[type='text']", $("#basket_form")).keyup(function(){ $("#basket_form").submit(); });
 	
 	$("a.smallimage").click(function(){
 		var src = $(this).attr("href");
+		var bsrc = $(this).attr("bigimage");
 		if ($.trim(src) != "")
 		{
-			$("#bigimage").attr("src", src);
+			$("#bigimage").attr("src", src).parent().attr("href", bsrc);
+			
 		}
 		return false;
 	});
 	
 	
-	$(function() {
-		$('a.gallery').lightBox({fixedNavigation:true});
-	});
 
 	$("a.CatalogImages").click(function(){
 		var src = $(this).attr("image");
@@ -31,9 +56,6 @@ $(document).ready( function(){
 	$("#ImageLayout").click(function(){ $(this).hide(); });
 	
 	$("#submit_basket_form").submit(function(){
-		//alert($("input[name='payment']:checked", $("form#submit_basket_form")).val());
-		//return false;
-		//если авторизован, то сразу делаем заказ
 		if ( $("#register").val() == 1 )
 			{
 				$("input[name='submit_basket'][type='image']").attr("disabled", "true").fadeOut("fast");
@@ -49,9 +71,7 @@ $(document).ready( function(){
 				
 			}
 		else
-			//иначе регим/логиним
 			{
-				//авторизаци€
 				if ($("#question").attr("register") == 1)
 					{
 						if (login_validate.form())
@@ -75,7 +95,6 @@ $(document).ready( function(){
 								}
 								else
 								{
-									//$("#submit_basket_form").submit();
 									$("input[name='submit_basket'][type='image']").attr("disabled", "true").fadeOut("fast");
 									$.post('http://' + location.hostname + '/shop/basket/submit/', {
 										submit_order : 1,
@@ -278,7 +297,7 @@ $(document).ready( function(){
 					
 					text:	{
 						required : "¬ведите комментарий"
-					},
+					}
 					
 				}
 			}
@@ -446,6 +465,8 @@ $(document).ready( function(){
 		}
 		return false;
 	});
+	
+
 	
 } );
 	

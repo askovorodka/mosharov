@@ -21,7 +21,7 @@ ini_set('display_errors','On');
 		$db = new db(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 		$shop = new Shop($db);
 		
-		$db->query('SET wait_timeout = 0');
+		//$db->query('SET wait_timeout = 0');
 
 		print "start time:" . date("Y-m-d H:i:s") . "\n\n";
 		$time = time();
@@ -51,7 +51,7 @@ ini_set('display_errors','On');
 
 			for ($a=0;$a<count($products_list);$a++)
 			{
-				$products_list[$a]['full_url']=$shop->getFullUrlProduct($products_list[$a]['id']);
+				$products_list[$a]['full_url']=$shop->getFullUrlProduct($products_list[$a]['id'],'catalog');
 			}
 			
 			$imp = new DOMImplementation;
@@ -121,7 +121,7 @@ ini_set('display_errors','On');
 				$offer->setAttribute('available','true');
 				
 				$url = $dom->createElement('url');
-				$text = $dom->createTextNode(BASE_URL . '/catalog' . $product['full_url']);
+				$text = $dom->createTextNode(BASE_URL . '/' . $product['full_url'].'/');
 				$url->appendChild($text);
 				$offer->appendChild($url);
 				

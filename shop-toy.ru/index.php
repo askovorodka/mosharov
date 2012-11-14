@@ -79,10 +79,11 @@ $css[] = BASE_URL."/templates/style.css";
 $css[] = BASE_URL."/javascript/colorbox/example1/colorbox.css";
 //$css[]=BASE_URL."/templates/jquery.lightbox-0.5.css";
 $js[]=BASE_URL."/javascript/jquery-1.5.min.js";
+$js[]=BASE_URL."/javascript/tools.js";
 $js[]=BASE_URL."/javascript/colorbox/colorbox/jquery.colorbox.js";
 $js[]=BASE_URL."/javascript/jquery.validate.min.js";
 //$js[]=BASE_URL."/javascript/jquery.center.js";
-$js[]=BASE_URL."/javascript/tools.js";
+
 //$js[]=BASE_URL."/javascript/tools.js";
 
 /* ------------- ��������� �������� ������ -------------- */

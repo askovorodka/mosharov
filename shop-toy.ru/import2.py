@@ -90,6 +90,11 @@ def _replaced_text(text):
     items = row['conf_value'].split()
     for item in items:
         text = text.replace(item,"")
+    
+    var = text.decode('cp1251')
+    var1 = var[0].upper()
+    var2 = var[1:].lower()
+    text = (var1+var2).encode('cp1251')
 
     return text
     
@@ -145,6 +150,8 @@ for row in imported_rows:
         product_name = re.sub("\((.*?)\)","",product_name)
         
         product_name = product_name.decode('utf-8').encode('cp1251')
+        
+        row['price'] = round(float(row['price']))
             
         db.query("insert into fw_products (parent, name, article, price, status) values ('%d', '%s', '%s', '%f', '1')" % (int(cat_param_2['id']), db.escape(str(product_name)), str(row['article']), float(row['price'])))
         product_id = int(last_insert_id())
@@ -178,6 +185,7 @@ for row in imported_rows:
         
         product_name = product_name.decode('utf-8').encode('cp1251')
         
+        row['price'] = round(float(row['price']))
         
         db.query("update fw_products set name='%s', price = '%f' where id = '%d'" % (str(db.escape(product_name)),float(row['price']), int(product['id'])))
         print "Обновлен продукт: %s" % str(product_name)

@@ -19,7 +19,7 @@
         
         {if $images}
         	{foreach from=$images item=image}
-        	<a href="/images/img315x228/uploaded_files/product_images/{$product.id}/{$images[0].image}" class="smallimage"><img src="/images/img71x74/uploaded_files/product_images/{$product.id}/{$image.image}" width="71" height="74" class="itemps"></a>
+        	<a bigimage="/uploaded_files/product_images/{$product.id}/{$image.image}" href="/images/img315x228/uploaded_files/product_images/{$product.id}/{$image.image}" class="smallimage"><img src="/images/img71x74/uploaded_files/product_images/{$product.id}/{$image.image}" width="71" height="74" class="itemps"></a>
         	{/foreach}
         {/if}
         </td>
