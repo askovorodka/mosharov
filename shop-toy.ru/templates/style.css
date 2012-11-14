@@ -17,7 +17,7 @@ label.error, #response_server	{color:red; font-size:11px;}
 body {
 	margin:0px;
 	padding:0px;
-	background:#978898;
+	background:#abcdef;
 	font-family:Tahoma, Geneva, sans-serif;
 	text-align:center;
 	color:#000000;
@@ -314,11 +314,12 @@ h3 {
 .lmenucos div {
 	margin-left:60px;
 	font-size:12px;
+	padding:4px 0;
 	/*height:22px;*/
 }
 .lmenucos div a {
 	font-size:12px;
-	line-height:22px;
+	line-height:16px;
 }
 .lmenuc a, .lmenuco a {
 	font-size:13px;
@@ -537,39 +538,36 @@ h3 {
 }
 .cats td {
 	width:170px;
-	padding:10px 0;
+	padding:0;
 	text-align:center;
-	border-right:1px solid #d9d9d9;
-}
-.cats td.right {
-	border-right:none;
+	border:0;
 }
 .catnone {
 	padding:0px;
-	height:10px;
+	height:15px;
 	border-right:none!important;
 }
 .catsl {
 	border:0px !important;
 }
 .catitem {
-	width:130px;
-	margin:0 20px;
+	width:140px;
+	margin:0 15px;
 	color:#000000;
 	line-height:16px;
 }
 .catitemin {
-	width:130px;
-	margin:0 20px;
+	width:140px;
+	margin:0 15px;
 	color:#000000;
 	line-height:16px;
 	text-align:left;
 }
-.catitemin img {
-	text-align:center !important;
+.catitemin a img {
+	margin:0 0 10px 15px !important;
 }
 .catitem a {
-	font-size:14px;
+	font-size:12px;
 	color:#0070b1;
 }
 .catitemin a {
@@ -605,10 +603,12 @@ h3 {
 	text-align:left;
 	color:#000000;
 	font-size:12px;
+	padding-top:5px;
 }
 .catcap {
 	color:#666666;
 	font-size:12px;
+	line-height:18px;
 }
 .itemtbl {
 	border-collapse:collapse;
