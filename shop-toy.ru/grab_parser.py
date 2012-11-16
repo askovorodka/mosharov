@@ -15,6 +15,7 @@ def get_abs_path():
 
 def main():
     grab = Grab()
+    grab.setup(hammer_mode=True, hammer_timeouts=((1, 1), (2, 2), (30, 30)))
     items = db.select("select * from _import_product_links")
     if items == None:
         print "Парсинг не требуется"

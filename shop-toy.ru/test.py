@@ -7,6 +7,9 @@ import sys
 import re
 
 import DataBase
+import trans
+import re
+from urllib import urlencode
 
 DB_HOST, DB_NAME, DB_USER, DB_PASS = "localhost", "shop-toy", "demo", "gthtgenmt"
 db = DataBase.Db(DB_NAME,DB_HOST,DB_USER,DB_PASS)
@@ -19,13 +22,21 @@ db.query("set CHARACTER SET cp1251")
 #for i in items:
 #    print i
 
-products = db.select("select * from fw_products where (select count(*) from product_images where product_images.product_id=fw_products.id)>1")
+cats = db.select("select * from fw_catalogue where param_level=2")
 
-for item in products:
+for item in cats:
     
-    image = db.selectrow("select * from product_images where product_id=%d order by id desc limit 1" % int(item['id']))
-    if image != None:
-        db.query("delete from product_images where product_id=%d and id<>%d" % (int(item['id']), int(image['id'])))
+    name = item['name'].decode('cp1251')
+    name = re.sub(", ", "_", name)
+    name = re.sub("\s","_",name)
+    url = name.encode('trans').lower().encode('cp1251')
+    db.query("update fw_catalogue set url='%s' where id='%d'" % (str(url), int(item['id'])))
+    
+    
+    
+    #image = db.selectrow("select * from product_images where product_id=%d order by id desc limit 1" % int(item['id']))
+    #if image != None:
+    #    db.query("delete from product_images where product_id=%d and id<>%d" % (int(item['id']), int(image['id'])))
     
     #var = item['name'].decode('cp1251')
     #var = var.lower()

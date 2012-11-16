@@ -5,6 +5,7 @@ import xlrd
 import os
 import sys
 import re
+import trans
 
 import DataBase
 
@@ -124,7 +125,11 @@ for row in imported_rows:
     #если нет категории, добавлем ее
     if cat_param_2 == None:
         cat2_id = insert(cat_param_1)
-        url = 'category' + str(cat2_id)
+        #url = 'category' + str(cat2_id)
+        url = cat1['group_prod'].decode('cp1251').encode('trans').lower()
+        url = re.sub(", ", "_", url)
+        url = re.sub("\s","_",url)
+        url = url.encode('cp1251')
         status = 1
         db.query("update fw_catalogue set name = '%s', url = '%s', status = '%d' where id='%d' " % (db.escape(str(cat1['group_prod'])), url, status, cat2_id))
         cat_param_2 = get_category(cat2_id)
@@ -139,10 +144,10 @@ for row in imported_rows:
         else:
             product_name = row['nomen']
         
-        product_name_array = ""
-        product_name_array = re.split('(', product_name)
-        if product_name_array != None:
-            product_name = product_name_array[0]
+        #product_name_array = ""
+        #product_name_array = re.split('(', product_name)
+        #if product_name_array != None:
+        #    product_name = product_name_array[0]
             
         product_name = _replaced_text(product_name)
         product_name = product_name.decode('cp1251').encode('utf-8')
