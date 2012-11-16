@@ -85,7 +85,7 @@ if (isset($_POST['fast_order']) && $_POST['fast_order'] == 1)
 	$smarty->assign('product', $product);
 	$body=$smarty->fetch($templates_path.'/fast_order.txt');
 	//Mail::send_mail("ai@avtozeon.ru,avtozeon@gmail.com,rifshina@mail.ru,itire@ya.ru",$user['login'],"Новый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
-	Mail::send_mail("ai@avtozeon.ru,avtozeon@gmail.com,rifshina@mail.ru,itire@ya.ru","noreply@itire.ru","Быстрый заказ",$body,'','text','standard','Windows-1251');
+	Mail::send_mail("ai@avtozeon.ru,avtozeon@gmail.com,rifshina@mail.ru,itire@ya.ru","itire@ya.ru","Быстрый заказ",$body,'','text','standard','Windows-1251');
 	
 	header("Location: " . $_SERVER['HTTP_REFERER']);
 	die();
@@ -670,7 +670,7 @@ SWITCH (TRUE) {
 
 				$body=$smarty->fetch($templates_path.'/order_notice.txt');
 
-				Mail::send_mail($user['login'],"ai@avtozeon.ru,avtozeon@gmail.com,rifshina@mail.ru,itire@ya.ru","Новый заказ в интернет магазине",$body,'','html','standard','Windows-1251');
+				Mail::send_mail($user['login'],"itire@ya.ru","Новый заказ в интернет магазине",$body,'','html','standard','Windows-1251');
 				//Mail::send_mail("andrey.schmitz@gmail.com","ai@avtozeon.ru,avtozeon@gmail.com,rifshina@mail.ru","Новый заказ в интернет магазине",$body,'','html','standard','Windows-1251');
 
 				$admin_body=$smarty->fetch($templates_path.'/admin_order_notice.txt');
