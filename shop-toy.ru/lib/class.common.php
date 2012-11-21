@@ -5,8 +5,17 @@ class Common {
 	
 	function _404()
 	{
-		header("HTTP/1.0 404 Not Found");
+		header("Location: /404/");
 		die();
+		/*
+		global $smarty;
+		header("HTTP/1.0 404 Not Found");
+  		$main_template=BASE_PATH . '/templates/404.html';
+  		$navigation[]=array("url"=>"/","title"=>"Ошибка 404. Ничего не найдено.");
+		$smarty_display=$main_template;
+		$smarty->display($smarty_display);
+		*/
+		
 	}
 	
 	function generate_main_menu($level=0) {

@@ -13,57 +13,51 @@
 </head>
 
 <div id='loading-layer'><div>Кладем в корзину. Подождите...</div></div>
+<div class="popImage"></div>
 
 <body>
-<!--- toping --->
+<!---- BASKET ---->
+{include file="`$smarty.const.TPL_PATH`basket_block.html"}
+<!---- /BASKET ---->
+
+<!--------- TOPING --------->
 <div class="topd">
-	
-	<div class="topt"><div class="toptel"><span class="kod">+7 (495)</span> 645-16-57</div><div class="littler">режим работы:  9:00 - 21:00  без выходных</div></div>
-
-	{include file="`$smarty.const.TPL_PATH`basket_block.html"}
-
-    <div class="tmenu">
-    {include file="../templates/top_menu.html"}
+<!---- TOPMENU ---->
+{include file="`$smarty.const.TPL_PATH`top_menu.html"}
+<!---- /TOPMENU ---->
+    <div class="topdmain">
+<!---- SEARCH ---->
+{include file="`$smarty.const.TPL_PATH`top_search.html"}
+<!---- /SEARCH ---->
+    	<div class="littler">работаем c 9:00 до 21:00 &mdash; без выходных</div>
+    	<div class="toptel">(495) 645-16-57</div>
+    	<a href="{$base_url}/" title="SHOP-TOY &mdash; магазин детских игрушек"><img src="{$template_image}logo.png" class="logo" alt="SHOP-TOY &mdash; магазин детских игрушек" /></a>
     </div>
-
 </div>
-<!--- /toping --->
-<!--- search --->
-{include file="../templates/top_search.html"}
-<!--- /search --->
+<!--------- /TOPING --------->
 
-<!--- special --->
-{if $current_url == "home"}{include file="../templates/top_special_block.html"}{/if}
-<!--- /special --->
+<!--------- CATLIST --------->
+{include file="`$smarty.const.TPL_PATH`top_filter.html"}
+<!--------- /CATLIST --------->
 
-<!--- middle --->
+<!--------- MIDDLE --------->
 <table class="middle">
 <tr>
-<td class="lmenu">
-{include file="../templates/left_catalog_menu.html"}
+{if $product || $cat_content}
+<td class="middleside">
+<!---- FILTER ---->
+{include file="`$smarty.const.TPL_PATH`left_filter.html"}
+<!---- /FILTER ---->
 </td>
-<td class="righter">
-
-{include file="`$smarty.const.TPL_PATH`filter_green.html"}
-
-<div class="cat">
-<div class="contt">
-<br><br>
-<center>Ошибка 404, такой страницы не существует.</center>		
-
-</div></div>
-
+{/if}
+<td class="maincolumn">
+<center>Такой страницы не существует.</center>
 </td>
 </tr>
 </table>
-<!--- /middle --->
-<!--- bottom --->
-<div class="bottom"><br><br>
-
-{include file="../templates/footer_menu.html"}
-{include file="../templates/counters.html"}
-</div>
-<!--- /bottom --->
-
+<!--- /MIDDLE --->
+<!--- BOTTOM --->
+{include file="`$smarty.const.TPL_PATH`footer_menu.html"}
+<!--- /BOTTOM --->
 </body>
 </html>

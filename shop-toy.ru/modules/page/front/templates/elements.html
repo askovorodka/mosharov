@@ -1,12 +1,7 @@
-<div class="cont">
-<div class="contt">
 {include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
 <h1>{if $page_content.label}{$page_content.label|strip_tags|stripslashes}{else}{$page_content.name|strip_tags|stripslashes}{/if}</h1>
-{if $page_content}{eval var=$page_content.text|stripslashes}{/if}
+<div class="cattext">{if $page_content}{eval var=$page_content.text|stripslashes}{/if}</div>
 
 {$subpages}
 
 {$documents}
-
-</div>
-</div>

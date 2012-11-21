@@ -52,7 +52,6 @@ $shop = new Shop($db);
 
 define ('CAPTCHA_SALT', 'kjhfgkjhfsdkjghskjd hkjfdnkmbn ,msdnbskjh'); 
 
-
 /* -------- пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ ---------- */
 
 Common::load_config('front');
@@ -266,10 +265,12 @@ $shop_menu=$db->get_all("
 
 if ($shop_menu)
 {
+	$shop_menu_count = ceil(count($shop_menu) / 3);
+	$smarty->assign("shop_menu_count",$shop_menu_count);
 	foreach ($shop_menu as $key=>$val)
 	{
 		$shop_menu[$key]['full_url'] = $shop->getFullUrlCategory($val['id'], "catalog");
-		$shop_menu[$key]['children'] = $shop->getChildrenCategor($val, 2);
+		/*$shop_menu[$key]['children'] = $shop->getChildrenCategor($val, 2);
 		if ($shop_menu[$key]['children'])
 		{
 			foreach ($shop_menu[$key]['children'] as $key2=>$val2)
@@ -277,7 +278,7 @@ if ($shop_menu)
 				$shop_menu[$key]['children'][$key2]['full_url'] = $shop->getFullUrlCategory($val2['id'], "catalog");
 			}
 			$shop_menu[$key]['full_url'] = $shop_menu[$key]['children'][0]['full_url'];
-		}
+		}*/
 	}
 }
 
@@ -301,10 +302,10 @@ $smarty->assign("page_title",@$page_title);
 $smarty->assign("meta_keywords",@$meta_keywords);
 $smarty->assign("meta_description",@$meta_description);
 
-if (!empty($page_content['id'])){
+/*if (!empty($page_content['id'])){
   $files_list = $db->get_all("SELECT id,ext,title FROM fw_tree_files WHERE parent='".$page_content['id']."'");
   $smarty->assign("files_list",$files_list);
-}
+}*/
 
 /*-------------------пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ-------------------- */
 $t_endtime= gettime ();
@@ -321,6 +322,7 @@ elseif ($page_found) {
 }
 else {
   //$template=BASE_PATH.'/templates/404.html';
+  //header("HTTP/1.0 404 Not Found");
   $main_template=BASE_PATH . '/templates/404.html';
   $navigation[]=array("url"=>"/","title"=>"Ошибка 404. Ничего не найдено.");
 
@@ -376,7 +378,7 @@ if (!$switch_off_smarty){
 if ($page_found) header("HTTP/1.0 200 OK");
 else {
 
-  $db->query("REPLACE INTO fw_urls (url_from,url_to) VALUES('".@$_SERVER['HTTP_REFERER']."','".BASE_URL.$_SERVER['REQUEST_URI']."')");
+ // $db->query("REPLACE INTO fw_urls (url_from,url_to) VALUES('".@$_SERVER['HTTP_REFERER']."','".BASE_URL.$_SERVER['REQUEST_URI']."')");
 
   $smarty->assign("page_title","Ошибка 404.");
   require_once (BASE_PATH.'/modules/site_map/front/site_map.f_main.php');

@@ -22,16 +22,18 @@ db.query("set CHARACTER SET cp1251")
 #for i in items:
 #    print i
 
-cats = db.select("select * from fw_catalogue where param_level=2")
+products = db.select("select * from fw_products")
 
-for item in cats:
+for item in products:
     
-    name = item['name'].decode('cp1251')
-    name = re.sub(", ", "_", name)
-    name = re.sub("\s","_",name)
-    url = name.encode('trans').lower().encode('cp1251')
-    db.query("update fw_catalogue set url='%s' where id='%d'" % (str(url), int(item['id'])))
+    if item['description'] != None:
+        text = item['description'].decode('cp1251').encode('utf-8')
+        search = re.findall('[А-ЯA-Z][а-яa-z]', text)
     
+        if len(search):
+            for i in search:
+                print i
+        
     
     
     #image = db.selectrow("select * from product_images where product_id=%d order by id desc limit 1" % int(item['id']))

@@ -11,7 +11,7 @@
 	
     <td{if $smarty.foreach.for2.iteration%4 == 0} class="right"{/if}>
     <div class="catitemin">
-    <a class="rollover" {if !empty($product.image)}image="/images/img315x228/uploaded_files/product_images/{$product.id}/{$product.image}"{/if} href="{$base_url}/{$product.full_url}/" title="{$product.name}"><img src="/images/img105x105{if !empty($product.image)}/uploaded_files/product_images/{$product.id}/{$product.image}{else}/templates/img/nophoto.jpg{/if}" alt="{$product.name}"></a>
+    <a  {if !empty($product.image)} class="preview" image="/images/img315x228/uploaded_files/product_images/{$product.id}/{$product.image}" {/if} href="{$base_url}/{$product.full_url}/"  title="{$product.name}"><img src="/images/img105x105{if !empty($product.image)}/uploaded_files/product_images/{$product.id}/{$product.image}{else}/templates/img/nophoto.jpg{/if}" alt="{$product.name}"></a>
     <br>
     <a href="{$base_url}/{$product.full_url}/" title="{$product.name}">{$product.name}</a>
     <div class="cato">{*if $product.age > 0}<br><span class="catcap">Возраст:</span> от {$product.age|age_postfix}{/if*}

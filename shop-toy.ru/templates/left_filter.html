@@ -1,0 +1,26 @@
+<div class="filter">
+<div class="filterinput checkboxing">
+	Категория:<br />
+	{if $categories}
+	{foreach from=$categories item=item}
+	<div><input type="checkbox" id="cat{$item.id}"><label for="cat{$item.id}">{$item.name|strip_tags}</label></div>
+	{/foreach}
+	{/if}
+</div>
+<div class="filterinput checkboxing">
+	Бренд:<br />
+	<div><input type="checkbox" id="input11" checked="checked"><label for="input11">HASBRO</label></div>
+    <div><input type="checkbox" id="input12" checked="checked"><label for="input12">LEGO</label></div>
+    <div><input type="checkbox" id="input13" checked="checked"><label for="input13">Kid Galaxy</label></div>
+    <div><input type="checkbox" id="input14" checked="checked"><label for="input14">Astrel</label></div>
+</div>
+<div class="filterinput fromto">
+	Возраст:<br />
+	<div><label>от</label><input type="text" value="0"><label>до</label><input type="text" value="12"></div>
+</div>
+<div class="filterinput fromto">
+	Цена:<br />
+	<div><label>от</label><input type="text" value="78"><label>до</label><input type="text" value="2 345"></div>
+</div>
+<div class="aligncenter"><input type="image" class="filterbutton" src="{$template_image}filter_button.png" value="Показать" title="Показать"></div>
+</div>

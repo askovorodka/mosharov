@@ -9,6 +9,15 @@ class Shop extends db {
 		$this->db = &$db;
 	}
 	
+	function get_category_by_url($url)
+	{
+		$result = $this->db->get_single("select * from fw_catalogue where url='{$url}' and status='1' limit 1");
+		
+		if (!empty($result))
+			return $result;
+		else
+			return null;
+	}
 	
 	function delete_products_by_category($category_id)
 	{
@@ -434,7 +443,7 @@ class Shop extends db {
 	function getProductImages($product_id)
 	{
 		
-		$result = $this->db->get_all("select * from fw_products_images where parent='{$product_id}' ");
+		$result = $this->db->get_all("select * from product_images where product_id='{$product_id}' ");
 		
 		if ($result)
 		{
