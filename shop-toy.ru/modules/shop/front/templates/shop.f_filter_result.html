@@ -6,7 +6,8 @@
 	{if $smarty.foreach.for2.first}<tr>{/if}
 	
     	<td class="catitemin">
-    		<a href="{$base_url}/{$product.full_url}/" title="{$product.name}"><img src="/images/img150x150{if !empty($product.image)}/uploaded_files/product_images/{$product.id}/{$product.image}{else}/templates/img/nophoto.jpg{/if}" alt="{$product.name}">
+    		<a href="{$base_url}/{$product.full_url}/" title="{$product.name}">
+    		<img src="/images/img150x150{if !empty($product.image)}/uploaded_files/product_images/{$product.id}/{$product.image}{else}/templates/img/nophoto.jpg{/if}" alt="{$product.name}">
     		<br />{$product.name}</a>
     		<br />
     		<div class="catiteminp">{$product.price} р.<input name="add_order" product_id="{$product.id}" type="image" src="{$template_image}buy_button.png" title="Добавить в корзину"></div>

@@ -1,26 +1,29 @@
-<div class="filter">
+
+<div class="filter" url="{$base_url}/{if $category}{$category.full_url}{else}catalog{/if}/">
+{if $categories}
 <div class="filterinput checkboxing">
 	Категория:<br />
-	{if $categories}
 	{foreach from=$categories item=item}
-	<div><input type="checkbox" id="cat{$item.id}"><label for="cat{$item.id}">{$item.name|strip_tags}</label></div>
+	<div><input type="checkbox" name="categories" {if $cats_filter && in_array($item.id,$cats_filter)}checked{/if} value="{$item.id}" id="cat{$item.id}"><label for="cat{$item.id}">{$item.name|strip_tags}</label></div>
+	{/foreach}
+</div>
+{/if}
+<div class="filterinput checkboxing">
+	Бренд:<br />
+	{if $brands}
+	{foreach from=$brands item=item}
+	<div><input type="checkbox" {if $brands_filter && in_array($item.id,$brands_filter)}checked{/if} name="brands" value="{$item.id}" id="brand{$item.id}"><label for="brand{$item.id}">{$item.name|strip_tags}</label></div>
 	{/foreach}
 	{/if}
 </div>
-<div class="filterinput checkboxing">
-	Бренд:<br />
-	<div><input type="checkbox" id="input11" checked="checked"><label for="input11">HASBRO</label></div>
-    <div><input type="checkbox" id="input12" checked="checked"><label for="input12">LEGO</label></div>
-    <div><input type="checkbox" id="input13" checked="checked"><label for="input13">Kid Galaxy</label></div>
-    <div><input type="checkbox" id="input14" checked="checked"><label for="input14">Astrel</label></div>
-</div>
+
 <div class="filterinput fromto">
 	Возраст:<br />
-	<div><label>от</label><input type="text" value="0"><label>до</label><input type="text" value="12"></div>
+	<div><label>от</label><input type="text" name="age_start" value="{$filter_age_start}"><label>до</label><input name="age_end" type="text" value="{$filter_age_end}"></div>
 </div>
 <div class="filterinput fromto">
 	Цена:<br />
-	<div><label>от</label><input type="text" value="78"><label>до</label><input type="text" value="2 345"></div>
+	<div><label>от</label><input name="price_start" type="text" value="{$filter_price_start}"><label>до</label><input name="price_end" type="text" value="{$filter_price_end}"></div>
 </div>
-<div class="aligncenter"><input type="image" class="filterbutton" src="{$template_image}filter_button.png" value="Показать" title="Показать"></div>
+<div class="aligncenter"><input type="image" class="filterbutton" id="filterbutton" src="{$template_image}filter_button.png" value="Показать" title="Показать"></div>
 </div>

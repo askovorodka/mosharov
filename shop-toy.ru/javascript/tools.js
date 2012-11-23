@@ -1,3 +1,36 @@
+	//скрываем/раскрываем корзину
+	this.basket_block =  function(){
+		var basket = $("#basket_block");
+		if (basket.length)
+		{
+            var showPanel = function() {
+                $(basket).animate({
+                    right: '+=195',
+                }, 200, function() {
+                    $(this).addClass('visible');
+                });
+            };
+			
+            var hidePanel = function() {
+                $(basket).animate({
+                    right: '-=195',
+                }, 200, function() {
+                    $(this).removeClass('visible');
+                });
+            };
+            $("#basketlink").click(function(){
+                if ($(basket).hasClass('visible')) {
+                    hidePanel();
+                }
+                else {
+                    showPanel();
+                }
+                return false;
+            });
+		}
+		
+	};
+
 	this.imagePreview = function(){	
 			xOffset = 10;
 			yOffset = 30;
@@ -23,10 +56,103 @@
 		});			
 	};
 
+	this.checked_filter = function()
+	{
+		var filter_cats = new Array();
+		var filter_brands = new Array();
+		var url = new Array();
+		
+		$("input[name='categories']:checked").each(function(){
+			filter_cats.push( $(this).val() );
+		});
+
+		$("input[name='brands']:checked").each(function(){
+			filter_brands.push( $(this).val() );
+		});
+		
+		if (filter_cats.length > 0)
+		{
+			url.push("categories=" + filter_cats.join(','));
+		}
+		
+		if (filter_brands.length > 0)
+		{
+			url.push("brands=" + filter_brands.join(','));
+		}
+		
+		if (url.length > 0)
+		{
+			return url.join('&');
+		}
+		else
+		{
+			return null;
+		}
+		
+	};
+	
+	this.left_filter = function()
+	{
+		$("div.filterinput input[type='checkbox']").click(function(){
+			var url = checked_filter();
+			if (url)
+			{
+				location = $("div.filter").attr("url") + '?' + url;
+			}
+			else
+			{
+				location = $("div.filter").attr("url");
+			}
+		});
+	};
+	
 
 $(document).ready( function(){
 
+	left_filter();
+	
+	basket_block();
+	
+	$("#filterbutton").click(function(){
+		
+		var age_start = $("input[name='age_start']", $("div.fromto")).val();
+		var age_end = $("input[name='age_end']", $("div.fromto")).val();
+		var price_start = $("input[name='price_start']", $("div.fromto")).val();
+		var price_end = $("input[name='price_end']", $("div.fromto")).val();
+		
+		var checked_url = checked_filter();
+		var filter_url = new Array();
+		
+		if (parseInt(price_start) > 0)
+		{
+			filter_url.push( "price_start=" + parseInt(price_start) );
+		}
 
+		if (parseInt(price_end) > 0)
+		{
+			filter_url.push( "price_end=" + parseInt(price_end) );
+		}
+
+		if (parseInt(age_start) > 0)
+		{
+			filter_url.push( "age_start=" + parseInt(age_start) );
+		}
+		
+		if (parseInt(age_end) > 0)
+		{
+			filter_url.push( "age_end=" + parseInt(age_end) );
+		}
+		
+		if (checked_url)
+		{
+			location = $("div.filter").attr("url") + '?' + checked_url + '&' + filter_url.join('&');
+		}
+		else
+		{
+			location = $("div.filter").attr("url") + '?' + filter_url.join('&');
+		}
+		
+	});
 
 	imagePreview();
 	
@@ -425,7 +551,7 @@ $(document).ready( function(){
 		
 		var product_id = parseInt($(this).attr("product_id"));
 		
-		var product_count = $("#product_count_" + product_id).val();
+		var product_count = 1;
 		
 		if (parseInt(product_count) > 0 && parseInt(product_id) > 0)
 		{

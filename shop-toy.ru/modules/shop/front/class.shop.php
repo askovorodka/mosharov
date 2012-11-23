@@ -9,6 +9,42 @@ class Shop extends db {
 		$this->db = &$db;
 	}
 	
+	
+	function get_brands_by_category($cat_id)
+	{
+		$query = "select brands.* from brands
+		inner join fw_products on brands.id=fw_products.brand_id
+		where fw_products.parent = '". intval($cat_id) ."' group by fw_products.brand_id";
+		
+		$result = $this->db->get_all($query);
+		if ($result)
+		{
+			return $result;
+		}
+		else 
+		{
+			return null;
+		}
+	}
+	
+	
+	function get_brands()
+	{
+		$query = "select brands.id,brands.name from brands
+		left join fw_products on brands.id=fw_products.brand_id
+		where fw_products.status = '1' group by fw_products.brand_id";
+		$result = $this->db->get_all($query);
+		if ($result)
+		{
+			return $result;
+		}
+		else 
+		{
+			return null;
+		}
+		
+	}
+	
 	function get_category_by_url($url)
 	{
 		$result = $this->db->get_single("select * from fw_catalogue where url='{$url}' and status='1' limit 1");

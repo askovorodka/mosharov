@@ -3,6 +3,7 @@
 class Common {
 
 	
+	
 	function _404()
 	{
 		header("Location: /404/");

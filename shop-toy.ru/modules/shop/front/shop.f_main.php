@@ -5,7 +5,7 @@ ini_set('display_errors','On');
 
 //$_SESSION['fw_basket']=array();
 
-if ($switch_default=='on' or $main_module=='on') {
+/*if ($switch_default=='on' or $main_module=='on') {
 	
 	$ages = $db->get_all("select age from fw_products where age > 0 group by age");
 	$smarty->assign('ages', $ages);
@@ -32,7 +32,16 @@ if ($switch_default=='on' or $main_module=='on') {
 	$smarty->assign("basket_total",$basket_total);
 	$smarty->assign("currency",DEFAULT_CURRENCY);
 	
+}*/
+
+function filter_array($val)
+{
+	if (preg_match("/\d/", $val))
+		return true;
+	else
+		return false;
 }
+
 
 if  ($main_module=='on')
 {
@@ -288,7 +297,7 @@ SWITCH (TRUE) {
 		}
 			
 			$switch_off_smarty=true;
-			$basket_total = number_format($basket_total,2,",","");
+			$basket_total = number_format($basket_total,2,".","");
 			print "$basket_number;$basket_total";
 			
 		}
@@ -427,7 +436,7 @@ SWITCH (TRUE) {
         foreach($sess['fw_basket'] as $key=>$val){
         	foreach($sess['fw_basket'][$key] as $key2=>$val2)
         		$sess['fw_basket'][$key]['price_number'] = sprintf("%.2f",$sess['fw_basket'][$key]['price']*$sess['fw_basket'][$key]['number']);
-        		$sess['fw_basket'][$key]['full_url'] = DOMAIN . 'shop' . $shop->getFullUrlProduct($sess['fw_basket'][$key]['id']);
+        		$sess['fw_basket'][$key]['full_url'] = $shop->getFullUrlProduct($sess['fw_basket'][$key]['id'],'catalog');
         		$sess['fw_basket'][$key]['image'] = $shop->getProductImage($sess['fw_basket'][$key]['id']);
         		
         }
@@ -1028,23 +1037,54 @@ SWITCH (TRUE) {
 			}
 
 			//находим дочернии категории
-			$cat_url = urldecode($url[1]);
-			$category = $shop->get_category_by_url($cat_url);
-			if (!$category)
+			if (!empty($url[1]))
+			{
+				$cat_url = urldecode($url[1]);
+				$category = $shop->get_category_by_url($cat_url);
+			}
+			/*if (!$category)
 			{
 				Common::_404();
+			}*/
+			
+			
+			
+			$brands_list = array();
+			$brands = array();
+			
+			
+			if (!empty($category))
+			{
+				$categories = $shop->getChildrenCategor($category, 2);
+				foreach ($categories as $key=>$val)
+				{
+					$categories[$key]['full_url'] = $shop->getFullUrlCategory($val['id'],'catalog');
+					array_push($brands_list, $shop->get_brands_by_category($val['id']));
+				}
 			}
 			
-			$categories = $shop->getChildrenCategor($category, 2);
-			foreach ($categories as $key=>$val)
+			if (count($brands_list) > 0)
 			{
-				$categories[$key]['full_url'] = $shop->getFullUrlCategory($val['id'],'catalog');
+				
+				foreach ($brands_list as $key=>$val)
+				{
+					foreach ($val as $value)
+						$brands[$value['id']] = array("id" => $value['id'], "name" => $value['name']);
+				}
 			}
 			
 			$where = array();
 			$where[] = "status='1'";
 			$limit = "";
 
+			if (count($url) == 1)
+			{
+				
+				$limit = " limit 100 ";
+				$brands = $shop->get_brands();
+			}
+			
+			
 			if (!empty($url[1]) && empty($url[2]))
 			{
 				foreach($categories as $cat)
@@ -1055,7 +1095,7 @@ SWITCH (TRUE) {
 				$limit = " limit 100";
 			}
 			
-			if (!empty($url[2]))
+			/*if (!empty($url[2]))
 			{
 				$subcat_url = urldecode($url[2]);
 				$subcategory = $shop->get_category_by_url($subcat_url);
@@ -1064,18 +1104,58 @@ SWITCH (TRUE) {
 					Common::_404();
 				}
 				$where[] = "parent = '{$subcategory['id']}'";
-			}
+			}*/
+
 			
-			if (!empty($_GET['brand']))
+			if (!empty($_GET['categories']))
 			{
-				$brands = explode(",", $_GET['brand']);
-				//$brands = array_filter($brands, function($val){ if () })
-				$where[] = "brand_id in (" . implode(",", $brands) . ")";
+				$cats_filter = explode(",", $_GET['categories']);
+				$cats_filter = array_filter($cats_filter, "filter_array");
+				$smarty->assign('cats_filter', $cats_filter);
+				$where[] = "parent in (" . implode(",", $cats_filter) . ")";
 			}
 			
-			$smarty->assign('category', $category);
+			if (!empty($_GET['brands']))
+			{
+				$brands_filter = explode(",", $_GET['brands']);
+				$brands_filter = array_filter($brands_filter, "filter_array");
+				$smarty->assign('brands_filter', $brands_filter);
+				$where[] = "brand_id in (" . implode(",", $brands_filter) . ")";
+			}
+			
+			if (!empty($_GET['price_start']))
+			{
+				$where[] = "price >= " . intval($_GET['price_start']);
+				$smarty->assign('filter_price_start', intval($_GET['price_start']));
+			}
+
+			if (!empty($_GET['price_end']))
+			{
+				$where[] = "price <= " . intval($_GET['price_end']);
+				$smarty->assign('filter_price_end', intval($_GET['price_end']));
+			}
+
+			if (!empty($_GET['age_start']))
+			{
+				$where[] = "age >= " . intval($_GET['age_start']);
+				$smarty->assign('filter_age_start', intval($_GET['age_start']));
+			}
+			
+			if (!empty($_GET['age_end']))
+			{
+				$where[] = "age <= " . intval($_GET['age_end']);
+				$smarty->assign('filter_age_end', intval($_GET['age_end']));
+			}
+			
+			if (!empty($category))
+			{
+				$category['full_url'] = $shop->getFullUrlCategory($category['id'],'catalog');
+				$smarty->assign('category', $category);
+			}
+			
+			$smarty->assign('brands', $brands);
 				
-			if ($categories)
+			if (!empty($categories))
 			{
 				$smarty->assign('categories', $categories);
 			}
@@ -1106,12 +1186,20 @@ SWITCH (TRUE) {
 				//если отдельный продукт
 				$product_id = intval($url[$n]);
 				$product = $shop->getProductInfo($product_id);
+				
 				if (!$product)
 				{
 					Common::_404();
 				}
 				
 				$page_found = true;
+				
+				$parentcat = $shop->getCategory($product['parent']);
+				
+				$navigation[]=array("url" => $category['url'],"title" => $category['name']);
+				$navigation[]=array("url" => "?brands=" . $product['parent'],"title" => $parentcat['name']);
+				
+				
 				
 				if ($product['meta_keywords']!='') 
 					$meta_keywords=$product['meta_keywords'];
