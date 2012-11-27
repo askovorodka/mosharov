@@ -5,9 +5,9 @@ ini_set('display_errors','On');
 
 //$_SESSION['fw_basket']=array();
 
-/*if ($switch_default=='on' or $main_module=='on') {
+if ($switch_default=='on' or $main_module=='on') {
 	
-	$ages = $db->get_all("select age from fw_products where age > 0 group by age");
+	/*$ages = $db->get_all("select age from fw_products where age > 0 group by age");
 	$smarty->assign('ages', $ages);
 	
 	$categories = $db->get_all("select id, name, param_level from fw_catalogue where status='1' and param_level between 1 and 2 order by param_left");
@@ -20,7 +20,7 @@ ini_set('display_errors','On');
 		group by fw_products.brand_id 
 		having count(fw_products.id) > 0
 		order by brands.name");
-	$smarty->assign('brands', $brands);
+	$smarty->assign('brands', $brands);*/
 	
 	$basket_number=0;
 	$basket_total=0;
@@ -32,7 +32,7 @@ ini_set('display_errors','On');
 	$smarty->assign("basket_total",$basket_total);
 	$smarty->assign("currency",DEFAULT_CURRENCY);
 	
-}*/
+}
 
 function filter_array($val)
 {
@@ -145,90 +145,6 @@ if (!isset($_SESSION['fw_basket'])) $_SESSION['fw_basket']=array();
 
 SWITCH (TRUE) {
 
-	/*CASE (count($url) > 1 && $url[$n-1] == 'checkemail' && preg_match("/\?useremail=(.+)$/",$url[$n])):
-		switch($url[$n-1])
-		{
-			case 'checkemail':
-				if (!empty($_GET['useremail']))
-				{
-					$email = urldecode($_GET['useremail']);
-					$query = "SELECT id FROM fw_users WHERE mail = '{$email}' ";
-					$result = $db->get_single($query);
-					if (empty($result['id']))
-					{
-						$result = 'true';
-					}
-					else 
-					{
-						$result = 'false';
-					}
-					echo $result;
-				}
-
-				exit();
-			break;
-		}
-	BREAK;*/
-
-
-	/*CASE ($url[$n]=='compare'):
-
-		if (isset($_POST['action']) && $_POST['action']=="compare") {
-			$_SESSION['fw_compare'] = $_POST['compare'];
-
-			header("Location: ".BASE_URL.'/'.$module_url."/compare");
-			die();
-		}
-
-		if (count($_SESSION['fw_compare'])) {
-				$products_list=$db->get_all("
-				SELECT *,
-						(SELECT c.name FROM fw_catalogue as c WHERE p.parent = c.id) as cat_name,
-						(SELECT id FROM fw_products_images i WHERE i.parent=p.id ORDER BY sort_order ASC LIMIT 1) AS image,
-						(SELECT ext FROM fw_products_images WHERE parent=p.id ORDER BY insert_date DESC LIMIT 1) AS ext,
-						(SELECT
-							GROUP_CONCAT(CONCAT_WS('||#||',
-								cp.id,
-								cp.name,
-								cp.type,
-								cp.elements,
-								cp.status,
-								(SELECT value FROM fw_products_properties AS pp WHERE pp.product_id = p.id AND pp.property_id = cr.property_id LIMIT 1)
-							) SEPARATOR '##|##')
-						FROM fw_catalogue_relations AS cr
-						LEFT JOIN fw_catalogue_properties AS cp ON cp.id=cr.property_id
-						WHERE cr.cat_id = p.parent) as properties
-					FROM fw_products AS p
-					WHERE
-						p.id IN (".implode(',',$_SESSION['fw_compare']).")
-						AND
-						p.status='1'
-						ORDER BY properties
-						"
-				);
-
-				foreach ($products_list as $v => $key) {
-//					if (substr_count($key['properties'],"##|##")>0) {
-						$tmp=explode("##|##",$key['properties']);
-						$products_list[$v]['properties']=array();
-						foreach ($tmp as $val => $k) {
-							if (substr_count($k,"||#||")>0) {
-								$tmp2=explode("||#||",$k);
-								$products_list[$v]['properties'][]=$tmp2;
-								if (substr_count($products_list[$v]['properties'][$val][3],"\n")>0) $products_list[$v]['properties'][$val][3]=explode("\n",$products_list[$v]['properties'][$val][3]);
-							}
-						}
-						
-				}
-
-				$smarty->assign("products_list",$products_list);
-				$smarty->assign("cat_name",@$products_list[0]['cat_name']);
-		}
-
-		$page_found=true;
-		$main_template = BASE_PATH."/modules/shop/front/templates/compare.html";
-
-	BREAK;*/
 
 	CASE (@$url[$n]=='step1' && $url[$n-1]=='basket'):
 
@@ -269,6 +185,12 @@ SWITCH (TRUE) {
 		{
 			
 		$number_found=false;
+		$first_order = 1;
+		
+		if (!empty($_SESSION['fw_basket']))
+		{
+			$first_order = 0;
+		}
 
 		$number = $_POST['product_count'];
 		$product_id = $_POST['product_id'];
@@ -298,7 +220,7 @@ SWITCH (TRUE) {
 			
 			$switch_off_smarty=true;
 			$basket_total = number_format($basket_total,2,".","");
-			print "$basket_number;$basket_total";
+			print "$basket_number;$basket_total;$first_order";
 			
 		}
 		exit();
@@ -354,51 +276,6 @@ SWITCH (TRUE) {
 		die();
 
 	BREAK;
-
-	/*CASE (preg_match("/^([0-9]+)$/",$url[$n]) && $url[$n-1]=='type'):
-		$item=array();
-		$item = $db->get_single("SELECT name,text FROM fw_products_types WHERE id=".(int)$url[$n]);
-		if (strlen(trim($item['text']))>0){
-			$smarty->assign("type_name",$item['name']);
-			$smarty->assign("type_text",$item['text']);
-		}
-		else
-			$smarty->assign("type_name","Описания нет");
-		$page_found=true;
-		//$switch_off_smarty=false;
-        $main_template='_types.html';
-		//$deny_access=true;
-
-	BREAK;*/
-
-
-	/*CASE (preg_match("/^([0-9]+)$/",$url[$n]) && $url[$n-1]=='photos'):
-		$item=array();
-		$item = $db->get_all("SELECT * FROM fw_products_images WHERE parent=".(int)$url[$n]);
-		if (count($item)>0){
-			for ($i=0; $i<count($item); $i++){
-				if (trim($item[$i]['ext'])!=""){
-					$size=getimagesize(BASE_PATH . "/uploaded_files/shop_images/".$item[$i]['id'].".".$item[$i]['ext']);
-					if ($size[0]>$width)
-						$width=$size[0];
-					if ($size[1]>$height)
-						$height=$size[1];
-				}
-			}
-		}
-
-		if (count($item)>0){
-			$smarty->assign("photos",$item);
-			$smarty->assign("max_w",$width);
-			$smarty->assign("max_h",$height);
-		}
-		else
-			$smarty->assign("msg","Изображений нет");
-		$page_found=true;
-		//$switch_off_smarty=false;
-        $main_template='_photos.html';
-
-	BREAK;*/
 
 
 	CASE ($url[$n]=='basket' && count($url)==2):
@@ -485,112 +362,6 @@ SWITCH (TRUE) {
 	BREAK;
 
 
-	/*CASE ($url[$n]=='submit' && $url[$n-1]=='basket' && count($url)==3):
-
-		if (isset($_POST['submit_order'])) {
-			
-			if (!empty($_POST['submit_register']))
-			{
-
-				$users->setEmail($_POST['email']);
-				$users->setName($_POST['name']);
-				$users->setPhone1($_POST['phone']);
-				$users->setPhone2($_POST['phone2']);
-				$users->register();
-
-			}
-			//exit();
-
-			if (count($_SESSION['fw_basket'])<1)
-			{
-				header("Location: ".BASE_URL);
-			}
-			else
-			{
-				//exit();
-				$navigation[]=array("url" => 'basket',"title" => 'Моя корзина');
-				$navigation[]=array("url" => 'confirm',"title" => 'Ваш заказ выполнен');
-				
-				$products_list='';
-				$total_number=0;
-				
-				$user = $shop->getUser($_SESSION['fw_user']['id']);
-				$name=$user['name'];
-				//$mail=$_POST['login'];
-				//$tel=$_POST['phone'];
-				
-				$comments=iconv('utf-8','windows-1251',$_POST['comment']);
-				
-				$dostavka = $_POST['dostavka'];
-				if ($dostavka == 1)
-				{
-					$order_price = SHOP_DOSTAVKA_PRICE;
-				}
-				else 
-				{
-					$order_price = 0;
-				}
-				
-				//$payment = $_POST['payment'];
-				
-				$total_price=0;
-				for ($i=0;$i<count($_SESSION['fw_basket']);$i++)
-				{
-					$total_price+=$_SESSION['fw_basket'][$i]['price']*$_SESSION['fw_basket'][$i]['number'];
-				}
-				
-				$db->query("INSERT INTO fw_orders (
-					user,
-					comments,
-					total_price,
-					insert_date,
-					dostavka,
-					order_price) 
-					VALUES('".$user['id']."',
-					'$comments',
-					'$total_price',
-					'".time()."',
-					'{$dostavka}',
-					'{$order_price}')");
-				
-				$order_id = mysql_insert_id();
-				$rel_prod = array();
-				for ($i=0;$i<count($_SESSION['fw_basket']);$i++) {
-					$products_list.=$_SESSION['fw_basket'][$i]['id'].'|'.$_SESSION['fw_basket'][$i]['number'].',';
-					$total_number=$total_number+$_SESSION['fw_basket'][$i]['number'];
-					$rel_prod[] = "('".$_SESSION['fw_basket'][$i]['id']."','".$order_id."','".$_SESSION['fw_basket'][$i]['number']."')";
-				}
-				
-				$db->query("INSERT INTO fw_orders_products (product_id,order_id,product_count) VALUES ".implode(",",$rel_prod));
-				
-				$_SESSION['fw_basket']=array();
-				
-				$smarty->assign("name",$user['name']);
-				$smarty->assign("site_url",BASE_URL);
-				$smarty->assign("date",time());
-				$smarty->assign("order_total",$total_price);
-				$smarty->assign("number",$total_number);
-				$smarty->assign("currency",DEFAULT_CURRENCY);
-
-				$body=$smarty->fetch($templates_path.'/order_notice.txt');
-				Mail::send_mail($_POST['email'],"noreply@".$_SERVER['SERVER_NAME'],"Новый заказ в интернет магазине",$body,'','text','standard','Windows-1251');
-
-				$admin_body=$smarty->fetch($templates_path.'/admin_order_notice.txt');
-				Mail::send_mail(ADMIN_MAIL,"noreply@".$_SERVER['SERVER_NAME'],"Новый заказ в интернет магазине",$admin_body,'','text','standard','WIndows-1251');
-
-				//echo 1;
-				$page_found = true;
-				$template = 'order_done.html';
-			}
-
-		}
-		else
-		{
-			header("Location: ".BASE_URL);
-		}
-
-	BREAK;*/
-	
 	
 	
 	CASE ($url[$n]=='submit' && $url[$n-1]=='basket' && count($url)==3):
@@ -787,162 +558,6 @@ SWITCH (TRUE) {
 	
 	
 	
-	/**
-	 * поиск в фильтрах
-	 */
-	/*CASE (isset($url[1]) && $url[1] == 'search'):
-		
-		//$navigation[]=array("url" => 'search',"title" => 'Поиск');
-		
-		if (isset($_GET['page']) && $_GET['page']!='') $page=$_GET['page'];
-		else $page=1;
-		
-		$where = array();
-		if (!empty($_GET['disk_manufacturer']))
-		{
-			$category = $shop->getCategory($_GET['disk_manufacturer']);
-			$where[] = " b.param_left BETWEEN {$category['param_left']} AND {$category['param_right']} AND b.param_level = 3 ";
-		}
-		if (!empty($_GET['disk_width']))
-		{
-			$where[] = " a.disk_width = '{$_GET['disk_width']}' ";
-		}
-		if (!empty($_GET['disk_diameter']))
-		{
-			$where[] = " a.disk_diameter = '{$_GET['disk_diameter']}' ";
-		}
-		if (!empty($_GET['disk_krep']))
-		{
-			$where[] = " a.disk_krep = '{$_GET['disk_krep']}' ";
-		}
-		if (!empty($_GET['disk_pcd']))
-		{
-			$where[] = " (a.disk_pcd = '{$_GET['disk_pcd']}' or a.disk_pcd2 = '{$_GET['disk_pcd']}') ";
-		}
-		if (!empty($_GET['disk_et']))
-		{
-			$where[] = " (a.disk_et >= '". ($_GET['disk_et']-10) . "' and a.disk_et <= '". ($_GET['disk_et']+5) . "') ";
-		}
-		if (!empty($_GET['disk_color']))
-		{
-			$where[] = " a.disk_color = '{$_GET['disk_color']}' ";
-		}
-		if (!empty($_GET['disk_sklad']))
-		{
-			$where[] = " a.disk_sklad > 0 ";
-		}
-
-		if (!empty($_GET['tire_manufacturer']))
-		{
-			$category = $shop->getCategory($_GET['tire_manufacturer']);
-			$where[] = " b.param_left BETWEEN {$category['param_left']} AND {$category['param_right']} AND b.param_level = 3 ";
-		}
-		if (!empty($_GET['tire_width']))
-		{
-			$where[] = " a.tire_width = '{$_GET['tire_width']}' ";
-		}
-		if (!empty($_GET['tire_height']))
-		{
-			$where[] = " a.tire_height = '{$_GET['tire_height']}' ";
-		}
-		if (!empty($_GET['tire_diameter']))
-		{
-			$where[] = " a.tire_diameter = '{$_GET['tire_diameter']}' ";
-		}
-		if (!empty($_GET['tire_season']))
-		{
-			$where[] = " a.tire_season = '{$_GET['tire_season']}' ";
-		}
-		if (!empty($_GET['tire_spike']))
-		{
-			$where[] = " a.tire_spike = '{$_GET['tire_spike']}' ";
-		}
-		if (!empty($_GET['tire_sklad']))
-		{
-			$where[] = " a.tire_sklad > 0 ";
-		}
-		
-		
-		//$count = $shop->searchCount($where);
-		//$pager=Common::pager($count,SEARCH_RESULTS_PER_PAGE,$page);
-		$pager = "";
-		
-		if (isset($_GET['sort']))
-		{
-			$sort = $_GET['sort'];
-		}
-		else 
-		{
-			$sort = "date";
-		}
-		
-		if (isset($_GET['order']))
-		{
-			$order = $_GET['order'];
-		}
-		else 
-		{
-			$order = "desc";
-		}
-		
-		$products = $shop->search($where, $pager, $sort, $order);
-		
-		if ($products)
-		{
-			foreach ($products as $key=>$val)
-			{
-				$products[$key]['full_url'] = $shop->getFullUrlProduct($val['id']);
-			}
-		}
-		
-		$smarty->assign("total_pages",$pager['total_pages']);
-		$smarty->assign("current_page",$pager['current_page']);
-		$smarty->assign("pages",$pager['pages']);
-		$smarty->assign("sort",$sort);
-		$smarty->assign("order",$order);
-		
-		$smarty->assign("products",$products);
-		$page_found=true;
-		$template='search_products.html';
-		
-		
-	BREAK;*/
-	
-	
-	
-	/*CASE (preg_match("/\?search=(.+)/",$url[$n]) && $url[$n-1] == "search_product"):
-
-		$navigation[]=array("url" => 'search',"title" => 'Поиск');
-
-		$search=mysql_real_escape_string($_GET['search']);
-		$search = trim($search);
-
-		if ($search != "")
-		{
-			$search_results=$db->get_all("SELECT fw_products.* FROM fw_products WHERE fw_products.name LIKE '%$search%' or fw_products.article = '$search' AND fw_products.status='1' ");
-		}
-
-		if ($search_results)
-		{
-			foreach ($search_results as $key=>$val)
-			{
-				$search_results[$key]['full_url'] = $shop->getFullUrlProduct($val['id'],'catalog');
-				$search_results[$key]['image'] = $shop->getProductImage($val['id']);
-			}
-			
-			$smarty->assign("search_results",$search_results);
-			
-		}
-		
-		$smarty->assign("search_string",$search);
-		
-
-		$page_found=true;
-		$template='search.html';
-
-	BREAK;*/
-
-	
 	
 	CASE (count($url) >= 2 && $url[$n-1] == "product_filter" ):
 
@@ -1095,17 +710,6 @@ SWITCH (TRUE) {
 				$limit = " limit 100";
 			}
 			
-			/*if (!empty($url[2]))
-			{
-				$subcat_url = urldecode($url[2]);
-				$subcategory = $shop->get_category_by_url($subcat_url);
-				if (!$subcategory)
-				{
-					Common::_404();
-				}
-				$where[] = "parent = '{$subcategory['id']}'";
-			}*/
-
 			
 			if (!empty($_GET['categories']))
 			{
@@ -1164,6 +768,9 @@ SWITCH (TRUE) {
 			if (count($url) < 4)
 			{
 				
+				setcookie('filter_query_string', $_SERVER['REQUEST_URI']);
+				
+				
 				$products = $db->get_all("select * from fw_products where " . implode(" and ", $where) . $limit);
 				if ($products)
 				{
@@ -1183,6 +790,7 @@ SWITCH (TRUE) {
 			}
 			else
 			{
+				
 				//если отдельный продукт
 				$product_id = intval($url[$n]);
 				$product = $shop->getProductInfo($product_id);
@@ -1211,6 +819,11 @@ SWITCH (TRUE) {
 				
 				$images = $shop->getProductImages($product['id']);
 				$smarty->assign("images",$images);
+				
+				if (!empty($_COOKIE['filter_query_string']))
+				{
+					$smarty->assign('filter_query_string', $_COOKIE['filter_query_string']);
+				}
 				
 				$template='product_details.html';
 				

@@ -7,7 +7,7 @@
     		{if $smarty.foreach.shopm.first}
     			<td class="catlistitem">
     		{/if}
-    		<a {if $category.id == $item.id}class="catlistitemthis"{/if} href="{$base_url}/{$item.full_url}/" title="{$item.name|strip_tags}">{$item.name|strip_tags}</a>
+    		<a {if $category.id == $item.id}class="catlistitemthis"{/if} href="{$base_url}/{$item.full_url}/">{$item.name|strip_tags}</a>
     		
     		{if !$smarty.foreach.shopm.first && !$smarty.foreach.shopm.last && $smarty.foreach.shopm.iteration % $shop_menu_count == 0}
     			</td><td class="catlistitem">

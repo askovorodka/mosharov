@@ -547,6 +547,11 @@ $(document).ready( function(){
 				var floor = response.split(";");
 				$("#basket_number").html(floor[0]);
 				$("#basket_currency").html(floor[1]);
+				//если первый заказ, показываем корзину
+				if (floor[2] == 1)
+				{
+					$("#basketlink").click();
+				}
 			};
 		
 		var product_id = parseInt($(this).attr("product_id"));

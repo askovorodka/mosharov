@@ -13,18 +13,6 @@
 			<a href="{$base_url}/{$folder.full_url}/" title="{$folder.name|strip_tags}">{$folder.name|strip_tags}</a>
 			</li>
 		
-			{*
-			{if $smarty.foreach.for1.iteration%5 == 0 && !$smarty.foreach.for1.first}<tr><td colspan="4" class="catnone"></td></tr>{/if}
-			{if $smarty.foreach.for1.first || $smarty.foreach.for1.iteration%5 == 0}<tr>{/if}
-			<td{if $smarty.foreach.for1.iteration%4 == 0} class="right"{/if}><div class="catitem"><a href="{$base_url}/{$folder.full_url}/" title="{$folder.name}">{$folder.name}</a>
-			<br>{if $folder.image}<a href="{$base_url}/{$folder.full_url}/" title="{$folder.name}"><img src="/uploaded_files/shop_images/{$folder.image}" alt="Машинки"></a>{else}<div class="nophoto">Нет фото</div>{/if}
-			<div class="cato"><span class="catcap">Возраст:</span> 
-			<span class="catcapt">от 6 мес.</span>
-			<br><span class="catcap">Цена:</span> от 640 руб.</div></div>
-			</td>
-			{if $smarty.foreach.for1.last || $smarty.foreach.for1.iteration%4 == 0}</tr>{/if}
-			*}
-			
 		{/foreach}
 		</ul>
 	{/if}

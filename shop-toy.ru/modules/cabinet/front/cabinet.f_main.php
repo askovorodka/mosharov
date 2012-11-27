@@ -78,17 +78,17 @@ if (isset($_POST['submit_login'])) {
 	$email=String::secure_format($_POST['email']);
 	$password=$_POST['password'];
 
-
-	if (trim($password) == "") {
-		$smarty->assign("error_message",'¬ведите пожалуйста ваш пароль');
-		$smarty->assign("email",$login);
-		$check=false;
-	}
-
 	if (trim($email) == "") {
 		$smarty->assign("error_message",'¬ведите пожалуйста ваш логин');
 		$check=false;
 	}
+	
+	if (trim($password) == "") {
+		$smarty->assign("error_message",'¬ведите пожалуйста ваш пароль');
+		$smarty->assign("email",$email);
+		$check=false;
+	}
+
 	
 	if ($check==true) {
 

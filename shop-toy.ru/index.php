@@ -226,8 +226,10 @@ $capt->base_path = BASE_PATH;
 
   }
 
+  
   /* -------------- ������ ��� ������ ������-------------- */
 
+  //setcookie('filter_query_string', "");
   foreach ($modules_to_load as $k=>$v) {
     $switch_default = isset($v['switch_default']) ? $v['switch_default'] : 'off' ;
     $switch_support = isset($v['switch_support']) ? $v['switch_support'] : 'off' ;

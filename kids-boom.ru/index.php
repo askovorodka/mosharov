@@ -303,6 +303,7 @@ else {
 }
 
 $temp='';
+//print_r($navigation);
 
 for ($i=0;$i<count($navigation);$i++)
 {
@@ -311,8 +312,11 @@ for ($i=0;$i<count($navigation);$i++)
   $navigation[$i]['url']=$temp;
 }
 
-
-
+//костыль
+if (count($navigation) > 1)
+	unset($navigation[count($navigation)-1]);
+	
+//print_r($navigation);
 $navigation=String::unformat_array($navigation,'front');
 $smarty->assign("navigation",$navigation);
 $smarty->assign("base_url",BASE_URL);
@@ -358,6 +362,8 @@ else {
   require_once (BASE_PATH.'/modules/site_map/front/site_map.f_main.php');
   header("HTTP/1.0 404 Not Found");
 }
+
+//print_r($navigation);
 
 $smarty->display($smarty_display);
 

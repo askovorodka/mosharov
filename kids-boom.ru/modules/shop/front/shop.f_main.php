@@ -19,6 +19,7 @@ if ($switch_default=='on' or $main_module=='on') {
 	$smarty->assign("currency",DEFAULT_CURRENCY);
 
 }
+
 if  ($main_module=='on')
 {
 
@@ -146,7 +147,7 @@ SWITCH (TRUE) {
 	BREAK;
 
 
-	CASE ($url[$n]=='compare'):
+	/*CASE ($url[$n]=='compare'):
 
 		if (isset($_POST['action']) && $_POST['action']=="compare") {
 			$_SESSION['fw_compare'] = $_POST['compare'];
@@ -203,7 +204,7 @@ SWITCH (TRUE) {
 		$page_found=true;
 		$main_template = BASE_PATH."/modules/shop/front/templates/compare.html";
 
-	BREAK;
+	BREAK;*/
 
 	CASE (@$url[$n]=='step1' && $url[$n-1]=='basket'):
 		
@@ -330,7 +331,7 @@ SWITCH (TRUE) {
 	BREAK;
 
 
-	CASE (@$url[$n-1]=='search_product' && preg_match("/\?keyword=(.+)$/",$url[$n]) && count($url)==3):
+	/*CASE (@$url[$n-1]=='search_product' && preg_match("/\?keyword=(.+)$/",$url[$n]) && count($url)==3):
 
   		$patterns = array('/\s+/', '/"+/', '/%+/');
   		$replace = array('');
@@ -356,25 +357,8 @@ SWITCH (TRUE) {
   		$page_found = true;
   		$template = "shop.f_search.html";
   		
-    	/*$query = $db->get_all("SELECT name FROM fw_products WHERE name LIKE '".$keyword."%'");
-    	$output = '<?xml version="1.0" encoding="windows-1251" standalone="yes"?>';
-    	$output .= "<response>";
-    	for ($i=0; $i<count($query); $i++)
-		
-                $output .= '<name>' . $query[$i]['name'] . '</name>';
-    	
-    	$output .= "</response>";
-		
-  		if (ob_get_length()) ob_clean();
-  		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-  		header("Last-Modified: " . gmdate('D, d M Y H:i:s') . " GMT");
-  		header("Cache-Control: no-cache, must-revalidate");
-  		header("Pragma: no-cache");
-  		header("Content-Type: text/xml");
-  		echo $output;
-		die();*/
 
-	BREAK;
+	BREAK;*/
 
 
 
@@ -398,7 +382,7 @@ SWITCH (TRUE) {
 
 	BREAK;
 
-	CASE (preg_match("/^([0-9]+)$/",$url[$n]) && $url[$n-1]=='type'):
+	/*CASE (preg_match("/^([0-9]+)$/",$url[$n]) && $url[$n-1]=='type'):
 		$item=array();
 		$item = $db->get_single("SELECT name,text FROM fw_products_types WHERE id=".(int)$url[$n]);
 		if (strlen(trim($item['text']))>0){
@@ -412,10 +396,10 @@ SWITCH (TRUE) {
         $main_template='_types.html';
 		//$deny_access=true;
 
-	BREAK;
+	BREAK;*/
 
 
-	CASE (preg_match("/^([0-9]+)$/",$url[$n]) && $url[$n-1]=='photos'):
+	/*CASE (preg_match("/^([0-9]+)$/",$url[$n]) && $url[$n-1]=='photos'):
 		$item=array();
 		$item = $db->get_all("SELECT * FROM fw_products_images WHERE parent=".(int)$url[$n]);
 		if (count($item)>0){
@@ -441,7 +425,7 @@ SWITCH (TRUE) {
 		//$switch_off_smarty=false;
         $main_template='_photos.html';
 
-	BREAK;
+	BREAK;*/
 
 
 	CASE ($url[$n]=='basket' && count($url)==2):
@@ -784,7 +768,7 @@ SWITCH (TRUE) {
 	/**
 	 * поиск в фильтрах
 	 */
-	CASE (isset($url[1]) && $url[1] == 'search'):
+	/*CASE (isset($url[1]) && $url[1] == 'search'):
 		
 		//$navigation[]=array("url" => 'search',"title" => 'Поиск');
 		
@@ -904,7 +888,7 @@ SWITCH (TRUE) {
 		$template='search_products.html';
 		
 		
-	BREAK;
+	BREAK;*/
 	
 	
 	CASE ((count($url)==2 && preg_match("/\?search_product=(.+)$/",$url[$n])) or (count($url)==2 && preg_match("/\?search_product=(.+)&page=([1-9]+)$/",$url[$n]))):
@@ -919,11 +903,8 @@ SWITCH (TRUE) {
 		if (isset($_GET['page']) && $_GET['page']!='') $page=$_GET['page'];
 		else $page=1;
 		
-		//$result=$db->query("SELECT COUNT(*) FROM fw_products WHERE name LIKE '%$search%' AND status='1' and (tire_sklad = 1 or disk_sklad = 1)");
-		//$pager=Common::pager($result,SEARCH_RESULTS_PER_PAGE,$page);
 
 		$search_results=$db->get_all("SELECT fw_products.*, fw_catalogue.image FROM fw_products left join fw_catalogue on fw_products.parent = fw_catalogue.id WHERE fw_products.name LIKE '%$search%' AND fw_products.status='1' ");
-		//echo "SELECT * FROM fw_products WHERE name LIKE '%$search%' AND status='1' and (tire_sklad > 0 or disk_sklad > 0) ";
 
 		if ($search_results)
 		{
@@ -943,17 +924,6 @@ SWITCH (TRUE) {
 			}
 		}
 		
-		/*
-		$cat_list=Common::get_nodes_list($cl);
-		for ($a=0;$a<count($search_results);$a++) {
-			for ($a1=0;$a1<count($cat_list);$a1++) {
-				if ($search_results[$a]['parent']==$cat_list[$a1]['id']) {
-					$search_results[$a]['full_url']=$cat_list[$a1]['full_url'];
-					$search_results[$a]['price']=number_format(($search_results[$a]['price'] * $cur_admin['kurs'])/$cur_site['kurs'],2);
-				}
-			}
-		}
-		*/
 
 		$smarty->assign("search_string",$search);
 
@@ -1188,6 +1158,7 @@ SWITCH (TRUE) {
 				
 				$smarty->assign("cat_list",$cat_list);
 				
+				
 				switch($cat_content['param_level'])
 				{
 					case 1:
@@ -1201,8 +1172,6 @@ SWITCH (TRUE) {
 						break;
 				}
 				
-				//$template='shop.f_main.html';
-				break;
 			}
 		}
 
@@ -1290,14 +1259,12 @@ SWITCH (TRUE) {
 									$navigation[]=array("url" => $nav_urls[$l],"title" => trim($nav_titles[$l]));
 								}
 							}
-							
-							
-							
+
 							$navigation[]=array("url" => $product_content['id'],"title" => $product_content['name']);
 
-
 							unset($url[$n]);
-							
+
+							//print_r($navigation);
 							$template='product_details.html';
 						}
 					}
@@ -1306,6 +1273,9 @@ SWITCH (TRUE) {
 		}
 }
 
+
+
 }
+
 
 ?>
