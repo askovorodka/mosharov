@@ -1,3 +1,37 @@
+	this.list_orders = function()
+	{
+	$("input[name='add_order']").click(function(){
+		
+			this.response = function(response){
+				$("DIV#loading-layer").hide();
+				var floor = response.split(";");
+				$("#basket_number").html(floor[0]);
+				$("#basket_currency").html(floor[1]);
+				//если первый заказ, показываем корзину
+				if (floor[2] == 1)
+				{
+					$("#basketlink").click();
+				}
+			};
+		
+		var product_id = parseInt($(this).attr("product_id"));
+		
+		var product_count = 1;
+		
+		if (parseInt(product_count) > 0 && parseInt(product_id) > 0)
+		{
+			$("DIV#loading-layer").show();
+			//кидаем запрос на сервер
+			$.post('http://' + location.hostname + '/catalog/basket/add/', 
+			{product_id : product_id, product_count : product_count}, 
+			this.response );
+			
+		}
+		return false;
+	});
+	};
+
+
 	//скрываем/раскрываем корзину
 	this.basket_block =  function(){
 		var basket = $("#basket_block");
@@ -116,6 +150,7 @@
 			$.get(url, {ajax : 1}, function(response){
 				$("#maincontent").empty();
 				$("#maincontent").css("width","730px").append(response);
+				list_orders();
 			});
 		}
 		
@@ -176,52 +211,9 @@ $(document).ready( function(){
 	
 	basket_block();
 	
-	//$("#filterbutton").click(function(){
-	/*$("input[name='age_start'],input[name='age_end'],input[name='price_start'],input[name='price_end']").change(function(){
-		
-		left_filter();
-		var age_start = $("input[name='age_start']", $("div.fromto")).val();
-		var age_end = $("input[name='age_end']", $("div.fromto")).val();
-		var price_start = $("input[name='price_start']", $("div.fromto")).val();
-		var price_end = $("input[name='price_end']", $("div.fromto")).val();
-		
-		var checked_url = checked_filter();
-		var filter_url = new Array();
-		
-		if (parseInt(price_start) > 0)
-		{
-			filter_url.push( "price_start=" + parseInt(price_start) );
-		}
-
-		if (parseInt(price_end) > 0)
-		{
-			filter_url.push( "price_end=" + parseInt(price_end) );
-		}
-
-		if (parseInt(age_start) > 0)
-		{
-			filter_url.push( "age_start=" + parseInt(age_start) );
-		}
-		
-		if (parseInt(age_end) > 0)
-		{
-			filter_url.push( "age_end=" + parseInt(age_end) );
-		}
-		
-		if (checked_url)
-		{
-			//location = $("div.filter").attr("url") + '?' + checked_url + '&' + filter_url.join('&');
-			get_ajax_request($("div.filter").attr("url") + '?' + checked_url + '&' + filter_url.join('&'));
-		}
-		else
-		{
-			//location = $("div.filter").attr("url") + '?' + filter_url.join('&');
-			get_ajax_request($("div.filter").attr("url") + '?' + filter_url.join('&'));
-		}
-		
-	});*/
-
 	imagePreview();
+	
+	list_orders();
 	
 	$(".rollover").hover(function(){
 		var image = $(this).attr("image");
@@ -277,257 +269,10 @@ $(document).ready( function(){
 	
 	$("#ImageLayout").click(function(){ $(this).hide(); });
 	
-	/*$("#submit_basket_form").submit(function(){
-		if ( $("#register").val() == 1 )
-			{
-				$("input[name='submit_basket'][type='image']").attr("disabled", "true").fadeOut("fast");
-									$.post('http://' + location.hostname + '/shop/basket/submit/', {
-										submit_order : 1,
-										dostavka : $("input[name='dostavka']:checked", $("form#submit_basket_form")).val(),
-										payment : $("input[name='payment']:checked", $("form#submit_basket_form")).val(),
-										company : $("input[name='company']", $("form#submit_basket_form")).val(),
-										inn : $("input[name='inn']", $("form#submit_basket_form")).val(),
-										kpp : $("input[name='kpp']", $("form#submit_basket_form")).val(),
-										comment : $("textarea[name='comment']", $("form#submit_basket_form")).val()
-									}, function(response) { location = 'http://' + location.hostname + '/cabinet/orders/'; } );
-				
-			}
-		else
-			{
-				if ($("#question").attr("register") == 1)
-					{
-						if (login_validate.form())
-						{
-							$.post('http://' + location.hostname + '/cabinet/login/', {
-								submit_login : 1,
-								login_email : $("input[name='login_email']", $("form#login_user_form")).val(),
-								login_pass :  $("input[name='login_pass']", $("form#login_user_form")).val()
-							}, function(response){ 
-								if (response != 1)
-								{
-									switch(response)
-									{
-									case "error1":
-										$("#response_server").html("Неправильный формат e-mail адреса");
-										break;
-									case "error2":
-										$("#response_server").html("Пользователь с таким почтовым адресом уже существует");
-										break;
-									}
-								}
-								else
-								{
-									$("input[name='submit_basket'][type='image']").attr("disabled", "true").fadeOut("fast");
-									$.post('http://' + location.hostname + '/shop/basket/submit/', {
-										submit_order : 1,
-										dostavka : $("input[name='dostavka']:checked", $("form#submit_basket_form")).val(),
-										payment : $("input[name='payment']:checked", $("form#submit_basket_form")).val(),
-										company : $("input[name='company']", $("form#submit_basket_form")).val(),
-										inn : $("input[name='inn']", $("form#submit_basket_form")).val(),
-										kpp : $("input[name='kpp']", $("form#submit_basket_form")).val(),
-										comment : $("textarea[name='comment']", $("form#submit_basket_form")).val()
-									}, function(response) { location = 'http://' + location.hostname + '/cabinet/orders/'; } );
-									return false;
-								}
-							} );
-						}
-					}
-				else
-					{
-						//регистрация
-						if (register_validate.form())
-						{
-							$.post('http://' + location.hostname + '/cabinet/register/',{
-								submit_user_register : 1,
-								username : $("input[name='username']", $("form#register_user_form")).val(),
-								useremail : $("input[name='useremail']", $("form#register_user_form")).val(),
-								phone : $("input[name='phone']", $("form#register_user_form")).val(),
-								address : $("input[name='address']", $("form#register_user_form")).val(),
-								pass : $("input[name='pass']", $("form#register_user_form")).val()
-							}, function(response){ 
-								//alert(response);
-								if (response != 1)
-								{
-									switch(response)
-									{
-									case "error1":
-										$("#response_server").html("Неправильный формат e-mail адреса");
-										break;
-									case "error2":
-										$("#response_server").html("Пользователь с таким почтовым адресом уже существует");
-										break;
-									}
-								}
-								else
-								{
-									$("input[name='submit_basket'][type='image']").attr("disabled", "true").fadeOut("fast");
-									$.post('http://' + location.hostname + '/shop/basket/submit/', {
-										submit_order : 1,
-										dostavka : $("input[name='dostavka']:checked", $("form#submit_basket_form")).val(),
-										payment : $("input[name='payment']:checked", $("form#submit_basket_form")).val(),
-										company : $("input[name='company']", $("form#submit_basket_form")).val(),
-										inn : $("input[name='inn']", $("form#submit_basket_form")).val(),
-										kpp : $("input[name='kpp']", $("form#submit_basket_form")).val(),
-										comment : $("textarea[name='comment']", $("form#submit_basket_form")).val()
-									}, function(response) { location = 'http://' + location.hostname + '/cabinet/orders/'; } );
-								
-								}
-							})
-						}
-					}
-					
-			}
-		return false;
-	});*/
 	
-	
-	//регистрация/логин при заказе
-	/*$("#register_login").click(function(){
-		
-		if ($("#question").attr("register") == 1)
-			{
-				if (login_validate.form())
-					{
-					$("form#login_user_form").submit();
-					}
-			}
-		else
-			{
-				if (register_validate.form())
-					{
-					$("form#register_user_form").submit();
-					}
-			}
-		
-	});*/
-	
-	/*$("form#restore_password_form").submit(function(){
-		return restore_validate.form();
-	});
-	var restore_validate = $("form#restore_password_form").validate(
-			{
-		 		
-				errorPlacement: function(error, element) {
-			    	error.insertAfter( element );
-		   		},
-		    	
-				rules:
-				{
-					email :	{required: true, email : true}
-				},
-				messages:
-				{
-					email:	{
-						required : "Введите email",
-						email : "Неверный формат email"
-					}
-				}
-			}
-			);
-	
-	
-	
-	var login_validate = $("form#login_user_form").validate(
-	{
- 		
-		errorPlacement: function(error, element) {
-	    	error.insertAfter( element );
-   		},
-    	
-		rules:
-		{
-			login_email :	{required: true, email : true},
-			login_pass :	{required: true}
-		},
-		messages:
-		{
-			login_email:	{
-				required : "Введите email",
-				email : "Неверный формат email"
-			},
-			login_pass:	{
-				required : "Введите пароль"
-			}
-		}
-	}
-	);
-
-	
-	var register_validate = $("form#register_user_form").validate(
-			{
-		 		
-				errorPlacement: function(error, element) {
-			    	error.insertAfter( element );
-		   		},
-		    	
-				rules:
-				{
-					username :		{required: true},
-					phone :			{required: true},
-					useremail :		{required: true, email:true},
-					address :		{required: true},
-					pass: {required: true}
-				},
-				messages:
-				{
-					username:	{
-						required : "Введите имя"
-					},
-					phone:	{
-						required : "Введите телефон"
-					},
-					useremail:	{
-						required : "Введите email",
-						email : "Неверный формат email"
-					},
-					address:	{
-						required : "Введите адрес"
-					},
-					pass:	{
-						required : "Введите пароль"
-					}
-
-				}
-			}
-			);
-	
-	
-			
-	var comment_validate = $("form#add_comment").validate(
-			{
-		 		
-				errorPlacement: function(error, element) {
-			    	error.insertAfter( element );
-		   		},
-		    	
-				rules:
-				{
-					username : {required: true},
-					email :	{required: true, email : true},
-					text : {required: true}
-				},
-				messages:
-				{
-					username:	{
-						required : "Введите ваше имя"
-					},
-					
-					email:	{
-						required : "Введите email",
-						email : "Неверный формат email"
-					},
-					
-					text:	{
-						required : "Введите комментарий"
-					}
-					
-				}
-			}
-			);
-	*/
 	
 	//ссылка показать/скрыть форму регистрации/логина
-	$("A#question").click(function(){
+	/*$("A#question").click(function(){
 		if ($(this).attr("register") == 1)
 		{
 			$("#login_user").fadeOut("fast");
@@ -543,10 +288,10 @@ $(document).ready( function(){
 			$(this).attr("register", "1");
 		}
 		return false;
-	});
+	});*/
 	
 	//левое меню, что-то вроде анимации
-	$("A.lmenuf:not(.static)").click( function(){
+	/*$("A.lmenuf:not(.static)").click( function(){
 		var submenu = $("DIV#subitem_" + $(this).attr("id"));
 		if ($(submenu).css("display") != "block" )
 		{
@@ -554,7 +299,7 @@ $(document).ready( function(){
 			$(submenu).animate({opacity:1},250).fadeIn("fast");
 		}
 		return false;
-	} );
+	} );*/
 	
 	
 	//заказ продукта на отдельной странице
@@ -608,35 +353,6 @@ $(document).ready( function(){
 	
 	
 	//заказ из списка продуктов в категории
-	$("input[name='add_order']").click(function(){
-		
-			this.response = function(response){
-				$("DIV#loading-layer").hide();
-				var floor = response.split(";");
-				$("#basket_number").html(floor[0]);
-				$("#basket_currency").html(floor[1]);
-				//если первый заказ, показываем корзину
-				if (floor[2] == 1)
-				{
-					$("#basketlink").click();
-				}
-			};
-		
-		var product_id = parseInt($(this).attr("product_id"));
-		
-		var product_count = 1;
-		
-		if (parseInt(product_count) > 0 && parseInt(product_id) > 0)
-		{
-			$("DIV#loading-layer").show();
-			//кидаем запрос на сервер
-			$.post('http://' + location.hostname + '/catalog/basket/add/', 
-			{product_id : product_id, product_count : product_count}, 
-			this.response );
-			
-		}
-		return false;
-	});
 	
 
 	var validator = $("FORM#RegisterForm").validate(
