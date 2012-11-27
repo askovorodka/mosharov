@@ -376,6 +376,10 @@ if (!$switch_off_smarty){
     $smarty_display=$main_template;
   }
 }
+else 
+{
+	$smarty_display = $template;
+}
 
 if ($page_found) header("HTTP/1.0 200 OK");
 else {

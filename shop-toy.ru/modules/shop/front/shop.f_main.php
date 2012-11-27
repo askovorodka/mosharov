@@ -36,7 +36,9 @@ if ($switch_default=='on' or $main_module=='on') {
 
 function filter_array($val)
 {
-	if (preg_match("/\d/", $val))
+	$val = preg_replace("/\d/","", $val);
+	
+	if (!$val)
 		return true;
 	else
 		return false;
@@ -524,9 +526,6 @@ SWITCH (TRUE) {
 					$smarty->assign("company_dost",$companies[$dostavka]);
 				}
 				
-				/*if ($company_dost > 0)
-					$smarty->assign("company_dost",$companies[$company_dost]);*/
-
 				$smarty->assign("name",$user['name']);
 				$smarty->assign("site_url",BASE_URL);
 				$smarty->assign("order_id",$order_id);
@@ -551,8 +550,6 @@ SWITCH (TRUE) {
 
 				Mail::send_mail("aschmitz@yandex.ru","Заказ ShopToy.com <".$user['mail'].">","Новый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
 				
-				//$page_found = true;
-				//$template = 'order_done.html';
 				header("Location: /catalog/basket/final/");
 				die();
 			}
@@ -724,6 +721,10 @@ SWITCH (TRUE) {
 			{
 				$cats_filter = explode(",", $_GET['categories']);
 				$cats_filter = array_filter($cats_filter, "filter_array");
+				
+				if (empty($cats_filter))
+					Common::_404();
+				
 				$smarty->assign('cats_filter', $cats_filter);
 				$where[] = "parent in (" . implode(",", $cats_filter) . ")";
 			}
@@ -732,6 +733,10 @@ SWITCH (TRUE) {
 			{
 				$brands_filter = explode(",", $_GET['brands']);
 				$brands_filter = array_filter($brands_filter, "filter_array");
+				
+				if (empty($brands_filter))
+					Common::_404();
+				
 				$smarty->assign('brands_filter', $brands_filter);
 				$where[] = "brand_id in (" . implode(",", $brands_filter) . ")";
 			}
@@ -777,9 +782,6 @@ SWITCH (TRUE) {
 			if (count($url) < 4)
 			{
 				
-				//setcookie('filter_query_string', $_SERVER['REQUEST_URI']);
-				
-				
 				$products = $db->get_all("select * from fw_products where " . implode(" and ", $where) . $limit);
 				if ($products)
 				{
@@ -794,7 +796,19 @@ SWITCH (TRUE) {
 				
 				
 				$page_found = true;
-				$template = "shop.f_filter_result.html";
+				
+				if (!empty($_GET['ajax']))
+				{
+					$switch_off_smarty = true;
+					$content = $smarty->fetch("../modules/shop/front/templates/shop.f_filter_result.html");
+					header("Content-type: text/html; charset=Windows-1251");
+					echo $content;
+					die();
+				}
+				else 
+				{
+					$template = "shop.f_filter_result.html";
+				}
 				
 			}
 			else
@@ -828,11 +842,6 @@ SWITCH (TRUE) {
 				
 				$images = $shop->getProductImages($product['id']);
 				$smarty->assign("images",$images);
-				
-				/*if (!empty($_COOKIE['filter_query_string']))
-				{
-					$smarty->assign('filter_query_string', $_COOKIE['filter_query_string']);
-				}*/
 				
 				$template='product_details.html';
 				

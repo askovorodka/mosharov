@@ -56,6 +56,71 @@
 		});			
 	};
 
+	this.get_ajax_request = function(url)
+	{
+		//основной урл с выбранной категорией
+		var url = $("div.filter").attr("url");
+		
+		//собираем в урл знаечние отмеченных чекбоксов
+		var checked_url = checked_filter();
+		
+		var input_url = null;
+		
+		var age_start = $("input[name='age_start']", $("div.fromto")).val();
+		var age_end = $("input[name='age_end']", $("div.fromto")).val();
+		var price_start = $("input[name='price_start']", $("div.fromto")).val();
+		var price_end = $("input[name='price_end']", $("div.fromto")).val();
+		
+		var filter_url = new Array();
+		
+		if (parseInt(price_start) > 0)
+		{
+			filter_url.push( "price_start=" + parseInt(price_start) );
+		}
+
+		if (parseInt(price_end) > 0)
+		{
+			filter_url.push( "price_end=" + parseInt(price_end) );
+		}
+
+		if (parseInt(age_start) > 0)
+		{
+			filter_url.push( "age_start=" + parseInt(age_start) );
+		}
+		
+		if (parseInt(age_end) > 0)
+		{
+			filter_url.push( "age_end=" + parseInt(age_end) );
+		}
+		
+		if (filter_url.length > 0)
+		{
+			var input_url = filter_url.join('&');
+		}
+		
+		if (checked_url)
+			url = url + '?' + checked_url;
+		if (input_url && checked_url)
+			url = url + '&' + input_url;
+		else if (input_url)
+			url = url + '?' + input_url;
+		
+		
+		if (typeof(product)!="undefined" && product==true)
+		{
+			location = url;
+		}
+		else
+		{
+			$("#maincontent table").addClass("shadow");
+			$.get(url, {ajax : 1}, function(response){
+				$("#maincontent").empty();
+				$("#maincontent").css("width","730px").append(response);
+			});
+		}
+		
+	};
+
 	this.checked_filter = function()
 	{
 		var filter_cats = new Array();
@@ -94,17 +159,15 @@
 	this.left_filter = function()
 	{
 		$("div.filterinput input[type='checkbox']").click(function(){
-			var url = checked_filter();
-			if ($.trim(url) != "")
-			{
-				location = $("div.filter").attr("url") + '?' + url;
-			}
-			else
-			{
-				location = $("div.filter").attr("url");
-			}
+			get_ajax_request();
 		});
+		
+		$("input[name='age_start'],input[name='age_end'],input[name='price_start'],input[name='price_end']").change(function(){
+			get_ajax_request();
+		});
+		
 	};
+	
 	
 
 $(document).ready( function(){
@@ -113,8 +176,10 @@ $(document).ready( function(){
 	
 	basket_block();
 	
-	$("#filterbutton").click(function(){
+	//$("#filterbutton").click(function(){
+	/*$("input[name='age_start'],input[name='age_end'],input[name='price_start'],input[name='price_end']").change(function(){
 		
+		left_filter();
 		var age_start = $("input[name='age_start']", $("div.fromto")).val();
 		var age_end = $("input[name='age_end']", $("div.fromto")).val();
 		var price_start = $("input[name='price_start']", $("div.fromto")).val();
@@ -145,14 +210,16 @@ $(document).ready( function(){
 		
 		if (checked_url)
 		{
-			location = $("div.filter").attr("url") + '?' + checked_url + '&' + filter_url.join('&');
+			//location = $("div.filter").attr("url") + '?' + checked_url + '&' + filter_url.join('&');
+			get_ajax_request($("div.filter").attr("url") + '?' + checked_url + '&' + filter_url.join('&'));
 		}
 		else
 		{
-			location = $("div.filter").attr("url") + '?' + filter_url.join('&');
+			//location = $("div.filter").attr("url") + '?' + filter_url.join('&');
+			get_ajax_request($("div.filter").attr("url") + '?' + filter_url.join('&'));
 		}
 		
-	});
+	});*/
 
 	imagePreview();
 	

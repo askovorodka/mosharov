@@ -52,7 +52,7 @@
 <!---- /FILTER ---->
 </td>
 {/if}
-<td class="maincolumn">
+<td class="maincolumn" id="maincontent">
 	{if $content=='' or !$content}
 		{assign var="content" value=""}
 		{fetch file=$template assign="content"}

@@ -1,4 +1,7 @@
-
+.shadow{
+opacity: 0.5;
+filter: alpha(Opacity=50);
+}
 /* BASKET */
 .basket {
 	position:fixed;
@@ -494,7 +497,7 @@ h3 {
 
 /* CATALOG */
 .cats {
-	/*width:730px;*/
+	width:730px;
 	margin:20px 0;
 	border-collapse:collapse;
 }

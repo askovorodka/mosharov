@@ -5,6 +5,7 @@
 <a href="{$base_url}{$filter_query_string}">Вернуться к результатам поиска</a>
 {/if*}
 
+
 <h1>{$product.name|strip_tags}</h1>
 	<table class="itemtbl">
       <tr>
@@ -39,3 +40,9 @@
     {$product.description|strip_tags}
 <br><br>
 <div style="height:80px;">&nbsp;</div>
+
+{literal}
+<script language="JavaScript">
+var product=true;
+</script>
+{/literal}
