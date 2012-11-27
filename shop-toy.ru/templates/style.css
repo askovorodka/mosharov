@@ -440,6 +440,9 @@ h3 {
 	text-align:left;
 	vertical-align:top;
 	padding-bottom:15px;
+	max-height:350px;
+	overflow-x:none;
+    overflow-y:auto;
 }
 .filterinput label {
 	font-size:12px;
@@ -464,17 +467,17 @@ h3 {
 	margin:0 4px 0 -16px;
 }
 .fromto input {
-	width:50px;
+	width:48px;
 	height:24px;
 	background:#fff;
 	border:0;
-	border-radius:13px;
+	border-radius:10px;
 	box-shadow: inset 0px 1px 3px rgba(0,0,0,.7);
 	vertical-align:middle;
 	line-height:22px;
-	padding:0 8px;
+	padding:0 5px;
 	text-align:center;
-	font-size:14px;
+	font-size:12px;
 	color:#666;
 	margin:0 2px;
 }
@@ -760,8 +763,8 @@ h3 {
 	padding:0 3px 10px 0;
 }
 .zakazbut {
-	width:139px !important;
-	height:24px !important;
+	width:205px !important;
+	height:34px !important;
 	margin:20px 0 0 0 !important;
 	border:0 !important;
 }
@@ -783,10 +786,11 @@ h3 {
 	vertical-align:top;
 }
 .enterbut {
-	width:79px !important;
-	height:24px !important;
+	width:113px !important;
+	height:34px !important;
 	float:left;
 	border:0 !important;
+	background:none !important;
 }
 .lostpwd {
 	margin-right:96px;
