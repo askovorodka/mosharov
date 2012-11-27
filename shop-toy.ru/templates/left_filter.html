@@ -4,7 +4,7 @@
 <div class="filterinput checkboxing">
 	Категория:<br />
 	{foreach from=$categories item=item}
-	<div><input type="checkbox" class="check" name="categories" {if $cats_filter && in_array($item.id,$cats_filter)}checked{/if} value="{$item.id}" id="cat{$item.id}"><label for="cat{$item.id}">{$item.name|strip_tags}</label></div>
+	<div><input type="checkbox" class="check" name="categories" {if ($cats_filter && in_array($item.id,$cats_filter)) or ($product.parent==$item.id)}checked{/if} value="{$item.id}" id="cat{$item.id}"><label for="cat{$item.id}">{$item.name|strip_tags}</label></div>
 	{/foreach}
 </div>
 {/if}
@@ -12,7 +12,7 @@
 	Бренд:<br />
 	{if $brands}
 	{foreach from=$brands item=item}
-	<div><input type="checkbox" class="check" {if $brands_filter && in_array($item.id,$brands_filter)}checked{/if} name="brands" value="{$item.id}" id="brand{$item.id}"><label for="brand{$item.id}">{$item.name|strip_tags}</label></div>
+	<div><input type="checkbox" class="check" {if ($brands_filter && in_array($item.id,$brands_filter)) or ($product.brand_id==$item.id)}checked{/if} name="brands" value="{$item.id}" id="brand{$item.id}"><label for="brand{$item.id}">{$item.name|strip_tags}</label></div>
 	{/foreach}
 	{/if}
 </div>

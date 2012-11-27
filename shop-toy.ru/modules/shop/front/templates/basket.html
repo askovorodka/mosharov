@@ -1,8 +1,6 @@
 <div class="txtd">
 <div class="contt">
 
-{*include file="`$smarty.const.TPL_PATH`breadcrumbs.html"*}
-
 <h1>¬аша корзина</h1>
 
 {if $basket}
@@ -28,10 +26,13 @@
   {/foreach}
   <tr>
     <td colspan="3" class="basketitog">ќбща€ стоимость: <span class="itog">{$total_price} р.</span></td>
-    <td colspan="2"><a title="ќформить заказ" href="/catalog/basket/step1/"><img src="{$template_image}basket_button.png" class="basketbutton" /></a></td>
+    <td colspan="2"><a title="ќформить заказ" href="/catalog/basket/step1/"><img src="{$template_image}basket_button.png" class="basketbutton basketrecount" /></a></td>
   </tr>
 </table>
 </form>
+
+<center>{include file="../modules/shop/front/templates/register_form.html"}</center>
+
 {else}
 <center>¬аша корзина пуста</center>
 {/if}

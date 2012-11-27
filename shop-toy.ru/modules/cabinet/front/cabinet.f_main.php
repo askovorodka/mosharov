@@ -97,11 +97,15 @@ if (isset($_POST['submit_login'])) {
 		if (empty($password_to_check)) {
 			$smarty->assign("error_message",'Такого пользователя не существует');
 			$smarty->assign("email",$login);
+			header ("Location: /catalog/basket/?error=error_login");
+			die();
 		}
 		else {
 			if (sha1($password) != $password_to_check) {
 				$smarty->assign("error_message",'Неправильный пароль');
 				$smarty->assign("email",$email);
+				header ("Location: /catalog/basket/?error=error_login");
+				die();
 			}
 			else {
 				setcookie('shop_login_cookie',$email."|".sha1($password),time()+LOGIN_LIFETIME,'/','');
@@ -109,7 +113,7 @@ if (isset($_POST['submit_login'])) {
 				
 				if (!empty($_SESSION['fw_basket']))
 				{
-					header("Location: ".BASE_URL.'/catalog/basket/step1/');
+					header("Location: ".BASE_URL.'/catalog/basket/');
 					die();
 				}
 				

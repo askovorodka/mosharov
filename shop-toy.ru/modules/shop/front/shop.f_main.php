@@ -278,11 +278,17 @@ SWITCH (TRUE) {
 	BREAK;
 
 
-	CASE ($url[$n]=='basket' && count($url)==2):
+	CASE ($url[$n]=='basket' && count($url)==2 || (count($url) >= 2 && $url[$n-1]=='basket' && preg_match("/^\?error=([a-z])/", $url[$n]))):
 
 		$page_found=true;
 		$navigation[]=array("url" => 'basket',"title" => 'ћо€ корзина');
 
+		if ($user_id = $users->is_auth_user())
+		{
+			$user = $users->get_user($user_id);
+			$smarty->assign('user', $user);
+		}
+		
 		if (isset($_POST['basket_remove']))
 		{
 			unset($_SESSION['fw_basket']);
@@ -321,7 +327,7 @@ SWITCH (TRUE) {
 			$smarty->assign("basket",$_SESSION['fw_basket']);
 			
 			$smarty->assign("total_price",sprintf("%.2f",$total_price));
-			if (isset($_SESSION['fw_user'])) $smarty->assign("user",$_SESSION['fw_user']);
+			//if (isset($_SESSION['fw_user'])) $smarty->assign("user",$_SESSION['fw_user']);
 		}
 		$template='basket.html';
 
@@ -382,9 +388,7 @@ SWITCH (TRUE) {
 				$products_list='';
 				$total_number=0;
 				
-				//echo $users->is_auth_user();
-				//exit();
-				
+				$check = true;
 				//если пользователь зареген, берем данные из таблицы
 				if ($user_id = $users->is_auth_user())
 				{
@@ -393,24 +397,25 @@ SWITCH (TRUE) {
 				//иначе если он хочет быть зареген, регистрируем и берем данные из таблицы
 				elseif (!empty($_POST['password']))
 				{
-					$users->setEmail($_POST['email']);
+					
 					$users->setName($_POST['name']);
 					$users->setTel($_POST['phone']);
+					$users->setEmail($_POST['email']);
 					$users->setAddress($_POST['address']);
 					$users->setPassword($_POST['password']);
 
-					if (!$users->get_user_by_email($_POST['email']))
+					if (!$users->get_errors())
 					{
 						$user = $users->register();
 					}
 					else
 					{
-						$smarty->assign('error_register_message','ѕользователь с тами email уже зарегистрирован');
-						$error_register = true;
-						echo "ѕользователь с тами email уже зарегистрирован";
-						header("Location: /catalog/basket/?error=email");
+						$errors = $users->get_errors();
+						header("Location: /catalog/basket/?error=" . $errors[0]);
 						die();
 					}
+					
+					
 				}
 				//иначе без регистрации
 				else
@@ -421,6 +426,19 @@ SWITCH (TRUE) {
 					$user['id'] = null;
 					$user['tel'] = $_POST['phone'];
 					$user['address'] = $_POST['address'];
+					
+					//проверка введенных данных через методы класса пользовател€
+					$users->setName($_POST['name']);
+					$users->setEmail($_POST['email'], false);
+					$users->setTel($_POST['phone']);
+					if ($users->get_errors())
+					{
+						$errors = $users->get_errors();
+						header("Location: /catalog/basket/?error=" . $errors[0]);
+						die();
+						
+					}
+					
 				}
 				
 				$name=$user['name'];
@@ -442,15 +460,6 @@ SWITCH (TRUE) {
 				for ($i=0;$i<count($_SESSION['fw_basket']);$i++)
 				{
 					
-					/*$p_info = $shop->getProductInfo($_SESSION['fw_basket'][$i]['id']);
-					if (!empty($p_info['tire_width']))
-						if ($_SESSION['fw_basket'][$i]['number'] > $p_info['tire_sklad'])
-							$_SESSION['fw_basket'][$i]['number'] = $p_info['tire_sklad'];
-					
-					if (!empty($p_info['disk_width']))
-						if ($_SESSION['fw_basket'][$i]['number'] > $p_info['disk_sklad'])
-							$_SESSION['fw_basket'][$i]['number'] = $p_info['disk_sklad'];
-					*/
 					$total_price+=$_SESSION['fw_basket'][$i]['price']*$_SESSION['fw_basket'][$i]['number'];
 					
 				}
@@ -536,11 +545,11 @@ SWITCH (TRUE) {
 				$body=$smarty->fetch($templates_path.'/order_notice.txt');
 
 				
-				Mail::send_mail($user['mail'],$_SERVER['SERVER_NAME'],"Ќовый заказ в интернет магазине",$body,'','html','standard','Windows-1251');
+				Mail::send_mail($user['mail'],"ћагазин игрушек ShopToy.com <orders@shop-toy.com>","Ќовый заказ в интернет магазине",$body,'','html','standard','Windows-1251');
 
 				$admin_body=$smarty->fetch($templates_path.'/admin_order_notice.txt');
 
-				Mail::send_mail("aschmitz@yandex.ru",$user['mail'],"Ќовый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
+				Mail::send_mail("aschmitz@yandex.ru","«аказ ShopToy.com <".$user['mail'].">","Ќовый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
 				
 				//$page_found = true;
 				//$template = 'order_done.html';
@@ -691,7 +700,7 @@ SWITCH (TRUE) {
 			$where = array();
 			$where[] = "status='1'";
 			$limit = "";
-
+			
 			if (count($url) == 1)
 			{
 				
@@ -732,13 +741,13 @@ SWITCH (TRUE) {
 				$where[] = "price >= " . intval($_GET['price_start']);
 				$smarty->assign('filter_price_start', intval($_GET['price_start']));
 			}
-
+			
 			if (!empty($_GET['price_end']))
 			{
 				$where[] = "price <= " . intval($_GET['price_end']);
 				$smarty->assign('filter_price_end', intval($_GET['price_end']));
 			}
-
+			
 			if (!empty($_GET['age_start']))
 			{
 				$where[] = "age >= " . intval($_GET['age_start']);
@@ -758,7 +767,7 @@ SWITCH (TRUE) {
 			}
 			
 			$smarty->assign('brands', $brands);
-				
+			
 			if (!empty($categories))
 			{
 				$smarty->assign('categories', $categories);
@@ -768,7 +777,7 @@ SWITCH (TRUE) {
 			if (count($url) < 4)
 			{
 				
-				setcookie('filter_query_string', $_SERVER['REQUEST_URI']);
+				//setcookie('filter_query_string', $_SERVER['REQUEST_URI']);
 				
 				
 				$products = $db->get_all("select * from fw_products where " . implode(" and ", $where) . $limit);
@@ -820,10 +829,10 @@ SWITCH (TRUE) {
 				$images = $shop->getProductImages($product['id']);
 				$smarty->assign("images",$images);
 				
-				if (!empty($_COOKIE['filter_query_string']))
+				/*if (!empty($_COOKIE['filter_query_string']))
 				{
 					$smarty->assign('filter_query_string', $_COOKIE['filter_query_string']);
-				}
+				}*/
 				
 				$template='product_details.html';
 				

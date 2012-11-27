@@ -14,6 +14,7 @@ class Users extends db
 	private $id=null;
 	private $rst=null;
 	private $tel = null;
+	protected $errors = array();
 	
 	
 	function __construct()
@@ -21,9 +22,22 @@ class Users extends db
 		parent::db();
 	}
 	
-	function setEmail($val)
+	
+	public function get_errors()
+	{
+		return $this->errors;
+	} 
+	
+	function setEmail($val, $with_reg=true)
 	{
 		$this->email = $val;
+		if (!preg_match("~^([a-z0-9_\-\.])+@([a-z0-9_\-\.])+\.([a-z0-9])+$~i", $this->email))
+			$this->errors[] = "error_email";
+		elseif ($with_reg)
+		{ 
+			if ($this->get_user_by_email($this->email))
+				$this->errors[] = "error_regemail";
+		}
 	}
 	
 	function setPassword($val)
@@ -34,11 +48,16 @@ class Users extends db
 	function setName($val)
 	{
 		$this->name = $val;
+		if (trim($this->name) == "")
+			$this->errors[] = "error_username";
 	}
 
 	function setTel($val)
 	{
 		$this->tel = $val;
+		$this->tel = preg_replace("/\D/", "", $this->tel);
+		if (strlen($this->tel) < 10)
+			$this->errors[] = "error_phone";
 	}
 	
 	function setPhone1($val)

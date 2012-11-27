@@ -95,7 +95,7 @@
 	{
 		$("div.filterinput input[type='checkbox']").click(function(){
 			var url = checked_filter();
-			if (url)
+			if ($.trim(url) != "")
 			{
 				location = $("div.filter").attr("url") + '?' + url;
 			}
@@ -210,7 +210,7 @@ $(document).ready( function(){
 	
 	$("#ImageLayout").click(function(){ $(this).hide(); });
 	
-	$("#submit_basket_form").submit(function(){
+	/*$("#submit_basket_form").submit(function(){
 		if ( $("#register").val() == 1 )
 			{
 				$("input[name='submit_basket'][type='image']").attr("disabled", "true").fadeOut("fast");
@@ -311,11 +311,11 @@ $(document).ready( function(){
 					
 			}
 		return false;
-	});
+	});*/
 	
 	
 	//регистрация/логин при заказе
-	$("#register_login").click(function(){
+	/*$("#register_login").click(function(){
 		
 		if ($("#question").attr("register") == 1)
 			{
@@ -332,9 +332,9 @@ $(document).ready( function(){
 					}
 			}
 		
-	});
+	});*/
 	
-	$("form#restore_password_form").submit(function(){
+	/*$("form#restore_password_form").submit(function(){
 		return restore_validate.form();
 	});
 	var restore_validate = $("form#restore_password_form").validate(
@@ -457,7 +457,8 @@ $(document).ready( function(){
 				}
 			}
 			);
-			
+	*/
+	
 	//ссылка показать/скрыть форму регистрации/логина
 	$("A#question").click(function(){
 		if ($(this).attr("register") == 1)

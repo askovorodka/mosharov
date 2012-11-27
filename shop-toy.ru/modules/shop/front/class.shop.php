@@ -14,7 +14,7 @@ class Shop extends db {
 	{
 		$query = "select brands.* from brands
 		inner join fw_products on brands.id=fw_products.brand_id
-		where fw_products.parent = '". intval($cat_id) ."' group by fw_products.brand_id";
+		where fw_products.parent = '". intval($cat_id) ."' group by fw_products.brand_id order by brands.name";
 		
 		$result = $this->db->get_all($query);
 		if ($result)
@@ -32,7 +32,7 @@ class Shop extends db {
 	{
 		$query = "select brands.id,brands.name from brands
 		left join fw_products on brands.id=fw_products.brand_id
-		where fw_products.status = '1' group by fw_products.brand_id";
+		where fw_products.status = '1' group by fw_products.brand_id order by brands.name";
 		$result = $this->db->get_all($query);
 		if ($result)
 		{
@@ -252,7 +252,7 @@ class Shop extends db {
 			$where = "";
 		}
 		$result = $this->db->get_all("SELECT * FROM fw_catalogue WHERE param_left BETWEEN '{$categor['param_left']}' 
-					and '{$categor['param_right']}' and status = '1' " . $where);
+					and '{$categor['param_right']}' and status = '1' " . $where." order by name ");
 		if ($result)
 		{
 			return $result;

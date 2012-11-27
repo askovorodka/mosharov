@@ -1,8 +1,18 @@
-<div class="txtd">
-<div class="contt">
-
-
-<h1>Оформление заказа</h1>
+{if $smarty.get.error}
+<center style="color:red;">
+	{if $smarty.get.error == 'error_email'}
+		Укажите правильный Email
+	{elseif $smarty.get.error == 'error_regemail'}
+		Такой Email уже зарегистрирован
+	{elseif $smarty.get.error == 'error_username'}
+		Укажите имя пользователя
+	{elseif $smarty.get.error == 'error_phone'}
+		Укажите полный телефон, с кодом города или оператора
+	{elseif $smarty.get.error == 'error_login'}
+		Неправильный логин или пароль
+	{/if}
+</center>
+{/if}
 <table class="zakaz">
       <tr>
         <td class="zakaznew">
@@ -43,7 +53,3 @@
         </td>
       </tr>
 </table>
-<p></p>
-<br><br>
-</div>
-</div>

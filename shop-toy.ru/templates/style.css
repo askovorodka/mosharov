@@ -773,7 +773,7 @@ h3 {
 	height:300px;
 	padding:2px 0 30px 20px !important;
 	line-height:22px;
-	background:left top url(/templates/img/line.gif) no-repeat;
+	/*background:left top url(/templates/img/line.gif) no-repeat;*/
 }
 .zakazold input {
 	width:225px;
