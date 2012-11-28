@@ -119,6 +119,7 @@ if (isset($_POST['submit_comment'])) {
 //Common::dumper($_SESSION['fw_basket']);
 if (!isset($_SESSION['fw_basket'])) $_SESSION['fw_basket']=array();
 
+
 SWITCH (TRUE) {
 
 	CASE (count($url) > 1 && $url[$n-1] == 'checkemail' && preg_match("/\?useremail=(.+)$/",$url[$n])):
@@ -1262,7 +1263,7 @@ SWITCH (TRUE) {
 
 							$navigation[]=array("url" => $product_content['id'],"title" => $product_content['name']);
 
-							unset($url[$n]);
+							//unset($url[$n]);
 
 							//print_r($navigation);
 							$template='product_details.html';
@@ -1276,6 +1277,7 @@ SWITCH (TRUE) {
 
 
 }
+
 
 
 ?>
