@@ -339,7 +339,7 @@ $(document).ready( function(){
 					
 					text:	{
 						required : "¬ведите комментарий"
-					},
+					}
 					
 				}
 			}
