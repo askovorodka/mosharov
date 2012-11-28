@@ -160,13 +160,20 @@ h1 {
 }
 h2 {
 	font-size:20px;
-	color:#000000;
+	color:#000;
 	font-weight:normal;
 }
 h3 {
 	font-size:16px;
-	color:#000000;
+	font-family: "junegullregular";
+	color:#000;
 	font-weight:normal;
+}
+.headerbold {
+	font-family: "junegullregular";
+	color:#fff;
+	font-weight:normal;
+	text-shadow: 0px -1px 0px rgba(0, 0, 0, .2);
 }
 /* MAIN - END */
 
@@ -417,6 +424,14 @@ h3 {
 	font-size:13px;
 	line-height:18px;
 }
+.maincolumnbask {
+	width:970px;
+	background:#fff;
+	border-radius:15px 15px 0px 0px;
+	padding:15px !important;
+	font-size:13px;
+	line-height:18px;
+}
 .aligncenter {
 	text-align:center;
 }
@@ -651,6 +666,9 @@ h3 {
 	padding-right:0 !important;
 	width:85px;
 }
+.basketimg img {
+	border-radius:10px !important;
+}
 .basketinf {
 	font-size:12px;
 	color:#000000;
@@ -670,13 +688,18 @@ h3 {
 	vertical-align:middle;
 }
 .basketi input {
-	width:40px;
-	height:22px;
+	width:30px;
+	height:24px;
+	background:#DEEBF4;
+	border:0;
+	border-radius:10px;
+	box-shadow: inset 0px 1px 3px rgba(0, 0, 0, .7);
+	vertical-align:middle;
+	line-height:24px;
+	padding:0 5px;
 	text-align:center;
-	line-height:22px;
-	font-size:14px;
-	color:#000000;
-	border:1px solid #197eb9;
+	font-size:13px;
+	color:#333;
 }
 .basketu {
 	font-size:12px;
@@ -690,7 +713,7 @@ h3 {
 }
 .itog {
 	font-size:20px;
-	color:#a3238e;
+	color:#57ADDF;
 }
 .basketbutton {
 	width:139px;
@@ -698,95 +721,135 @@ h3 {
 	margin-top:10px;
 }
 .zakaz {
-	width:680px;
+	width:970px;
+	background:#57ADDF;
+	border-radius:0px 0px 15px 15px;
+	border-top: 4px solid #DEEBF4;
+	padding:15px !important;
 	border-collapse:collapse;
-	font-size:12px;
-	margin:35px 0 70px 0;
+	font-size:13px;
 }
 .zakaznew {
-	width:340px;
-	padding:2px 20px 30px 0 !important;
-	line-height:22px;
+	width:600px;
+	line-height:24px;
+	color:#fff;
+	font-size:13px;
 }
 .zakaznew input {
-	width:225px;
-	height:23px;
-	border:1px solid #0472b2;
+	width:240px;
+	height:24px;
+	background:white;
+	border:0;
+	border-radius:10px;
+	box-shadow: inset 0px 1px 3px rgba(0, 0, 0, .7);
+	vertical-align:middle;
+	line-height:24px;
+	padding:0 10px;
+	text-align:left;
 	font-size:12px;
-	line-height:22px;
-	margin:0 6px 20px 0;
-	vertical-align:top;
+	color:#666;
+	margin:10px 5px 10px 0;
+}
+.zakaznewpwdi {
+	width:240px;
+	height:24px;
+	background:#FFDE00;
+	border:0;
+	border-radius:10px;
+	box-shadow: inset 0px 1px 3px rgba(0, 0, 0, .7);
+	vertical-align:middle;
+	line-height:24px;
+	padding:0 10px;
+	text-align:left;
+	font-size:12px;
+	color:#333;
+	margin:10px 5px 10px 0;
 }
 .zakaznew textarea {
-	width:225px;
-	height:90px;
-	border:1px solid #0472b2;
-	margin-right:6px;
+	width:240px;
+	height:120px;
+	background:white;
+	border:0;
+	border-radius:10px;
+	box-shadow: inset 0px 1px 3px rgba(0, 0, 0, .7);
+	vertical-align:top;
+	padding:0 10px;
+	text-align:left;
 	font-size:12px;
-	font-family:Tahoma, Geneva, sans-serif;
+	color:#666;
+	margin:10px 5px 10px 0;
 }
 .zakaznewdop {
 	border:1px solid #81b8d8 !important;
 }
-.zakaznewpwd {
-	background:#bbc95b;
-	width:100%;
-}
-.zakaznewpwd input {
-	width:205px;
-	margin:10px 6px 6px 20px;
-}
 .zakaznewpvdc {
-	display:inline-block;
-	padding-top:10px;
+	color:#FFDE00;
 	font-weight:bold;
 }
 .zakaznewpwdt {
 	font-size:11px;
 	line-height:16px;
-	margin-left:20px;
+	color:#FFDE00;
 }
 .zakazpol {
 	font-size:14px;
 	font-weight:bold;
 }
-.zakazradio {
+.zakazradiot {
+	margin-bottom:5px;
+}
+.zakazradiot input {
 	width:auto !important;
 	height:auto !important;
 	margin:0 0 0 0 !important;
 	border:0 !important;
+	vertical-align:middle;
 }
-.zakazradiot {
-	border:0px;
-	border-collapse:collapse;
-	margin-bottom:5px;
-	font-size:12px;
+.zakazradiot label {
+	width:auto !important;
+	height:auto !important;
+	margin:0 0 0 0 !important;
+	border:0 !important;
+	vertical-align:middle;
 }
-.zakazradiot td {
-	padding:0 3px 10px 0;
+.zakazradiot span {
+	color:#DEEBF4;
 }
 .zakazbut {
 	width:205px !important;
 	height:34px !important;
-	margin:20px 0 0 0 !important;
+	margin:20px 0 !important;
 	border:0 !important;
+	background:none !important;
+	border-radius:0px !important;
+	box-shadow:none !important;
 }
 .zakazold {
-	width:340px;
-	height:300px;
-	padding:2px 0 30px 20px !important;
-	line-height:22px;
-	/*background:left top url(/templates/img/line.gif) no-repeat;*/
+	width:330px;
+	line-height:24px;
+	color:#333;
+	font-size:13px;
+}
+.zakazold div {
+	padding:20px !important;
+	border-radius:10px 0px 0px 10px;
+	box-shadow: -1px 0px 3px rgba(0, 0, 0, .7);
+	background:#DEEBF4;
 }
 .zakazold input {
-	width:225px;
-	height:23px;
-	border:1px solid #0472b2;
-	background:#efefef;
+	width:200px;
+	height:24px;
+	background:white;
+	border:0;
+	border-radius:10px;
+	box-shadow: inset 0px 1px 3px rgba(0, 0, 0, .7);
+	vertical-align:middle;
+	line-height:24px;
+	padding:0 10px;
+	text-align:left;
 	font-size:12px;
-	line-height:22px;
-	margin:0 6px 20px 0;
-	vertical-align:top;
+	color:#666;
+	margin:10px 5px 10px 0;
 }
 .enterbut {
 	width:113px !important;
@@ -794,6 +857,8 @@ h3 {
 	float:left;
 	border:0 !important;
 	background:none !important;
+	border-radius:0px !important;
+	box-shadow:none !important;
 }
 .lostpwd {
 	margin-right:96px;
