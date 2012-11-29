@@ -132,7 +132,7 @@ label.error, #response_server	{color:red; font-size:11px;}
 body {
 	margin:0px;
 	padding:0px;
-	background: url(/templates/img/bg2.jpg) repeat;
+	background:#89e1f5 url(/templates/img/bg_top.jpg) repeat-x;
 	font-family:Tahoma, Geneva, sans-serif;
 	text-align:center;
 	color:#000000;
@@ -512,7 +512,6 @@ h3 {
 
 /* CATALOG */
 .cats {
-	width:730px;
 	margin:20px 0;
 	border-collapse:collapse;
 }
@@ -649,7 +648,7 @@ h3 {
 .baskettbl {
 	width:100%;
 	border-collapse:collapse;
-	margin:10px 0 70px 0;
+	margin:10px 0 20px 0;
 }
 .baskettbl td {
 	padding:5px;
@@ -725,16 +724,16 @@ h3 {
 	background:#57ADDF;
 	border-radius:0px 0px 15px 15px;
 	border-top: 4px solid #DEEBF4;
-	padding:15px !important;
 	border-collapse:collapse;
 	font-size:13px;
 	margin-top:-15px;
 }
 .zakaznew {
-	width:600px;
+	width:500px;
 	line-height:24px;
 	color:#fff;
 	font-size:13px;
+	padding:10px 20px 10px 100px !important;
 }
 .zakaznew input {
 	width:240px;
@@ -826,21 +825,19 @@ h3 {
 	box-shadow:none !important;
 }
 .zakazold {
-	width:330px;
+	width:500px;
 	line-height:24px;
-	color:#333;
+	color:#fff;
 	font-size:13px;
+	padding:10px 20px 10px 50px !important;
 }
-.zakazold div {
-	padding:20px !important;
-	border-radius:10px 0px 0px 10px;
-	box-shadow: -1px 0px 3px rgba(0, 0, 0, .7);
-	background:#DEEBF4;
+.zakazold .headerbold {
+  color:#DEEBF4;
 }
 .zakazold input {
-	width:200px;
+	width:240px;
 	height:24px;
-	background:white;
+	background:#DEEBF4;
 	border:0;
 	border-radius:10px;
 	box-shadow: inset 0px 1px 3px rgba(0, 0, 0, .7);
