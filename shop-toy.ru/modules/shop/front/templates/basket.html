@@ -1,6 +1,3 @@
-<div class="txtd">
-<div class="contt">
-
 <h1>Ваша корзина</h1>
 
 {if $basket}
@@ -30,13 +27,12 @@
   </tr>
 </table>
 </form>
-
-<center>{include file="../modules/shop/front/templates/register_form.html"}</center>
+</td>
+</tr>
+<tr>
+<td>
+{include file="../modules/shop/front/templates/register_form.html"}
 
 {else}
 <center>Ваша корзина пуста</center>
 {/if}
-    <p></p>
-<br><br>
-</div>
-</div>

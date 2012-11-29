@@ -721,13 +721,14 @@ h3 {
 	margin-top:10px;
 }
 .zakaz {
-	width:970px;
+	width:1000px;
 	background:#57ADDF;
 	border-radius:0px 0px 15px 15px;
 	border-top: 4px solid #DEEBF4;
 	padding:15px !important;
 	border-collapse:collapse;
 	font-size:13px;
+	margin-top:-15px;
 }
 .zakaznew {
 	width:600px;
