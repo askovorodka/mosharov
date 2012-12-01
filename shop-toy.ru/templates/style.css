@@ -436,6 +436,9 @@ h3 {
 .aligncenter {
 	text-align:center;
 }
+.contacts_form {
+  width:400px;
+}
 .contacts_form input {
 	width:240px;
 	height:24px;
@@ -466,6 +469,18 @@ h3 {
 	color:#666;
 	margin:10px 5px 10px 0;
 	overflow:hidden;
+}
+.cleft {
+  width:85px;
+  float:left;
+  height:24px;
+  margin:10px 5px 10px 0;
+  font-size:16px;
+	color:#000;
+	font-weight:normal;
+}
+.cright {
+  float:left;
 }
 .csubmit input {
   width:152px;
