@@ -436,6 +436,46 @@ h3 {
 .aligncenter {
 	text-align:center;
 }
+.contacts_form input {
+	width:240px;
+	height:24px;
+	background:white;
+	border:1px solid #57ADDF ;
+	border-radius:10px;
+	box-shadow: inset 0px 1px 3px rgba(0, 0, 0, .5);
+	vertical-align:middle;
+	line-height:24px;
+	padding:0 10px;
+	text-align:left;
+	font-size:13px;
+	color:#666;
+	margin:10px 5px 10px 0;
+}
+.contacts_form textarea {
+	width:240px;
+	height:90px;
+	background:white;
+	border:1px solid #57ADDF ;
+	border-radius:10px;
+	box-shadow: inset 0px 1px 3px rgba(0, 0, 0, .5);
+	vertical-align:top;
+	line-height:24px;
+	padding:0 10px;
+	text-align:left;
+	font-size:13px;
+	color:#666;
+	margin:10px 5px 10px 0;
+	overflow:hidden;
+}
+.csubmit input {
+  width:152px;
+	height:34px;
+	background:url(/templates/img/but_sender.png) 0 0 no-repeat;
+	border:0 !important;
+	box-shadow:none !important;
+	border-radius:0px !important;
+	font-size:0;
+}
 /* MIDDLE END */
 
 
@@ -779,6 +819,7 @@ h3 {
 	font-size:12px;
 	color:#666;
 	margin:10px 5px 10px 0;
+	overflow:hidden;
 }
 .zakaznewdop {
 	border:1px solid #81b8d8 !important;
@@ -805,6 +846,11 @@ h3 {
 	margin:0 0 0 0 !important;
 	border:0 !important;
 	vertical-align:middle;
+	background:none !important;
+	border-radius:0px !important;
+	box-shadow:none !important;
+	padding:0 !important;
+	
 }
 .zakazradiot label {
 	width:auto !important;
