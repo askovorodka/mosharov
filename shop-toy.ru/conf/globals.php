@@ -14,4 +14,6 @@
   
   define("TPL_PATH", ROOT . "templates/");
   define("TPL_SHOP_PATH", ROOT . "modules/shop/front/templates/");
+  define("TPL_PAGE_PATH", ROOT . "modules/page/front/templates/");
+  
 ?>

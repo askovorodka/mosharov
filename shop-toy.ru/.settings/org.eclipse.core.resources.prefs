@@ -1,4 +1,4 @@
-#Tue Nov 27 17:37:44 MSK 2012
+#Fri Nov 30 22:36:11 MSK 2012
 eclipse.preferences.version=1
 encoding//modules/cabinet/front/templates/cabinet_login.html=cp1251
 encoding//modules/cabinet/front/templates/cabinet_main.html=cp1251
@@ -7,6 +7,8 @@ encoding//modules/cabinet/front/templates/cabinet_orders.html=cp1251
 encoding//modules/cabinet/front/templates/cabinet_register_basket.html=cp1251
 encoding//modules/cabinet/front/templates/orders.html=cp1251
 encoding//modules/cabinet/front/templates/restore_pwd.html=cp1251
+encoding//modules/forms/templates/main.html=cp1251
+encoding//modules/page/front/templates/contacts.html=cp1251
 encoding//modules/shop/admin/templates/shop.a_cur_edit.html=cp1251
 encoding//modules/shop/admin/templates/shop.a_edit_product.html=cp1251
 encoding//modules/shop/admin/templates/shop.a_exclude_words.html=cp1251

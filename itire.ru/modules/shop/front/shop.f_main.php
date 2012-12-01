@@ -1197,9 +1197,21 @@ SWITCH (TRUE) {
 		}
 
 		if (!$page_found) {
+			
+			//если передаются доп. параметри GET убиваем их
+			if (!empty($url[$n]))
+			{
+				if (preg_match("/^\?(.*)/", $url[$n]))
+				{
+					unset($url[$n]);
+					--$n;
+				}
+			}
+			
+			
 
 			if (preg_match("/^([0-9]+)$/",$url[$n])) {
-
+				
 				$product_content = $shop->getProductInfo( intval($url[$n]) );
 				
 				//берем картинку из категории продукта
@@ -1334,7 +1346,7 @@ SWITCH (TRUE) {
 							$navigation[]=array("url" => $product_content['id'],"title" => $product_content['name']);
 
 
-		unset($url[$n]);
+							unset($url[$n]);
 					
 							$meta_keywords=html_entity_decode($product_content['dictionary']);
 							$meta_description=html_entity_decode($product_content['dictionary']);

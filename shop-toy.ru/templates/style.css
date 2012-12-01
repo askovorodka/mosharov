@@ -112,6 +112,7 @@ div.popImage	{border:1px solid #0070B1; z-index:50; position:absolute; display:n
 #loading-layer div	{font-weight:bold; color: #fff; background: url(/templates/img/loading.gif) 50% 100% no-repeat; height: 70px}
 
 label.error, #response_server	{color:red; font-size:11px;}
+label.error {display:block; margin:0px; padding:0px; line-height:5px;}
 
 
 /* ADD FONTS */

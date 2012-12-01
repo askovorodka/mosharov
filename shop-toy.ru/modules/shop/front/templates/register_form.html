@@ -1,5 +1,6 @@
 {if $smarty.get.error}
-<center style="color:red;">
+<center>
+<label class="error" style="font-size:13px;">
 	{if $smarty.get.error == 'error_email'}
 		Укажите правильный Email
 	{elseif $smarty.get.error == 'error_regemail'}
@@ -11,12 +12,12 @@
 	{elseif $smarty.get.error == 'error_login'}
 		Неправильный логин или пароль
 	{/if}
-</center>
+</label></center>
 {/if}
 <table class="zakaz">
       <tr>
         <td class="zakaznew">
-        <form action="/catalog/basket/submit/" method="post">
+        <form action="/catalog/basket/submit/" method="post" {if !$user}id="register_form"{/if}>
         <input type="hidden" name="submit_order" value="1" />
         {if !$user}
         <input type="hidden" name="submit_register" value="1" />
@@ -42,7 +43,7 @@
         {if !$user}
         <div>
         <h3 class="headerbold">Уже зарегистрированы?</h3>
-        <form action="/cabinet/login/" method="post">
+        <form action="/cabinet/login/" method="post" id="login_form">
         <input type="hidden" name="submit_login" value="1" />
         <input type="text" name="email">Email<br>
         <input type="password" name="password">Пароль<br>

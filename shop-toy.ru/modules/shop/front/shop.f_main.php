@@ -7,21 +7,6 @@ ini_set('display_errors','On');
 
 if ($switch_default=='on' or $main_module=='on') {
 	
-	/*$ages = $db->get_all("select age from fw_products where age > 0 group by age");
-	$smarty->assign('ages', $ages);
-	
-	$categories = $db->get_all("select id, name, param_level from fw_catalogue where status='1' and param_level between 1 and 2 order by param_left");
-	$smarty->assign('categories', $categories);
-	
-	$brands = $db->get_all("
-		select brands.id,brands.name 
-		from brands left join fw_products on brands.id=fw_products.brand_id 
-		where fw_products.status='1' 
-		group by fw_products.brand_id 
-		having count(fw_products.id) > 0
-		order by brands.name");
-	$smarty->assign('brands', $brands);*/
-	
 	$basket_number=0;
 	$basket_total=0;
 	for ($i=0;$i<count(@$_SESSION['fw_basket']);$i++) {
@@ -409,6 +394,11 @@ SWITCH (TRUE) {
 					if (!$users->get_errors())
 					{
 						$user = $users->register();
+						$smarty->assign('user', $user);
+						$smarty->assign('password', $_POST['password']);
+						$body=$smarty->fetch($templates_path.'/register_notice.txt');
+						Mail::send_mail($user['mail'],"Регистрация Shop-Toy.com <noreply@shop-toy.com>","Регистрация в интернет магазине",$body,'','html','standard','Windows-1251');
+						
 					}
 					else
 					{
@@ -543,12 +533,11 @@ SWITCH (TRUE) {
 
 				$body=$smarty->fetch($templates_path.'/order_notice.txt');
 
-				
-				Mail::send_mail($user['mail'],"Магазин игрушек ShopToy.com <orders@shop-toy.com>","Новый заказ в интернет магазине",$body,'','html','standard','Windows-1251');
+				Mail::send_mail($user['mail'],"Магазин игрушек Shop-Toy.com <orders@shop-toy.com>","Новый заказ в интернет магазине",$body,'','html','standard','Windows-1251');
 
 				$admin_body=$smarty->fetch($templates_path.'/admin_order_notice.txt');
 
-				Mail::send_mail("aschmitz@yandex.ru","Заказ ShopToy.com <".$user['mail'].">","Новый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
+				Mail::send_mail("aschmitz@yandex.ru","Заказ Shop-Toy.com <".$user['mail'].">","Новый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
 				
 				header("Location: /catalog/basket/final/");
 				die();
@@ -663,10 +652,12 @@ SWITCH (TRUE) {
 				$cat_url = urldecode($url[1]);
 				$category = $shop->get_category_by_url($cat_url);
 			}
-			/*if (!$category)
+			
+			
+			if (empty($category) && count($url) >= 2)
 			{
 				Common::_404();
-			}*/
+			}
 			
 			
 			
@@ -677,10 +668,17 @@ SWITCH (TRUE) {
 			if (!empty($category))
 			{
 				$categories = $shop->getChildrenCategor($category, 2);
-				foreach ($categories as $key=>$val)
+				if (!empty($categories))
 				{
-					$categories[$key]['full_url'] = $shop->getFullUrlCategory($val['id'],'catalog');
-					array_push($brands_list, $shop->get_brands_by_category($val['id']));
+					foreach ($categories as $key=>$val)
+					{
+						$categories[$key]['full_url'] = $shop->getFullUrlCategory($val['id'],'catalog');
+						array_push($brands_list, $shop->get_brands_by_category($val['id']));
+					}
+				}
+				else 
+				{
+					Common::_404();
 				}
 			}
 			
@@ -708,12 +706,15 @@ SWITCH (TRUE) {
 			
 			if (!empty($url[1]) && empty($url[2]))
 			{
-				foreach($categories as $cat)
+				if (!empty($categories))
 				{
-					$ids[] = $cat['id'];
+					foreach($categories as $cat)
+					{
+						$ids[] = $cat['id'];
+					}
+					$where[] = "parent in (" . implode(",", $ids) . ")";
+					$limit = " limit 100";
 				}
-				$where[] = "parent in (" . implode(",", $ids) . ")";
-				$limit = " limit 100";
 			}
 			
 			
@@ -763,6 +764,12 @@ SWITCH (TRUE) {
 			{
 				$where[] = "age <= " . intval($_GET['age_end']);
 				$smarty->assign('filter_age_end', intval($_GET['age_end']));
+			}
+			
+			if (!empty($_GET['search']))
+			{
+				$search = trim($_GET['search']);
+				$where[] = "name like '%{$search}%'";
 			}
 			
 			if (!empty($category))
@@ -851,378 +858,6 @@ SWITCH (TRUE) {
 		}
 		
 		
-		//$cat_list=Common::get_nodes_list($cl);
-		/*unset($url[0]);
-
-				if (isset($type) && $type!='all'){
-					$where =  " AND product_type=".$type." ";
-					$smarty->assign("prod_type",$type);
-				}
-				else{
-					$where = "";
-				}
-
-		$order='ORDER BY sort_order ASC';
-		if (!isset($page)) $page=1;
-		$dirs=array("price"=>"desc","insert_date"=>"desc","name"=>"desc");
-		*/
-		/*if (isset($_GET['page']) or isset($_GET['order'])) {
-
-			if (isset($_GET['page'])) $page=$_GET['page'];
-
-			if (isset($_GET['sort']))
-			{
-				
-				switch ($_GET['sort'])
-				{
-					case 'name':
-						$order = "order by name ";
-					break;
-					case 'article':
-						$order = "order by article ";
-					break;
-					case 'price':
-						$order = "order by price ";
-					break;
-					case 'tire_is':
-						$order = "order by tire_is ";
-					break;
-					case 'tire_width':
-						$order = "order by tire_width ";
-					break;
-					case 'tire_in':
-						$order = "order by tire_in ";
-					break;
-					case 'disk_width':
-						$order = "order by disk_width ";
-					break;
-					case 'disk_diameter':
-						$order = "order by disk_diameter ";
-					break;
-					case 'disk_krep':
-						$order = "order by disk_krep ";
-					break;
-					case 'disk_pcd':
-						$order = "order by disk_pcd ";
-					break;
-					
-					default:
-						$order = "order by sort_order ";
-					break;
-				}
-				
-				$smarty->assign('sort', $_GET['sort']);
-				$smarty->assign('order', $_GET['order']);
-				if ($_GET['order'] == 'asc')
-				{
-					$order .= " asc";
-				}
-				if ($_GET['order'] == 'desc')
-				{
-					$order .= " desc";
-				}
-				
-			}
-			
-			unset($url[$n]);
-			unset($current_url_pages[count($current_url_pages)-1]);
-		}
-		$smarty->assign("dir",$dirs);
-		*/
-
-		/*for ($f=0;$f<count($cat_list);$f++) {
-			$url_to_check=implode("/",$url).'/';
-			
-			if ($cat_list[$f]['full_url']==$url_to_check) {
-				
-				$cat_content=$cat_list[$f];
-				$page_found=true;
-				
-				//находим родителя уровня 1
-				/*if (!in_array($cat_content['id'], array(TIRES_ID, DISK_ID)))
-				{
-
-					$parent = $shop->getParent($cat_content);
-					
-				}
-				else 
-				{
-					$parent = $cat_content;
-				}
-				
-				if ($cat_content['param_level'] > 2)
-				{
-					$parent2 = $db->get_single("SELECT id FROM fw_catalogue WHERE param_left < '{$cat_content['param_left']}' and param_right > '{$cat_content['param_right']}' and param_level = '2'");
-				}
-				elseif ($cat_content['param_level'] == 2)
-				{
-					$parent2 = $cat_content;
-				}
-				
-				$smarty->assign('parent', $parent);
-				if (isset($parent2))
-				{
-					$smarty->assign('parent2', $parent2);
-				}*/
-				
-				
-	            //мегу тайтлы
-	            /*$parent_0 = $shop->getParent($cat_content);
-	            if ($parent_0)
-	            {
-	            	if ($parent_0['id'] == DISK_ID)
-	            	{
-	            		// тайлты для дисков
-	            		$title_template = DISK_TITLE_TEMPLATE;
-	            	}
-	            	elseif ($parent_0['id'] == TIRES_ID)
-	            	{
-	            		//тайтлы для шин
-	            		$title_template = TIRES_TITLE_TEMPLATE;
-	            	}
-	            	
-	            	$title_template = str_replace("{name}", $cat_content['title'], $title_template);
-	            	
-	            	//if ( preg_match_all( '/\[([^\]]*)\]/', $title_template, $matches ) )
-	            	if ( preg_match_all( '/\[([^\]]*)\]/', $title_template, $matches ) )
-	            	{
-						if (is_array($matches))
-						{
-							foreach ($matches as $key=>$val)
-							{
-								foreach ($matches[$key] as $key2=>$val2)
-								{
-									//почему-то повторяется два раза данные паттерн поэтому делаю еще одно условия
-									if (preg_match("/\[(.*)\]/", $matches[$key][$key2], $str) )
-									{
-										if (isset($str[1]))
-										{
-											$array = explode("|", $str[1]);
-											$random = rand(0, count($array)-1);
-											$word = $array[$random];
-											$title_template = str_replace($matches[$key][$key2], $word, $title_template);
-										}
-									}
-								}
-							}
-						}
-	            	}
-
-	            	//echo $title_template;
-
-	            }*/
-				
-				
-				
-				/*if ($cat_content['title']!='') $page_title=$cat_content['title'];
-				else if ($cat_content['name']!='/') $page_title=$cat_content['name'];*/
-				
-				/*if (isset($title_template)) $page_title=$title_template;
-				else if ($cat_content['name']!='/') $page_title=$cat_content['name'];
-				if ($cat_content['meta_keywords']!='') $meta_keywords=$cat_content['meta_keywords'];
-				if ($cat_content['meta_description']!='') $meta_description=$cat_content['meta_description'];*/
-				
-				/*$photo = new Photoalbum();
-				$cat_content['text']= $photo->pregReplace($cat_content['text'],BASE_PATH,PHOTOS_FOLDER,PHOTOS_PER_PAGE_SUP);
-				
-				$table = new Table();
-				$cat_content['text'] = $table->pregReplace($cat_content['text'],BASE_PATH);
-
-				$form = new Form();
-				$cat_content['text'] = $form->pregReplace($cat_content['text'],BASE_PATH);
-				*/
-				
-				//$text=$cat_content['text'];
-				//$smarty->assign("text",$text);
-				//$smarty->assign('cat_content', $cat_content);
-
-				//$result=$db->query("SELECT COUNT(*) FROM fw_products WHERE parent='".$cat_content['id']."' $where $order ");
-				//$pager=Common::pager($result,PRODUCTS_PER_PAGE_FRONT,$page);
-
-				//$smarty->assign("total_pages",$pager['total_pages']);
-				//$smarty->assign("current_page",$pager['current_page']);
-				//$smarty->assign("pages",$pager['pages']);
-
-
-		
-		//$cat_children_ids = array();
-		/*for ($c=0;$c<count($cat_list);$c++) {
-			//определяем дочернии категории каталога
-			if ($cat_list[$c]['param_left']>$cat_content['param_left'] && $cat_list[$c]['param_right']<$cat_content['param_right'] && $cat_list[$c]['param_level']==($cat_content['param_level'])+1) {
-				$cat_children_ids[] = $cat_list[$c]['id'];
-				if (isset($type)){
-    				$item=array();
-    				$item=$db->get_single("SELECT count(id) as count FROM fw_cats_types_relations WHERE cat_id='".(int)$cat_list[$c]['id']."' AND type_id='".$type."'");
-    				if (intval($item['count'])>0)
-    				{
-    					$cat_list[$c]['parent_id'] = $cat_content['id'];
-    					$folders_list[]=$cat_list[$c];
-    				}
-				}
-				else
-				{
-					$cat_list[$c]['parent_id'] = $cat_content['id'];
-					$folders_list[]=$cat_list[$c];
-				}
-			}
-			
-			//определяем родительскую категорию каталога
-			if ($cat_list[$c]['param_left'] < $cat_content['param_left'] && $cat_list[$c]['param_right'] > $cat_content['param_right'] && $cat_list[$c]['param_level'] == $cat_content['param_level']-1) {
-				$cat_parent_info = $cat_list[$c];
-				$smarty->assign('cat_parent_info', $cat_parent_info);
-			}
-		}*/
-		
-		/*if (isset($folders_list)) {
-          $done=0;
-          for ($c=0;$c<count($folders_list);$c++) {
-
-          	$folders_list[$c]['full_url'] = $shop->getFullUrlCategory($folders_list[$c]['id'], "catalog");
-          	$folders_list[$c]['products'] = $shop->getProductsByCategory($folders_list[$c]['id']);
-          	
-          	if (isset($folders_list[$c]['products']))
-          	{
-          		foreach ($folders_list[$c]['products'] as $key=>$val)
-          		{
-          			$folders_list[$c]['products'][$key]['full_url'] = $shop->getFullUrlProduct($folders_list[$c]['products'][$key]['id'], "catalog");
-          		}
-          	}
-          	
-            /*for ($d=0;$d<count($cat_list);$d++) {
-              if ($cat_list[$d]['param_left']>$folders_list[$c]['param_left'] && $cat_list[$d]['param_right']<$folders_list[$c]['param_right'] && $cat_list[$d]['param_level']==($folders_list[$c]['param_level']+1)) {
-              	
-   				if (isset($type)){
-   					$item2=array();
-   					$item2=$db->get_single("SELECT count(id) as count FROM fw_cats_types_relations WHERE cat_id='".(int)$cat_list[$d]['id']."' AND type_id='".$type."'");
-                	if (intval($item2['count'])>0)
-                		$folders_list[$c]['subfolders'][]=$cat_list[$d];
-        		}
-        		else
-        			$folders_list[$c]['subfolders'][]=$cat_list[$d];
-        		
-                $done++;
-                if ($done==8) break;
-              }
-            }*/
-
-            
-            
-            
-            
-          	//находим св-ва продукции категории
-			/*if ($cat_parent_info['id'] == DISK_ID)
-			{
-				$folders_list[$c]['properties'] = $shop->getProductsPropertiesDisk($folders_list[$c]['id']);
-			}
-			elseif ($cat_parent_info['id'] == TIRES_ID)
-			{
-				$folders_list[$c]['properties'] = $shop->getProductsPropertiesTires($folders_list[$c]['id']);
-			}*/
-
-			/*if ($cat_parent_info['param_level'] == 0)
-			{
-				$children_folders = $shop->getChildrenCategor($folders_list[$c], 3);
-				if ($children_folders)
-				{
-					$ids = array();
-					foreach ($children_folders as $val)
-					{
-						$ids[] = $val['id'];
-					}
-					$folders_list[$c]['properties'] = $shop->getProductsProperties($ids);
-				}
-				
-			}
-          	
-
-          }
-          //$smarty->assign("folders_list",$folders_list);
-        }*/
-
-        /*
-				$products_list=$db->get_all("
-				SELECT *,
-						(SELECT id FROM fw_products_images i WHERE i.parent=p.id ORDER BY sort_order ASC LIMIT 1) AS image,
-						(SELECT ext FROM fw_products_images WHERE parent=p.id ORDER BY insert_date DESC LIMIT 1) AS ext,
-						(SELECT name FROM fw_products_types WHERE id=p.product_type LIMIT 0,1) AS type_name,
-						(SELECT id FROM fw_products_types WHERE id=p.product_type LIMIT 0,1) AS type_id,
-						(SELECT
-							GROUP_CONCAT(CONCAT_WS('||#||',
-								cp.id,
-								cp.name,
-								cp.type,
-								cp.elements,
-								cp.status,
-								(SELECT value FROM fw_products_properties AS pp WHERE pp.product_id = p.id AND pp.property_id = cr.property_id LIMIT 1)
-							) ORDER BY cr.sort_order SEPARATOR '##|##')
-						FROM fw_catalogue_relations AS cr
-						LEFT JOIN fw_catalogue_properties AS cp ON cp.id=cr.property_id
-						WHERE cr.cat_id = p.parent) as properties
-					FROM fw_products AS p
-					WHERE
-						p.parent='".$cat_content['id']."'
-						AND
-						p.status='1' $where
-						$order "
-				);
-				
-
-				foreach ($products_list as $v => $key) {
-						$image = $db->get_single("select * from product_images where product_id='{$key['id']}' limit 1");
-						if (!empty($image))
-						{
-							$products_list[$v]['image'] = $image['image'];
-						}
-						$tmp=explode("##|##",$key['properties']);
-						$products_list[$v]['properties']=array();
-						foreach ($tmp as $val => $k) {
-							if (substr_count($k,"||#||")>0) {
-								$tmp2=explode("||#||",$k);
-								$products_list[$v]['properties'][]=$tmp2;
-								if (substr_count($products_list[$v]['properties'][$val][3],"\n")>0) $products_list[$v]['properties'][$val][3]=explode("\n",$products_list[$v]['properties'][$val][3]);
-							}
-						}
-						$products_list[$v]['full_url'] = $shop->getFullUrlProduct($products_list[$v]['id'], "catalog");
-				}
-        
-				
-				$smarty->assign("products_list",$products_list);
-
-				if ($cat_list[$f]['full_title']!='/') {
-					$nav_titles=explode("/",$cat_list[$f]['full_title']);
-
-					$nav_urls=explode("/",$cat_list[$f]['full_url']);
-					unset($nav_titles[count($nav_titles)-1]);
-					unset($nav_urls[count($nav_urls)-1]);
-					for ($l=0;$l<count($nav_titles);$l++) {
-						$navigation[]=array("url" => $nav_urls[$l],"title" => trim($nav_titles[$l]));
-					}
-				}
-				
-				//комменты
-				//$comments = $db->get_all("select * from fw_products_comments where product_id = '{$cat_content['id']}' order by insert_date desc");
-				//$smarty->assign("comments",$comments);
-				
-				$smarty->assign("cat_list",$cat_list);
-
-				switch($cat_content['param_level'])
-				{
-					case 1:
-						$template = "shop.f_filter_result.html";
-						break;
-					case 2:
-						$template = "shop.f_catalog_2.html";
-						break;
-					default:
-						$template = "shop.f_catalog_0.html";
-						break;
-				}
-				
-				//$template='shop.f_main.html';
-				break;
-			}
-		}*/
-
 		if (!$page_found) {
 
 			$product_id = intval($url[$n]);
@@ -1252,73 +887,6 @@ SWITCH (TRUE) {
 			
 			$template='product_details.html';
 			
-			/*if (preg_match("/^([0-9]+)$/",$url[$n])) {
-
-				$product_content = $shop->getProductInfo( intval($url[$n]) );
-				
-				if ($product_content['id']!='') {
-					for ($f=0;$f<count($cat_list);$f++) {
-						
-						$url_to_check=implode("/",$url).'/';
-						if ($cat_list[$f]['full_url']=='/') $cat_list[$f]['full_url']='';
-						if ($cat_list[$f]['full_url'].$product_content['id'].'/'==$url_to_check && $product_content['parent']==$cat_list[$f]['id']) {
-							
-							
-							foreach ($cat_list as $key=>$val)
-							{
-								if ($val['param_left'] < $cat_list[$f]['param_left'] && $val['param_right'] > $cat_list[$f]['param_right'] && $val['param_level'] == $cat_list[$f]['param_level']-1) {
-								$cat_parent_info = $val;
-								$smarty->assign('cat_parent_info', $cat_parent_info);
-								$smarty->assign('cat_content', $cat_list[$f]);
-								$cat_parent = $shop->getParent($cat_parent_info);
-								$smarty->assign('parent', $cat_parent);
-								}								
-							}
-							
-							$page_found=true;
-							
-							if ($product_content['title']!='') $page_title=$product_content['title'];
-							//if ($title_template) $page_title=$title_template;
-							else $page_title= 'Продукция ' . $product_content['name'];
-
-							if ($product_content['meta_keywords']!='') 
-								$meta_keywords=$product_content['meta_keywords'];
-							else
-								$meta_keywords=$page_title;
-							
-							if ($product_content['meta_description']!='') 
-								$meta_description=$product_content['meta_description'];
-							else 
-								$meta_description=$page_title;
-							
-							$smarty->assign("product",$product_content);
-							
-							$images = $shop->getProductImages($product_content['id']);
-							$smarty->assign("images",$images);
-							
-							$images = $db->get_all("SELECT * FROM product_images WHERE product_id='".$product_content['id']."'");
-							$smarty->assign('images', $images);
-
-
-							if ($cat_list[$f]['full_title']!='/') {
-								$nav_titles=explode("/",$cat_list[$f]['full_title']);
-								$nav_urls=explode("/",$cat_list[$f]['full_url']);
-								unset($nav_titles[count($nav_titles)-1]);
-								unset($nav_urls[count($nav_urls)-1]);
-								for ($l=0;$l<count($nav_titles);$l++) {
-									$navigation[]=array("url" => $nav_urls[$l],"title" => trim($nav_titles[$l]));
-								}
-							}
-							$navigation[]=array("url" => $product_content['id'],"title" => $product_content['name']);
-
-
-							unset($url[$n]);
-							
-							$template='product_details.html';
-						}
-					}
-				}
-			}*/
 		}
 }
 

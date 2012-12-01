@@ -69,7 +69,6 @@
 			xOffset = 10;
 			yOffset = 30;
 		$("a.preview").hover(function(e){
-			//this.t = this.title;
 			this.t = "";
 			this.title = "";	
 			var c = (this.t != "") ? "<br/>" + this.t : "";
@@ -90,7 +89,7 @@
 		});			
 	};
 
-	this.get_ajax_request = function(url)
+	this.get_ajax_request = function()
 	{
 		//основной урл с выбранной категорией
 		var url = $("div.filter").attr("url");
@@ -206,6 +205,11 @@
 	
 
 $(document).ready( function(){
+	
+	/*$("#search_back").click(function(){
+		get_ajax_request();
+		return false;
+	});*/
 
 	left_filter();
 	
@@ -215,7 +219,7 @@ $(document).ready( function(){
 	
 	list_orders();
 	
-	$(".rollover").hover(function(){
+	/*$(".rollover").hover(function(){
 		var image = $(this).attr("image");
 		if (image)
 			{
@@ -232,11 +236,11 @@ $(document).ready( function(){
 				$(".popImage").css({'left' : position.left, 'top' : (position.top-108)}).show();
 			
 			}
-	});
+	});*/
 	
-	$(".popImage").mouseleave(function(){
+	/*$(".popImage").mouseleave(function(){
 		$(".popImage").hide();
-	});
+	});*/
 	
 	
 	
@@ -269,37 +273,6 @@ $(document).ready( function(){
 	
 	$("#ImageLayout").click(function(){ $(this).hide(); });
 	
-	
-	
-	//ссылка показать/скрыть форму регистрации/логина
-	/*$("A#question").click(function(){
-		if ($(this).attr("register") == 1)
-		{
-			$("#login_user").fadeOut("fast");
-			$("#register_user").fadeIn("fast");
-			$(this).html("Вы уже зарегистрированны ?");
-			$(this).attr("register", "0");
-		}
-		else
-		{
-			$("#login_user").fadeIn("fast");
-			$("#register_user").fadeOut("fast");
-			$(this).html("Не зарегистрированны ?");
-			$(this).attr("register", "1");
-		}
-		return false;
-	});*/
-	
-	//левое меню, что-то вроде анимации
-	/*$("A.lmenuf:not(.static)").click( function(){
-		var submenu = $("DIV#subitem_" + $(this).attr("id"));
-		if ($(submenu).css("display") != "block" )
-		{
-			$("DIV.submenu").fadeOut().animate({opacity:.5}, 100);
-			$(submenu).animate({opacity:1},250).fadeIn("fast");
-		}
-		return false;
-	} );*/
 	
 	
 	//заказ продукта на отдельной странице
@@ -352,10 +325,67 @@ $(document).ready( function(){
 	);
 	
 	
+	
 	//заказ из списка продуктов в категории
+	var validator_login = $("FORM#login_form").validate(
+	{
+ 		
+		errorPlacement: function(error, element) {
+	    	error.insertBefore( element );
+   		},
+    	
+		rules:
+		{
+			email :	{required: true, email : true},
+			password : {required : true}
+		},
+		messages:
+		{
+			email:	{
+				required : "Введите email &darr;",
+				email : "Неверный формат email &darr;"
+			},
+			password : {
+				required : "Введите пароль &darr;"
+			}
+		}
+	}
+	);
+	
+	
+	var validator_register = $("FORM#register_form").validate(
+			{
+		 		
+				errorPlacement: function(error, element) {
+			    	error.insertBefore( element );
+		   		},
+		    	
+				rules:
+				{
+					name :	{required: true},
+					phone : {required : true},
+					email : {required : true, email: true}
+				},
+				messages:
+				{
+					name : {
+						required : "Введите ФИО &darr;"
+					},
+					
+					phone : {
+						required : "Введите телефон &darr;"
+					},
+
+					email:	{
+						required : "Введите email &darr;",
+						email : "Неверный формат email &darr;"
+					}
+				}
+			}
+			);
 	
 
-	var validator = $("FORM#RegisterForm").validate(
+	/*var validator = $("FORM#RegisterForm").validate(
 	{
  		
 		errorPlacement: function(error, element) {
@@ -391,10 +421,10 @@ $(document).ready( function(){
 			
 		}
 	}
-	);
+	);*/
 	
 
-	$("A#i_registered").click(function(){
+	/*$("A#i_registered").click(function(){
 		if ($("FORM#Registration").css('display') == 'block')
 		{
 			$("FORM#Registration").hide();
@@ -408,7 +438,7 @@ $(document).ready( function(){
 			$(this).html("Я уже зарегистрирован");
 		}
 		return false;
-	});
+	});*/
 	
 
 	

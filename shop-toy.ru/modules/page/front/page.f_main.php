@@ -3,7 +3,33 @@
 require_once 'lib/class.photoalbum.php';
 require_once 'lib/class.table.php';
 require_once 'lib/class.form.php';
+require_once 'lib/class.mail.php';
 
+
+if (isset($_POST) && isset($_POST['submit_contacts']))
+{
+	if (!empty($_POST['name']) && trim($_POST['name']) != "")
+		$name = trim($_POST['name']);
+		
+	if (!empty($_POST['contacts']) && trim($_POST['contacts']) != "")
+		$contacts = trim($_POST['contacts']);
+		
+	if (!empty($_POST['message']) && trim($_POST['message']) != "")
+		$message = trim($_POST['message']);
+		
+	if (!empty($name) && !empty($contacts) && !empty($message))
+	{
+		$smarty->assign('name', $name);
+		$smarty->assign('contacts', $contacts);
+		$smarty->assign('message', $message);
+		$body=$smarty->fetch($templates_path.'/contacts.txt');
+		Mail::send_mail("aschmitz@yandex.ru","Обратная связь Shop-Toy.com <orders@shop-toy.com>","Сообщение от пользователя",$body,'','html','standard','Windows-1251');
+	}
+	
+	header("Location: " . $_SERVER['HTTP_REFERER']);
+	die();
+	
+}
 
 $all_pages=$db->get_all("
 	SELECT
@@ -65,6 +91,9 @@ for ($f=0;$f<count($all_pages);$f++) {
 
 			$main_template=$page_content['template'];
 
+			$form = new Form();
+			$page_content['text'] = $form->pregReplace($page_content['text'],BASE_PATH);
+			
 			$smarty->assign("page_content",$page_content);
 			$navigation[count($navigation)-1]=array("url" => $main_page_content['url'],"title" => $page_content['name']);
 
@@ -126,14 +155,16 @@ for ($f=0;$f<count($all_pages);$f++) {
 			if (!isset($select_item)) {
 
 				$page_found=true;
-
+				
+				$form = new Form();
+				$page_content['text'] = $form->pregReplace($page_content['text'],BASE_PATH);
+				
 				if ($page_content['title']!='') $page_title=$page_content['title'];
 				else $page_title=$page_content['name'];
 				if ($page_content['meta_keywords']!='') $meta_keywords=$page_content['meta_keywords'];
 				if ($page_content['meta_description']!='') $meta_description=$page_content['meta_description'];
 
-
-                        $smarty->assign("content",$main_page_content['elements']);
+                $smarty->assign("content",$main_page_content['elements']);
 			}
 			else {
 				$document=$db->get_single("SELECT * FROM fw_documents WHERE id='".$select_item."' AND status='1'");
