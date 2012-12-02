@@ -18,6 +18,7 @@ if (isset($_POST['submit_add_banner'])) {
 	$name=String::secure_format($_POST['name']);
 	$group=String::secure_format($_POST['group']);
 	$url=String::secure_format($_POST['url']);
+	$code=$_POST['code'];
 	
 	$type=String::secure_format($_POST['type']);
 	$showings=String::secure_format($_POST['showings']);
@@ -63,7 +64,7 @@ if (isset($_POST['submit_add_banner'])) {
 
 	if ($check) {
 		
-		$result=$db->query("INSERT INTO fw_banners (name,`group`,target_url,type,showings,start_date,end_date,status,image) VALUES('$name','$group','$url','$type','$showings','$start_date','$end_date','$status','$ext')");
+		$result=$db->query("INSERT INTO fw_banners (name,`group`,target_url,type,showings,start_date,end_date,status,image,code) VALUES('$name','$group','$url','$type','$showings','$start_date','$end_date','$status','$ext','$code')");
 		
 		//echo "INSERT INTO fw_banners (name,`group`,target_url,type,showings,start_date,end_date,status,image) VALUES('$name','$group','$url','$type','$showings','$start_date','$end_date','$status','$ext')"; exit();
 		
@@ -129,8 +130,9 @@ if (isset($_POST['submit_edit_banner'])) {
 	$name=String::secure_format($_POST['name']);
 	$group=String::secure_format($_POST['group']);
 	$url=String::secure_format($_POST['url']);
-	
+	$code=$_POST['code'];
 	$type=String::secure_format($_POST['type']);
+	
 	$showings=String::secure_format($_POST['showings']);
 	
 	/*if ($_POST['start_date']!='' && $_POST['end_date']!='') {
@@ -188,8 +190,10 @@ if (isset($_POST['submit_edit_banner'])) {
 											status='$status',
 											start_date='$start_date',
 											end_date='$end_date',
-											image='$ext'
+											image='$ext',
+											code='$code'
 										WHERE id='$id'");
+		
 	
 		if (isset($file_name) && $file_name!='') {
 			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/banners/'.$id.'.'.$ext)) {

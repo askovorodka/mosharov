@@ -1,3 +1,7 @@
+label.message_ok
+{
+	color:green;
+}
 .shadow{
 opacity: 0.5;
 filter: alpha(Opacity=50);

@@ -22,11 +22,17 @@ if (isset($_POST) && isset($_POST['submit_contacts']))
 		$smarty->assign('name', $name);
 		$smarty->assign('contacts', $contacts);
 		$smarty->assign('message', $message);
+		$smarty->assign('dev_info', $_SERVER);
 		$body=$smarty->fetch($templates_path.'/contacts.txt');
 		Mail::send_mail("aschmitz@yandex.ru","Обратная связь Shop-Toy.com <orders@shop-toy.com>","Сообщение от пользователя",$body,'','html','standard','Windows-1251');
+		
+		$_SERVER['HTTP_REFERER'] = preg_replace("/\?(.*)/", "", $_SERVER['HTTP_REFERER']);
+		header("Location: " . $_SERVER['HTTP_REFERER'] . "?send_message=ok");
 	}
-	
-	header("Location: " . $_SERVER['HTTP_REFERER']);
+	else 
+	{
+		header("Location: " . $_SERVER['HTTP_REFERER']);
+	}
 	die();
 	
 }
@@ -70,6 +76,12 @@ if (preg_match("/^item_([0-9]+)$/",$url[$n],$a)) {
 	$select_item=intval($a[1]);
 	unset($url[$n]);
 	$n--;
+}
+
+if (preg_match("/^\?(.*)/", $url[$n]))
+{
+	unset($url[$n]);
+	--$n;
 }
 
 for ($f=0;$f<count($all_pages);$f++) {
@@ -127,7 +139,7 @@ for ($f=0;$f<count($all_pages);$f++) {
 					$limit
 				");
 
-				
+
 				if (count($documents_list)) {
 					$smarty->assign("documents_list",$documents_list);
 

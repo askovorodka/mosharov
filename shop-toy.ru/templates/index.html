@@ -41,8 +41,20 @@
 {include file="`$smarty.const.TPL_PATH`top_filter.html"}
 <!--------- /CATLIST --------->
 
+{capture name="banner1"}
+	{banners group="1"}
+{/capture}
 <!--------- MIDDLE --------->
 <table class="middle">
+
+{if trim($smarty.capture.banner1) != ""}
+<tr>
+	{if $product || $category || $brands}
+	<td></td>
+	{/if}
+	<td class="maincolumn" id="maincontent">{$smarty.capture.banner1}</td>
+</tr>
+{/if}
 
 <tr>
 {if $product || $category || $brands}

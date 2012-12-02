@@ -38,7 +38,8 @@ function check_form() {
 		</td>
 	</tr>
 	<tr>
-		<td width=20% valign=top class=td1_left><font color=red>*</font> Группа:</td><td class=td1_right>
+		<td width=20% valign=top class=td1_left><font color=red>*</font> Группа:</td>
+		<td class=td1_right>
 			<select name=group style="width:50%;" class=field>
 			{foreach from=$groups_list item=entry}
 				<option value="{$entry.id}" {if $banner.group==$entry.id}selected=true{/if}>{$entry.name}</option>
@@ -59,6 +60,7 @@ function check_form() {
 			<select name=type style="width:50%;" class=field>
 				<option value="0" {if $banner.type=='0'}selected=true{/if}>Картинка</option>
 				<option value="1" {if $banner.type=='1'}selected=true{/if}>Flash анимация</option>
+				<option value="2" {if $banner.type=='2'}selected=true{/if}>HTML код</option>
 			</select>
 		</td>
 	</tr>
@@ -68,25 +70,29 @@ function check_form() {
 		</td>
 		<td class=td1_right>
 			{if $banner.image!=''}
-			
-			{if $banner.type=='0'}
+			{if $banner.type=='0' || $banner.type == '2'}
 			<img src={$base_url}/uploaded_files/banners/{$banner.id}.{$banner.image}>
 			{else}
-			
 			<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" width="{$width}" height="{$height}">
 			<param name="movie" value="{$base_url}/uploaded_files/banners/{$banner.id}.{$banner.image}">
 			<param name="quality" value="high">
 			<param name="wmode" value="transparent">
 			<embed src="{$base_url}/uploaded_files/banners/{$banner.id}.{$banner.image}" wmode="transparent" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="{$width}" height="{$height}"></embed>
 			</object>
-			
 			{/if}
 			
 			
 			<br>
 			<input type=checkbox name=delete_image> Удалить баннер
 			<br><br>
-			{/if}<input type=file name=image style="width:50%" class=field>
+			{/if}
+			
+			{if $banner.type == '2'}
+			<textarea name="code" style="width:400px; height:100px;">{$banner.code}</textarea><br />
+			{/if}
+			
+			<input type=file name=image style="width:50%" class=field>
+			{if !$banner}<textarea name="code" style="width:400px; height:100px;"></textarea>{/if}
 		</td>
 	</tr>
 	<tr>
