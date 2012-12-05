@@ -769,7 +769,14 @@ SWITCH (TRUE) {
 			if (!empty($_GET['search']))
 			{
 				$search = trim($_GET['search']);
-				$where[] = "name like '%{$search}%'";
+				
+				$searchs = preg_replace("/\s/", ",", $search);
+				
+				$search_array = explode(",", $searchs);
+				
+				//$search_text = implode(" or ", $search_array);
+				
+				$where[] = "name like '{$search}%'";
 			}
 			
 			if (!empty($category))
