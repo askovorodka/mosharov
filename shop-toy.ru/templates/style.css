@@ -405,6 +405,19 @@ h3 {
 	height:100%;
 	background:#d9d9d9;
 }
+.bannerbrands {
+	width:970px;
+	border:0;
+	border-collapse: collapse;
+	margin-top:-20px;
+}
+.bannerbrands  td {
+	text-align:center;
+	vertical-align:middle;
+}
+.bannerbrands  td img{
+	margin:25px 0 5px 0;
+}
 /* /SPECIAL */
 
 
