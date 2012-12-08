@@ -773,10 +773,21 @@ SWITCH (TRUE) {
 				$searchs = preg_replace("/\s/", ",", $search);
 				
 				$search_array = explode(",", $searchs);
-				
-				//$search_text = implode(" or ", $search_array);
-				
-				$where[] = "name like '{$search}%'";
+
+				$search_txt = array();
+				foreach ($search_array as $item)
+				{
+					$search_txt[] = " name like '{$item}%' ";
+				}
+
+				if ($search_txt)
+				{
+					$where[] = "name like '{$search}%' or (".implode("or", $search_txt).")";
+				}
+				else 
+				{
+					$where[] = "name like '{$search}%'";
+				}
 			}
 			
 			if (!empty($category))
