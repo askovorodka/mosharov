@@ -41,6 +41,7 @@ require_once 'lib/class.photoalbum.php';
 require_once 'lib/class.table.php';
 require_once 'lib/class.form.php';
 require_once 'lib/class.users.php';
+require_once 'lib/sphinxapi.php';
 //require_once 'modules/shop/front/class.shop.php';
 
 $navigation[]=array("url" => $module_url,"title" => $node_content['name']);
@@ -766,28 +767,28 @@ SWITCH (TRUE) {
 				$smarty->assign('filter_age_end', intval($_GET['age_end']));
 			}
 			
+			//текстовый поиск
 			if (!empty($_GET['search']))
 			{
-				$search = trim($_GET['search']);
+				$search_string = trim($_GET['search']);
 				
-				$searchs = preg_replace("/\s/", ",", $search);
+				//поиск продуктов
+				$sphinx = new SphinxClient();
+				$sphinx->SetServer("localhost",3312);
+				$sphinx->SetMatchMode(SPH_MATCH_ANY);
+				$sphinx->SetSortMode(SPH_SORT_RELEVANCE);
+				$result = $sphinx->Query($search_string,'*');
 				
-				$search_array = explode(",", $searchs);
-
-				$search_txt = array();
-				foreach ($search_array as $item)
+				if (!empty($result['matches']))
 				{
-					$search_txt[] = " name like '{$item}%' ";
-				}
-
-				if ($search_txt)
-				{
-					$where[] = "name like '{$search}%' or (".implode("or", $search_txt).")";
+					$products_ids = array_keys($result['matches']);
+					$where[] = " fw_products.id in (" . implode(",", $products_ids) . ")";
 				}
 				else 
 				{
-					$where[] = "name like '{$search}%'";
+					$where[] = " fw_products.id < 0 ";
 				}
+				
 			}
 			
 			if (!empty($category))
