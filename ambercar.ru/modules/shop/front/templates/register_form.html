@@ -1,0 +1,56 @@
+{if $smarty.get.error}
+<center>
+<label class="error" style="font-size:13px;">
+	{if $smarty.get.error == 'error_email'}
+		Укажите правильный Email
+	{elseif $smarty.get.error == 'error_regemail'}
+		Такой Email уже зарегистрирован
+	{elseif $smarty.get.error == 'error_username'}
+		Укажите имя пользователя
+	{elseif $smarty.get.error == 'error_phone'}
+		Укажите полный телефон, с кодом города или оператора
+	{elseif $smarty.get.error == 'error_login'}
+		Неправильный логин или пароль
+	{/if}
+</label></center>
+{/if}
+<table class="zakaz">
+      <tr>
+        <td class="zakaznew">
+        <form action="/catalog/basket/submit/" method="post" {if !$user}id="register_form"{/if}>
+        <input type="hidden" name="submit_order" value="1" />
+        {if !$user}
+        <input type="hidden" name="submit_register" value="1" />
+        <h3 class="headerbold">Новый пользователь?</h3>
+        <input type="text" name="name">ФИО<br>
+        <input type="text" name="phone">Телефон<br>
+        <input type="text" name="email">Email<br>
+        <input type="password" name="password"><span class="zakaznewpvdc">Пароль</span><br><div class="zakaznewpwdt">Введите пароль, если хотите 
+зарегистрироваться!<br>Регистрация упрощает заказ и дает право на скидку.<br><br></div>
+		{/if}
+		<p class="zakazpol">Получение товара</p>
+		<div class="zakazradiot">
+		<input type="radio" class="zakazradio" name="dostavka" value="2" id="dost2" checked>
+        <label for="dost2">Доставка <span class="basketint">(стоимость - {$smarty.const.SHOP_DOSTAVKA_PRICE} р.)</span></label>
+        </div>
+        
+        <input type="text" name="address">Адрес<br>
+        <textarea name="comment"></textarea>Комментарий<br>
+        <input type="image" src="{$template_image}but_submit.png" class="zakazbut">
+        </form>
+        </td>
+        <td class="zakazold">
+        {if !$user}
+        <div>
+        <h3 class="headerbold">Уже зарегистрированы?</h3>
+        <form action="/cabinet/login/" method="post" id="login_form">
+        <input type="hidden" name="submit_login" value="1" />
+        <input type="text" name="email">Email<br>
+        <input type="password" name="password">Пароль<br>
+        <input type="image" src="{$template_image}but_enter.png" class="enterbut"> 
+        </form>
+        </div>
+        {/if}
+        </td>
+      </tr>
+</table>

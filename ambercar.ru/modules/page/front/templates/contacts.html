@@ -1,0 +1,11 @@
+<div class="contacts_form">
+	{if $smarty.get.send_message == "ok"}<label class="message_ok">Ваше сообщение отправлено. Спасибо.</label>{/if}
+	<form action="" method="post" class="contacts_form">
+		<input type="hidden" name="submit_contacts" value="1">
+		<div class="cleft">Ваше имя</div><div class="cright"><input type="text" name="name" value="" /></div>
+		<div class="cleft">Контакты</div><div class="cright"><input type="text" name="contacts" value="" /></div>
+		<div class="cleft">Сообщение</div><div></div>
+		<div class><textarea name="message"></textarea></div>
+		<div class="csubmit"><input type="submit" value="Отправить" /></div>
+	</form>
+</div>

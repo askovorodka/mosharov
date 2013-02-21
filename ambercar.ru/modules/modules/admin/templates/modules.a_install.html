@@ -1,0 +1,48 @@
+<center>
+
+<table width=100% class=content_table>
+<tr>
+<td>
+{if $step=='2'}
+<br>
+<b>Проверка и установка модуля:</b><br><br>
+<center>
+<table width=100% class=content_table>
+	<tr><th width=70%>Файл</th><th width=30%>Статус</th></tr>
+	{foreach from=$checked_files item=entry}
+	{if $col==1}
+	{assign var="td" value="td1"}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value="td2"}
+	{assign var="col" value=1}
+	{/if}
+			<td class={$td}_left>{$entry.file}</td>
+			<td align=center class={$td}_right>{if $entry.checked=='1'}<font color=green>В порядке</font>{else}<font color=red>Ошибка</font>{/if}</td>
+		</tr>
+	{/foreach}	
+	</table>
+</center>
+<br><br>
+<b>Вставка MySQL записей:</b> {if $sql_install=='1'}<font color=green>Успешно</font>{else}<font color=red>Ошибка</font>{/if}
+<br><br><br>
+{if $status=='failed'}Установка не выполнена{if $module_exists=='1'}, такой модуль уже существует{/if}!{else}Установка выполнена успешно!{/if}
+<br><br>
+{else}
+<center>
+<br>
+<form action="" method=get>
+<input type=hidden name=mod value=modules>
+<input type=hidden name=action value=install>
+<input type=hidden name=step value=2>
+Имя модуля: <input type=text name=module_name class=field style="width:250px;"><br><br><input type=submit value="Установить модуль" class=button>
+</form>
+<br>
+</center>
+{/if}
+</td>
+</tr>
+</table>
+
+
+</center>

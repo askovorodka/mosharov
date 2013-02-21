@@ -1,0 +1,60 @@
+{*
+Вас приветствует почтовый робот сайта {$site_url}
+
+В Вашем онлайн магазине появился новый заказ от {$date|date_format:"%d.%m.%Y в %T"}
+
+{$name} заказал {$number} товаров на сумму {$order_total} {$currency}, подробности смотрите в администраторской панели, раздел "Управление заказами".
+
+До скорых встреч!
+*}
+
+<p>В вашем онлайн магазине http://{$smarty.server.SERVER_NAME} сделан заказ</p>
+
+<p>Дата: {$date|date_format:"%d.%m.%Y в %T"}</p> 
+
+<p>Номер заказа: {$order_id}</p>
+
+<p>Имя пользователя: {$user.name}</p>
+
+<p>Email пользователя: {$user.mail}</p>
+<p>Телефон пользователя: {$user.tel}</p>
+
+
+<p>Пользователь заказал {$number} товаров на сумму {$order_total} {$currency}.</p> 
+
+<p>Способ доставки: {if $dostavka == 2}Доставка{else}Самовывоз{/if}</p>
+
+<p><b>Список заказанных товаров</b></p>
+
+<table cellpadding="3">
+<tr><th>№</th><th>Наименование</th><th>Количество</th><th>Стоимость за единицу</th><th>Сумма</th></tr>
+{foreach from=$products item=product name=for1}
+<tr><td>{$smarty.foreach.for1.iteration}</td>
+<td>{$product.details.name}
+{if $product.properties}<br><small>{foreach from=$product.properties item=pr key=key}{$key}:{$pr}<br />{/foreach}</small>{/if}
+</td>
+<td>{$product.count}</td>
+<td>{$product.details.price} руб.</td>
+<td>{$product.sum} руб.</td></tr>
+{/foreach}
+
+<tr>
+<td colspan="4" align="right">Стоимость доставки:</td>
+<td>{$order_price} руб.</td>
+</tr>
+
+<tr>
+<td colspan="4" align="right">Итого:</td>
+<td>{$total_sum} руб.</td>
+</tr>
+
+</table>
+
+<p>Адрес указанный при заказе: {$address}</p>
+
+
+<p>Комментарий пользователя: {$comment}</p>
+
+<p></p>
+<p>Список заказов в панели управления: {$base_url}/admin/index.php?mod=shop&action=orders</p>
+<p>Детализация данного заказа в панели управления: {$base_url}/admin/index.php?mod=shop&action=order_details&id={$order_id}</p>

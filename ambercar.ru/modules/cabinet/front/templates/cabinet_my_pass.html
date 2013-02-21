@@ -1,0 +1,38 @@
+{literal}
+
+<script language='JavaScript'>
+function validate(form){
+
+   try{
+
+     var goodEmail = form['email_user'].value.match(/\b(^([\.0-9a-zA-Z_-]+@[0-9a-zA-Z_\.-]+(\.[a-zA-Z]{2,4}){1,2})$)\b/gi);
+
+     if (!goodEmail){
+
+         alert('Неверный формат E-mail');
+
+         return false;
+
+       }
+     }
+
+     catch(e){alert(e.toString());}
+
+
+}
+</script>
+{/literal}
+<h1>Восстановление пароля</h1>
+{if $error_message}<font color=red>{$error_message}</font><br><br>{/if}
+<p><B>Внимание!</B> Электронная почта должна соответствовать регистрационным данным.</p>
+<form action="" method=post onSubmit="return validate(this);">
+<table width=100% cellspacing=1 cellpadding=3 class=text>
+
+<tr>
+<td width="180" nowrap="nowrap">Введите вашу электр. почту:</td>
+<td width="200"><input type=text name=email_user value="" style="width: 190px;"></td>
+<td><input type=submit name=submit_my_pass value="Выслать пароль" style="border: none; cursor: hand; cursor: pointer;"></td>
+</tr>
+
+</table>
+</form>

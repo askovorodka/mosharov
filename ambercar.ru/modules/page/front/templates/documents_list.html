@@ -1,0 +1,12 @@
+{if $documents_list}
+<ul>
+{foreach from=$documents_list item=page}
+	<li style="list-style-type:none; margin-left:0px; padding-left:0px;">
+			{if $page.image}<div style="float:left;"><img src="/images/img100x100/uploaded_files/documents_images/{$page.image}" /></div>{/if}
+			<div><strong><a href="{$base_url}/{$page_content.full_url}item_{$page.id}/" е >{$page.name|stripslashes}</a></strong></div>
+			<div>{$page.small_description}</div>
+			<div style="clear:both;"></div>
+	</li>
+{/foreach}
+</ul>
+{/if}

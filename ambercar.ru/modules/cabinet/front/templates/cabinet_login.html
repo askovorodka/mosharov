@@ -1,0 +1,26 @@
+<div class="txtd">
+<div class="contt">
+
+{*include file="`$smarty.const.TPL_PATH`breadcrumbs.html"*}
+
+<h1>Авторизация</h1>
+
+<center>{if $error_message}<font color=red>{$error_message}</font><br><br>{/if}</center>
+
+<table class="zakaz">
+      <tr>
+        <td class="zakazold" style="background:none;">
+        <form action="" method="post">
+        <input type="hidden" name="submit_login" value="1" />
+        <input type="text" name="email" value="{$email}">Email<br>
+        <input type="password" name="password" value="">Пароль<br>
+        <input type="image" src="{$template_image}but_enter.png" class="enterbut"> 
+        {*<a href="{$module_url}/restore/" class="lostpwd">Забыли пароль?</a>*}
+        </form>
+        </td>
+      </tr>
+</table>
+<p></p>
+<br><br>
+</div>
+</div>

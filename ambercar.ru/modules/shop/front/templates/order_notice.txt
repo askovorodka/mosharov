@@ -1,0 +1,55 @@
+
+<p>Добрый день, {$user.name}</p>
+
+<p>Вы сделали заказ на сайте http://{$smarty.server.SERVER_NAME}</p>
+
+<p>Дата: {$date|date_format:"%d.%m.%Y в %T"}</p> 
+
+<p>Номер вашего заказа: {$order_id}</p>
+
+<p>Вы заказали {$number} товаров на сумму {$order_total} {$currency}.</p> 
+
+{*<p>Историю ваших заказов смотрите на сайте {$site_url}/cabinet/orders/</p>*}
+
+<p>Способ доставки: {if $dostavka == 2}Доставка{else}Самовывоз{/if}</p>
+
+<p><b>Список заказанных товаров</b></p>
+
+<table>
+<tr><th>№</th><th>Наименование</th><th>Количество</th><th>Стоимость за единицу</th><th>Сумма</th></tr>
+{foreach from=$products item=product name=for1}
+<tr><td>{$smarty.foreach.for1.iteration}</td>
+<td>{$product.details.name}
+{if $product.properties}<br><small>{foreach from=$product.properties item=pr key=key}{$key}:{$pr}<br />{/foreach}</small>{/if}
+</td>
+<td>{$product.count}</td>
+<td>{$product.details.price} руб.</td>
+<td>{$product.sum} руб.</td></tr>
+{/foreach}
+
+<tr>
+<td colspan="4" align="right">Стоимость доставки:</td>
+<td>{$order_price} руб.</td>
+</tr>
+
+<tr>
+<td colspan="4" align="right">Итого:</td>
+<td>{$order_total} руб.</td>
+</tr>
+
+<tr>
+<td colspan="4" align="right">Итого, с учетом доставки:</td>
+<td>{$total_sum} руб.</td>
+</tr>
+
+</table>
+
+<p>Ваш адрес электронной почты: {$user.mail}</p>
+
+<p>Ваш телефон: {$user.tel}</p>
+
+<p>Адрес указанный вами при заказе: {$address}</p>
+
+<p>Ваш комментарий: {$comment}</p>
+
+До скорых встреч!

@@ -1,0 +1,188 @@
+{literal}
+<script language="JavaScript">
+function check_form() {
+	if ((document.edit_banner.name.value=='') ||
+		(document.edit_banner.url.value=='')) {
+		alert("Заполните, пожалуйста, обязательные поля");
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+</script>
+{/literal}
+
+{if $error_message}<center><font color=red>{$error_message}</font></center><br>{/if}
+
+<form action="" name=edit_banner method=POST enctype="multipart/form-data" onSubmit="return check_form();">
+
+{if $mode=="edit"}
+<input type=hidden name=id value={$banner.id}>
+<input type=hidden name=old_ext value={$banner.image}>
+{/if}
+
+<table width=100% class="content_table">
+	<tr>
+		<th>{if $mode=='edit'}Редактируем баннер{else}Добавить баннер{/if}</th>
+	</tr>
+</table>
+
+<table width=100% class="content_table">
+	<tr>
+		<td width=20% class=td1_left>
+			<font color=red>*</font> Название:
+		</td>
+		<td class=td1_right>
+			<input type=text name=name style="width:100%" value="{$banner.name}" class=field>
+		</td>
+	</tr>
+	<tr>
+		<td width=20% valign=top class=td1_left><font color=red>*</font> Группа:</td>
+		<td class=td1_right>
+			<select name=group style="width:50%;" class=field>
+			{foreach from=$groups_list item=entry}
+				<option value="{$entry.id}" {if $banner.group==$entry.id}selected=true{/if}>{$entry.name}</option>
+			{/foreach}
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td width=20% valign=top class=td1_left>&nbsp;
+			
+		</td>
+		<td class=td1_right>&nbsp;
+			
+		</td>
+	</tr>
+	<tr>
+		<td width=20% valign=top class=td1_left><font color=red>*</font> Тип:</td><td class=td1_right>
+			<select name=type style="width:50%;" class=field>
+				<option value="0" {if $banner.type=='0'}selected=true{/if}>Картинка</option>
+				<option value="1" {if $banner.type=='1'}selected=true{/if}>Flash анимация</option>
+				<option value="2" {if $banner.type=='2'}selected=true{/if}>HTML код</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td width=20% valign=top class=td1_left>
+			Баннер:
+		</td>
+		<td class=td1_right>
+			{if $banner.image!=''}
+			{if $banner.type=='0' || $banner.type == '2'}
+			<img src={$base_url}/uploaded_files/banners/{$banner.id}.{$banner.image}>
+			{else}
+			<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" width="{$width}" height="{$height}">
+			<param name="movie" value="{$base_url}/uploaded_files/banners/{$banner.id}.{$banner.image}">
+			<param name="quality" value="high">
+			<param name="wmode" value="transparent">
+			<embed src="{$base_url}/uploaded_files/banners/{$banner.id}.{$banner.image}" wmode="transparent" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="{$width}" height="{$height}"></embed>
+			</object>
+			{/if}
+			
+			
+			<br>
+			<input type=checkbox name=delete_image> Удалить баннер
+			<br><br>
+			{/if}
+			
+			{if $banner.type == '2'}
+			<textarea name="code" style="width:400px; height:100px;">{$banner.code}</textarea><br />
+			{/if}
+			
+			<input type=file name=image style="width:50%" class=field>
+			{if !$banner}<textarea name="code" style="width:400px; height:100px;"></textarea>{/if}
+		</td>
+	</tr>
+	<tr>
+		<td width=20% valign=top class=td1_left>
+			<font color=red>*</font> URL страницы:
+		</td>
+		<td class=td1_right>
+			<input type=text name=url style="width:100%" value="{$banner.target_url}" class=field>
+		</td>
+	</tr>
+	<tr>
+		<td width=20% valign=top class=td1_left>&nbsp;
+			
+		</td>
+		<td class=td1_right>&nbsp;
+			
+		</td>
+	</tr>
+	<tr>
+		<td width=20% valign=top class=td1_left>
+			&nbsp;&nbsp;Показывать, раз:
+		</td>
+		<td class=td1_right>
+			<input type=text name=showings style="width:50%" value="{$banner.showings}" class=field>{if $mode=="edit"} показано раз: {$banner.shown}{/if}
+		</td>
+	</tr>
+	<tr>
+		<td width=20% valign=top class=td1_left>
+			&nbsp;&nbsp;Время показа:
+		</td>
+		<td class=td1_right>
+
+			<table>
+				<tr><td>C</td><td>{html_select_date prefix='start_' start_year='2011' end_year='2021' time=$curdate}</td></tr>
+				<tr><td colspan="2" height="10"></td></tr>
+				<tr><td>По</td><td>{html_select_date prefix='end_' start_year='2011' end_year='2021' time=$curdate2}</td></tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td width=20% valign=top class=td1_left>&nbsp;</td>
+		<td class=td1_right>&nbsp;</td>
+	</tr>
+	
+	{if $mode=="edit"}
+	<tr>
+		<td width=20% valign=top class=td1_left>&nbsp;&nbsp;Кликов:</td><td class=td1_right>{$banner.clicks}</td>
+	</tr>
+	{/if}
+	
+	<tr>
+		<td width=20% valign=top class=td1_left>&nbsp;&nbsp;Статус:</td><td class=td1_right>
+			<select name=status style="width:50%;" class=field>
+				<option value="1">Активный</option>
+				<option value="0" {if $banner.status=='0'}selected=true{/if}>Ждёт</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td width=15% class=td1_left valign=top>Где показывать:</td>
+		<td class=td1_right>
+		<div style="height: 600px; width: 600px; overflow: auto;">
+			<input type="checkbox" name="checked_all_items" value="1" id="checked_all_items">
+			<label for="checked_all_items">Все</label>
+		
+			{assign var=urlslist value=$cat_checkboxes}
+			{assign var=fullurl value="/"}
+			{include file="../../modules/banners/admin/templates/banners.a_edit_banner_list.html"}
+		</div>
+		</td>
+	</tr>
+</table>
+<br>
+<center><input type=submit {if $mode=='edit'}name=submit_edit_banner value="Сохранить изменения"{else}name=submit_add_banner value="Добавить баннер"{/if}></center>
+
+</form>
+
+{literal}
+<SCRIPT language=JavaScript>
+<!--
+$("#checked_all_items").click(function(){
+	if ( $(this).attr("checked") )
+		{
+			$("input.checkbox_tree").attr("checked", "true");
+		}
+	else
+		{
+			$("input.checkbox_tree").removeAttr("checked");
+		}
+});
+-->
+</SCRIPT>
+{/literal}

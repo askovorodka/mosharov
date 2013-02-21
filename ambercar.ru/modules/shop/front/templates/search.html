@@ -1,0 +1,37 @@
+{include file="`$smarty.const.TPL_PATH`filter_green.html"}
+
+<div class="cat">
+<div class="contt">
+{include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
+
+<h1>Результаты поиска</h1>
+{if !empty($search_results)}
+<table class="cats">
+	{foreach from=$search_results item=product name=for2}
+	{if $smarty.foreach.for2.first}<tr>{/if}
+	
+    <td>
+    <div class="catitemin">
+    <a href="{$base_url}/{$product.full_url}/" title="{$product.name}"><img src="/images/img105x105{if !empty($product.image)}/uploaded_files/product_images/{$product.id}/{$product.image}{else}/templates/img/nophoto.jpg{/if}" alt="{$product.name}"></a>
+    <br>
+    <a href="{$base_url}/{$product.full_url}/" title="{$product.name}">{$product.name}</a>
+    <div class="cato"><span class="catcap">Артикул:</span> {$product.article}
+    {if $product.age > 0}<br><span class="catcap">Возраст:</span> от {$product.age|age_postfix}{/if}
+    <br><div class="catiteminp"><input type="hidden" id="product_count_{$product.id}" value="1" />
+    <input type="image" name="add_order" src="{$template_image}sub_button.jpg" class="catitemini" product_id="{$product.id}" title="Добавить в корзину"> {$product.price} р.
+    </div>
+    </div>
+    
+    </div>
+    
+    </td>
+    
+    {if $smarty.foreach.for2.iteration%4==0}</tr><tr><td colspan="4" class="catnone"></td></tr><tr>{/if}
+	{if $smarty.foreach.for2.last}</tr>{/if}
+	{/foreach}
+</table><br>
+{else}
+<center>Ничего не найдено.</center>
+{/if}
+</div>
+</div>

@@ -1,0 +1,38 @@
+<h1>Ваша корзина</h1>
+
+{if $basket}
+<form action="" method="post" id="basket_form">
+<input type="hidden" name="basket_recount" value="1" />
+<table class="baskettbl">
+  <tr>
+    <th>&nbsp;</th>
+    <th>Наименование</th>
+    <th>Цена</th>
+    <th>Кол-во</th>
+    <th>&nbsp;</th>
+  </tr>
+  {foreach from=$basket item=item}
+  <tr>
+    <td class="basketimg"><img src="/images/img80x80/{if $item.image}uploaded_files/product_images/{$item.id}/{$item.image}{else}templates/img/nophoto.jpg{/if}" width="80" height="80"></td>
+    <td class="basketinf"><a href="{$base_url}/{$item.full_url}/">{$item.name}</a>
+    <br><span class="catcap">Артикул:</span> {$item.article}</td>
+    <td class="basketprice">{$item.price_number} р.</td>
+    <td class="basketi"><input type="text" value="{$item.number}" name="edit_number[{$item.id}]" /></td>
+    <td class="basketu"><a href="{$module_url}/basket/delete/{$item.id}" onclick="return confirm('Удалить продукт из корзины');">Удалить товар</a></td>
+  </tr>
+  {/foreach}
+  <tr>
+    <td colspan="3" class="basketitog">Общая стоимость: <span class="itog">{$total_price} р.</span></td>
+    <td colspan="2">{*<a title="Оформить заказ" href="/catalog/basket/step1/"><img src="{$template_image}basket_button.png" class="basketbutton basketrecount" /></a>*}</td>
+  </tr>
+</table>
+</form>
+</td>
+</tr>
+<tr>
+<td>
+{include file="../modules/shop/front/templates/register_form.html"}
+
+{else}
+<center>Ваша корзина пуста</center>
+{/if}

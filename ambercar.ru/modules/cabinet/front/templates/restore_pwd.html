@@ -1,0 +1,22 @@
+<div class="txtd">
+<div class="contt">
+
+{include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
+
+<h1>Восстановление пароля</h1>
+
+<center><font color=red>{$error_message}</font></center>
+
+<table class="zakaz">
+      <tr>
+        <td class="zakazold" style="background:none;">
+        <form action="" method="post">
+        <input type="hidden" name="submit_restore" value="1" />
+        <input type="text" name="email" value="{$email}">Ваш Email<br>
+        <input type="image" src="{$template_image}comment_button.png" class="enterbut" style="width:103px;"> 
+        </form>
+        </td>
+      </tr>
+</table>
+
+</div></div>

@@ -1,0 +1,49 @@
+<div class="txtd">
+<div class="contt">
+
+{include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
+
+
+        <h1>История заказов</h1>
+		
+        {foreach from=$orders_list item=order}
+        <div style="margin-top:25px;">Заказ от {$order.insert_date|date_format:"%d.%m.%y"}</div>
+           <table width="100%" border="0">
+              <tr>
+                <td colspan="6"><div></div></td>
+              </tr>
+
+              <tr>
+                <th>№</th>
+                <th>Количество</th>
+                <th>Артикул</th>
+                <th>Наименование</th>
+                <th>Цена</th>
+                <th>Сумма</th>
+              </tr>
+              
+              
+              {foreach from=$order.products_list item=product name=products}
+              <tr>
+                <td>{$order.id}</td>
+                <td style="text-align:center;">{$product.product_count} шт.</td>
+                <td style="text-align:center;">{$product.article}</td>
+                <td style="width:270px;"><a href="{$base_url}/{$product.full_url}/">{$product.name}</a></td>
+                <td id="nw">{$product.price|format_number}&nbsp;руб.</td>
+                <td id="nw">{$product.total_price|format_number}&nbsp;руб.</td>
+              </tr>
+              {/foreach}
+              
+              <tr>
+                <td colspan="6"><div></div></td>
+              </tr>
+            </table>
+            <div id="tar2">
+            Итого: <span>{$order.total_price|format_number}</span> руб.<br>
+            Доставка: <span>{$order.order_price|format_number}</span> руб.<br>
+            Всего: <span>{$order.dostavka|format_number}</span> руб. <br>
+            Статус заказа: {$order.status|get_order_status}
+            </div>
+            {/foreach}
+
+</div></div>
