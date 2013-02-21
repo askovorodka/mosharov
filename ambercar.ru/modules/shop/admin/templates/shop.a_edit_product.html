@@ -46,7 +46,7 @@ if(document.getElementById(name).style.display!="none") {
 
 <table width=100% class=content_table>
 <tr>
-	<td width=15% class=td1_left>Раздел:</td>
+	<td width=15% class=td1_left>Марка/Модель:</td>
 	<td class=td1_right>
 		<select name=edit_parent class=field style="width:100%;">
 		{foreach from=$cat_list item=entry}
@@ -55,7 +55,7 @@ if(document.getElementById(name).style.display!="none") {
 		</select>	</td>
 </tr>
 <tr>
-	<td class=td1_left>Имя:</td><td class=td1_right><input type=text name=edit_name class=field style="width:100%;" value="{$product.name}"></td>
+	<td class=td1_left>Название товара:</td><td class=td1_right><input type=text name=edit_name class=field style="width:100%;" value="{$product.name}"></td>
 </tr>
 
 {if $mode=='edit'}
@@ -79,16 +79,21 @@ if(document.getElementById(name).style.display!="none") {
 {/if}
 
 <tr>
+  <td class=td1_left>Категория товара:</td>
+  <td class=td1_right>
+  <select name=edit_type style="width:100%;" class=field>
+    <option value="" {if $product.product_type==''}selected{/if}>--Выбрать--</option>
+    {foreach from=$types_list item=entry}
+      <option value={$entry.id}{if $entry.id==$product.product_type} selected=true{/if}>{$entry.name}</option>
+    {/foreach}
+  </select>  </td>
+</tr>
+
+
+<tr>
   <td class=td1_left style="border-bottom: none;">Цена:</td>
   <td class=td1_right style="border-bottom: none;">
   <input type=text name=edit_price class=field style="width:200px;" value="{$product.price}">&nbsp;&nbsp;{$currency_admin.znak}
-  </td>
-</tr>
-
-<tr>
-  <td class=td1_left style="border-bottom: none;">Новая цена (спецпредложение):</td>
-  <td class=td1_right style="border-bottom: none;">
-  <input type=text name=edit_price2 class=field style="width:200px;" value="{$product.price2}">&nbsp;&nbsp;{$currency_admin.znak}
   </td>
 </tr>
 
@@ -113,47 +118,10 @@ if(document.getElementById(name).style.display!="none") {
   </td>
 </tr>
 
-{*
-<tr>
-  <td class=td1_left style="border-bottom: none;">Пол:</td>
-  <td class=td1_right style="border-bottom: none;">
-  <select name="edit_sex"><option value="boy" {if $product.sex=='boy'}selected{/if}>Мальчик</option>
-  <option {if $product.sex=='girl'}selected{/if} value="girl">Девочка</option></select>
-  </td>
-</tr>
-*}
 
 <tr>
   <td class=td1_left style="border-bottom: none;">Спецпредложение:</td>
   <td class=td1_right style="border-bottom: none;"><input type=checkbox name=edit_hit {if $product.hit=='1'}checked{/if} id="hit"></td>
-</tr>
-
-<tr>
-  <td class=td1_left style="border-bottom: none;">Возраст:</td>
-  <td class=td1_right style="border-bottom: none;">
-	<select name="edit_age">
-    {section name=item loop=20 start=0 step=1}
-    <option value="{$smarty.section.item.index}" {if $product.age == $smarty.section.item.index}selected{/if}>{$smarty.section.item.index}</option>
-    {/section}
-    {*<option value="0" {if $product.age=='0'}selected{/if}>Менее года</option>
-    <option value="1" {if $product.age=='1'}selected{/if}>1 год</option>
-    <option value="2" {if $product.age=='2'}selected{/if}>2 года</option>
-    <option value="3" {if $product.age=='3'}selected{/if}>3</option>
-    <option value="4" {if $product.age=='4'}selected{/if}>4</option>
-    <option value="5" {if $product.age=='5'}selected{/if}>5</option>
-    <option value="6" {if $product.age=='6'}selected{/if}>6</option>
-    <option value="7" {if $product.age=='7'}selected{/if}>7</option>
-    <option value="8" {if $product.age=='8'}selected{/if}>8</option>
-    <option value="9" {if $product.age=='9'}selected{/if}>9</option>
-    <option value="10" {if $product.age=='10'}selected{/if}>10</option>
-    <option value="10" {if $product.age=='10'}selected{/if}>10</option>
-    <option value="10" {if $product.age=='10'}selected{/if}>10</option>
-    <option value="10" {if $product.age=='10'}selected{/if}>10</option>
-    <option value="10" {if $product.age=='10'}selected{/if}>10</option>
-    <option value="10" {if $product.age=='10'}selected{/if}>10</option>
-    <option value="10" {if $product.age=='10'}selected{/if}>10</option>*}
-	</select>
-  </td>
 </tr>
 
 <tr>

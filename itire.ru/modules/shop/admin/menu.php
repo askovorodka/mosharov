@@ -7,8 +7,9 @@ $sub='';
       "link"=>"?mod=shop&action=types"
      );
 */
+
 $sub[]= array(
-			"name"=>"Категории",
+			"name"=>"Категория",
 			"link"=>"?mod=shop&action=catalogue"
 	   );
 $sub[]= array(
