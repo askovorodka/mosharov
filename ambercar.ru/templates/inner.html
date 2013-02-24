@@ -1,0 +1,19 @@
+{include file="`$smarty.const.ROOT`templates/header_block.tpl"}
+
+<tr>
+    <td class="mainzone">
+    	{include file="`$smarty.const.ROOT`templates/subpages_block.tpl"}
+    	
+    	<div class="mainerinner">
+    		{include file="`$smarty.const.ROOT`templates/breadcrumbs.html"}
+			{if $content=='' or !$content}
+				{assign var="content" value=""}
+				{fetch file=$template assign="content"}
+			{/if}
+			{eval var=$content}
+    	
+    	</div>
+	</td>
+</tr>
+
+{include file="`$smarty.const.ROOT`/templates/footer_block.tpl"}
