@@ -17,7 +17,7 @@ $sub[]= array(
 	   );
 
 $sub[]= array(
-			"name"=>"Типы",
+			"name"=>"Категории товаров",
 			"link"=>"?mod=shop&action=types"
 	   );
 

@@ -636,7 +636,7 @@ if (isset($_POST['submit_add_product'])) {
 	//$sort_order=$db->get_single("SELECT MAX(sort_order) as max FROM fw_products WHERE parent='$parent'");
 	//$sort_order=$sort_order['max']+1;
 	$sort_order=0;
-  	//$type=($_POST['edit_type']!='')?intval($_POST['edit_type']):"NULL";
+  	$type=($_POST['edit_type']!='')?intval($_POST['edit_type']):0;
 
 
 	if ($name=='') $name='Новый продукт';
@@ -647,11 +647,11 @@ if (isset($_POST['submit_add_product'])) {
 		
 		article,parent,name,
 		title,price,price2,insert_date,
-		country,garant,age,description,sex) 
+		country,garant,age,description,sex,product_type) 
 		
 		VALUES(
 			'$article','$parent','$name','$title','$price','$price2',
-			'".time()."','$country','$garant','$age','$description','$sex'
+			'".time()."','$country','$garant','$age','$description','$sex','$type'
 		)");
 	
 	header("Location: ?mod=shop&action=edit_product&id=".mysql_insert_id());
@@ -680,6 +680,7 @@ if (isset($_POST['submit_edit_product'])) {
 	$garant=String::secure_format($_POST['edit_garant']);
 	//$sex=String::secure_format($_POST['edit_sex']);
 	$sex='';
+	$type=($_POST['edit_type']!='')?intval($_POST['edit_type']):0;
 	
 
 	$id=$_POST['id'];
@@ -706,7 +707,8 @@ if (isset($_POST['submit_edit_product'])) {
 			country='$country',
 			status='$status',
 			description='$description',
-			hit='$hit' 
+			hit='$hit',
+			product_type='$type'
 		WHERE id='$id'");
 	
 

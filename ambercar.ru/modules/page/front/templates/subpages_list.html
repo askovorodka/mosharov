@@ -1,10 +1,8 @@
 {if count($subpages_list)>0}
-<ul>
-	{foreach from=$subpages_list item=page name=for1}            
-    	<li class="subpages">
-    		<a href="{$base_url}/{$page.full_url}" class="black">{$page.name|stripslashes}</a>
-    		{if $page.text}{$page.text|truncate:"150"|stripslashes}{/if}
-    	</li>
-	{/foreach}
-</ul>
+        <div class="sidemenu">
+			{foreach from=$subpages_list item=page name=for1}            
+		    	<a href="{$base_url}/{$page.full_url}" class="black">{$page.name|stripslashes}</a><br>
+			{/foreach}
+        </div>
+        <br />
 {/if}

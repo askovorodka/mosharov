@@ -1,3 +1,34 @@
+{include file="`$smarty.const.ROOT`templates/header_block.tpl"}
+
+
+  <tr>
+    <td class="mainzone">
+    
+    <div class="mainer">
+        {include file="`$smarty.const.ROOT`templates/marks_block.tpl"}
+        <div>
+			{if $content=='' or !$content}
+				{assign var="content" value=""}
+				{fetch file=$template assign="content"}
+			{/if}
+			{eval var=$content}
+        </div>
+    </div>
+    
+    <div class="sidebarr">
+    	{include file="`$smarty.const.ROOT`/templates/callback_block.tpl"}
+    	{include file="`$smarty.const.ROOT`/templates/news_block.tpl"}
+    </div>
+    
+    </td>
+  </tr>
+
+
+{include file="`$smarty.const.ROOT`/templates/footer_block.tpl" home="true"}
+
+
+
+
 {*<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>

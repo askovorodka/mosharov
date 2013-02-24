@@ -647,18 +647,51 @@ SWITCH (TRUE) {
 				$n--;
 			}
 
-			//находим дочернии категории
-			if (!empty($url[1]))
+			if (count($url) == 1)
 			{
-				$cat_url = urldecode($url[1]);
-				$category = $shop->get_category_by_url($cat_url);
+				$categories = $shop->getCategories(1);
+				foreach ($categories as $key=>$val)
+				{
+					$categories[$key]['models'] = $shop->getChildrenCategor($val, 2);
+					if (isset($categories[$key]['models']))
+					{
+						foreach ($categories[$key]['models'] as $key2=>$val2)
+						{
+							$categories[$key]['models'][$key2]['full_url'] = $shop->getFullUrlCategory($val2['id'],'catalog');
+						}
+					}
+				}
+
+				$smarty->assign('marks', $categories);
+				$template = 'marks.tpl';
+			}
+			
+			$page_found = true;
+			//находим дочернии категории
+			if (count($url) == 3)
+			{
+				$mark_url = (string)$url[$n];
+				$model = $shop->get_category_by_url($mark_url);
+				if (!empty($model))
+				{
+					$types = $shop->get_products_types_by_category($model['id']);
+					$mark = $shop->getParent($model,1);
+					$smarty->assign('types', $types);
+					$smarty->assign('model', $model);
+					$smarty->assign('mark', $mark);
+					
+					$navigation[]=array("url" => $model['url'],"title" => $mark['name']." ".$model['name']);
+					$template = 'types.tpl';
+					
+				}
+				
 			}
 			
 			
-			if (empty($category) && count($url) >= 2)
+			/*if (empty($category) && count($url) >= 2)
 			{
 				Common::_404();
-			}
+			}*/
 			
 			
 			
@@ -666,7 +699,7 @@ SWITCH (TRUE) {
 			$brands = array();
 			
 			
-			if (!empty($category))
+			/*if (!empty($category))
 			{
 				$categories = $shop->getChildrenCategor($category, 2);
 				if (!empty($categories))
@@ -681,9 +714,9 @@ SWITCH (TRUE) {
 				{
 					Common::_404();
 				}
-			}
+			}*/
 			
-			if (count($brands_list) > 0)
+			/*if (count($brands_list) > 0)
 			{
 				
 				foreach ($brands_list as $key=>$val)
@@ -702,10 +735,10 @@ SWITCH (TRUE) {
 				
 				$limit = " limit 100 ";
 				$brands = $shop->get_brands();
-			}
+			}*/
 			
 			
-			if (!empty($url[1]) && empty($url[2]))
+			/*if (!empty($url[1]) && empty($url[2]))
 			{
 				if (!empty($categories))
 				{
@@ -716,10 +749,10 @@ SWITCH (TRUE) {
 					$where[] = "parent in (" . implode(",", $ids) . ")";
 					$limit = " limit 100";
 				}
-			}
+			}*/
 			
 			
-			if (!empty($_GET['categories']))
+			/*if (!empty($_GET['categories']))
 			{
 				$cats_filter = explode(",", $_GET['categories']);
 				$cats_filter = array_filter($cats_filter, "filter_array");
@@ -803,9 +836,9 @@ SWITCH (TRUE) {
 			{
 				$smarty->assign('categories', $categories);
 			}
+			*/
 			
-			
-			if (count($url) < 4)
+			/*if (count($url) < 4)
 			{
 				
 				$products = $db->get_all("select * from fw_products where " . implode(" and ", $where) . $limit);
@@ -836,8 +869,8 @@ SWITCH (TRUE) {
 					$template = "shop.f_filter_result.html";
 				}
 				
-			}
-			else
+			}*/
+			/*else
 			{
 				
 				//если отдельный продукт
@@ -871,7 +904,7 @@ SWITCH (TRUE) {
 				
 				$template='product_details.html';
 				
-			}
+			}*/
 			
 			
 		}

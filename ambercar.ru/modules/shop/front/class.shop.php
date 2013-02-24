@@ -267,7 +267,7 @@ class Shop extends db {
 	
 	function getCategories($param_level = 0)
 	{
-		$result = $this->db->get_all("select * from fw_catalogue where status='1' and param_level >= '{$param_level}' order by param_left");
+		$result = $this->db->get_all("select * from fw_catalogue where status='1' and param_level = '{$param_level}' order by param_left");
 		
 		if ($result)
 		{
@@ -457,7 +457,7 @@ class Shop extends db {
 	{
 		
 		$result = $this->db->get_all("
-				SELECT *,
+				SELECT p.*,
 						(SELECT id FROM fw_products_images i WHERE i.parent=p.id ORDER BY sort_order ASC LIMIT 1) AS image,
 						(SELECT ext FROM fw_products_images WHERE parent=p.id ORDER BY insert_date DESC LIMIT 1) AS ext
 					FROM fw_products AS p
@@ -474,6 +474,25 @@ class Shop extends db {
 		
 	}
 	
+	
+	function get_products_types_by_category($cat_id)
+	{
+		$result = $this->db->get_all(sprintf("select fw_products_types.* 
+		from fw_products 
+		inner join fw_products_types on fw_products.product_type = fw_products_types.id
+		where fw_products.parent='%d' and fw_products.status='1' group by fw_products_types.id 
+		order by fw_products_types.name asc", intval($cat_id)));
+		
+		if ($result)
+		{
+			return $result;
+		}
+		else 
+		{
+			return null;
+		}
+		
+	}
 	
 	
 	function getProductImages($product_id)
