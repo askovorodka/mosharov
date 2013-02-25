@@ -46,9 +46,9 @@ switch ($_GET['type'])
 		$height = 74;
 	break;
 
-	case 'img80x80':
-		$width = 80;
-		$height = 80;
+	case 'img82x62':
+		$width = 82;
+		$height = 62;
 	break;
 	
 	default:

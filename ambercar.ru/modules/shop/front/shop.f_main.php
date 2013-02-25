@@ -639,7 +639,6 @@ SWITCH (TRUE) {
 		if (!empty($url[$n]))
 		{
 			
-			
 			//если передаются параметры фильтра
 			if (preg_match("/^\?(.*)/", $url[$n]))
 			{
@@ -667,7 +666,7 @@ SWITCH (TRUE) {
 			}
 			
 			$page_found = true;
-			//находим дочернии категории
+			//находим дочернии категории список категорий товаров марки/модели
 			if (count($url) == 3)
 			{
 				$mark_url = (string)$url[$n];
@@ -685,6 +684,44 @@ SWITCH (TRUE) {
 					
 				}
 				
+			}
+			
+			if (count($url) == 4)
+			{
+				$type_id = intval($url[$n]);
+				$model_name = (string)urldecode($url[$n-1]);
+				$mark_name = (string)urldecode($url[$n-2]);
+				
+				$model = $shop->get_category_by_url($model_name);
+				$type = $shop->get_product_type($type_id);
+				$mark = $shop->get_category_by_url($mark_name);
+				
+				if (!empty($model) and !empty($type_id))
+				{
+					$products = $shop->get_products_by_category_and_type($model['id'], $type_id);
+					
+					if (count($products))
+					{
+						foreach ($products as $key=>$val)
+						{
+							$products[$key]['full_url'] = $shop->getFullUrlProduct($val['id'],'catalog');
+							$products[$key]['image'] = $shop->getProductImage($val['id']);
+						}
+						
+						$smarty->assign('products', $products);
+						
+					}
+				}
+				
+				$navigation[]=array("url" => $mark_name . '/' . $model_name,"title" => $mark['name']." ".$model['name']);
+				
+				$navigation[]=array("url" => null,"title" => $type['name']);
+				
+				$smarty->assign('model', $model);
+				$smarty->assign('mark', $mark);
+				$smarty->assign('type', $type);
+				
+				$template = 'products.tpl';
 			}
 			
 			

@@ -617,24 +617,16 @@ if (isset($_POST['submit_add_product'])) {
 	$parent=$_POST['edit_parent'];
 	$name=String::secure_format($_POST['edit_name']);
 	$title=String::secure_format($_POST['edit_title']);
-	//$site_url=$_POST['edit_site_url'];
-	//$small_description=String::secure_format($_POST['edit_small_description']);
-	//$description=String::secure_format($_POST['edit_description']);
 	$price=String::secure_format($_POST['edit_price']);
 	$price2=String::secure_format($_POST['edit_price2']);
-	//$price1=String::secure_format($_POST['edit_price1']);
-	//$price2=String::secure_format($_POST['edit_price2']);
-	//$guarantie=String::secure_format($_POST['edit_guarantie']);
 	$article=String::secure_format($_POST['edit_article']);
 	$country=String::secure_format($_POST['edit_country']);
 	$garant=String::secure_format($_POST['edit_garant']);
 	$age=String::secure_format($_POST['edit_age']);
 	$description=String::secure_format($_POST['edit_description']);
-	//$sex=String::secure_format($_POST['edit_sex']);
+	$sklad=$_POST['edit_sklad'];
 	$sex='';
 	
-	//$sort_order=$db->get_single("SELECT MAX(sort_order) as max FROM fw_products WHERE parent='$parent'");
-	//$sort_order=$sort_order['max']+1;
 	$sort_order=0;
   	$type=($_POST['edit_type']!='')?intval($_POST['edit_type']):0;
 
@@ -647,11 +639,11 @@ if (isset($_POST['submit_add_product'])) {
 		
 		article,parent,name,
 		title,price,price2,insert_date,
-		country,garant,age,description,sex,product_type) 
+		country,garant,age,description,sex,product_type,sklad) 
 		
 		VALUES(
 			'$article','$parent','$name','$title','$price','$price2',
-			'".time()."','$country','$garant','$age','$description','$sex','$type'
+			'".time()."','$country','$garant','$age','$description','$sex','$type','$sklad'
 		)");
 	
 	header("Location: ?mod=shop&action=edit_product&id=".mysql_insert_id());
@@ -678,7 +670,8 @@ if (isset($_POST['submit_edit_product'])) {
 	$age=String::secure_format($_POST['edit_age']);
 	$country=String::secure_format($_POST['edit_country']);
 	$garant=String::secure_format($_POST['edit_garant']);
-	//$sex=String::secure_format($_POST['edit_sex']);
+	$sklad = $_POST['edit_sklad'];
+	
 	$sex='';
 	$type=($_POST['edit_type']!='')?intval($_POST['edit_type']):0;
 	
@@ -708,7 +701,8 @@ if (isset($_POST['submit_edit_product'])) {
 			status='$status',
 			description='$description',
 			hit='$hit',
-			product_type='$type'
+			product_type='$type',
+			sklad='$sklad'
 		WHERE id='$id'");
 	
 

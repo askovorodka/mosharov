@@ -5,12 +5,12 @@ RewriteEngine on
 Options +FollowSymlinks
 RewriteBase /
 
-RewriteCond %{HTTP_HOST} ^www.shop-toy.com$ [NC]
-RewriteRule ^(.*)$ http://shop-toy.com/$1 [R=301,L]
+RewriteCond %{HTTP_HOST} ^www.ambercar.mosharov.com$ [NC]
+RewriteRule ^(.*)$ http://ambercar.mosharov.com/$1 [R=301,L]
 
 RewriteCond %{REQUEST_URI} ^/home$ [OR]
 RewriteCond %{REQUEST_URI} ^/home/$ [NC]
-RewriteRule ^(.*)$ http://shop-toy.com/ [R=301,L]
+RewriteRule ^(.*)$ http://ambercar.mosharov.com/ [R=301,L]
 
 #RewriteRule     ^(.*)/video/(.*)$			/video/$2	[L]
 #RewriteRule     ^(.*)/insertfiles/(.*)$	/insertfiles/$2	[L]
@@ -26,6 +26,8 @@ RewriteRule     ^images/([^/]+)/(.*)$		/images.php?type=$1&image=$2	[L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+
+#RewriteRule     ^catalog/(.*)/(.*)/([0-9]-[0-9].html)$		/images.php?type=$1&image=$2	[L]
 
 
 #RewriteRule [^\.xml][^\/]$ %{REQUEST_URI}/ [R,L]

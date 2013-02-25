@@ -9,6 +9,38 @@ class Shop extends db {
 		$this->db = &$db;
 	}
 	
+	function get_product_type($type_id)
+	{
+		$result = $this->db->get_single("select * from fw_products_types where id = '$type_id'");
+		
+		if ($result)
+		{
+			return $result;
+		}
+		else 
+		{
+			return null;
+		}
+		
+	}
+	
+	function get_products_by_category_and_type($parent_id, $type_id)
+	{
+		
+		$result = $this->db->get_all(sprintf("select fw_products.* 
+		from fw_products 
+		where fw_products.parent='%d' and fw_products.product_type='%d' and fw_products.status='1'", intval($parent_id), intval($type_id)));
+		
+		if ($result)
+		{
+			return $result;
+		}
+		else 
+		{
+			return null;
+		}
+		
+	}
 	
 	function get_brands_by_category($cat_id)
 	{
@@ -515,7 +547,10 @@ class Shop extends db {
 	function getProductImage($product_id)
 	{
 		
-		$result = $this->db->get_single("select image from product_images where product_id = '{$product_id}' limit 1 ");
+		//$result = $this->db->get_single("select image from product_images where product_id = '{$product_id}' limit 1 ");
+		$result = $this->db->get_single("select concat(id,'.',ext) as image 
+		from fw_products_images 
+		where parent = '{$product_id}' order by sort_order asc limit 1 ");
 		
 		if ($result)
 		{
