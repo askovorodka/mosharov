@@ -530,7 +530,7 @@ class Shop extends db {
 	function getProductImages($product_id)
 	{
 		
-		$result = $this->db->get_all("select * from product_images where product_id='{$product_id}' ");
+		$result = $this->db->get_all("select concat(id,'.',ext) as image from fw_products_images where parent='{$product_id}' order by sort_order asc ");
 		
 		if ($result)
 		{

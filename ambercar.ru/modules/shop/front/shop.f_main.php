@@ -714,7 +714,6 @@ SWITCH (TRUE) {
 				}
 				
 				$navigation[]=array("url" => $mark_name . '/' . $model_name,"title" => $mark['name']." ".$model['name']);
-				
 				$navigation[]=array("url" => null,"title" => $type['name']);
 				
 				$smarty->assign('model', $model);
@@ -722,6 +721,33 @@ SWITCH (TRUE) {
 				$smarty->assign('type', $type);
 				
 				$template = 'products.tpl';
+			}
+			
+			if (count($url) == 5)
+			{
+				
+				$type_id = intval($url[$n]);
+				$product_id = intval($url[$n-1]);
+				$model_name = (string)urldecode($url[$n-2]);
+				$mark_name = (string)urldecode($url[$n-3]);
+				
+				$model = $shop->get_category_by_url($model_name);
+				$type = $shop->get_product_type($type_id);
+				$mark = $shop->get_category_by_url($mark_name);
+				$product = $shop->getProductInfo($product_id);
+				$images = $shop->getProductImages($product_id);
+
+				$navigation[]=array("url" => $mark_name . '/' . $model_name,"title" => $mark['name']." ".$model['name']);
+				$navigation[]=array("url" => $type['id'],"title" => $type['name']);
+				$navigation[]=array("url" => $product['id'],"title" => $product['name']);
+				
+				$smarty->assign('model', $model);
+				$smarty->assign('mark', $mark);
+				$smarty->assign('type', $type);
+				$smarty->assign('product', $product);
+				$smarty->assign('images', $images);
+				
+				$template = 'product.tpl';
 			}
 			
 			
