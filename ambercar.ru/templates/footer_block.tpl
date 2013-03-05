@@ -18,6 +18,7 @@
         <br /></div>
         </div>
     	<div class="botform{if !$home}inner{/if}">
+    	<form action="" id="question">
         ОТВЕТИМ НА ЛЮБЫЕ ВОПРОСЫ!<br />
         {if !$home}
         <input type="text" name="name" id="name" /> <label for="name">Имя</label><br />
@@ -26,8 +27,9 @@
         <label for="name">Имя: </label><input type="text" name="name" id="name" /><br />
         <label for="contacts">Контакты: </label><input type="text" name="contacts" id="contacts" /><br />
         {/if}
-        <textarea>Текст сообщения</textarea><br />
+        <textarea name="text">Текст сообщения</textarea><br />
         <input type="image" src="/templates/img/but_send.png" class="botformbut" />
+        </form>
     	</div>
     	
     	

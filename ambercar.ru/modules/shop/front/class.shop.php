@@ -146,6 +146,21 @@ class Shop extends db {
 		
 	}
 
+	function search_product($text)
+	{
+		$result = $this->db->get_all("select fw_products.*, model.name as model_name, mark.name as mark_name
+		from fw_products
+		left join fw_catalogue as model on fw_products.parent = model.id 
+		left join fw_catalogue as mark on model.param_left > mark.param_left and model.param_right < mark.param_right and mark.param_level = 1
+		where (fw_products.name like '%{$text}%' or model.name like '%{$text}%' or mark.name like '%{$text}%')
+		and fw_products.status = '1'  ");
+		
+		if (!empty($result))
+			return $result;
+			
+		return null;
+		
+	}
 	
 	function search($where, $pager, $sort_field = "date", $sort_order = "desc")
 	{

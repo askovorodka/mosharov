@@ -144,7 +144,10 @@ function check_form() {
 </td>
 </tr>
 <tr>
-<td width=20% valign=top class=td1_left>&nbsp;&nbsp;Картинка:</td><td class=td1_right>{if $mode=='edit' and $news.image!=''}<img src={$base_url}/uploaded_files/news/{$news.image}><br><input type=checkbox name=delete_image> Удалить картинку<br><br>{/if}<input type=file name=edit_news_image style="width:50%" class=field></td>
+<td width=20% valign=top class=td1_left>&nbsp;&nbsp;Картинка:</td>
+<td class=td1_right>{if $mode=='edit' and $news.image!=''}<img src={$base_url}/images/img100x100/uploaded_files/news/{$news.image}>
+<br><input type=checkbox name=delete_image> Удалить картинку<br><br>{/if}
+<input type=file name=edit_news_image style="width:50%" class=field></td>
 </tr>
 
 {if $mode=='edit'}

@@ -258,6 +258,9 @@ foreach ($main_menu as $key=>$val)
 }
 $smarty->assign("main_menu",$main_menu);
 
+$news=$db->get_all("SELECT * FROM fw_news WHERE status='1' ORDER BY publish_date DESC limit 3");
+$smarty->assign("news_list",$news);
+
 
 $shop_menu=$db->get_all("
 	SELECT * 

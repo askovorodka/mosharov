@@ -642,11 +642,34 @@ SWITCH (TRUE) {
 			//если передаются параметры фильтра
 			if (preg_match("/^\?(.*)/", $url[$n]))
 			{
+				if (preg_match("/^\?search_product=(.*)$/", urldecode($url[$n]), $matches))
+				{
+					
+					$search = trim(htmlspecialchars($matches[1]));
+					
+					if (trim($search) != "")
+						$products = $shop->search_product((string)$search);
+						
+					if (!empty($products))
+					{
+							foreach ($products as $key=>$val)
+							{
+								$products[$key]['full_url'] = $shop->getFullUrlProduct($val['id'],'catalog');
+								$products[$key]['image'] = $shop->getProductImage($val['id']);
+							}
+							$smarty->assign('products', $products);
+					}
+						
+					
+					
+					$smarty->assign('search', $search);
+					
+					$template = 'search.tpl';
+				}
 				unset($url[$n]);
 				$n--;
 			}
-
-			if (count($url) == 1)
+			elseif (count($url) == 1)
 			{
 				$categories = $shop->getCategories(1);
 				foreach ($categories as $key=>$val)

@@ -16,7 +16,7 @@
 <table class="maintable">
   <tr>
     <td class="toper">
-    	<div class="search"><input type="text" /><br />Ищу - <u>VIN</u>, <u>Frame</u>, <u>Наименование</u></div>
+    	<div class="search"><form action="{$base_url}/catalog/"><input type="text" name="search_product" value="{$search}" /><br />Ищу - <u>VIN</u>, <u>Frame</u>, <u>Наименование</u></form></div>
     	<div class="tel"><strong>С 9:00 до 20:00</strong><div class="phonenumber">+7 (926) 612-17-19</div>Москва, ул. Аллея Первой Маевки, д. 15</div>
     </td>
   </tr>

@@ -70,8 +70,8 @@ if (isset($_POST['submit_add_news'])) {
 				$id=mysql_insert_id();
 				if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/news/'.$id.'.'.$ext)) {
 					chmod(BASE_PATH.'/uploaded_files/news/'.$id.'.'.$ext, 0644);
-					Image::image_resize(BASE_PATH.'/uploaded_files/news/'.$id.'.'.$ext,BASE_PATH.'/uploaded_files/news/resized-'.$id.'.'.$ext,NEWS_IMAGE_WIDTH,NEWS_IMAGE_WIDTH);
-					unlink(BASE_PATH.'/uploaded_files/news/'.$id.'.'.$ext);
+					//Image::image_resize(BASE_PATH.'/uploaded_files/news/'.$id.'.'.$ext,BASE_PATH.'/uploaded_files/news/resized-'.$id.'.'.$ext,NEWS_IMAGE_WIDTH,NEWS_IMAGE_WIDTH);
+					//unlink(BASE_PATH.'/uploaded_files/news/'.$id.'.'.$ext);
 					$result=$db->query("UPDATE fw_news SET image='resized-".$id.".$ext' WHERE id='".mysql_insert_id()."'");
 				}
 			}
@@ -135,10 +135,11 @@ if (isset($_POST['submit_edit_news'])) {
 		if (@$file_name!='') {
 			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/news/'.$id.'.'.$ext)) {
 				chmod(BASE_PATH.'/uploaded_files/news/'.$id.'.'.$ext,0644);
-				Image::image_resize(BASE_PATH.'/uploaded_files/news/'.$id.'.'.$ext,BASE_PATH.'/uploaded_files/news/resized-'.$id.'.'.$ext,NEWS_IMAGE_WIDTH,NEWS_IMAGE_WIDTH);
-				unlink(BASE_PATH.'/uploaded_files/news/'.$id.'.'.$ext);
+				//Image::image_resize(BASE_PATH.'/uploaded_files/news/'.$id.'.'.$ext,BASE_PATH.'/uploaded_files/news/resized-'.$id.'.'.$ext,NEWS_IMAGE_WIDTH,NEWS_IMAGE_WIDTH);
+				//unlink(BASE_PATH.'/uploaded_files/news/'.$id.'.'.$ext);
 			}
-			$image='resized-'.$id.'.'.$ext;
+			//$image='resized-'.$id.'.'.$ext;
+			$image=$id.'.'.$ext;
 		}
 		else $image=$_POST['old_image'];
 		
