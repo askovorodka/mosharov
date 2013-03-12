@@ -36,12 +36,12 @@ function allCats(){
 <input type=hidden name={if $mode=='add'}submit_add_type{else}submit_edit_type{/if}>
 <input type=hidden name=type_id value={$type.id}>
 <table width=100% class=content_table>
-	<tr><th>{if $mode=='edit'}Редактировать производителя товара<input type=hidden name=id value={$type.id}>{else}Добавить производителя товара{/if}</th></tr>
+	<tr><th>{if $mode=='edit'}Редактировать категорию<input type=hidden name=id value={$type.id}>{else}Добавить категорию{/if}</th></tr>
 </table>
 
 <table width=100% class=content_table>
 	<tr>
-		<td width=20% class=td1_left>Производитель:</td>
+		<td width=20% class=td1_left>Название:</td>
 		<td class=td1_right>
 			<input type="text" name=edit_type_name style="width:100%;" class=field value="{$type.name}">
 		</td>
@@ -58,7 +58,7 @@ function allCats(){
 {if $mode=="edit"}
 	<tr>
 		<td class=td1_single valign=top colspan="2">
-			<p>Краткое описание производителя:</p>
+			<p>Краткое описание категории:</p>
 <input type=hidden name=edit_type_text value="">
 {if $editor_style!='html'}
 {literal}
@@ -132,7 +132,7 @@ function allCats(){
 
 </table>
 <br>
-<center><input type=submit value={if $mode=='add'}"Добавить дату разработки"{else}"Сохранить изменения"{/if}></center>
+<center><input type=submit value={if $mode=='add'}"Добавить"{else}"Сохранить изменения"{/if}></center>
 </form>
 {else}
 {literal}
@@ -141,7 +141,7 @@ function allCats(){
 <!--
 function confirm_delete(delete_id)
 {
-if (confirm("Дейтсвительно удалить этого производителя товара? ВНИМАНИЕ: Это свойство удалится у всех имеющих его товаров!!!")) {
+if (confirm("Удалить")) {
 parent.location.href = "index.php?mod=shop&action=delete_type&id=" + delete_id;
 }
 }
@@ -181,5 +181,5 @@ parent.location.href = "index.php?mod=shop&action=delete_type&id=" + delete_id;
 
 	</table>
 <br>
-<div class="add_but" onClick="location.href='?mod=shop&action=add_type'"><div><a href="?mod=shop&action=add_type">Добавить производителя</a></div></div>
+<div class="add_but" onClick="location.href='?mod=shop&action=add_type'"><div><a href="?mod=shop&action=add_type">Добавить категорию</a></div></div>
 {/if}

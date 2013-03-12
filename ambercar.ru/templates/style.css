@@ -1,3 +1,5 @@
+input.error { border:1px solid red !important; }
+
 div.hide { display:none; }
 html {
 	margin:0;

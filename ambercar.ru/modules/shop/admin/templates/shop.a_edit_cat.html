@@ -55,7 +55,7 @@ function form_check() {
 {/if}
 <input type=hidden name=old_parent value={$parent}>
 <table width=100% class=content_table>
-	<tr><th>{if $mode=='edit'}Редактировать категорию{else}Добавить категорию{/if}</th></tr>
+	<tr><th>{if $mode=='edit'}Редактировать марку/модель{else}Добавить марку/модель{/if}</th></tr>
 </table>
 
 <table width=100% class=content_table>
@@ -196,5 +196,5 @@ function form_check() {
 </div>
 
 <br>
-<center><input type=submit name={if $mode=='add'}submit_add_cat value="Добавить раздел"{else}submit_edit_cat value="Сохранить изменения"{/if}></center>
+<center><input type=submit name={if $mode=='add'}submit_add_cat value="Добавить"{else}submit_edit_cat value="Сохранить изменения"{/if}></center>
 </form>

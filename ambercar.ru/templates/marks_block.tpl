@@ -1,3 +1,6 @@
+{banners group="1"}
+
+{*
         <div class="brands">
             <a href="#"><img src="/templates/img/br_mazda.jpg" width="78" height="78" /><br />Mazda</a>
             <a href="#"><img src="/templates/img/br_toyota.jpg" width="78" height="78" /><br />Toyota</a>
@@ -7,3 +10,4 @@
             <a href="#"><img src="/templates/img/br_nissan.jpg" width="78" height="78" /><br />Nissan</a>
             <a href="#"><img src="/templates/img/br_subaru.jpg" width="78" height="78" /><br />Subaru</a>
         </div>
+*}

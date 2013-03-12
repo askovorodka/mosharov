@@ -1055,7 +1055,7 @@ SWITCH (TRUE) {
 	
 	CASE ($action=='add_cat'):
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=add_cat","title" => 'Добавить категорию');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=add_cat","title" => 'Добавить марку/модель');
 
 		$smarty->assign("mode","add");
 		$smarty->assign("parent",$_GET['parent']);
@@ -1079,8 +1079,8 @@ SWITCH (TRUE) {
 
 		$id=$_GET['id'];
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=catalogue","title" => 'Категории');
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=edit_cat","title" => 'Редактировать категорию');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=catalogue","title" => 'Марки/Модели');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=edit_cat","title" => 'Редактировать марку/модель');
 
 		$parent=$tree->getParent($id);
 
@@ -1406,7 +1406,7 @@ SWITCH (TRUE) {
 
 	CASE ($action=='catalogue'):
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Категории');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Марки/модели');
 
 		$smarty->assign("cat_list",$cat_list);
 
@@ -1648,7 +1648,7 @@ SWITCH (TRUE) {
 
   CASE ($action=='add_type'):
 
-    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Добавить тип продукта');
+    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Добавить категорию');
 
     $smarty->assign("mode","add");
     $template='shop.a_products_types.html';
@@ -1657,7 +1657,7 @@ SWITCH (TRUE) {
 
   CASE ($action=='edit_type' && isset($_GET['id'])):
 
-    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Редактировать тип продукта');
+    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Редактировать категорию');
 
     $id=$_GET['id'];
 

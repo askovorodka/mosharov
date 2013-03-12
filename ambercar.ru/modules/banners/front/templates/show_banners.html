@@ -1,4 +1,6 @@
-{if $banner.image!=''}
+{if $banner.type == 2}
+	{$banner.code}
+{elseif $banner.image !=''}
 	<div class="banner{$banner.id}">
 	{if $banner.type=='0'}
 	<a href="{$base_url}/go.php?target={$banner.id}" target="_blank"><img src="{$base_url}/uploaded_files/banners/{$banner.id}.{$banner.image}"></a>

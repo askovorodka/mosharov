@@ -1,7 +1,37 @@
 $(document).ready(function(){
 	
+	var question = $("form#question").validate(
+			{
+		 		
+				errorPlacement: function(error, element) {
+					$(element).addClass('error');
+		   		},
+		    	
+				rules:
+				{
+					name :	{required: true},
+					contacts :	{required: true},
+					text :	{required: true}
+				},
+				messages:
+				{
+					name:	{ required : "¬ведите им€" },
+					contacts:	{ required : "¬ведите контакты" },
+					text:	{ required : "¬ведите текст" }
+				}
+			}
+			);
+	
+	
+	//больша€ фотка в списке продуктов
+	$('td.tablecatimg a').lightBox({fixedNavigation:false});
+		
 	//обратна€ св€зь
 	$("form#question").submit(function(){
+		try{
+		if (!question.form())
+			return false;
+		
 		var name = $("input[name='name']", $(this)).val();
 		var contacts = $("input[name='contacts']", $(this)).val();
 		var text = $("textarea[name='text']", $(this)).val();
@@ -14,7 +44,8 @@ $(document).ready(function(){
 			success : function(){ alert('¬аш вопрос отправлен. —пасибо!'); }
 			
 		});
-		
+		}
+		catch(e){}
 		return false;
 	});
 	
