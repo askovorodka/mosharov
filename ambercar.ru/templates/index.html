@@ -1,6 +1,5 @@
 {include file="`$smarty.const.ROOT`templates/header_block.tpl"}
 
-
   <tr>
     <td class="mainzone">
     
@@ -25,89 +24,3 @@
 
 
 {include file="`$smarty.const.ROOT`/templates/footer_block.tpl" home="true"}
-
-
-
-
-{*<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
-<title>{$page_title}</title>
-<meta name="Keywords" content="{$meta_keywords}">
-<meta name="Description" content="{$meta_description}">
-{foreach from=$css item=css}
-<link rel="stylesheet" type="text/css" href="{$css}">
-{/foreach}
-{foreach from=$js item=js}
-<script src="{$js}" type="text/javascript"></script>
-{/foreach}
-</head>
-
-<div id='loading-layer'><div>Кладем в корзину. Подождите...</div></div>
-<div class="popImage"></div>
-
-<body>
-<!---- BASKET ---->
-{include file="`$smarty.const.TPL_PATH`basket_block.html"}
-<!---- /BASKET ---->
-
-<!--------- TOPING --------->
-<div class="topd">
-<!---- TOPMENU ---->
-{include file="`$smarty.const.TPL_PATH`top_menu.html"}
-<!---- /TOPMENU ---->
-    <div class="topdmain">
-<!---- SEARCH ---->
-{include file="`$smarty.const.TPL_PATH`top_search.html"}
-<!---- /SEARCH ---->
-    	<div class="littler">работаем c 10:00 до 19:00 &mdash; без выходных</div>
-    	<div class="toptel">(495) 645-16-57</div>
-    	<a href="{$base_url}/" title="SHOP-TOY &mdash; магазин детских игрушек"><img src="{$template_image}logo.png" class="logo" alt="SHOP-TOY &mdash; магазин детских игрушек" /></a>
-    </div>
-</div>
-<!--------- /TOPING --------->
-
-<!--------- CATLIST --------->
-{include file="`$smarty.const.TPL_PATH`top_filter.html"}
-<!--------- /CATLIST --------->
-
-{capture name="banner1"}
-	{banners group="1"}
-{/capture}
-<!--------- MIDDLE --------->
-<table class="middle">
-
-{if trim($smarty.capture.banner1) != ""}
-<tr>
-	{if $product || $category || $brands}
-	<td></td>
-	{/if}
-	<td class="maincolumn" id="maincontent">{$smarty.capture.banner1}</td>
-</tr>
-<tr><td colspan="2" style="height:5px;">&nbsp;</td></tr>
-{/if}
-
-<tr>
-{if $product || $category || $brands}
-<td class="middleside">
-<!---- FILTER ---->
-{include file="`$smarty.const.TPL_PATH`left_filter.html"}
-<!---- /FILTER ---->
-</td>
-{/if}
-<td class="maincolumn" id="maincontent">
-	{if $content=='' or !$content}
-		{assign var="content" value=""}
-		{fetch file=$template assign="content"}
-	{/if}
-	{eval var=$content}
-</td>
-</tr>
-</table>
-<!--- /MIDDLE --->
-<!--- BOTTOM --->
-{include file="`$smarty.const.TPL_PATH`footer_menu.html"}
-<!--- /BOTTOM --->
-</body>
-</html>*}

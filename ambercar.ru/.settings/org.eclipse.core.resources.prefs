@@ -1,4 +1,4 @@
-#Tue Mar 12 23:01:17 MSK 2013
+#Wed Mar 13 00:26:11 MSK 2013
 eclipse.preferences.version=1
 encoding//modules/banners/admin/templates/banners.a_edit.html=cp1251
 encoding//modules/banners/admin/templates/banners.a_edit_banner_list.html=cp1251
@@ -7,5 +7,6 @@ encoding//modules/shop/admin/templates/shop.a_edit_cat.html=cp1251
 encoding//modules/shop/admin/templates/shop.a_edit_product.html=cp1251
 encoding//modules/shop/admin/templates/shop.a_main.html=cp1251
 encoding//modules/shop/admin/templates/shop.a_products_types.html=cp1251
+encoding//templates/404.html=cp1251
 encoding/<project>=cp1251
 encoding/mail.php=UTF-8
