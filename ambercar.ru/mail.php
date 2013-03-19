@@ -7,7 +7,7 @@ switch ($_GET['type'])
 	case 'phone':
 		$phone = trim($_GET['phone']);
 		$body = "Телефон: " . $phone;
-		Mail::send_mail("shand@yandex.ru", $_SERVER['SERVER_NAME'] ." <noreply@".$_SERVER['SERVER_NAME'].">","Телефон пользователя",$body,'','text','standard','utf-8');
+		Mail::send_mail("list@ambercar.ru", $_SERVER['SERVER_NAME'] ." <noreply@".$_SERVER['SERVER_NAME'].">","Телефон пользователя",$body,'','text','standard','utf-8');
 		break;
 		
 	case 'order':
@@ -18,7 +18,7 @@ switch ($_GET['type'])
 		
 		$body = "Фио: $name \n\nМарка, модель, год выпуска: $auto\n\nЗапчасть: $zapchast\n\nТелефон: $phone";
 		
-		Mail::send_mail("shand@yandex.ru", $_SERVER['SERVER_NAME'] ." <noreply@".$_SERVER['SERVER_NAME'].">","Заявка на запчасть",$body,'','text','standard','utf-8');
+		Mail::send_mail("list@ambercar.ru", $_SERVER['SERVER_NAME'] ." <noreply@".$_SERVER['SERVER_NAME'].">","Заявка на запчасть",$body,'','text','standard','utf-8');
 		break;
 		
 	case 'question':
@@ -28,7 +28,7 @@ switch ($_GET['type'])
 		
 		$body = "Фио: $name \n\nКонтакты: $contacts\n\nТекст: $text";
 		
-		Mail::send_mail("shand@yandex.ru", $_SERVER['SERVER_NAME'] ." <noreply@".$_SERVER['SERVER_NAME'].">","Вопрос пользователя с сайта",$body,'','text','standard','utf-8');
+		Mail::send_mail("list@ambercar.ru", $_SERVER['SERVER_NAME'] ." <noreply@".$_SERVER['SERVER_NAME'].">","Вопрос пользователя с сайта",$body,'','text','standard','utf-8');
 		break;
 		
 }

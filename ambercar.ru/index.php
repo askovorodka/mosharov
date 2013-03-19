@@ -16,7 +16,8 @@ exit;
 setlocale (LC_ALL, array ('ru_RU.CP1251', 'rus_RUS.1251'));
 
 session_start();
-error_reporting(E_ALL);
+error_reporting(0);
+ini_set('display_errors','Off');
 
 function gettime() {
   list($t_usec, $t_sec) = explode(" ",microtime());

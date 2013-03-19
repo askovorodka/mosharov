@@ -5,12 +5,12 @@ RewriteEngine on
 Options +FollowSymlinks
 RewriteBase /
 
-RewriteCond %{HTTP_HOST} ^www.ambercar.mosharov.com$ [NC]
-RewriteRule ^(.*)$ http://ambercar.mosharov.com/$1 [R=301,L]
+RewriteCond %{HTTP_HOST} ^www.ambercar.ru$ [NC]
+RewriteRule ^(.*)$ http://ambercar.ru/$1 [R=301,L]
 
 RewriteCond %{REQUEST_URI} ^/home$ [OR]
 RewriteCond %{REQUEST_URI} ^/home/$ [NC]
-RewriteRule ^(.*)$ http://ambercar.mosharov.com/ [R=301,L]
+RewriteRule ^(.*)$ http://ambercar.ru/ [R=301,L]
 
 #RewriteRule     ^(.*)/video/(.*)$			/video/$2	[L]
 #RewriteRule     ^(.*)/insertfiles/(.*)$	/insertfiles/$2	[L]
@@ -35,4 +35,3 @@ RewriteCond %{REQUEST_FILENAME} !-d
 #RewriteRule [^\.xml][^\/]$ %{REQUEST_URI}/ [R,L]
 
 RewriteRule ^(.*)$ /index.php [L,QSA]
-

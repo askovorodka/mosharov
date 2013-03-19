@@ -687,6 +687,34 @@ SWITCH (TRUE) {
 				$smarty->assign('marks', $categories);
 				$template = 'marks.tpl';
 			}
+
+			if (count($url) == 2)
+			{
+				$mark_url = urldecode($url[$n]);
+				$mark = $shop->get_category_by_url($mark_url);
+				if (!empty($mark))
+				{
+					$models = $shop->getChildrenCategor($mark, 2);
+					
+					if (!empty($models))
+					{
+						
+						foreach ($models as $key=>$val)
+						{
+							$models[$key]['full_url'] = $shop->getFullUrlCategory($val['id'],'catalog');
+						}
+					
+						$smarty->assign('models', $models);	
+					}
+					
+					$smarty->assign('mark', $mark);
+					
+				}
+
+				
+				$template = 'models.tpl';
+			}
+			
 			
 			$page_found = true;
 			//находим дочернии категории список категорий товаров марки/модели

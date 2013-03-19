@@ -16,8 +16,9 @@
 <table class="maintable">
   <tr>
     <td class="toper">
-    	<div class="search"><form action="{$base_url}/catalog/"><input type="text" name="search_product" value="{$search}" /><br />Ищу - <u>VIN</u>, <u>Frame</u>, <u>Наименование</u></form></div>
-    	<div class="tel"><strong>С 9:00 до 20:00</strong><div class="phonenumber">+7 (926) 612-17-19</div>Москва, ул. Аллея Первой Маевки, д. 15</div>
+    	<div class="toplogo"><a href="http://ambercar.ru/" title="На главную"><img src="http://ambercar.ru/templates/img/logo.jpg" /></a></div>
+    	<div class="search"><form action="{$base_url}/catalog/"><input type="text" name="search_product" value="{$search}" /><br />Ищу - <u>Бампер передний Subaru Outback</u></form></div>
+    	<div class="tel"><strong>С 9:00 до 20:00</strong><div class="phonenumber">+7 (495) 772-13-98</div>Москва, ул. Аллея Первой Маевки, д. 15<br /><img src="http://ambercar.ru/templates/img/skype.png" align="absmiddle"> <b>ambercar1</b></div>
     </td>
   </tr>
   <tr>

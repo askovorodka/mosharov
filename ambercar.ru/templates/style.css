@@ -60,7 +60,11 @@ h3 {
 }
 .toper {
 	height:120px;
-	background:url(/templates/img/logo.jpg) 15px 50% no-repeat;
+}
+.toplogo {
+	z-index:5;
+	position:absolute;
+	float:left;
 }
 .tel {
 	width:290px;
@@ -68,6 +72,7 @@ h3 {
 	font-size:12px;
 	color:#666;
 	line-height:20px;
+	padding-top:10px;
 }
 .phonenumber {
 	font-size:30px;
@@ -83,6 +88,7 @@ h3 {
 	font-size:12px;
 	color:#666;
 	line-height:24px;
+	padding-top:10px;
 }
 .search input {
 	width:290px;
@@ -111,6 +117,14 @@ h3 {
 	text-decoration:none;
 }
 .topmenu a:hover {
+	background:#006093;
+	text-shadow: 0px 1px 0px rgba(0,0,0,.7);
+	box-shadow: inset 0px 0px 5px rgba(0,0,0,.5);
+	margin:-5px 0 -5px 0 !important;
+	height:40px;
+	line-height:40px;
+}
+.topmenu a.selected {
 	background:#006093;
 	text-shadow: 0px 1px 0px rgba(0,0,0,.7);
 	box-shadow: inset 0px 0px 5px rgba(0,0,0,.5);
@@ -289,18 +303,18 @@ h3 {
 .news a {
 	font-weight:bold;
 }
-.payment {
+div.payment img {
 	padding:5px;
 	border:1px solid #ababab;
 }
 .botmenu {
 	width:660px;
-	border-top:5px solid #b2b2b2;
+	border-top:5px solid #1e95d8;
 }
 .botmenuinner {
 	width:660px;
 	float:right;
-	border-top:5px solid #b2b2b2;
+	border-top:5px solid #1e95d8;
 }
 .botmenu div, .botmenuinner div{
 	float:left;

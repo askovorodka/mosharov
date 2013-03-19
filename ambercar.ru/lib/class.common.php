@@ -19,7 +19,7 @@ class Common {
 		
 	}
 	
-	function generate_main_menu($level=0) {
+	static function generate_main_menu($level=0) {
 
 		global $db;
 		
@@ -126,7 +126,7 @@ class Common {
 		return $content;
 	}
 
-	function generate_main_menu_full_url($array, $url) {
+	static function generate_main_menu_full_url($array, $url) {
 		foreach ($array as $key => $value) {
 			$full_url=$url.$array[$key]['url']."/";
 			$array[$key]['full_url']=$full_url;
@@ -135,7 +135,7 @@ class Common {
 		return $array;
 	}
 	
-	function generate_menu($array, $start, $finish, $full_url='') {
+	static function generate_menu($array, $start, $finish, $full_url='') {
 
 		$ar = array();
 		foreach ($array as $val) {
@@ -148,7 +148,7 @@ class Common {
 		foreach ($array as $value) {
 			if ($value['param_left']>$start && $value['param_right']<$finish && $value['param_level']==($level+1)) {
 				if (($value['param_right']-$value['param_left'])>1) {
-					$value['sublist']=Common::generate_menu($array, $value['param_left'], $value['param_right'], &$full_url);
+					$value['sublist']=Common::generate_menu($array, $value['param_left'], $value['param_right'], $full_url);
 				}
 				$ar[] = $value;
 			}
@@ -272,7 +272,7 @@ class Common {
 		}
 	}
 	
-	function get_nodes_list($array,$type=true,$itself="") {
+	public static function get_nodes_list($array,$type=true,$itself="") {
 		
 		$temp_path='';
 		$temp_url='';
@@ -387,7 +387,7 @@ class Common {
 		if ($die=='1') die();
 	}
 	
-	function check_node_auth ($access) {
+	public static function check_node_auth ($access) {
 
 		if ($access=='all') return true;
 		else if ($access=='registered' && isset($_SESSION['fw_user'])) return true;

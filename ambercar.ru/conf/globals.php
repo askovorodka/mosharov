@@ -1,9 +1,9 @@
 <?php
 
   define("DB_HOST","localhost");
-  define("DB_NAME","ambercar");
-  define("DB_USER","demo");
-  define("DB_PASS","gthtgenmt");
+  define("DB_NAME","amber");
+  define("DB_USER","amber");
+  define("DB_PASS","gfhjkm12");
 
   define("ROOT", dirname(__FILE__) . "/../");
   define("DOMAIN", 'http://'.$_SERVER['SERVER_NAME'].'/');

@@ -39,7 +39,7 @@ class String {
 		}
 	}
 	
-	function unformat ($string) {
+	public static function unformat ($string) {
 		
 		if ($string=='') return '';
 		else {
@@ -51,7 +51,7 @@ class String {
 		}
 	}
 	
-	function unformat_array ($array) {
+	public static function unformat_array ($array) {
 		
 		while (list($key,$value)=each($array)) {
 			if (is_array($array[$key])) $array[$key]=String::unformat_array($array[$key]);
@@ -80,7 +80,8 @@ class String {
 			"ö"=>"ts","÷"=>"ch","ø"=>"sh","ù"=>"sch","ú"=>"",
 			"û"=>"yi","ü"=>"","ı"=>"e","ş"=>"yu","ÿ"=>"ya"," "=>"",
 			"\\"=>"","/"=>"","_"=>"","`"=>"","'"=>"\"","?"=>"","!"=>"",
-			")"=>"","("=>"","@"=>"","&"=>"","^"=>"","#"=>"","%"=>"","*"=>"","-"=>""
+			")"=>"","("=>"","@"=>"","&"=>"","^"=>"","#"=>"","%"=>"","*"=>"","-"=>"",
+			">" => "after","<" => "before", ">" => "after"
 			);
 
 			return strtr($cyr_str,$tr);

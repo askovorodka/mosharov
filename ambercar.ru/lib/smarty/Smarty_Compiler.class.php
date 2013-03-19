@@ -1401,7 +1401,7 @@ class Smarty_Compiler extends Smarty {
     }
 
 
-    function _compile_arg_list($type, $name, $attrs, &$cache_code) {
+    function _compile_arg_list($type, $name, $attrs, $cache_code) {
         $arg_list = array();
 
         if (isset($type) && isset($name)

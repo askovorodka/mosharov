@@ -16,7 +16,7 @@ class MyArray {
 		
 	}
 	
-	function insert_array_into_array($array, $input_array, $modulename) {
+	static function insert_array_into_array($array, $input_array, $modulename) {
 		
 		foreach ($array as $key => $value) {
 			if ($value['module']==$modulename) {
