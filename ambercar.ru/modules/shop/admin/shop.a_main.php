@@ -488,7 +488,7 @@ if (isset($_POST['submit_add_cat'])) {
 }
 
 if (isset($_POST['submit_edit_cat'])) {
-
+	//print_r($_POST); exit();
 	Common::check_priv("$priv");
 
 	$check=true;
@@ -545,7 +545,7 @@ if (isset($_POST['submit_edit_cat'])) {
 		}
 	}
 
-	if (!preg_match("/^([a-z0-9_-]+)$/",$url)) {
+	if (!preg_match("/^([a-zA-Z0-9_-]+)$/",$url)) {
 		$smarty->assign("error_message","В URL допустимы только символы латиницы, минус и знак подчёркивания!");
 		$check=false;
 	}

@@ -19,5 +19,6 @@
 		          </tr>
 	          {/foreach}
         </table><br />
+        
         <a href="{$DOMAIN}/catalog/{$mark.url}/{$model.url}/" class="goback">Назад к категориям</a><br />
         </div>

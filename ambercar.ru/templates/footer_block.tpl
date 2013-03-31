@@ -2,19 +2,19 @@
     <td height="100">
     	<div class="botmenu{if !$home}inner{/if}">
         <div class="blinks"><h3>Информация</h3>
-        <a href="#">Публикации</a><br />
-        <a href="#">Новости</a><br />
-        <a href="#">Отзывы о нас</a><br />
+        <a href="http://ambercar.ru/company/oplata/">Способы оплаты</a><br />
+        <a href="http://ambercar.ru/news/">Новости</a><br />
+        <a href="http://ambercar.ru/company/otzivi/">Отзывы о нас</a><br />
         <br /></div>
         <div class="blinks"><h3>О компании</h3>
-        <a href="#">Услуги</a><br />
-        <a href="#">Аксессуары</a><br />
-        <a href="#">Доставка</a><br />
+        <a href="http://ambercar.ru/uslugi/">Услуги</a><br />
+        <a href="http://ambercar.ru/company/vakancii/">Вакансии</a><br />
+        <a href="http://ambercar.ru/company/partners/">Наши партнеры</a><br />
         <br /></div>
         <div><h3>Контакты</h3>
-        Москва, ул. Аллея Первой Маевки, дом 15 - <a href="#">карта проезда</a><br />
-        Тел.: +7 495 612-17-19<br />
-        Email: <a href="mailto:clients@ambercar.ru">clients@ambercar.ru</a>
+        Москва, ул. Аллея Первой Маевки, дом 15 - <a href="http://goo.gl/maps/f6klu" target="_blank">карта проезда</a><br />
+        Тел.: +7 495 772-13-98<br />
+        Email: <a href="mailto:list@ambercar.ru">list@ambercar.ru</a>
         <br /></div>
         </div>
     	<div class="botform{if !$home}inner{/if}">

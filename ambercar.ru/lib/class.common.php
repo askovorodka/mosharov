@@ -157,7 +157,7 @@ class Common {
 		return $ar;
 	}
 
-	function load_config($section='') {
+	static function load_config($section='') {
 	
 		global $db;
 	
@@ -171,7 +171,7 @@ class Common {
 	}
 	
 	
-	function check_auth($where='admin') {
+	static function check_auth($where='admin') {
 		
 		global $db;
 	
@@ -264,7 +264,7 @@ class Common {
 	
 	}
 	
-	function check_priv ($priv) {
+	static function check_priv ($priv) {
 	
 		if (isset($_SESSION['fw_user']) && $_SESSION['fw_user']['priv']<=$priv) return true;
 		else {
@@ -323,7 +323,7 @@ class Common {
 		return $list;
 	}
 	
-	function pager($result,$per_page,$current_page) {
+	static function pager($result,$per_page,$current_page) {
 
 		if (is_resource($result)) {
 			$count = mysql_fetch_row($result);

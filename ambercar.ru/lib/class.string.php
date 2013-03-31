@@ -12,7 +12,7 @@ class String {
 		return $target;
 	}
 
-	function secure_format ($string) {
+	static function secure_format ($string) {
 		
 		if ($string=='') return '';
 		else {

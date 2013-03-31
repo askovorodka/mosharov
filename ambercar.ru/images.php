@@ -39,7 +39,6 @@ switch ($_GET['type'])
 	case 'img400x300':
 		$width = 400;
 		$height = 300;
-		$crope = true;
 	break;
 
 	case 'img71x74':

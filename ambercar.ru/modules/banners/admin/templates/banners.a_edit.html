@@ -151,7 +151,8 @@ function check_form() {
 			</select>
 		</td>
 	</tr>
-	<tr>
+	
+	{*<tr>
 		<td width=15% class=td1_left valign=top>Где показывать:</td>
 		<td class=td1_right>
 		<div style="height: 600px; width: 600px; overflow: auto;">
@@ -163,7 +164,7 @@ function check_form() {
 			{include file="../../modules/banners/admin/templates/banners.a_edit_banner_list.html"}
 		</div>
 		</td>
-	</tr>
+	</tr>*}
 </table>
 <br>
 <center><input type=submit {if $mode=='edit'}name=submit_edit_banner value="Сохранить изменения"{else}name=submit_add_banner value="Добавить баннер"{/if}></center>

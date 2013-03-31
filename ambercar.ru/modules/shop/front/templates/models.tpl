@@ -10,8 +10,8 @@
         	</ul>
         </div>
         
-        {if $mark.description}
-        	<p>{$mark.description}</p>
+        {if $mark.text}
+        	<p>{$mark.text}</p>
         {/if}
         
         </div>

@@ -2,7 +2,7 @@
 
 class Image {
 
-function resize($src, $dst, $dst_width, $dst_height, $crop = true, $background = "#ffffff", $fix_width = false)
+static function resize($src, $dst, $dst_width, $dst_height, $crop = true, $background = "#ffffff", $fix_width = false)
 {
 	if (is_file($src))
 	{
@@ -146,7 +146,7 @@ function resize($src, $dst, $dst_width, $dst_height, $crop = true, $background =
 }
 
 
-	function image_resize($src, $dest, $width, $height, $quality=90) {
+static	function image_resize($src, $dest, $width, $height, $quality=90) {
 		
 		if (!file_exists($src)) return false;
 		
@@ -204,7 +204,7 @@ function resize($src, $dst, $dst_width, $dst_height, $crop = true, $background =
 	
 	}
 	
-	function image_details ($image) {
+static	function image_details ($image) {
 		
 		$size = getimagesize($image);
 		

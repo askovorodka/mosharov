@@ -3,6 +3,9 @@
 require_once '../lib/class.tree.php';
 require_once '../lib/class.image.php';
 
+//error_reporting(E_ALL);
+//ini_set('display_errors','On');
+
 /* DB TREE VARIABLES */
 $table='fw_tree';
 $id_name='id';

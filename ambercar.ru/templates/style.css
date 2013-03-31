@@ -318,8 +318,12 @@ div.payment img {
 }
 .botmenu div, .botmenuinner div{
 	float:left;
-	padding-right:40px;
 	line-height:22px;
+	color:#666;
+}
+.blinks {
+	padding-right:35px;
+	font-size:12px;
 	color:#666;
 }
 .blinks a {

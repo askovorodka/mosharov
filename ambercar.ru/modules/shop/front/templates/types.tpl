@@ -8,4 +8,6 @@
             </div>
         </div>
         
+        <div>{$model.text}</div>
+        
         </div>

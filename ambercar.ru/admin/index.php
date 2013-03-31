@@ -3,6 +3,8 @@ ob_start("ob_gzhandler");
 session_start();
 
 error_reporting(E_ALL);
+ini_set('display_errors','On');
+
 
 setlocale (LC_ALL, array ('ru_RU.CP1251', 'rus_RUS.1251'));
 
