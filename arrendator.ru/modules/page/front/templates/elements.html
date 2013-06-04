@@ -1,0 +1,3 @@
+{include file="`$smarty.const.TPL_PATH`breadcrumbs.html"}
+<h1>{$page_content.name|strip_tags|stripslashes}</h1>
+{if $page_content}{eval var=$page_content.text|stripslashes}{/if}

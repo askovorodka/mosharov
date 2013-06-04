@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>Администраторская панель</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<link rel="stylesheet" type="text/css" href="templates/style.css">
+</head>
+
+<body>
+
+{literal}
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/tooltips.js'></script>
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/common.js'></script>
+<script language=JavaScript type="text/javascript">
+function doInsert(table)
+    {
+    var obj = window.opener.oUtil.obj;
+
+    var sTBL=table;
+
+    obj.insertHTML(sTBL)
+    }
+
+</script>
+{/literal}
+
+<table width="100%" style="height: 100%;" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign="top">
+
+<table width=100% class=content_table>
+
+  <tr>
+  <th>Таблица</th>
+  <th width=10%>Формат</th>
+  <th width=20%>Код</th>
+  </tr>
+
+  {foreach name=tree from=$tables_list item=entry}
+
+  {if $col==1}
+  {assign var="td" value='td1'}
+  {assign var="col" value=0}
+  {else}
+  {assign var="td" value='td2'}
+  {assign var="col" value=1}
+  {/if}
+  <tr>
+      <td class={$td}_left>
+        <img src="templates/img/tree.gif"><b>{$entry.name}</b>
+      </td>
+      <td align=center class={$td}_middle>
+      <b><font color=red>{$entry.format}</font></b>
+      </td>
+      <td align=center class={$td}_right>
+      <input type=button value="Вставить" onclick="doInsert('{literal}{table id=&quot;{/literal}{$entry.id}{literal}&quot;}{/literal}');self.close()">
+      </td>
+    </tr>
+
+  {/foreach}
+
+</table>
+</td></tr>
+<tr>
+<td valign="top" style="height: 40px;">
+<div class="citata">Для правильной работы таблицы, нужно включить дополнительный модуль &laquo;Таблицы&raquo;<br>(вкладка &laquo;Дополнительные настройки&raquo; / строка &laquo;Дополнительные модули&raquo;)</div>
+</td></tr>
+</table>
+</body>
+</html>

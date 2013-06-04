@@ -1,0 +1,122 @@
+{include file="`$TEMP`breadcrumbs.html"}
+
+<h1>Ваша корзина</h1>
+{if $basket}
+{if $error_msg}<div style="color:red;">{section loop=$error_msg name=item}{$error_msg[item]}<br />{/section}</div>{/if}
+
+<form action="" method="post" id="form_basket_recount">
+<input type="hidden" name="basket_recount" value="1" />
+         
+         <table class="mainbasket">
+          <tr>
+            <td>
+                
+                <table class="itemlt">
+                   <tr class="itemltcapt">
+                   	
+                    <td></td>
+                    <td>Наименование</td>
+                    <td>Артикул</td>
+                    <td>Цена</td>
+                    <td>Сумма</td> 
+                    <td>Кол-во</td>
+                    <td></td>
+                    
+                  </tr>
+                  {foreach from=$basket item=product name=basket_foreach}
+                  <tr>
+                  	
+                    <td>{if $product.image}<a title="Посмотреть фото" class="CatalogImages" href="{$base_url}/{$current_url}/{$item.id}/" image="/uploaded_files/shop_images/{$product.image}"><img src="{$template_image}camera.png"></a>{/if}</td>
+                    <td class="itemlname"><a href="{$product.full_url}">{$product.name}</a></td>
+                    <td>{$product.article}</td>
+                    <td>{$product.price|format_price} руб.</td>
+                    <td>{$product.price_number|format_price} руб.</td>
+                    <td><input type="text" value="{$product.number}" name="edit_number[{$product.id}]"></td>
+                    <td><a title="Удалить" href="{$module_url}/basket/delete/{$product.id}/" onclick="return confirm('Удалить продукт из корзины');">удалить</a></td>
+                    
+                  </tr>
+                  {/foreach}
+                </table>
+                </td>
+                <td class="mainbasketsumm">
+                    Доставка: <span id="dostavka_ajax">{if $total_price|format_number < $smarty.const.SHOP_DOSTAVKA_LIMIT}{$smarty.const.SHOP_DOSTAVKA_PRICE}{else}0{/if}</span> руб.<br />
+                    Итого: <span id="total_ajax">{$total_price_dostavka|format_price}</span> руб.<br />
+                    <a href="#" onClick="$('#form_basket_recount').submit(); return false;" title="Пересчитать">Пересчитать</a>
+                 </td>
+                   
+                  </tr>
+                </table><br clear="all" />
+</form>
+
+
+			{if $error_auth_message}<label class="error">Ошибка авторизации: {$error_auth_message}</label>{/if}
+				
+			<form action="/catalog/basket/submit/" method="post" id="form_order">
+			<input type="hidden" name="submit_order" value="1" />	
+            <table class="mainbasketform">
+              <tr>
+                <td class="mainbasketform1">
+				<h2>Контактные данные</h2>
+        		<div class="basketform1">
+                <div><input type="text" name="name"> ФИО</div>
+                <div><input type="text" name="phone"> Телефон</div>
+                <div><input type="text" name="email"> Email</div>
+                <div><input type="text" name="address"> Адрес</div>
+                </div><br />
+                <h2>Способ доставки</h2>
+                <select name="dostavka" id="dostavka" class="basketformsel">
+                	<option value="1" selected caption="Выезд за МКАД - 30 руб/км, но не менее 100км.">Доставка по Москве</option>
+                	<option value="2" caption="Стоимость 0 руб.">Забрать самостоятельно</option>
+                	<option value="3" caption="Стоимость доставки до транспортной компании - {$order_price} руб. Стоимость доставки из Москвы до Вашего города рассчитывает транспортная компания.">Доставка до транспортной компании ПЭК</option>
+                	<option value="4" caption="Стоимость доставки до транспортной компании - {$order_price} руб. Стоимость доставки из Москвы до Вашего города рассчитывает транспортная компания.">Доставка до транспортной компании Желдорэкспедиция</option>
+                	<option value="5" caption="Стоимость доставки до транспортной компании - {$order_price} руб. Стоимость доставки из Москвы до Вашего города рассчитывает транспортная компания.">Доставка до транспортной компании Автотрейдинг</option>
+                </select>
+                
+                <div id="dostavka_caption" style="margin-top:10px; width:385px; font-weight:bold;">Выезд за МКАД - 30 руб/км, но не менее 100 руб.</div>
+                
+                </td>
+                <td class="mainbasketform2">
+				<h2>Способ оплаты</h2>
+                <select name="payment" class="basketformsel">
+                	<option value="1" selected>Наличные (только для Москвы и МО)</option>
+                	<option value="2">Безналичный расчет (предоплата)</option>
+                	<option value="3">Банковская карта (только при самовывозе)</option>
+                </select>
+                <div class="basketform2">
+                <div><input type="text" name="company"> Название компании</div>
+                <div><input type="text" name="inn"> ИНН</div>
+                <div><input type="text" name="kpp"> КПП</div>
+                </div>
+                <h2>Дополнительные пожелания</h2>
+                <textarea name="comment" class="basketformt"></textarea><br>
+                </td>
+              </tr>
+              <tr>
+              	<td colspan="2" class="basketbut"><input type="image" src="{$template_image}but_ok.gif" title="Утвердить Ваш заказ"></td>
+              </tr>
+            </table>
+			</form>	
+				
+{else}
+<center>Ваша корзина пуста.</center>
+{/if}
+
+		{literal}
+		<script>
+			$(document).ready(function(){
+
+				$("select[name='dostavka']").change(function(){
+					var dostavka = $(this).val();
+					$.post('http://' + location.hostname + '/catalog/', {ajax:1, dostavka : dostavka}, 
+							function(response){  
+								var array = eval(response); 
+								$("#dostavka_ajax").html(array[0]);
+								$("#total_ajax").html(array[1]);
+							});
+					$("#dostavka_caption").html( $("select[name='dostavka'] option:selected").attr("caption") );
+				});
+				
+			});
+
+		</script>
+		{/literal}

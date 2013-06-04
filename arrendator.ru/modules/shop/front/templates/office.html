@@ -1,0 +1,20 @@
+{$cat_content.text}
+
+{assign var="count" value=0}
+
+{if $products_list}
+
+<table style="padding:0;border:0; border-collapse:collapse;">
+{foreach from=$products_list item=item name=for1}
+{if $smarty.foreach.for1.first}<tr>{elseif $smarty.foreach.for1.iteration % 4 == 0}</tr><tr>{/if}
+
+{assign var="count" value=`$count+1`}
+<td class="firms"><p><a href="{$item.site_url}">{$item.name|strip_tags}</a> <span class="stgrey">{$item.small_text|strip_tags}</span></p>
+<p{if $count==2} class="borders"{/if}>{$item.description|strip_tags}</p></td>
+{if $count >= 3}{assign var="count" value=0}{/if}
+
+{if $smarty.foreach.for1.last}</tr>{/if}
+{/foreach}
+</table>
+
+{/if}

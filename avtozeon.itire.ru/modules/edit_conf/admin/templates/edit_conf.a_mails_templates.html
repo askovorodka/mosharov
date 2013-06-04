@@ -1,0 +1,147 @@
+{literal}
+<script language="javascript" type="text/javascript">
+function validateMailsTemplates(form){
+
+   var i;
+
+   var str = '';
+
+   var status = true;
+
+   var bad_field;
+
+   var fields = new Array();
+
+   var prompts = new Array();
+
+    fields[fields.length] = 'key';
+
+    prompts[prompts.length] = 'Ключ шаблона :';
+
+    fields[fields.length] = 'name';
+
+    prompts[prompts.length] = 'Название шаблона :';
+
+    fields[fields.length] = 'template';
+
+    prompts[prompts.length] = 'Шаблон :';
+
+
+    for (i = 0; i < fields.length; i++)
+
+    {
+        var field = form[fields[i]];
+        if (trim(field.value) == '' || field.value==0)
+        {
+           if (str != '')
+           {
+              str += '\n';
+            }
+            else
+            {
+               bad_field = field;
+             }
+           str += prompts[i];
+          }
+     }
+
+    if (trim(form['key'].value) != ""){
+      var goodKey = new String();
+      goodKey = form['key'].value.match(/\b(^([0-9a-zA-Z_]+)$)\b/gi);
+      if(!goodKey){
+        alert("Код шаблона должен состоять из латинских букв !");
+        return false;
+      }
+    }
+
+    if (str != '')
+    {
+         str +='\n';
+         alert("Не заполнены необходимые поля:\n" + str);
+         status= false;
+         return false;
+     }
+
+   form.submit();
+}
+
+function trim(s){return s.replace(/(^\s+)|(\s+$)/g,"");}
+</script>
+{/literal}
+
+
+
+
+
+
+
+
+{if $mode != "edit"}
+<b>Доступные шаблоны писем в системе:</b>
+<br><br>
+
+{if !$mails_list}
+Нет ни одного доступного шаблона письма
+{else}
+
+<form action="" method=post>
+<table width=70% cellspacing=1 cellpadding=3>
+{foreach from=$mails_list item="template"}
+	<tr>
+		<td width=40% align=left>{$template.name}</td>
+		<td width=40% align=left>{$template.mail_key}</td>
+		<td width=40% align=left>{$template.status}</td>
+		<td>[<a href=index.php?mod=edit_conf&action=edit_mail_template&id={$template.mail_key}>Редактировать</a>] / [<a href=index.php?mod=edit_conf&action=delete_mail_template&id={$template.mail_key}>Удалить</a>]</td>
+	</tr>
+{/foreach}
+</table>
+</form>
+{/if}
+
+<br><br><br>
+
+<form action="" method=post onSubmit="return validateMailsTemplates(this);">
+<table width=70% cellspacing=1 cellpadding=3>
+	<tr>
+		<td>Ключ шаблона:</td>
+		<td width=40%><input type=text name=key class=field value="{$key}"></td>
+	</tr>
+	<tr>
+		<td>Название шаблона:</td>
+		<td width=40%><input type=text name=name class=field value="{$name}"></td>
+	</tr>
+	<tr>
+		<td>Шаблон:</td>
+		<td><textarea cols="55" rows="15" name="template"></textarea></td>
+	</tr>
+	<tr>
+		<td><input type=submit name=submit_add_mail_template value="Добавить"></td>
+	</tr>
+</table>
+</form>
+
+{else}
+<b>Редактирование шаблона {$name}</b>
+<br><br><br>
+
+<form action="" method=post onSubmit="return validateMailsTemplates(this);">
+<table width=70% cellspacing=1 cellpadding=3>
+	<tr>
+		<td>Ключ шаблона:</td>
+		<td width=40%><input type=text name=key class=field value="{$key}"></td>
+	</tr>
+	<tr>
+		<td>Название шаблона:</td>
+		<td width=40%><input type=text name=name class=field value="{$name}"></td>
+	</tr>
+	<tr>
+		<td>Шаблон:</td>
+		<td><textarea cols="55" rows="15" name="template">{$text}</textarea></td>
+	</tr>
+	<tr>
+		<td><input type=submit name=submit_edit_mail_template value="Изменить"></td>
+	</tr>
+</table>
+</form>
+
+{/if}

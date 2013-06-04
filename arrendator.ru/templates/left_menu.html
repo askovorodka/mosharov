@@ -1,0 +1,20 @@
+{if $subpages_list}
+	<div class="lmen"><a href="{$base_url}/{$page_content.url}/" title="{$page_content.name|strip_tags}">{$page_content.name|strip_tags}</a><br>
+		<div class="lmeni">
+		{foreach from=$subpages_list item=page}
+		<a href="{$base_url}/{$page.full_url}" title="{$page.name|strip_tags}">{$page.name|strip_tags}</a>
+		{/foreach}
+		</div>
+	</div>
+{elseif $other_page && $parent_page.param_level > 0}
+
+	<div class="lmen"><a href="{$base_url}/{$parent_page.url}/" title="{$parent_page.name|strip_tags}">{$parent_page.name|strip_tags}</a><br>
+		<div class="lmeni">
+		{foreach from=$other_page item=page}
+		<a href="{$base_url}/{$parent_page.url}/{$page.url}/" title="{$page.name|strip_tags}">{$page.name|strip_tags}</a>
+		{/foreach}
+		</div>
+	</div>
+
+
+{/if}

@@ -13,7 +13,7 @@
 		          <tr>
 		            <td class="tablecatimg"><a href="{$base_url}/{$product.full_url}/{$product.product_type}"><img src="/images/img82x62/uploaded_files/shop_images/{$product.image}" width="82" height="62" /></td>
 		            <td>{$product.article}</td>
-		            <td class="naimenovanie">{$product.name}</td>
+		            <td class="naimenovanie"><a href="{$base_url}/{$product.full_url}/{$product.product_type}">{$product.name}</a></td>
 		            <td>{$product.sklad}</td>
 		            <td class="price">{$product.price|format_price} руб.</td>
 		          </tr>

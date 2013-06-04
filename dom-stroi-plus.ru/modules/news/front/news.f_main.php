@@ -89,14 +89,14 @@ SWITCH (TRUE) {
 			
   			// ----парсинг контекта для вставки фотоальбома, таблицы и формы -- //
 			
-			$photo = new Photoalbum();
-			$result['text'] = $photo->pregReplace($result['text'],BASE_PATH,PHOTOS_FOLDER,PHOTOS_PER_PAGE_SUP);
+			//$photo = new Photoalbum();
+			//$result['text'] = $photo->pregReplace($result['text'],BASE_PATH,PHOTOS_FOLDER,PHOTOS_PER_PAGE_SUP);
 				
-			$table = new Table();
-			$result['text'] = $table->pregReplace($result['text'],BASE_PATH);
+			//$table = new Table();
+			//$result['text'] = $table->pregReplace($result['text'],BASE_PATH);
 
-			$form = new Form();
-			$result['text'] = $form->pregReplace($result['text'],BASE_PATH);
+			//$form = new Form();
+			//$result['text'] = $form->pregReplace($result['text'],BASE_PATH);
 
 			// ---- конец парсинга контекта для вставки фотоальбома, таблицы и формы -- //
 			

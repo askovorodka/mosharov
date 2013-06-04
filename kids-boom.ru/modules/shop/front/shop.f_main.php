@@ -3,7 +3,6 @@
 //error_reporting(E_ALL);
 //ini_set('display_errors','On');
 
-
 //$_SESSION['fw_basket']=array();
 
 if ($switch_default=='on' or $main_module=='on') {
@@ -894,6 +893,7 @@ SWITCH (TRUE) {
 	
 	CASE ((count($url)==2 && preg_match("/\?search_product=(.+)$/",$url[$n])) or (count($url)==2 && preg_match("/\?search_product=(.+)&page=([1-9]+)$/",$url[$n]))):
 
+		
 		$navigation[]=array("url" => 'search',"title" => 'Поиск');
 
 		$search=mysql_real_escape_string($_GET['search_product']);
@@ -905,13 +905,14 @@ SWITCH (TRUE) {
 		else $page=1;
 		
 
-		$search_results=$db->get_all("SELECT fw_products.*, fw_catalogue.image FROM fw_products left join fw_catalogue on fw_products.parent = fw_catalogue.id WHERE fw_products.name LIKE '%$search%' AND fw_products.status='1' ");
+		//echo "SELECT fw_products.*, fw_catalogue.image FROM fw_products left join fw_catalogue on fw_products.parent = fw_catalogue.id WHERE fw_products.name LIKE '%$search%' AND fw_products.status='1' ";
+		$search_results=$db->get_all("SELECT fw_products.*, concat(fw_products_images.id,'.',fw_products_images.ext) as image FROM fw_products left join fw_products_images on fw_products.id = fw_products_images.parent WHERE fw_products.name LIKE '%$search%' AND fw_products.status='1' ");
 
 		if ($search_results)
 		{
 			foreach ($search_results as $key=>$val)
 			{
-				$search_results[$key]['full_url'] = $shop->getFullUrlProduct($val['id']);
+				$search_results[$key]['full_url'] = $shop->getFullUrlProduct($val['id'], 'catalog');
 				$model = $shop->getCategory($val['parent']);
 				if ($model)
 				{
@@ -928,14 +929,14 @@ SWITCH (TRUE) {
 
 		$smarty->assign("search_string",$search);
 
-		$smarty->assign("search_results",$search_results);
+		$smarty->assign("products",$search_results);
 
 		$smarty->assign("total_pages",$pager['total_pages']);
 		$smarty->assign("current_page",$pager['current_page']);
 		$smarty->assign("pages",$pager['pages']);
 
 		$page_found=true;
-		$template='search_products.html';
+		$template='shop.f_search.html';
 
 	BREAK;
 

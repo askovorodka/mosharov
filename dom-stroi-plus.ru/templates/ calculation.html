@@ -1,0 +1,82 @@
+<form class="classform" name="form1" method="post">
+<p><strong>1. Выберите тип строительного материала:</strong></p>
+
+<div class="block">
+    <p><label><input name="material" type="radio" value="radiobutton" onClick="chek1(0)">Брус</label></p>
+    <p><select name="select0" id="select0" disabled>
+	<option > 150x150</option>
+	<option>200x150</option>
+	<option>200x200</option>
+    </select>
+	</p>
+</div>
+
+<div class="block">
+   <p><label><input name="material" type="radio" value="radiobutton" onClick="chek1(1)">Профилированный брус</label></p>
+	<p>
+	<select name="select1" id="select1" disabled>
+	<option > 140x145</option>
+	<option>190x145</option>
+	<option>190x195</option>
+    </select>
+	</p>
+</div>
+
+<div class="block">
+    <p><label><input name="material" type="radio" value="radiobutton" onClick="chek1(2)">Оцилиндрованное бревно</label></p>
+	<p>
+	<select name="select2" id="select2" disabled>
+	<option>&empty;20</option>
+	<option>&empty;22</option>
+	<option>&empty;24</option>
+	<option>&empty;26</option>
+	<option>&empty;28</option>
+    </select>
+	</p>
+</div>
+
+<p style="clear:left;"><strong>2. Выберите размеры дома:</strong></p>
+
+
+<div style="float:left;">
+<p><label>Длина дома<br><input class="classtext" name="" type="text"></label></p>
+</div>
+
+<div style=" float:left;">
+<p><label>Ширина дома<br><input class="classtext" name="" type="text"></label></p>
+</div>
+
+<div style="float:left;">
+<p><label>Общая длина стен<br><input class="classtext" name="" type="text"></label></p>
+</div>
+
+<p style="clear:left;"><strong>3. Выберите тип дома:</strong></p>
+
+<div style="float:left"> <img src="insertfiles/dom-chb1.jpg">
+ <p><label><input name="etazh" type="radio" onClick="franton()">Одноэтажный дом</label></p>
+</div>
+
+<div style="float:left"><img src="insertfiles/dom-chb2.jpg">
+<p><label><input name="etazh" type="radio" onClick="nofranton()">Полтораэтажный дом дом</label></p>
+</div>
+
+<div style="float:left;"><img src="insertfiles/dom-chb3.jpg">
+<p><label><input name="etazh" type="radio" onClick="franton()">Двухэтажный дом</label></p>
+</div>
+<div style="clear:both;">
+<p><strong>4. Высота этажей: </strong></p>
+
+<p><label>Высота первого этажа <input class="classtext" name="vysota_etazhey1" type="text"></label></p>
+<p><label>Высота второго этажа <input class="classtext" name="vysota_etazhey" type="text"></label></p>
+
+<input class="classbut" type="submit" onclick="calc(this.form); return false;" value="Сделать расчет">
+</div>
+</form>
+
+
+<div id="div1">
+Здесь будет выведена высота этажей
+</div>
+
+<script src="http://dom-stroi-plus.ru/javascript/js/form_calc2.js" type="text/javascript"></script>
+

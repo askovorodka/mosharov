@@ -1,0 +1,15 @@
+{foreach from=$main_menu item=menu}
+	<div class="maind"><a title="{$menu.name}" href="{if $menu.type=='link'}{$menu.link}{elseif $menu.url == 'home'}/{else}{$base_url}/{$menu.url}/{/if}">{$menu.name|strip_tags}</a><br>
+	{if $menu.submenu}
+	<div class="innd">
+	{foreach from=$menu.submenu item=submenu}
+	{if $submenu.type=='link'}
+		<a href="{$submenu.link}" title="{$submenu.name|strip_tags}">{$submenu.name|strip_tags}</a>
+	{else}
+		<a href="{$base_url}/{$menu.url}/{$submenu.url}/" title="{$submenu.name|strip_tags}">{$submenu.name|strip_tags}</a>
+	{/if}
+	{/foreach}
+	</div>
+	{/if}
+	</div>
+{/foreach}

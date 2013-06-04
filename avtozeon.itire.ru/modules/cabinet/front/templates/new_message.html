@@ -1,0 +1,65 @@
+<p><a href="/forum/">Вернуться в Форум</a></p>
+<p><a href="/cabinet/">Вернуться в Личный кабинет</a></p>
+
+{literal}
+<script language="JavaScript">
+function check_form() {
+	if ((document.new_message.to.value=='') || (document.new_message.text.value=='')) {
+		alert ("Заполните, пожалуйста, обязательные поля");
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+</script>
+{/literal}
+
+<center>
+
+<form action="" name=new_message method=post onsubmit="return check_form();">
+
+{if $error_message}<font color=red><b>{$error_message}</b></font><br><br>{/if}
+{if $message}<font color=green><b>{$message}</b></font><br><br>{/if}
+
+
+
+<table width="70%" cellpadding="5" cellspacing="1" bgcolor="#000000">
+	<tr>
+		<td width=20% bgcolor=#cccccc>
+			Кому:
+		</td>
+		
+		<td bgcolor="#ffffff">
+			<input type=text name=to value="{$to}" class=field style="width:100%">
+		</td>
+	</tr>
+	
+	<tr>
+		<td width=20% bgcolor=#cccccc>
+			Тема:
+		</td>
+		
+		<td bgcolor="#ffffff">
+			<input type=text name=subject class=field style="width:100%">
+		</td>
+	</tr>
+	
+	<tr>
+		<td width=20% bgcolor=#cccccc>
+			Сообщение:
+		</td>
+		
+		<td bgcolor="#ffffff">
+			<textarea name=text class=field style="width:100%" rows=10>{if $comment!=''}>> {$comment|replace:"\n":"\n>> "}{/if}</textarea>
+		</td>
+	</tr>
+</table>
+
+<p><br><input type=submit name="submit_new_message" value="Отправить"></p>
+
+
+
+</form>
+
+</center>

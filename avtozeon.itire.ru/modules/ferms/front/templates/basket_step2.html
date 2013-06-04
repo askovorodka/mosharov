@@ -1,0 +1,36 @@
+<form action={$module_url}/basket/submit/ method=post>
+<input type=hidden name=submit_order value=1>
+<h1 style="margin-top : 26px;">Подтверждение заказа:</h1>
+
+<table cellspacing="0" cellpadding="0" border="0">
+<tr valign="top"><td width="130" align="right">Ф.И.О.&nbsp;</td><td><input style="font-size:11px;border:0px;" type="text" name="customer_name" value="{$user.name}" class="field" /></td></tr>
+<tr valign="top"><td width="130" align="right">E-mail&nbsp;</td><td><input style="font-size:11px;border:0px;" type="text" name="customer_mail" value="{$user.mail}" class="field" /></td></tr>
+<tr valign="top"><td width="130" align="right">Телефон&nbsp;</td><td><input style="font-size:11px;border:0px;" type="text" name="customer_tel" value="{$user.tel}" class="field" /></td></tr>
+<tr valign="top"><td width="130" align="right">Адрес доставки&nbsp;</td><td><input style="font-size:11px;border:0px;" type="text" name="customer_deliver" value="{$user.site}" class="field" /></td></tr>
+<tr valign="top"><td width="130" align="right">Комментарии&nbsp;</td><td><textarea style="font-size:11px;" name="customer_comments" style="width : 198px; height : 94px;  border : 1px solid #999999;"></textarea></td></tr>
+</table>
+
+<br>
+<br>
+<h1>Заказанные товары:</h1><br />
+<table width=100% cellspacing=1 cellpadding=3 bgcolor=#999999 >
+<tr align=center bgcolor=#ffffff>
+<td><b>Наименование</b></td>
+<td width=15%><b>Кол-во</b></td>
+<td width=15%><b>Цена</b></td>
+</tr>
+{foreach from=$basket item=product}
+<tr bgcolor=#ffffff>
+<td>{$product.name}</td>
+<td align="center">{$product.number}</td>
+<td>{math equation="x * y" x=$product.price y=$product.number format="%.2f"} {$currency}</td>
+</tr>
+{/foreach}
+</table>
+<br />
+Итого:<strong style="font-size : 11px;">{$total_price}</strong> {$currency}
+
+<br /><br /><br />
+<center><table cellspacing=0><tr><td><a href="javascript: history.back();"><img src="/templates/img/btn_back.jpg" border=0></a></td><td><input type="image" name="submit_order" src="templates/img/zakaz.gif" /></td></tr></table></center>
+</form>
+<br><br>

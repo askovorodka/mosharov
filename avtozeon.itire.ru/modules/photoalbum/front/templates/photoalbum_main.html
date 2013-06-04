@@ -1,0 +1,54 @@
+{if $cat_list}
+<b>Подразделы:</b>
+<table width={if $count_cat=='1'}{/if}33{if $count_cat=='2'}66{/if}{if $count_cat>2}100{/if}% cellspacing=1 cellpadding=3>
+{assign var="i" value=0}
+{foreach from=$cat_list item=cat}
+{if $i==3}{assign var="i" value=0}</tr><tr>{/if}
+<td valign=top>
+• <a href={$module_url}/{if $cat.name=='/'}{else}{$cat.full_url}{/if}>{if $cat.name=='/'}Основной{else}{$cat.name}{/if}</a> {if $cat.albums>0}<small>[{$cat.albums}]</small>{/if}
+{if $cat.subcat}
+<br>
+{foreach from=$cat.subcat item=subcat}
+{str_repeat str="&nbsp;" num=$subcat.param_level mod="4"}<img src={$templates_url}/img/tree.gif><a href={$module_url}/{$subcat.full_url}>{$subcat.name}</a><br>
+{/foreach}
+{/if}
+</td>
+{math equation="x + y" x=$i y=1 assign="i"}
+{/foreach}
+</table>
+<br>
+<small>[n] - количество альбомов в разделе</small>
+<br><br>
+{/if}
+
+{if $albums_list}
+<b>Фотоальбомы:</b><br><br>
+<table width=100% cellspacing=1 cellpadding=3>
+{foreach from=$albums_list item=album}
+<tr>
+<td width=5%><a href={$current_url}/album_{$album.id}><img src={$base_url}/{$photos_folder}/small-{$album.image} border=0></a></td>
+<td valign=top>
+<a href={$current_url}/album_{$album.id}>{$album.name}</a> <small>(создан {$album.insert_date|date_format:"%d.%m.%Y в %T"})</small><br>
+Фотографий в альбоме: <b>{$album.photos}</b>
+</td>
+</tr>
+{/foreach}
+</table>
+{if $total_pages>1}
+<br><br>
+<center>
+Страница: <a href="{$current_url}/?page=1"><<</a>
+
+{section name=p loop=$pages}
+	{if $pages[p]==$current_page}
+	{$pages[p]}
+	{else}
+	<a href="{$current_url}/?page={$pages[p]}">{$pages[p]}</a>
+	{/if}
+{/section}
+	
+<a href="{$current_url}/?page={$total_pages}">>></a>
+</center>
+{/if}
+
+{/if}

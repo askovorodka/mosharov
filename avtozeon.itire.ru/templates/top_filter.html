@@ -1,0 +1,157 @@
+    	<table class="filtertbl">
+          <tr>
+            <td>
+<!--- FILTER DISK --->
+                <form action="{$base_url}/catalog/search/" method="GET" id="filter_disk">
+            	<input type="hidden" name="filter_type" value="disk">
+
+				<table class="fint">
+                  <tr>
+                    <td>Диаметр</td>
+                    <td>
+             	    <select class="mainselect" name="disk_diameter">
+             	    <option value="">Любой</option>
+             	    {foreach from=$disk_diameter item=ddiameter}
+                      <option value="{$ddiameter.disk_diameter}" {if $smarty.get.disk_diameter == $ddiameter.disk_diameter}selected{/if}>{$ddiameter.disk_diameter|format_number}</option>
+                    {/foreach}
+                    </select>
+                	</td>
+                    <td>Крепеж</td>
+                    <td>
+             	    <select class="mainselect" name="disk_krep">
+             	    <option value="">Любой</option>
+             	    {foreach from=$disk_krep item=dkrep}
+                      <option value="{$dkrep.disk_krep}" {if $smarty.get.disk_krep == $dkrep.disk_krep}selected{/if}>{$dkrep.disk_krep|format_number}</option>
+                    {/foreach}
+                    </select>
+                </td>
+                    <td>PCD</td>
+                    <td>
+             	    <select class="mainselect" name="disk_pcd">
+             	    <option value="">Любой</option>
+             	    {foreach from=$disk_pcd item=dpcd}
+                      <option value="{$dpcd.disk_pcd}" {if $smarty.get.disk_pcd == $dpcd.disk_pcd}selected{/if}>{$dpcd.disk_pcd|format_number}</option>
+                    {/foreach}
+                    </select>
+                </td>
+                  </tr>
+                  <tr>
+                    <td>Ширина</td>
+                    <td>
+             	    <select class="mainselect" name="disk_width">
+             	    <option value="">Любая</option>
+             	    {foreach from=$disk_width item=dwidth}
+                      <option value="{$dwidth.disk_width}"  {if $smarty.get.disk_width == $dwidth.disk_width}selected{/if}>{$dwidth.disk_width|format_number}</option>
+                    {/foreach}
+                    </select>
+                </td>
+                    <td>ET</td>
+                    <td>
+             	    <select class="mainselect" name="disk_et">
+             	    <option value="">Любой</option>
+             	    {foreach from=$disk_et item=det}
+                      <option value="{$det.disk_et}" {if $smarty.get.disk_et == $det.disk_et}selected{/if}>{$det.disk_et|format_number}</option>
+                    {/foreach}
+                    </select>
+                </td>
+                    <td>Бренд</td>
+                    <td>
+             	    <select class="mainselect" name="disk_manufacturer">
+             	    <option value="">Все</option>
+             	    {foreach from=$disk_manufacturer item=disk}
+                      <option value="{$disk.id}" {if $smarty.get.disk_manufacturer == $disk.id}selected{/if}>{$disk.name}</option>
+                    {/foreach}
+                    </select>
+                </td>
+                  </tr>
+                  <tr>
+                  	<td></td>
+                  	<td colspan="3"><a href="/catalog/rims/">КАТАЛОГ ДИСКОВ</a></td>
+                    <td colspan="2"><input type="image" src="{$template_image}but_search_disk.gif" class="fintb" title="Найти диски" /></td>
+                  </tr>
+                </table>
+                </form>
+<!--- /FILTER DISK --->
+            </td>
+            <td class="filtertblcenter"></td>
+            <td>
+<!--- FILTER TIRE --->
+                <form action="{$base_url}/catalog/search/" method="GET" id="filter_tire">
+            	<input type="hidden" name="filter_type" value="tire">
+
+				<table class="fint">
+                  <tr>
+                    <td>Ширина</td>
+                    <td>
+             	    <select class="mainselect" name="tire_width">
+             	    <option value="">Любая</option>
+             	    {foreach from=$tires_width item=tire_width}
+             	    	{if trim($tire_width.tire_width) != ""}
+                      		<option value="{$tire_width.tire_width}" {if $smarty.get.tire_width == $tire_width.tire_width}selected{/if}>{$tire_width.tire_width|format_number}</option>
+                      	{/if}
+                    {/foreach}
+                    </select>
+                </td>
+                    <td>Профиль</td>
+                    <td>
+             	    <select class="mainselect" name="tire_height">
+             	    <option value="">Любой</option>
+             	    {foreach from=$tires_height item=tire_height}
+             	    	{if $tire_height.tire_height > 0}
+                      		<option value="{$tire_height.tire_height}" {if $smarty.get.tire_height == $tire_height.tire_height}selected{/if}>{$tire_height.tire_height|format_number}</option>
+                      	{/if}
+                    {/foreach}
+                    </select>
+                </td>
+                    <td>Диаметр</td>
+                    <td>
+             	    <select class="mainselect" name="tire_diameter">
+             	    <option value="">Любой</option>
+             	    {foreach from=$tires_diameter item=tires_diameter}
+             	    	{if $tires_diameter.tire_diameter > 0}
+                      		<option value="{$tires_diameter.tire_diameter}" {if $smarty.get.tire_diameter == $tires_diameter.tire_diameter}selected{/if}>{$tires_diameter.tire_diameter|format_number}</option>
+                      	{/if}
+                    {/foreach}
+                    </select>
+                </td>
+                  </tr>
+                  <tr>
+                    <td>Бренд</td>
+                    <td>
+             	    <select class="mainselect" name="tire_manufacturer">
+             	    <option value="">Все</option>
+             	    {foreach from=$tires_manufacturer item=tire}
+             	    	{if trim($tire.name) != ""}
+                      		<option value="{$tire.id}" {if $smarty.get.tire_manufacturer == $tire.id}selected{/if}>{$tire.name}</option>
+                      	{/if}
+                    {/foreach}
+                    </select>
+                </td>
+                    <td>Сезон</td>
+                    <td>
+             	    <select class="mainselect" name="tire_season">
+             	    	<option value="">Любой</option>
+                      	<option value="2" {if $smarty.get.tire_season == 2}selected{/if}>Лето</option>
+                      	<option value="1" {if $smarty.get.tire_season == 1}selected{/if}>Зима</option>
+                      	<option value="3" {if $smarty.get.tire_season == 3}selected{/if}>Всесезон</option>
+                    </select>
+                </td>
+                    <td>Шипы</td>
+                    <td>
+             	    <select class="mainselect" name="tire_spike">
+                      <option value="1" {if $smarty.get.tire_spike == 1}selected{/if}>Нет</option>
+                      <option value="2" {if $smarty.get.tire_spike == 2}selected{/if}>Да</option>
+                    </select>
+                </td>
+                  </tr>
+                  <tr>
+                  	<td></td>
+                  	<td colspan="3"><a href="/catalog/tyres/">КАТАЛОГ ШИН</a></td>
+                    <td colspan="2"><input type="image" src="{$template_image}but_search_tire.gif" class="fintb" title="Найти шины" /></td>
+                  </tr>
+                </table>
+                </form>
+<!--- /FILTER TIRE --->
+            </td>
+          </tr>
+        </table>

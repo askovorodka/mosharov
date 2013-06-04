@@ -1,0 +1,25 @@
+<html>
+<head>
+<title>Администраторская панель</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<link rel="stylesheet" type="text/css" href="templates/style.css">
+</head>
+
+<body>
+
+
+<DIV id=dhtmltooltip></DIV>
+{literal}
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/tooltips.js'></script>
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/common.js'></script>
+{/literal}
+
+<table width=100% class="content_table">
+
+	<tr><th>Название</th><th width=10%>Модуль</th><th width=6%>Статус</th></tr>
+
+	{assign var=_tmp_content value=$content}
+	{include file="../../modules/tree/admin/templates/mini_browser_list.html"}
+	</table>
+</body>
+</html>

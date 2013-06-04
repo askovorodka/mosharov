@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 
-#from mosharov_site.views import home
+from mosharov_site.views import home, pages
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -9,7 +9,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     
-    url(r'^$', 'mosharov_site.views.home', name='home'),
+    url(r'^$', home),
+    url(r'^pages$', pages),
     
     # url(r'^mosharov_site/', include('mosharov_site.foo.urls')),
 

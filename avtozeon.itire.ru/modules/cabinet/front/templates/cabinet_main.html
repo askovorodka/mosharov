@@ -1,0 +1,49 @@
+<p><strong>Уважаемый {$profile.name},</strong><br />здесь Вы можете посмотреть/отредактировать Ваши личные данные, а также посмотреть историю сделанных вами заказов.</p>
+<br />
+<!--CABINET-->
+<table cellspacing="8" cellpadding="0" border="0">
+<tr valign="top"><td width="130" align="right"><h5 style="color : #666666;">Ф.И.О.</h5></td><td class="td_cab"><h6 class="black">{$profile.name}</h6></td></tr>
+<tr valign="top"><td width="130" align="right"><h5 style="color : #666666;">Город</h5></td><td class="td_cab"><h6 class="black">{$profile.place}</h6></td></tr>
+<tr valign="top"><td width="130" align="right"><h5 style="color : #666666;">Адрес</h5></td><td class="td_cab"><h6 class="black">{$profile.site}</h6></td></tr>
+<tr valign="top"><td width="130" align="right"><h5 style="color : #666666;">E-mail</h5></td><td class="td_cab"><h6 class="black">{$profile.mail}</h6></td></tr>
+<tr valign="top"><td width="130" align="right"><h5 style="color : #666666;">Контактный телефон</h5></td><td class="td_cab"><h6 class="black">{$profile.tel}</h6></td></tr>
+</table>
+<table height="62" cellspacing="0" cellpadding="0" border="0" style="margin-bottom : 20px;">
+<tr valign="top">
+<td width="138" align="right"><h5 style="color : #666666;">Дополнительно</h5></td><td width="8"></td><td width="498" bgcolor="#f0f0f0" style="padding : 5px 12px;"><h6 class="black">{$profile.about}</h6></td>
+</tr>
+<tr valign="top">
+<td width="138"></td><td width="8"></td><td style="padding-top : 8px;"><a href="{$module_url}/profile/"><img src="templates/img/edit.gif" /></a></td>
+</tr>
+</table>
+
+
+<h2>История заказов</h2>
+
+<table width="99%" cellspacing="0" cellpadding="0" border="0" style="border-top : 1px solid #cfcfcf; margin-top : 3px;">
+
+{foreach from=$orders_list item=item}
+<!--ITEM-->
+<tr valign="top">
+	<td width="313" height="33" class="pad_top7 font10" style="padding-right : 55px;"><h2 class="font10">({$item.article}) | <a href="javascript:void(0);" style="font-size:10px;cursor:default;">{$item.name}</a></h2></td>
+	<td width="55" class="pad_top7 font10"><strong>{$item.product_count}</strong> шт.</td>
+	<td width="160" class="pad_top7 font10">
+	<table cellspacing=0 cellpadding=0 border=0>
+		<tr><td rowspan=2>Стоимость:&nbsp;</td>
+		<td><strong>{math equation="x * y" x=$item.price y=$item.product_count format="%.2f"}</strong> {$currency_site.znak}</td></tr>
+		<tr><td><strong>{math equation="x * y" x=$item.price2 y=$item.product_count format="%.2f"}</strong> {$currency_site2.znak}</td></tr>
+		</table>
+	</td>
+	<td class="pad_top7 font10">Дата заказа: <strong>{$item.insert_date|date_format:"%d.%m.%Y"}</strong></td>
+	<td class="pad_top7 font10">Статус заказа: <strong>{if $item.status==0}<font color='red'>ожидание</font>{elseif $item.status==1}<font color='yellow'>выполняется</font>{else}<font color='green'>выполнен</font>{/if}</strong></td>
+</tr>
+<tr valign="top">
+	<td width="313" style="padding-right : 55px; padding-bottom : 6px;" class="font10">{$item.small_description}</td><td colspan="4"></td>
+</tr>
+
+<tr><td colspan=4 style="border-top : 1px solid #EBE9E9; margin-top : 3px;">&nbsp;</td></tr>
+{/foreach}
+<!--ITEM-->
+</table>
+<!--CABINET-->
+<br><br>Чтобы покинуть систему нажмите <a href="{$module_url}/logout/" style="text-decoration: underline;">выход</a>.

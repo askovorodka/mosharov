@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<title>{$page_title}</title>
+<meta name="Keywords" content="{$meta_keywords}">
+<meta name="Description" content="{$meta_description}">
+{foreach from=$css item=css}
+<link rel="stylesheet" type="text/css" href="{$css}">
+{/foreach}
+{foreach from=$js item=js}
+<script src="{$js}" type="text/javascript"></script>
+{/foreach}
+</head>
+
+<body>
+<table class="maintbl" align="center">
+  <tr>
+    <td class="lft"><a href="/"><img src="/templates/img/logo.png" alt="Деловой центр «Знатъ»" /></a></td>
+    <td class="topt">
+<!---- TOP MENU ---->
+{include file="../templates/top_menu.html"}
+<!---- /TOP MENU ---->
+	</td>
+  </tr>
+  
+  <tr height="100%">
+    <td class="lftinn">
+<!---- LEFT MENU ---->
+	
+    {if $module_name == "shop"}
+    	{include file="`$smarty.const.TPL_SHOP_PATH`left_menu.html"}
+    {elseif $module_name == "page"}
+    	{include file="`$smarty.const.TPL_PATH`left_menu.html"}
+    {/if}
+	
+<!---- /LEFT MENU ---->
+<!---- BANNERS ---->
+	{banners group="1"}
+	{banners group="5"}
+	{banners group="6"}
+<!---- /BANNERS ---->
+	</td>
+    <td class="cont">
+
+<!---- CONTENT ---->
+Запрашиваемая страница не найдена.
+<!---- /CONTENT ---->
+
+
+<img src="/templates/img/clear.png" width="659" height="1" />
+	</td>
+  </tr>
+  <tr>
+    <td colspan="2">
+	<div class="dvbm">
+<!---- BOTTOM MENU ---->
+{banners group="10"}
+<!---- /BOTTOM MENU ---->
+	</div>
+	<div class="dvbr">
+	<img src="/templates/img/moscow.png" width="71" height="83">
+<!---- CONTACTS ---->
+	107140, Россия, г. Москва<br> ул. Большая академическая, дом 5<br> Т/Ф: +7 (495) 777-77-77<br> Email: <a href="mailto:info@cpt-eurasia.ru">info@cpt-eurasia.ru</a>
+<!---- /CONTACTS ---->
+	</div>
+	</td>
+  </tr>
+</table>
+</body>
+</html>

@@ -2,8 +2,8 @@
 
   define("DB_HOST","localhost");
   define("DB_NAME","kids-boom");
-  define("DB_USER","kids-boom");
-  define("DB_PASS","gthtgenmt");
+  define("DB_USER","kidsboom");
+  define("DB_PASS","Ckj;ysqGfhjkm145");
 
   define("ROOT", dirname(__FILE__) . "/../");
   define("DOMAIN", 'http://'.$_SERVER['SERVER_NAME'].'/');

@@ -1,0 +1,43 @@
+<form action="" method="POST" id="form_order_products">
+		<table class="itemlt itemltwide">
+              <tr class="itemltcapt">
+              	
+              	<td></td>
+
+                <td nowrap>
+                <a href="{$base_url}/{$current_url}&sort=name&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Наименование</a>
+                {if $sort == "name"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}
+                </td>
+
+                <td nowrap>
+                <a href="{$base_url}/{$current_url}&sort=article&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Артикул</a>
+                {if $sort == "article"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}
+                </td>
+
+                <td nowrap>
+                <a href="{$base_url}/{$current_url}&sort=price&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Цена</a>
+                {if $sort == "price"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}
+                </td>
+
+                <td>Кол-во</td>
+                <td>В корзину</td>
+                
+              </tr>
+              {foreach from=$search_results item=product name=product}
+              <tr>
+              	
+              	<td>{if $product.image}<a href="{$base_url}/catalog{$product.full_url}" class="CatalogImages" {if $product.image}image="/uploaded_files/shop_images/{$product.image}"{/if}><img src="{$template_image}camera.png"></a>{/if}</td>
+                <td class="itemlname"><a href="{$base_url}/catalog/{$product.full_url}">{$product.name}</a></td>
+                <td>{$product.article}</td>
+                <td>{$product.price|format_number} <span class="tableart">руб.</span></td>
+                <td>{if ($product.disk_width > 0 && $product.disk_sklad > 0) ||  ($product.tire_width > 0 && $product.tire_sklad > 0)}<input type="text" name="{$product.id}" value="{if $product.tire_sklad > 3}4{elseif $product.tire_sklad > 1}{$product.tire_sklad}{elseif $product.disk_sklad > 3}4{elseif $product.disk_sklad > 1}{$product.disk_sklad}{else}1{/if}">{/if}</td>
+                {if ($product.disk_width > 0 && $product.disk_sklad > 0) ||  ($product.tire_width > 0 && $product.tire_sklad > 0)}
+                	<td><a href="" name="add_order" title="В корзину">В корзину</a></td>
+                {else}
+                	<td class="itemred">Нет в наличии</td>
+                {/if}
+                
+              </tr>
+              {/foreach}
+            </table>
+</form>

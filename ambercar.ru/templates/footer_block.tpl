@@ -12,7 +12,7 @@
         <a href="http://ambercar.ru/company/partners/">Наши партнеры</a><br />
         <br /></div>
         <div><h3>Контакты</h3>
-        Москва, ул. Аллея Первой Маевки, дом 15 - <a href="http://goo.gl/maps/f6klu" target="_blank">карта проезда</a><br />
+        Москва, ул. Аллея Первой Маевки, дом 15 - <a href="http://maps.yandex.ru/?text=ambercar.ru&sll=37.6177%2C55.7558&sspn=0.782226%2C0.520073&z=17&results=20&ol=biz&oid=1179498881&ll=37.798475%2C55.725292&spn=0.011008%2C0.003076&l=map" target="_blank">карта проезда</a><br />
         Тел.: +7 495 772-13-98<br />
         Email: <a href="mailto:list@ambercar.ru">list@ambercar.ru</a>
         <br /></div>

@@ -1,5 +1,6 @@
 <?php 
 
+
 require_once 'lib/class.mail.php';
 
 switch ($_GET['type'])

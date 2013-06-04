@@ -10,11 +10,41 @@
 {foreach from=$js item=js}
 <script src="{$js}" type="text/javascript"></script>
 {/foreach}
+<link rel="icon" href="/templates/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/templates/favicon.ico" type="image/x-icon">
 </head>
 <body>
 <table class="mtbl" align="center">
   <tr>
-    <td class="toper"><a href="/"><img src="{$template_image}logo.gif" width="261" height="108"></a><div class="cln"></div><div class="big"></div></td>
+    <td class="toper"><a href="/"><img src="{$template_image}logo.gif" width="261" height="108"></a><div class="cln"></div>
+<div class="big-new">
+
+
+<!-- навигация в шапке около домика -->
+
+<div id="menu_top_left">
+<ul>
+<li><a href="http://dom-stroi-plus.ru/services/item_11/#o-brevno">простое бревно<img src="/templates/img/o-brevno.jpg"> </a></li>
+<li><a href="http://dom-stroi-plus.ru/services/item_11/#oc-brevno">оцилиндрованное бревно<img src="/templates/img/oc-brevno.jpg"></a></li>
+<li><a href="http://dom-stroi-plus.ru/home/item_18/#o-brus">простой брус<img src="/templates/img/o-brus.jpg"></a></li>
+<li><a href="http://dom-stroi-plus.ru/home/item_18/#p-brus">профилированный брус<img src="/templates/img/p-brus.jpg"></a></li>
+<li><a href="http://dom-stroi-plus.ru/home/item_18/#k-brus">клееный брус<img src="/templates/img/k-brus.jpg"></a></li>
+</ul>
+</div>
+
+
+<div id="menu_top_right">
+<ul>
+<li><a href="http://dom-stroi-plus.ru/dom-stroi-plus/item_22/#m-cherepica"><img src="/templates/img/m-cherepica.jpg">мягкая черепица</a></li>
+<li><a href="http://dom-stroi-plus.ru/dom-stroi-plus/item_22/#n-cherepica"><img src="/templates/img/n-cherepica.jpg">натуральная черепица</a></li>
+<li><a href="http://dom-stroi-plus.ru/dom-stroi-plus/item_22/#met-cherepica"><img src="/templates/img/met-cherepica.jpg">металлочерепица</a></li>
+<li><a href="http://dom-stroi-plus.ru/dom-stroi-plus/item_22/#ondulin"><img src="/templates/img/ondulin.jpg">ондулин</a></li>
+</ul>
+</div>
+
+</div>
+
+</td>
   </tr>
   <tr>
     <td class="tmenu">
@@ -38,8 +68,16 @@
 		{if $content=='' or !$content}
 			{assign var="content" value=""}
 			{fetch file=$template assign="content"}
-		{/if}<!-- контент -->
+		{/if}
 		{eval var=$content}
+
+{if $current_url=="dom-stroi-plus/item_27"}
+{include file="../templates/form.html"}
+{/if}
+
+{if $current_url=="dom-stroi-plus/item_29"}
+{include file="../templates/ calculation.html"}
+{/if}
 
     </div>
     </td>

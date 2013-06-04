@@ -1,0 +1,45 @@
+<p><a href="/forum/">Вернуться в Форум</a></p>
+<p><a href="/cabinet/">Вернуться в Личный кабинет</a></p>
+
+
+<center>
+
+
+
+<table width="70%" cellpadding="5" cellspacing="1" bgcolor="#000000">
+	<tr>
+		<td width=20% bgcolor=#cccccc>
+			Автор:
+		</td>
+		
+		<td bgcolor="#ffffff">
+			{$message.author}
+		</td>
+	</tr>
+	
+	<tr>
+		<td width=20% bgcolor=#cccccc>
+			Тема:
+		</td>
+		
+		<td bgcolor="#ffffff">
+			{$message.subject}
+		</td>
+	</tr>
+	
+	<tr>
+		<td width=20% bgcolor=#cccccc>
+			Сообщение:
+		</td>
+		
+		<td bgcolor="#ffffff">
+			{$message.text}
+		</td>
+	</tr>
+</table>
+
+
+<br><br>
+[ <a href={$module_url}/messages/new/?to={$message.author_login}>Ответить автору сообщения</a> ]&nbsp;&nbsp;&nbsp;&nbsp;
+[ <a href="{$module_url}/messages/new/?to={$message.author_login}&comment={$message.id}">Цитировать</a> ]
+</center>

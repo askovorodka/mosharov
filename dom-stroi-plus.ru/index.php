@@ -24,7 +24,6 @@ function gettime() {
 }
 $t_starttime= gettime ();
 
-
 require_once 'conf/globals.php';
 require_once 'lib/smarty/Smarty.class.php';
 require_once 'lib/class.db.php';
@@ -76,11 +75,23 @@ $switch_off_smarty=false;
 
 $css[] = BASE_URL."/templates/style.css";
 $css[]=BASE_URL."/templates/jquery.lightbox-0.5.css";
+$css[]=BASE_URL."/javascript/css/default.css";
+$css[]=BASE_URL."/javascript/css/form-stoimost.css";
+
+$js[]=BASE_URL."/javascript/js/jquery.js";
+$js[]=BASE_URL."/javascript/js/validate.min.js";
+$js[]=BASE_URL."/javascript/js/init.js";
+
+$js[]=BASE_URL."/javascript/js/form_calc.js";
+
 $js[]=BASE_URL."/javascript/jquery-1.5.min.js";
 $js[]=BASE_URL."/javascript/jquery.lightbox-0.5.js";
 $js[]=BASE_URL."/javascript/jquery.validate.min.js";
 $js[]=BASE_URL."/javascript/jquery.center.js";
 $js[]=BASE_URL."/javascript/tools_01-06-11.js";
+
+$js[]=BASE_URL."/javascript/js/jquery-1.8.0.min.js";
+
 //$js[]=BASE_URL."/javascript/tools.js";
 
 /* ------------- ��������� �������� ������ -------------- */

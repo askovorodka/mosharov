@@ -1,0 +1,158 @@
+{literal}
+<DIV id=dhtmltooltip></DIV>
+<SCRIPT language=JavaScript>
+<!--
+function confirm_delete(delete_id) {
+	if (confirm("Дейтсвительно удалить этот продукт?")) parent.location.href = "?mod=shop&action=delete_product&id=" + delete_id;
+}
+
+function select_all(elem, str) {
+	for (i=0; i<elem.form.elements.length; i++) {
+		if (elem.form.elements[i].type=="checkbox" && elem.form.elements[i].name.indexOf(str)==0) {
+			elem.form.elements[i].checked=elem.checked;
+		}
+	}
+}
+
+function viewSortProducts(catId){
+	try{
+		if (parseInt(catId)){
+			window.open("?mod=shop&action=viewSortProducts&cat_id=" + parseInt(catId),"","width=600,height=600,resizable=yes,scrollbars=yes");
+		}
+	}
+	catch(e){
+		alert(e.toString());
+	}
+}
+function show(name, elem)
+{
+if(document.getElementById(name).style.display!="none") {
+		document.getElementById(name).style.display="none";
+		elem.className = "plus";
+	}
+	else {
+		document.getElementById(name).style.display="";
+		elem.className = "minus";
+	}
+}
+-->
+</SCRIPT>
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/tooltips.js'></script>
+{/literal}
+
+<table width=100%>
+<tr>
+<td valign="top" colspan="2">
+<form action="" method=GET name=cat_sort>
+<input type=hidden name=mod value=shop>
+<input type=hidden name=action value=products_list>
+<input type=hidden name=page value={$current_page}>
+Сортировать по разделу:
+<select name=cat class=field onChange="document.cat_sort.submit();" style="width: 100%">
+{foreach from=$cat_list item=entry}
+<option value={$entry.id} {if $cat==$entry.id}selected=true{/if}>{$entry.full_title}</option>
+{/foreach}
+</select>
+</form>
+</td></tr>
+<tr>
+<td valign="top" width="50%">
+</td><td valign="top" style="padding-left: 10px;"><form action="" method=get>
+<input type=hidden name=mod value=shop>
+<input type=hidden name=action value=products_list>
+<input type=hidden name=page value={$current_page}>
+Поиск:<br>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr valign="top">
+    <td width="80%"><input type=text name=search class=field style="width:100%;" value="{$search}">&nbsp;</td>
+    <td>&nbsp;<input type=submit value="Искать"></td>
+  </tr>
+</table>
+</form></td>
+</tr></table>
+{if $products_list}
+<form action="" method="post" name=frm1>
+	<input type="hidden" name="action" value="resort_order">
+	<input type="hidden" name="parent_cat" value="{$cat}">
+<table width=100% class=content_table>
+	<tr>
+	<th width="30" align="center" style="border-right: none;"><input type="checkbox" onClick="select_all(this,'del_product')" style="margin-left: 7px;"></th>
+	<th style="border-left: none;">Продукция&nbsp;&nbsp;<a href="?mod=shop&action=products_list&cat={$cat}&sort=name&{if trim($type)!=""}type={$type}&{/if}order=asc&search={$search}&page={$current_page}" class=img_link><img src=templates/img/cat_up.gif border=0 width="7" height="6"></a> <a href="?mod=shop&action=products_list&cat={$cat}&{if trim($type)!=""}type={$type}&{/if}sort=name&order=desc&search={$search}&page={$current_page}" class=img_link><img src=templates/img/cat_down.gif border=0 width="7" height="6"></a></th>
+	<th width="80">Статус <a href="?mod=shop&action=products_list&cat={$cat}&sort=status&order=asc&search={$search}&page={$current_page}" class=img_link><img src=templates/img/cat_up.gif border=0 width="7" height="6"></a>&nbsp;<a href="?mod=shop&action=products_list&cat={$cat}&sort=status&order=desc&search={$search}&page={$current_page}" class=img_link><img src=templates/img/cat_down.gif border=0 width="7" height="6"></a></th>
+	
+	{*<th width="80">Хит продаж</th>*}
+	
+	<th width="80">Действия</th>
+	</tr>
+
+
+	{foreach name=tree from=$products_list item=entry}
+
+	{if $col==1}
+	{assign var="td" value='td1'}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value='td2'}
+	{assign var="col" value=1}
+	{/if}
+	<tr onmouseover="flatlinkOver(this)" {if $smarty.foreach.tree.iteration%2==1}onmouseout="flatlinkOut(this)"{else}onmouseout="flatlinkOut1(this)"{/if}>
+			<td class={$td}_left align="center"><input type="checkbox" name="del_product[{$entry.id}]"></td>
+			<td class={$td}_middle>
+				{if intval($entry.hit)==1}<img src="templates/img/hit.gif" width="21" height="21" border="0" alt="Хит продаж" align="right" style="margin: 5px 5px 0 10px;">{/if}<small><font color=#666666>{$entry.cat_title}</font></small><br><img src="templates/img/tree.gif"><b>{$entry.name}</b>
+			</td>
+			<td class={$td}_middle align=center width="80">
+			<a href="?mod=shop&action=change_product_status&id={$entry.id}" title="Изменить статус"><img src=templates/img/status_{$entry.status}.gif border=0></a>
+			</td>
+			{*<td align=center class={$td}_right width="80">{$entry.hit}</td>*}
+			<td align=center class={$td}_right width="80">
+				<a href="javascript:confirm_delete('{$entry.id}');" class=img_link onmouseover="ddrivetip('Удалить продукт')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
+				<a href=?mod=shop&action=edit_product&id={$entry.id} class=img_link onmouseover="ddrivetip('Редактировать продукт')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>
+			</td>
+		</tr>
+
+	{/foreach}
+    <tr>
+    <td class=td2_left style="height: 40px;" align="center"><img src="templates/img/tree.gif" style="margin-left: 5px;"></td>
+    <td class=td2_middle><a href="javascript: void(document.frm1.submit());" style="color: #FF0000; text-decoration: underline;">Удалить отмеченные</a>
+{if trim($cat)!=""}&nbsp;&nbsp;&nbsp;&nbsp;<img src="templates/img/blank.gif" width="8" height="10" border="0" alt="" style="margin-right: 10px;"><a href="javascript: void(viewSortProducts({$cat}));" style="color: #FF0000; text-decoration: underline;">Упорядочить продукцию</a>{/if}</td>
+<td class=td2_middle>&nbsp;</td><td class=td2_right>&nbsp;</td></tr></table>
+</form>
+{else}
+<table width=100% class=content_table>
+	<tr>
+	<th width="30" align="center" style="border-right: none;">&nbsp;</th>
+	<th style="border-left: none;">Продукция</th>>
+	<th width="80">Статус</th>
+{*{if $cat!=''}
+	<th width="8%">Порядок</th>
+{/if}*}
+	<th width="80">Действия</th>
+	</tr>
+    <tr>
+    <td class="td2_left" style="height: 40px;">&nbsp;</td>
+    <td colspan="5" class="td2_right"><strong>{if !$search}В этой категории нет предложений{else}Ничего не найдено!{/if}</strong></td></tr></table>
+{/if}
+
+</div>
+<br>
+
+<div class="add_but" style="float: left;" onClick="location.href='?mod=shop&action=add_product{if $cat}&cat={$cat}{/if}'"><div><a href="?mod=shop&action=add_product&type=office{if $cat}&cat={$cat}{/if}">Добавить офис</a></div></div>
+
+<div class="add_but" style="float: left;" onClick="location.href='?mod=shop&action=add_product{if $cat}&cat={$cat}{/if}'"><div><a href="?mod=shop&action=add_product&type=apartment{if $cat}&cat={$cat}{/if}">Добавить квартиру</a></div></div>
+
+<br>
+{if $total_pages>1}
+<br><br>
+<div class="listing">
+<li class="str">
+<ul>
+<li class="center"><a href="?mod=shop&action=products_list&cat={$cat}&type={$type}&sort={$sort}&order={$order}&search={$search}&page=1">&laquo;</a>
+{section name=p loop=$pages}
+  {if $pages[p]==$current_page}
+  <a class="active" href="?mod=shop&action=products_list&cat={$cat}&sort={$sort}&type={$type}&order={$order}&search={$search}&page={$pages[p]}">{$pages[p]}</a>
+  {else}
+  <a href="?mod=shop&action=products_list&cat={$cat}&sort={$sort}&type={$type}&order={$order}&search={$search}&page={$pages[p]}">{$pages[p]}</a>
+  {/if}
+{/section}
+<a href="?mod=shop&action=products_list&cat={$cat}&type={$type}&sort={$sort}&order={$order}&search={$search}&page={$total_pages}">&raquo;</a></li>
+</ul></li></div>{/if}

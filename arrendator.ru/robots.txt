@@ -1,0 +1,8 @@
+User-Agent: Yandex
+
+Host: arrendator.ru
+Crawl-delay: 3
+
+User-Agent: *
+
+Sitemap: http://arrendator.ru//sitemap.xml

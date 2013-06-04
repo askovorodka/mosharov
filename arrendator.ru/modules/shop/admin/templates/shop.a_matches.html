@@ -1,0 +1,97 @@
+<strong>Соответствия категории</strong>
+
+<form action="" name="add_matches" method="post">
+<table style="width:100%;">
+	<tr>
+		<th>Категории каталога (1й уровень каталога)</th>
+		<th>Категории прайс-листа (2й уровень каталога)</th>
+		<th></th>
+	</tr>
+
+	{foreach from=$cat_list item=category}
+		{if $category.matches}	
+		<tr>
+			<td>{$category.name}</td>
+			<td><ul>{foreach from=$category.matches item=match}<li>{$match.group_prod}&nbsp;(<a href="/admin/index.php?mod=shop&action=delete_match_single&cat_id={$match.cat_id}&group_prod={$match.group_prod}">удалить</a>)</li>{/foreach}</ul></td>
+			<td><a href="/admin/index.php?mod=shop&action=delete_match&cat_id={$category.id}">удалить соответствие</a></td>
+		</tr>
+		{/if}
+	{/foreach}
+
+
+	<tr>
+		<th colspan="3">Добавить новое соответствие</th>
+	</tr>
+
+
+	<tr>
+		<td><select name="category">{foreach from=$cat_list item=category}{if $category.param_level == 1}<option value="{$category.id}">{$category.name|strip_tags}</option>{/if}{/foreach}</select></td>
+		<td>
+			<div style="width:100%; height:300px; overflow:auto;">
+				<ul style="list-style:none;">
+					{foreach from=$non_related item=row}
+						<li><input type="checkbox" {*if in_array($row.group_prod, $checked_imported_rows)}disabled{/if*} name="imported[{$row.name}]" id='{$row.name}'><label for='{$row.name}'>{$row.name}</label></li>
+					{/foreach}
+				</ul>
+			</div>
+		</td>
+		<td><input type="submit" name="submit_add_match" value="Добавить соответствие" /></td>
+	</tr>
+</table>
+</form>
+
+
+
+
+{*
+<strong>Редактировать соответствия категорий</strong>
+
+{if $matches}
+<form action="" name=edit_matches method=post>
+<table width=100% class=content_table>
+	  <tr>
+	    <th>Название в прайсе</th>
+	    <th>Название в каталоге</th>
+	    <th>Уровень</th>
+	    <th></th>
+	  </tr>
+
+	{foreach from=$matches item=item}
+	  <tr>
+	    <td><input type="text" name="name_feed[{$item.id}]" value="{$item.name_feed|strip_tags}" /></td>
+	    <td><input type="text" name="name_db[{$item.id}]" value="{$item.name_db|strip_tags}" /></td>
+	    <td><select name="param_level[{$item.id}]"><option value="2" {if $item.param_level == 2}selected{/if}>Категория<option value="3" {if $item.param_level == 3}selected{/if}>Подкатегория</select></td>
+	    <td><a href="/admin/index.php?mod=shop&action=delete_match&id={$item.id}" onClick="return confirm('Удалить категорию: {$item.name_feed}');">Удалить</a>
+	  </tr>
+	{/foreach}
+
+	  <tr>
+	    <td colspan="3"><input name=submit_edit_matches type=submit value="Изменить соответствия"></td>
+	  </tr>
+
+</table>
+</form>
+
+{else}
+<center>Соответствий нет</center>
+{/if}
+<br>
+
+<strong>Добавить новое соответствие</strong>
+<form action="" name=edit_matches method=post>
+<table width=100% class=content_table>
+	  <tr>
+	    <th>Название в прайсе</th>
+	    <th>Название в каталоге</th>
+	    <th>Уровень</th>
+	    <th></th>
+	  </tr>
+	  <tr>
+	    <td><input type="text" name="name_feed" value="" /></td>
+	    <td><input type="text" name="name_db" value="" /></td>
+	    <td><select name="param_level"><option value="2">Категория<option value="3">Подкатегория</select></td>
+	    <td><input name=submit_add_match type=submit value="Добавить соответствие"></td>
+	  </tr>
+</table>
+</form>
+*}

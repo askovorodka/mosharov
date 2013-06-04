@@ -3,7 +3,7 @@
 class Common {
 
 	
-	function generate_main_menu($level=0) {
+	static function generate_main_menu($level=0) {
 
 		global $db;
 		
@@ -15,7 +15,6 @@ class Common {
 			$level_str="param_level BETWEEN 0 AND $level AND";
 		}
 
-		//$res=$db->get_all("SELECT * FROM fw_tree WHERE $level_str in_menu='1' AND status='1' ORDER BY param_left");
 		$res=$db->get_all("SELECT * FROM fw_tree WHERE $level_str status='1' ORDER BY param_left");
 
 		$content=Common::generate_menu($res, $res[0]['param_left'], $res[0]['param_right']);
@@ -110,7 +109,7 @@ class Common {
 		return $content;
 	}
 
-	function generate_main_menu_full_url($array, $url) {
+	static function generate_main_menu_full_url($array, $url) {
 		foreach ($array as $key => $value) {
 			$full_url=$url.$array[$key]['url']."/";
 			$array[$key]['full_url']=$full_url;
@@ -119,7 +118,7 @@ class Common {
 		return $array;
 	}
 	
-	function generate_menu($array, $start, $finish, $full_url='') {
+	static function generate_menu($array, $start, $finish, $full_url='') {
 
 		$ar = array();
 		foreach ($array as $val) {
@@ -132,7 +131,7 @@ class Common {
 		foreach ($array as $value) {
 			if ($value['param_left']>$start && $value['param_right']<$finish && $value['param_level']==($level+1)) {
 				if (($value['param_right']-$value['param_left'])>1) {
-					$value['sublist']=Common::generate_menu($array, $value['param_left'], $value['param_right'], &$full_url);
+					$value['sublist']=Common::generate_menu($array, $value['param_left'], $value['param_right'], $full_url);
 				}
 				$ar[] = $value;
 			}
@@ -141,7 +140,7 @@ class Common {
 		return $ar;
 	}
 
-	function load_config($section='') {
+	static function load_config($section='') {
 	
 		global $db;
 	
@@ -155,7 +154,7 @@ class Common {
 	}
 	
 	
-	function check_auth($where='admin') {
+	static function check_auth($where='admin') {
 		
 		global $db;
 	
@@ -209,7 +208,7 @@ class Common {
 	
 	}
 	
-	function check_priv ($priv) {
+	static function check_priv ($priv) {
 	
 		if (isset($_SESSION['fw_user']) && $_SESSION['fw_user']['priv']<=$priv) return true;
 		else {
@@ -217,7 +216,7 @@ class Common {
 		}
 	}
 	
-	function get_nodes_list($array,$type=true,$itself="") {
+	static function get_nodes_list($array,$type=true,$itself="") {
 		
 		$temp_path='';
 		$temp_url='';
@@ -268,7 +267,7 @@ class Common {
 		return $list;
 	}
 	
-	function pager($result,$per_page,$current_page) {
+	static function pager($result,$per_page,$current_page) {
 
 		if (is_resource($result)) {
 			$count = mysql_fetch_row($result);
@@ -316,7 +315,7 @@ class Common {
 		return $cond;
 	}
 	
-	function get_url($url,$path) {
+	static function get_url($url,$path) {
 		$url=str_replace($path,"",$url);
 		$url=str_replace("/"," ",$url);
 		$url=trim($url);
@@ -332,7 +331,7 @@ class Common {
 		if ($die=='1') die();
 	}
 	
-	function check_node_auth ($access) {
+	static function check_node_auth ($access) {
 
 		if ($access=='all') return true;
 		else if ($access=='registered' && isset($_SESSION['fw_user'])) return true;

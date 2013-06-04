@@ -1,0 +1,11 @@
+{foreach from=$urlslist item=cat name=cl}
+	<div>
+		<input class="checkbox_tree" type="checkbox" name="edit_banners_cat[]" value="{$cat.full_url}" id="id_{$cat.url}_{$smarty.foreach.cl.iteration}" {if in_array($cat.full_url,$cat_checked)}checked{/if}>
+		<label for="id_{$cat.url}_{$smarty.foreach.cl.iteration}">{str_repeat str="&nbsp;" num=$cat.param_level mod="4"}<img src=templates/img/tree.gif>{$cat.name}</label>
+		{if $cat.sublist}
+			{assign var=urlslist value=$cat.sublist}
+			{include file="../../modules/banners/admin/templates/banners.a_edit_banner_list.html"}
+			{assign var=fullurl value=$_tmp_parent_url}
+		{/if}
+	</div>
+{/foreach}

@@ -12,7 +12,7 @@ class String {
 		return $target;
 	}
 
-	function secure_format ($string) {
+	static function secure_format ($string) {
 		
 		if ($string=='') return '';
 		else {
@@ -39,7 +39,7 @@ class String {
 		}
 	}
 	
-	function unformat ($string) {
+	static function unformat ($string) {
 		
 		if ($string=='') return '';
 		else {
@@ -51,7 +51,7 @@ class String {
 		}
 	}
 	
-	function unformat_array ($array) {
+	static function unformat_array ($array) {
 		
 		while (list($key,$value)=each($array)) {
 			if (is_array($array[$key])) $array[$key]=String::unformat_array($array[$key]);

@@ -1,0 +1,54 @@
+{literal}
+<DIV id=dhtmltooltip></DIV>
+<SCRIPT language=JavaScript>
+<!--
+function confirm_delete(delete_id)
+{
+if (confirm("Дейтсвительно удалить этот раздел?")) {
+parent.location.href = "index.php?mod=shop&action=delete_cat&id=" + delete_id;
+}
+}
+-->
+</SCRIPT>
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/tooltips.js'></script>
+{/literal}
+	<table width=100% class=content_table>
+
+	<tr><th>Название</th><th width=10%>Продуктов</th><th width=10%>Статус</th><th style="width: 120px;">Действия</th></tr>
+
+	{foreach name=tree from=$cat_list item=entry}
+
+	{if $col==1}
+	{assign var="td" value='td1'}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value='td2'}
+	{assign var="col" value=1}
+	{/if}
+	<tr onmouseover="flatlinkOver(this)" {if $smarty.foreach.tree.iteration%2==1}onmouseout="flatlinkOut(this)"{else}onmouseout="flatlinkOut1(this)"{/if}>
+			<td class={$td}_left>
+				{str_repeat str="&nbsp;" num=$entry.param_level mod="4"}<img src=templates/img/tree.gif>{if $entry.param_right-$entry.param_left!=1}<a href=index.php?mod=shop&action=products_list&cat={$entry.id}>{$entry.name}</a>{else}{$entry.name}{/if}{if $entry.properties>0} <small><font color="#666666">(Свойств: {$entry.properties})</font></small>{/if}
+			</td>
+			<td class={$td}_middle align=center style="font-size: 11px;">
+				{if $entry.products>0}[ <a href=index.php?mod=shop&action=products_list&cat={$entry.id}><b>{$entry.products}</b></a> ]{/if}
+			</td>
+			<td align=center class={$td}_middle>
+			{if $entry.param_level!=0}<a href="?mod=shop&action=change_status&id={$entry.id}" title="Изменить статус"><img src=templates/img/status_{$entry.status}.gif border=0></a>{/if}
+			</td>
+			{if $entry.param_level==0}
+            <td align=center class={$td}_right nowrap style="text-align: left;">
+            	<a href=?mod=shop&action=add_cat&parent={$entry.id} class=img_link onmouseover="ddrivetip('Добавить подкатегорию')" onmouseout=hideddrivetip()><img src=templates/img/add_cat.gif border=0></a>&nbsp;
+                <a href=?mod=shop&action=edit_cat&id={$entry.id} class=img_link onmouseover="ddrivetip('Редактировать категорию')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>&nbsp;
+			</td>
+            {else}
+            <td align=center class={$td}_right nowrap style="text-align: left;">
+            <a href=?mod=shop&action=add_cat&parent={$entry.id} class=img_link onmouseover="ddrivetip('Добавить подкатегорию')" onmouseout=hideddrivetip()><img src=templates/img/add_cat.gif border=0></a>&nbsp;<a href=?mod=shop&action=edit_cat&id={$entry.id} class=img_link onmouseover="ddrivetip('Редактировать категорию')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>&nbsp;<a href="javascript:confirm_delete('{$entry.id}');" class=img_link onmouseover="ddrivetip('Удалить категорию')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
+			<a href=?mod=shop&action=cat_move_up&id={$entry.id} class=img_link onmouseover="ddrivetip('Переместить категорию вверх')" onmouseout=hideddrivetip()><img src=templates/img/ico_up.gif border=0></a><a href=?mod=shop&action=cat_move_down&id={$entry.id} class=img_link onmouseover="ddrivetip('Переместить категорию вниз')" onmouseout=hideddrivetip()><img src=templates/img/ico_down.gif border=0></a>
+            {/if}
+		</tr>
+
+	{/foreach}
+
+	</table>
+    <br>
+<div class="add_but" onClick="location.href='?mod=shop&action=add_cat&parent=1'"><div><a href="?mod=shop&action=add_cat&parent=1">Добавить категорию каталога</a></div></div>

@@ -1,0 +1,65 @@
+<div style="position: absolute; left: 15px; margin-top: 160px; width: 300px;">
+<div align="center" class="title yel" style="line-height: 14px; padding-bottom: 12px;">{$product.name}<br><font style="font-weight: normal">(другие страницы)</font></div>
+{if $photos_list}
+<table border="0">
+<tr>
+{foreach from=$photos_list item=item name=sl}
+{if $smarty.foreach.sl.iteration%2==1 && !$smarty.foreach.sl.first}</tr><tr>{/if}
+<td style="height: 115px; margin-bottom: 5px; width: 145px;" align="center"><a href="javascript: void(viewBigImage('/uploaded_files/shop_images/{$item.id}.{$item.ext}'));"><img src="uploaded_files/shop_images/resized-{$item.id}.{$item.ext}" border=0 alt="" galleryimg="no"></a></td>
+{if $smarty.foreach.sl.last && $smarty.foreach.sl.iteration%2==1}<td bgcolor="#505050" width="145">&nbsp;</td>{/if}
+{/foreach}
+</tr>
+</table>
+{/if}
+</div>
+
+<div style="position: absolute; margin: 377px 0 0 420px;">
+<skip>
+<table cellpadding="0" cellspacing="0" border="0" width="200" id="shop">
+<tr>
+<td width="3" align="right"><div style="width: 3px; background: #0e68fe; height: 17px;">&nbsp;</div></td>
+<td style="padding-left: 6px;">{if $prev_product!=""}<a href="/{$url1}{$prev_product}">Предыдущая работа</a>{/if}</td>
+</tr>
+<tr>
+<td colspan="2" style="height: 4px;"><div style="height: 4px; font-size: 1px;"></div></td>
+</tr>
+<tr>
+<td width="3" align="right"><div style="width: 3px; background: #19d84a; height: 17px;">&nbsp;</div></td>
+<td style="padding-left: 6px;">{if $curnav2=="ecomon"}<a href="/portfolio/ecomon/">В портфолио Эконом&mdash;класса</a>{/if}{if $curnav2=="business"}<a href="/portfolio/business/">В портфолио Бизнес&mdash;класса</a>{/if}{if $curnav2=="premium"}<a href="/portfolio/premium/">В портфолио Премиум&mdash;класса</a>{/if}</td>
+</tr>
+<tr>
+<td colspan="2" style="height: 4px;"><div style="height: 4px; font-size: 1px;"></div></td>
+</tr>
+<tr>
+<td width="3" align="right"><div style="width: 3px; background: #ff0000; height: 17px;">&nbsp;</div></td>
+<td style="padding-left: 6px;">{if $next_product!=""}<a href="/{$url1}{$next_product}">Следующая работа</a>{/if}</td>
+</tr>
+</table>
+</skip>
+</div>
+<div style="display:none;" id="probka" class="bt"></div> 
+<table width="100%" style="height: 447px" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td bgcolor="#000000" align="center">
+   
+    {foreach from=$photos_list item=item name=sp}
+    {if $smarty.foreach.sp.iteration<2}<span style=color:#FFFFFF; id=fff><img id="bigImage" src="uploaded_files/shop_images/{$item.id}.{$item.ext}" border=0 alt="" galleryimg="no"></span>{/if}
+	{/foreach}
+    
+    </td>
+  </tr>
+  <tr>
+    <td style="height: 28px;" valign="top" bgcolor="#000000">
+
+	    <table width="100%" style="height: 28px;" border="0" cellspacing="0" cellpadding="0">
+   		   <tr>
+   	    	 <td width="21" bgcolor="#4f4f4f"><div style="width: 21px;">&nbsp;</div></td>
+       		 <td style="padding-left: 13px;" class="title">{$product.name}</td>
+		   </tr>
+    	</table>
+
+    </td>
+  </tr>
+</table>
+<p>{$product.description}</p>
+

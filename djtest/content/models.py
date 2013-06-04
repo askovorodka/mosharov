@@ -21,6 +21,7 @@ class Articles(models.Model):
     text = models.TextField(verbose_name='Текст статьи')
     image = models.ImageField(upload_to='images', blank=True, verbose_name='Картинка')
     author = models.ManyToManyField(Authors, verbose_name=u'Автор статьи')
+
     
     def __unicode__(self):
         return '%s' % self.name

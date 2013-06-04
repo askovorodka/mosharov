@@ -361,7 +361,7 @@ class Common {
 
 	}
 	
-	function get_cond ($temp_cond) {
+	static function get_cond ($temp_cond) {
 		$cond='';
 		for ($i=0;$i<count($temp_cond);$i++) {
 			if ($i==0) $cond.="WHERE ";

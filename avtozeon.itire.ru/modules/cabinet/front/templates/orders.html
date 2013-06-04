@@ -1,0 +1,75 @@
+<h1>История заказов</h1>
+
+{foreach from=$orders_list item=order}
+            	<span class="historycapt">Заказ от {$order.insert_date|date_format:"%d.%m.%y"}</span>
+                <table class="itemlisttbl">
+                  <tr class="itemlisttblcapt">
+                    <td>№</td>
+                    <td>Наименование</td>
+                    <td>Кол-во</td>
+                    <td>Артикул</td>
+                    <td>Цена</td>
+                    <td>Сумма</td> 
+                  </tr>
+                  {foreach from=$order.products_list item=product name=products}
+                  <tr>
+                    <td>{$order.id}</td>
+                    <td class="itemlistname"><a href="{$base_url}/shop{$product.full_url}">{$product.name}</a></td>
+                    <td>{$product.product_count}</td>
+                    <td>{$product.article}</td>
+                    <td>{$product.product_price|format_number} руб.</td>
+                    <td>{$product.total_price|format_number} руб.</td>
+                  </tr>
+                  {/foreach}
+                </table>
+                <div class="historyall">
+                	Итого: {$order.total_price|format_number} руб.<br>
+                	Доставка: {$order.order_price|format_number} руб. <span class="historltl">({if $order.dostavka == '1'}доставка по Москве и Области{elseif $order.dostavka == '2'}самовывоз{elseif $order.dostavka > 2}Транспортной компанией - {$order.company}{/if})</span><br>
+                    Всего: {if $order.total_price < 20000}{$order.dostavka_sum|format_number}{else}{$order.total_price|format_number}{/if} руб. <span class="historltl">({if $order.payment == 1}оплата наличными{else}безналичный расчет{/if})</span><br>
+                </div>
+{/foreach}
+
+		
+{*		
+        {foreach from=$orders_list item=order}
+        <div id="hisp">Заказ от {$order.insert_date|date_format:"%d.%m.%y"}</div>
+           <table width="100%" border="0" cellspacing="1" cellpadding="0">
+              <tr bgcolor="#fbf3df">
+                <td colspan="6" class="tabletop"><div class="tabletop2"></div></td>
+              </tr>
+
+              <tr bgcolor="#fbf3df" class="tablecapt">
+                <td>№</td>
+                <td>Количество</td>
+                <td>Артикул</td>
+                <td>Наименование</td>
+                <td>Цена</td>
+                <td>Сумма</td>
+              </tr>
+              
+              
+              {foreach from=$order.products_list item=product name=products}
+              <tr bgcolor="#{if $smarty.foreach.products.iteration%2}f1f6f9{else}fbf3df{/if}" class="tablecapt">
+                <td>{$order.id}</td>
+                <td>{$product.product_count} шт.</td>
+                <td><span class="tableart">{$product.article}</span></td>
+                <td><a href="{$base_url}/shop{$product.full_url}">{$product.name}</a></td>
+                <td id="nw">{$product.product_price|format_number} <span class="tableart">руб.</span></td>
+                <td id="nw">{$product.total_price|format_number} <span class="tableart">руб.</span></td>
+              </tr>
+              {/foreach}
+              
+              <tr bgcolor="#fbf3df">
+                <td colspan="6" class="tablebot"><div class="tablebot2"></div></td>
+              </tr>
+            </table>
+            <div id="tar2">
+            Итого: <span style="color:#e07e13;">{$order.total_price|format_number}</span> руб.<br>
+			Доставка: {if $order.total_price < 20000}<span style="color:#e07e13;">{$order.order_price|format_number}</span> руб.{else}<span style="color:#e07e13;">Бесплатно</span>{/if}
+            <span style="color:#999999;font-size:12px;">({if $order.dostavka == '1'}доставка по Москве и Области{elseif $order.dostavka == '3'}Транспортной компанией - {$order.company}{else}Самовывоз{/if})</span><br>
+            Всего: <span style="color:#156391;">{if $order.total_price < 20000}{$order.dostavka_sum|format_number}{else}{$order.total_price|format_number}{/if}</span> руб. 
+            <span style="color:#999999;font-size:12px;">({if $order.payment == 1}оплата наличными{else}безналичный расчет{/if})</span><br>
+            Статус заказа: {$order.status|get_order_status}
+            </div>
+            {/foreach}
+*}

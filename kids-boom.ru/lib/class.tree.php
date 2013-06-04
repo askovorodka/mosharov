@@ -20,7 +20,7 @@ class CDBTree {
 	var $sqlNeedReset = true;
 	var $sql;
 
-	function CDBTree(&$DB, $tableName, $itemId, $fieldNames=array()) {
+	function CDBTree($DB, $tableName, $itemId, $fieldNames=array()) {
 		if(empty($tableName)) trigger_error("phpDbTree: Unknown table", E_USER_ERROR);
 		if(empty($itemId)) trigger_error("phpDbTree: Unknown ID column", E_USER_ERROR);
 		$this->db = $DB;
@@ -409,7 +409,7 @@ class CDBTree {
 
 //--------------------------------------------------INTERVAL FUNCTIONS--------------------------------------------
 
-function _interval_move($i,&$a,&$b,&$c,&$f,&$t,$d) {
+function _interval_move($i,$a,$b,$c,$f,$t,$d) {
 
   if($t<$b[$i][0])
   { //left from an existing interval
@@ -418,7 +418,7 @@ function _interval_move($i,&$a,&$b,&$c,&$f,&$t,$d) {
     $f=$t+1;
     return;
   }
-  if($b[$i][0]<=$f&&$t<=$b[$i][1])
+  if($b[$i][0]<=$f && $t<=$b[$i][1])
   { //inside an existing interval
     $d1=$b[$i][2];
     $this->interval_add($a,$f+$d1,$t+$d1,$d);
@@ -427,7 +427,7 @@ function _interval_move($i,&$a,&$b,&$c,&$f,&$t,$d) {
     $f=$t+1;
     return;
   }
-  if($f<=$b[$i][0]&&$b[$i][0]<=$t&&$t<=$b[$i][1])
+  if($f<=$b[$i][0] && $b[$i][0]<=$t && $t<=$b[$i][1])
   { // intervals are intersected on the left from an existing one
     if($f<$b[$i][0])
     {
@@ -442,7 +442,7 @@ function _interval_move($i,&$a,&$b,&$c,&$f,&$t,$d) {
     $f=$t+1;
     return;
   }
-  if($f<=$b[$i][0]&&$b[$i][1]<=$t)
+  if($f<=$b[$i][0] && $b[$i][1]<=$t)
   { //an existing interval is inside of the interval being moved
     if($f<$b[$i][0])
     {
@@ -467,7 +467,7 @@ function _interval_move($i,&$a,&$b,&$c,&$f,&$t,$d) {
   }
 }
 
-function interval_add(&$a,$f,$t,$d) { 
+function interval_add($a,$f,$t,$d) { 
 
   if(!is_array($a)) return false;
   if(!$d||$f>$t) return true;
@@ -574,7 +574,7 @@ function interval_add(&$a,$f,$t,$d) {
   return true;
 }
 
-function interval_move(&$a,&$b,$f,$t,$l)
+function interval_move($a,$b,$f,$t,$l)
 {
   if(!$l||$f==$t) return;
 
@@ -626,9 +626,9 @@ function interval_move(&$a,&$b,$f,$t,$l)
   for($i=$i;$i<count($b)&&($i1_f<=$i1_t||$i2_f<=$i2_t);$i++)
   {
     if($i1_f<=$i1_t)
-      $this->_interval_move($i,&$a,&$b,&$c,&$i1_f,&$i1_t,$i1_d);
+      $this->_interval_move($i,$a,$b,$c,$i1_f,$i1_t,$i1_d);
     if($i2_f<=$i2_t)
-      $this->_interval_move($i,&$a,&$b,&$c,&$i2_f,&$i2_t,$i2_d);
+      $this->_interval_move($i,$a,$b,$c,$i2_f,$i2_t,$i2_d);
   }
   //Add an unadded part of the interval, if there is
   if($i1_f<=$i1_t)
@@ -668,7 +668,7 @@ function interval_search($a,$pos)
   return $r;
 }
 
-function interval_update(&$a,$b,$f,$t,$d)
+function interval_update($a,$b,$f,$t,$d)
 {
   if(!$d||$f>$t) return;
 

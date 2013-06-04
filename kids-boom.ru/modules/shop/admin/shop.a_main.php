@@ -351,10 +351,11 @@ if (isset($_POST['submit_add_cat'])) {
 			
 		if (@$file_name!='') {
 			$id=mysql_insert_id();
-			$image = $id.'.'.$ext;
+			$image = md5($id . rand(0,1000)) .'.'.$ext;
 			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/category_images/'.$image)) {
 				chmod(BASE_PATH.'/uploaded_files/category_images/'.$image, 0777);
 				$details = Image::image_details(BASE_PATH.'/uploaded_files/category_images/'.$image);
+				
 				//превьюшка
 				Image::resize(BASE_PATH."/uploaded_files/category_images/$image", BASE_PATH."/uploaded_files/category_images/small-$image", PRODUCT_PREVIEW_WIDTH,PRODUCT_PREVIEW_HEIGHT, false, "#FFFFFF");
 				Image::resize(BASE_PATH."/uploaded_files/category_images/$image", BASE_PATH."/uploaded_files/category_images/medium-$image", PRODUCT_MEDIUM_WIDTH,PRODUCT_MEDIUM_HEIGHT, false, "#FFFFFF");
@@ -406,6 +407,8 @@ if (isset($_POST['submit_edit_cat'])) {
 	}
 
 	if ($name=='') $name="Новая безымянная категория";
+	
+	
 
 	if ($url!=$old_url or $parent!=$old_parent) {
 		$check_if_exists=$db->get_all("SELECT id FROM fw_catalogue WHERE url='$url' AND param_left>(SELECT param_left FROM fw_catalogue WHERE id='$parent') AND param_right<(SELECT param_right FROM fw_catalogue WHERE id='$parent') AND param_level=(SELECT param_level FROM fw_catalogue WHERE id='$parent')");
@@ -419,6 +422,8 @@ if (isset($_POST['submit_edit_cat'])) {
 		$smarty->assign("error_message","В URL допустимы только символы латиницы, минус и знак подчёркивания!");
 		$check=false;
 	}
+	
+	$category_image = $db->get_single("select image from fw_catalogue where id='{$id}'");
 
 	if ($_FILES['edit_cat_image']['name']!='') {
 
@@ -443,14 +448,20 @@ if (isset($_POST['submit_edit_cat'])) {
 	if ($check || $id=="1") {
 
 		if (@$file_name!='') {
-			$image=$id.'.'.$ext;
+			$image= md5($id . rand(0, 10000)).'.'.$ext;
 			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/category_images/'.$image)) {
 				chmod(BASE_PATH.'/uploaded_files/category_images/'.$image, 0777);
 				$details = Image::image_details(BASE_PATH.'/uploaded_files/category_images/'.$image);
+				
 				Image::resize(BASE_PATH."/uploaded_files/category_images/$image", BASE_PATH."/uploaded_files/category_images/small-$image", PRODUCT_PREVIEW_WIDTH,PRODUCT_PREVIEW_HEIGHT, false, "#FFFFFF");
 				Image::resize(BASE_PATH."/uploaded_files/category_images/$image", BASE_PATH."/uploaded_files/category_images/medium-$image", PRODUCT_MEDIUM_WIDTH,PRODUCT_MEDIUM_HEIGHT, false, "#FFFFFF");
 				Image::resize(BASE_PATH."/uploaded_files/category_images/$image", BASE_PATH."/uploaded_files/category_images/big-$image", PRODUCT_BIG_WIDTH,PRODUCT_BIG_HEIGHT, false, "#FFFFFF");
-				//unlink(BASE_PATH.'/uploaded_files/shop_images/icon-'.$id.'.'.$ext);
+				
+				if (isset($category_image['image']))
+				{
+					@system("rm " . BASE_PATH . "/uploaded_files/category_images/*".$category_image['image']);
+				}
+				
 			}
 			
 		}
@@ -554,10 +565,12 @@ if (isset($_POST['submit_edit_product'])) {
 		$property_id = $key_array[0];
 		$value = $key_array[1];
 		$db->query("REPLACE INTO fw_products_properties SET product_id='$id', property_id='$property_id', value='$value'");
+		//echo "REPLACE INTO fw_products_properties SET product_id='$id', property_id='$property_id', value='$value'";
 		//$v=String::secure_format($v);
 		//if ($v!="") $db->query("INSERT INTO fw_products_properties SET product_id='$id', property_id='$k', value='$v'");
 	}
 
+	//exit();
 	
 	$db->query("UPDATE 
 		fw_products SET 

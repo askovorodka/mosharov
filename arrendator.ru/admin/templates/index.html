@@ -1,0 +1,143 @@
+<html>
+<head>
+<title>Администраторская панель</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<link rel="stylesheet" type="text/css" href="templates/style.css">
+<link rel="stylesheet" type="text/css" href="/templates/ui-lightness/jquery-ui-1.8.23.custom.css">
+</head>
+
+<SCRIPT language=JavaScript>
+
+var js_base_url = "{$base_url}";
+
+{literal}
+function show_menu(name,image)
+{
+if(document.getElementById(name).style.display!="none") {
+		document.getElementById(name).style.display="none";
+	}
+	else {
+		document.getElementById(name).style.display="";
+	}
+}
+
+</SCRIPT>
+<script src="{/literal}{$base_url}{literal}/javascript/common.js"></script>
+<script src="{/literal}{$base_url}{literal}/javascript/jquery-1.5.min.js"></script>
+<SCRIPT language=JavaScript type="text/javascript" src="{/literal}{$base_url}{literal}/javascript/stroka.js"></SCRIPT>
+<SCRIPT language=JavaScript type="text/javascript" src="{/literal}{$base_url}{literal}/javascript/jquery-ui-1.8.23.custom.min.js"></SCRIPT>
+{/literal}
+<script src="{$base_url}/javascript/insert_text/insert_text_{$browser}.js"></script>
+
+<body>
+<table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%">
+	<tr>
+		<td height="170" width="100%" bgcolor="#4384C5" background="#3396D7" class="repeatx" valign="top">
+			<table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%">
+				<tr>
+					<td width="259" rowspan="2" valign="top" style="padding: 13px 0px 0px 40px"></td>
+					<td align="right" style="padding: 0px 20px 0px 10px" height="90">
+						<table cellpadding="0" cellspacing="0" border="0" width="400">
+							<tr>
+								<td style="border-bottom: 1px solid #83B8E7" height="50">
+									<table width="100%" height="50" cellpadding="0" cellspacing="0" border="0">
+										<tr>
+											<td>
+												<table cellpadding="0" cellspacing="0" border="0" width="95%">
+													<tr>
+														<td width="25"><img src="templates/img/li1.gif" width="25" height="25" alt="Пользователь в системе"></td>
+														<td bgcolor="#69A0E2"><b class="white" style="margin: 8px">{$user_login} ({$user_priv})</b></td>
+														<td width="12"><img src="templates/img/li2.gif" width="12" height="25" alt=""></td>
+													</tr>
+												</table>
+											</td>
+											<td style="background: url(templates/img/li3.gif) no-repeat 0px 6px" align="right" width="100">
+												<table cellpadding="0" cellspacing="0" border="0">
+													<tr>
+														<td bgcolor="#69A0E2"><a href="login.php?action=logout" class="white">Выход</a></td>
+														<td><img src="templates/img/li2.gif" width="12" height="25" alt=""></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td align="right" height="30"><img src="templates/img/li4.gif" width="13" height="13" hspace="5" align="absmiddle" alt="Перейти к справочному руководству"><a href="http://fastweb.ru/?cms_help" class="white" target="_blank">Помощь</a>&nbsp;&nbsp;&nbsp;</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td valign="bottom">
+					{if $rss_news.title}
+						<div class="info_box">
+							<div class="info_header">{$rss_news.title}</div>
+							<div class="info_body">
+								{$rss_news.description}
+							</div>
+						</div>
+					{/if}
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td style="border-bottom: 40px solid #FFFFFF">
+			<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+				<tr bgcolor="#E2EFEE">
+					<td height="41" width="230" style="border-top: 1px solid #FFFFFF; border-bottom: 11px solid #FFFFFF; padding: 0px 8px 0px 8px" align="center"><b>Доступные модули</b></td>
+					<td style="border-top: 1px solid #FFFFFF; border-bottom: 11px solid #FFFFFF;" class="menu">
+						<img src="templates/img/li5.gif" width="14" height="14" hspace="5" align="absmiddle" alt="Путь">
+						{foreach name=nav_loop from=$navigation item=nav}
+						{assign var="temp" value=$nav.title}
+							  {assign var="ntitle" value=$temp}
+						      {if $smarty.foreach.nav_loop.last}
+						      {if !$smarty.foreach.nav_loop.first}/{/if} {$ntitle}
+						      {else}
+						        {if !$smarty.foreach.nav_loop.first}/{/if} <a href="{$nav.url}" class=menu>{$ntitle}</a>
+						      {/if}
+						{/foreach}
+					</td>
+				</tr>
+				<tr>
+					<td width="250" height="100%" style="border-right: 1px solid #3C68D9" valign="top">
+						<table width="250" cellpadding="0" cellspacing="0" border="0" >
+						{foreach from=$main_menu item=entry}
+							<tr>
+								<td class="left_img_act"><img src="{$base_url}/modules/{$entry.name}/admin/ico.gif" alt="{$entry.title}"></td>
+								<td class="left_menu_act" width="190"><a href="javascript:show_menu('{$entry.name}','image_{$entry.name}');" class="menu">{$entry.title}</a></td>
+							</tr>
+							{if $entry.sub}
+							<tr id={$entry.name} {if $current_module!=$entry.name}style="display: none;"{/if}>
+								<td colspan="2" class="mini">
+									<div class="left_pod">
+										{foreach from=$entry.sub item=sub}
+											<div class=submenu><img src=templates/img/li5.gif> <a href="{$sub.link}" class="podmenu">{$sub.name}</a></div>
+										{/foreach}
+									</div>
+								</td>
+							</tr>
+							{/if}
+						{/foreach}
+						</table>
+					</td>
+					<td valign="top" style="padding: 5px;">
+					{include file="$template"}
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td height="100" background="#3396D7" align="right">
+		</td>
+	</tr>
+	<tr>
+		<td height="24" style="border-top: 1px solid #3396D7; border-bottom: 1px solid #3396D7" bgcolor="#3C68D9" align="right" >&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	</tr>
+</table>
+</body>
+</html>

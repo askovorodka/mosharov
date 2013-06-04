@@ -1,0 +1,22 @@
+        {if $error_fast_order}<label class="error">{$error_fast_order}</label>{/if}
+        <form action="" method="post" id="fast_order_form">
+                <input type="hidden" name="product_id" value="{$product.id}" />
+                <input type="hidden" name="fast_order" value="1" />
+                <input type="hidden" name="product_count" value="1" />
+
+                  <table class="itemform">
+                      <tr>
+                        <td class="yandexer">{include file="../templates/yandex_share.html"}</td>
+                        <td rowspan="2" class="nicegirl">&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td>
+                        <div class="itemformtxt">Хочу купить - позвоните мне!</div>
+                        <input type="text" name=name value=""><br />
+                        <input type="text" name=phone value=""><br />
+                        <textarea name=comment></textarea><br />
+                        <input type="image" src="{$template_image}but_send.gif" class="itemformbut" title="Отправить" />
+                        </td>
+                      </tr>
+                  </table>
+		</form>

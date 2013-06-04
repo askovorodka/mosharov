@@ -414,7 +414,7 @@ if (isset($_POST['submit_add_cat'])) {
 				@chmod(BASE_PATH.'/uploaded_files/categor_images/'.$id.'.'.$ext, 0644);
 				$details = Image::image_details(BASE_PATH.'/uploaded_files/categor_images/'.$id.'.'.$ext);
 				//превьюшка
-				Image::resize(BASE_PATH."/uploaded_files/categor_images/$id.$ext", BASE_PATH."/uploaded_files/categor_images/small-$id.$ext", 240,162, true, "#ffffff");
+				Image::resize(BASE_PATH."/uploaded_files/categor_images/$id.$ext", BASE_PATH."/uploaded_files/categor_images/small-$id.$ext", 240,162, false, "#ffffff");
 				@unlink(BASE_PATH.'/uploaded_files/categor_images/'.$id.'.'.$ext);
 				$result=$db->query("UPDATE fw_catalogue SET image='cat-".$id.".$ext' WHERE id='".mysql_insert_id()."'");
 			}
@@ -497,7 +497,7 @@ if (isset($_POST['submit_edit_cat'])) {
 				@chmod(BASE_PATH.'/uploaded_files/categor_images/'.$id.'.'.$ext, 0777);
 				$details = Image::image_details(BASE_PATH.'/uploaded_files/categor_images/'.$id.'.'.$ext);
 				$image_name = $id.'.'.$ext;
-				Image::resize(BASE_PATH."/uploaded_files/categor_images/$id.$ext", BASE_PATH."/uploaded_files/categor_images/small-$id.$ext", 240,162, true, "#ffffff");
+				Image::resize(BASE_PATH."/uploaded_files/categor_images/$id.$ext", BASE_PATH."/uploaded_files/categor_images/small-$id.$ext", 240,162, false, "#ffffff");
 				//@unlink(BASE_PATH.'/uploaded_files/categor_images/'.$id.'.'.$ext);
 			}
 			$image=$id.'.'.$ext;
@@ -650,9 +650,9 @@ if (isset($_POST['submit_add_photo'])) {
 		if (move_uploaded_file($tmp, BASE_PATH."/uploaded_files/shop_images/$id.$ext"))
 		{
 			@chmod(BASE_PATH."/uploaded_files/shop_images/$id.$ext",0777);
-			Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/small-$id.$ext", PRODUCT_PREVIEW_WIDTH,PRODUCT_PREVIEW_HEIGHT, true, "#ffffff");
-			Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/medium-$id.$ext", PRODUCT_MEDIUM_WIDTH,PRODUCT_MEDIUM_HEIGHT, true, "#ffffff");
-			Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/big-$id.$ext", PRODUCT_BIG_WIDTH,PRODUCT_BIG_HEIGHT, true, "#ffffff");
+			Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/small-$id.$ext", PRODUCT_PREVIEW_WIDTH,PRODUCT_PREVIEW_HEIGHT, false, "#ffffff");
+			Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/medium-$id.$ext", PRODUCT_MEDIUM_WIDTH,PRODUCT_MEDIUM_HEIGHT, false, "#ffffff");
+			Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/big-$id.$ext", PRODUCT_BIG_WIDTH,PRODUCT_BIG_HEIGHT, false, "#ffffff");
 		}
 		else {
 			$result=$db->query("DELETE FROM fw_products_images WHERE id='".mysql_insert_id()."'");

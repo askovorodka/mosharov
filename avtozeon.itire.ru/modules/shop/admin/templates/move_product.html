@@ -1,0 +1,81 @@
+<script src="{$base_url}/javascript/common.js"></script>
+
+{if $move_done}
+
+{literal}
+<script language="JavaScript">
+
+window.opener.location.reload();
+window.close();
+
+</script>
+{/literal}
+
+{/if}
+
+
+Перемещаем продукт: <b>{$product.name}</b><br><br>
+
+
+
+<form action="" method=GET name=cat_sort>
+<input type=hidden name=mod value=shop>
+<input type=hidden name=action value=move_product>
+<input type=hidden name=product_id value={$product_id}>
+<input type=hidden name=page value={$current_page}>
+Сортировать по разделу: 
+<select name=cat class=field onChange="document.cat_sort.submit();" style="width: 100%">
+<option value="" {if !$sort_cat}selected=true{/if}>Все</option>
+{foreach from=$cat_list item=entry}
+<option value={$entry.id} {if $cat==$entry.id}selected=true{/if}>{$entry.full_title}</option>
+{/foreach}
+</select>
+</form>
+
+<table width="100%" cellspacing="1" bgcolor=#cccccc>
+	<tr>
+		<td bgcolor=#79aef5 align=center style="padding: 3pt">
+			Продукт
+		</td>
+		
+		<td width=20% bgcolor=#79aef5 align=center style="padding: 3pt">
+			Артикул
+		</td>
+		
+		<td width=20% bgcolor=#79aef5 align=center style="padding: 3pt">
+			Действие
+		</td>
+
+	</tr>
+	{foreach from=$products_list item=entry}
+	<tr>
+		<td bgcolor=#ffffff style="padding: 3pt">
+			{$entry.name}
+		</td>
+		
+		<td bgcolor=#ffffff style="padding: 3pt">
+			{$entry.art}
+		</td>
+		
+		<td bgcolor=#ffffff style="padding: 3pt">
+			[<a href=?mod=shop&action=move_product&product_id={$product_id}&move_to={$entry.id}>Переместить сюда</a>]
+		</td>
+	</tr>
+	{/foreach}
+</table>
+
+{if $total_pages>1}
+<br><br>
+<div class="listing">
+<li class="str">
+<ul>
+<li class="center"><a href="?mod=shop&action=move_product&product_id={$product_id}&cat={$cat}&page=1">&laquo;</a>
+{section name=p loop=$pages}
+  {if $pages[p]==$current_page}
+  <a class="active" href="?mod=shop&action=move_product&product_id={$product_id}&cat={$cat}&page={$pages[p]}">{$pages[p]}</a>
+  {else}
+  <a href="?mod=shop&action=move_product&product_id={$product_id}&cat={$cat}&page={$pages[p]}">{$pages[p]}</a>
+  {/if}
+{/section}
+<a href="?mod=shop&action=move_product&product_id={$product_id}&cat={$cat}&page={$total_pages}">&raquo;</a></li>
+</ul></li></div>{/if}

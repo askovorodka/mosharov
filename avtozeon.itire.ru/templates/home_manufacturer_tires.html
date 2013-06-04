@@ -1,0 +1,13 @@
+            <table class="creaters">
+              <tr>
+                <td class="createrscapt"><div><a href="{$base_url}/katalog/shini/" title="Производители шин">Производители шин</a></div></td>
+                <td class="creatersmin"><span>самый большой ассоримент шин!</span></td>
+              </tr>
+              <tr>
+                <td colspan="2" class="createrslnk">
+                {foreach from=$tires_manufacturer item=item}
+                	<a href="{$base_url}/katalog/shini/{$item.url|urlencode}/">{$item.name}</a>
+                {/foreach}
+                </td>
+              </tr>
+            </table>

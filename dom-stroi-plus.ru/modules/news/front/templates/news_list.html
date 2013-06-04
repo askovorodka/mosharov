@@ -1,27 +1,9 @@
 <h1>Новости</h1>
 
-{*
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><h1>Новости</h1></td>
-    <td width="50">архив:</td>
-    <td width="100">
-        <form action="{$base_url}/news/archive/" method="get">
-        <select name="year" style="width: 80px;" onChange="this.form.submit()">
-        <option value=""></option>
-        {foreach from=$news_years_list item=item}
-        <option value="{$item.year}" {if $year==$item.year}selected{/if}>{$item.year}</option>
-        {/foreach}
-        </select>
-        </form>
-    </td>
-  </tr>
-</table>
-*}
-
 {foreach from=$news_list item=news}
 <span class="datenews">{$news.publish_date|date_format:"%d.%m.%Y"}</span> 
 <a href="{$base_url}/{$module_url}/archive/{$news.id}" class="newscapt">{$news.title|strip_tags}</a><br>
+{if $news.image}<img style="float:left;" src="/uploaded_files/news/{$news.image}" />{/if}
 {$news.small_text|strip_tags}<br><br>
 {/foreach}
 
