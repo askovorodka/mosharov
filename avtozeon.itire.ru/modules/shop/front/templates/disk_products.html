@@ -1,34 +1,35 @@
-                <table class="itemlt">
-                  <tr class="itemltcapt">
-                  	
-                    <td nowrap><a href="{$base_url}/{$current_url}/?sort=name&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Наименование</a>{if $sort == "name"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td>
-                    <td nowrap><a href="{$base_url}/{$current_url}/?sort=disk_diameter&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Диаметр</a>{if $sort == "disk_diameter"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td>
-                    <td nowrap><a href="{$base_url}/{$current_url}/?sort=disk_krep&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Крепеж</a>{if $sort == "disk_krep"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td>
-                    <td nowrap><a href="{$base_url}/{$current_url}/?sort=disk_pcd&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">PCD</a>{if $sort == "disk_pcd"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td>
-                    <td nowrap><a href="{$base_url}/{$current_url}/?sort=price&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Цена</a>{if $sort == "price"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td> 
-                    <td>Кол-во</td>
-                    <td></td>
-                    
-                  </tr>
-                  
+
+<table class="table table-hover table-cart">
+  					<thead>
+    					<tr>
+      					<th>Наименование</th>
+      					<th>Диаметр</th>
+      					<th>Крепеж</th>
+      					
+      					<th>PCD</th>
+      					<th>Цена</th>
+      					<th>Наличие</th>
+      					<th> </th>
+    					</tr>
+  					</thead>
+  					<tbody>
+  					
                   <form action="" method="POST" id="form_order_products">
                   		{foreach from=$products_list item=item name=product}
 		                  <tr>
 		                  	
-		                    <td class="itemlistname"><a href="{$base_url}/{$current_url}/{$item.id}/">{$item.name}</a></td>
+		                    <td class="td-main"><a href="{$base_url}/{$current_url}/{$item.id}/">{$item.name}</a></td>
 		                    <td>{$item.disk_diameter|format_number}</td>
 		                    <td>{$item.disk_krep|format_number}</td>
 		                    <td>{$item.disk_pcd|format_number}</td>
 		                    <td>{$item.price|format_price} руб.</td>
-		                    <td>{if $item.disk_sklad > 0}<input {if !$item.disk_sklad}disabled{/if} type="text" class="tableinp" name="{$item.id}" value="{if $item.disk_sklad > 3}4{elseif $item.disk_sklad > 1}{$item.disk_sklad}{else}1{/if}">{/if}</td>
-			                {if $item.disk_sklad > 0}
-			                	<td><a name="add_order" href="" title="В корзину">В корзину</a></td>
-			                {else}
-			                	<td class="itemred">Нет в наличии</td>
-			                {/if}
-		                    
+							<td>
+								{if $item.disk_sklad > 0}
+									<a href="#myModal" role="button" class="btn" data-toggle="modal" data-target="#myModal"><i class="icon-shopping-cart"></i> Купить</a>
+								{/if}
+							</td>		                    
 		                  </tr>
                   		{/foreach}
                   </form>
-                  
-                </table>
+  					</tbody>
+				</table>

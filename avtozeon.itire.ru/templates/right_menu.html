@@ -1,0 +1,24 @@
+			<aside class="span41">
+				<div class="row">
+					<div class="span21">
+						<div class="bigger-caption"><a href="#">Шины</a> &nbsp;&amp;</div>
+						<ul class="tyre-wheel">
+							
+							{foreach from=$tires_manufacturer item=tire}
+								<li><a href="{$DOMAIN}/catalog/tires/{$tire.url}/">{$tire.name|strip_tags}</a></li>
+							{/foreach}
+							
+						</ul>
+					</div>
+					<div class="span21">
+						<div class="bigger-caption"><a href="#">Диски</a></div>
+						<ul class="tyre-wheel">
+
+							{foreach from=$disk_manufacturer item=disk}
+								<li><a href="{$DOMAIN}/catalog/disk/{$disk.url}/">{$disk.name|strip_tags}</a></li>
+							{/foreach}
+
+						</ul>
+					</div>
+				</div>
+			</aside>

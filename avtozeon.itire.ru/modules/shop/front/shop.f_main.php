@@ -28,7 +28,7 @@ if  ($main_module=='on')
 	require_once 'lib/class.form.php';
 	//require_once 'modules/shop/front/class.shop.php';
 
-	$navigation[]=array("url" => $module_url);
+	$navigation[]=array("url" => $module_url, "title" => "..");
 	$smarty->assign("module_url",BASE_URL.'/'.$module_url);
 
 	$cabinet_url=$db->get_single("SELECT url FROM fw_tree WHERE module='cabinet'");
@@ -1134,6 +1134,17 @@ if  ($main_module=='on')
 				$where[] = " a.disk_sklad > 0 ";
 			}
 
+			if (!empty($_GET['disk_price_start']))
+			{
+				$where[] = sprintf(" a.price >= '%d' ", intval($_GET['disk_price_start']));
+			}
+
+			if (!empty($_GET['disk_price_end']))
+			{
+				$where[] = sprintf(" a.price <= '%d' ", intval($_GET['disk_price_end']));
+			}
+			
+			
 			if (!empty($_GET['tire_manufacturer']))
 			{
 				$category = $shop->getCategory($_GET['tire_manufacturer']);
@@ -1164,6 +1175,16 @@ if  ($main_module=='on')
 				$where[] = " a.tire_sklad > 0 ";
 			}
 
+			if (!empty($_GET['tire_price_start']))
+			{
+				$where[] = sprintf(" a.price >= '%d' ", intval($_GET['tire_price_start']));
+			}
+
+			if (!empty($_GET['tire_price_end']))
+			{
+				$where[] = sprintf(" a.price <= '%d' ", intval($_GET['tire_price_end']));
+			}
+			
 
 			$pager = "";
 
@@ -1227,9 +1248,8 @@ if  ($main_module=='on')
 
 			$smarty->assign("products",$products);
 			$page_found=true;
-			$page_title = "Ðåçóëüòàòû ïèñîêà ØÈÍÛ-ÏÐÎÄÀÆÀ.ÐÔ";
+			$page_title = "Ðåçóëüòàòû ïîèñêà";
 			$template='search_products.html';
-
 
 			BREAK;
 
@@ -1612,9 +1632,8 @@ if  ($main_module=='on')
 							
 						if (is_file(SHOP_IMAGE_PATH . $category['image']))
 						{
-							$product_content['image'] = SHOP_IMAGE . $category['image'];
+							$product_content['image'] = $category['image'];
 						}
-							
 							
 					}
 
@@ -1711,9 +1730,9 @@ if  ($main_module=='on')
 								//if ($product_content['title']!='') $page_title=$product_content['title'];
 								if ($title_template) $page_title=$title_template;
 								else $page_title=$product_content['name'];
-									
+								
 								$smarty->assign("product",$product_content);
-									
+								
 								if (PRODUCT_RATING=='on' or PRODUCT_COMMENTS=='on') {
 									$this_module=$db->get_single("SELECT priv FROM fw_modules WHERE name='shop' LIMIT 1");
 									if (@$_SESSION['fw_user']['priv']<=$this_module['priv']) {

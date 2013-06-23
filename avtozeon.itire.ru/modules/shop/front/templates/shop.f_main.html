@@ -1,11 +1,7 @@
 
-		{include file="`$TEMP`breadcrumbs.html"}
-		<h1>{if $cat_parent_info.param_level == 2}{if $parent.id == $smarty.const.TIRES_ID}Каталог шин {else}Каталог дисков {/if}{/if}
-		{if $cat_parent_info.name}{$cat_parent_info.name} {/if}{$cat_content.name}</h1>
-
-		{if $cat_content.param_level == 2}{include file="`$TEMP`brand_list.html"}{/if}
-		{if $models}{include file="`$TEMP`models_list.html"}{/if}
-
+	<h1>{if $cat_parent_info.param_level == 2}{if $parent.id == $smarty.const.TIRES_ID}Каталог шин {else}Каталог дисков {/if}{/if}
+		
+	{if $cat_parent_info.name}{$cat_parent_info.name} {/if}{$cat_content.name}</h1>
 
 		{if $cat_content.param_level == 3}
 			{if $parent.id == $smarty.const.TIRES_ID}

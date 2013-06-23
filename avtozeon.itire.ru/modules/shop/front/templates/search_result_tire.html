@@ -1,4 +1,45 @@
 
+<table class="table table-hover">
+  			<thead>
+    			<tr>
+      			<th> </th>
+      			<th>Наименование</th>
+      			<th>Типоразмер</th>
+      			<th>ИН</th>
+      			<th>ИС</th>
+      			<th>Сезон</th>
+      			<th>Цена</th>
+      			<th>Наличие</th>
+      			<th> </th>
+    			</tr>
+  			</thead>
+  			<tbody>
+  			{foreach from=$products item=item name=product}
+    			<tr>
+      			<td><a href="#" data-toggle="tooltip" title="" data-original-title="&lt;img src='/images/img105x105/uploaded_files/shop_images/{$item.image}'&gt;"><i class="icon-camera"></i></a></td>
+      			<td class="td-main"><a href="#" data-toggle="tooltip" title="" data-original-title="&lt;img src='/images/img105x105/uploaded_files/shop_images/{$item.image}'&gt;">{$item.name}</a></td>
+      			<td>{$item.tire_width}/{$item.tire_height} R{$item.tire_diameter}</td>
+      			<td>{$item.tire_in}</td>
+      			<td>{$item.tire_is}</td>
+      			<td>
+      				{if $item.tire_season == '1'}<i class="icon-season-winter"></i>
+      				{elseif $item.tire_season == '2'}<i class="icon-season-summer"></i>
+      				{elseif $item.tire_season == '3'}<i class="icon-season-allseasons"></i>
+      				{/if}</td>
+      			<td>{$item.price|format_price} руб.</td>
+      			<td class="td-many">{if $item.tire_sklad > 4}Много{elseif $item.tire_sklad > 0}{$item.tire_sklad}{else}Нет{/if}</td>
+      			<td><a href="#myModal" role="button" class="btn" data-toggle="modal" data-target="#myModal"><i class="icon-shopping-cart"></i> Купить</a></td>
+    			</tr>
+    		{/foreach}
+  			</tbody>
+		</table>
+
+{if $other_products && ($smarty.get.tire_season == 1 || $smarty.get.tire_season == 2)}
+	{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/other_tires.html"}
+{/if}
+
+
+{*
 <form action="" method="POST" id="form_order_products">
 
                 <table class="itemlt itemltwide">
@@ -22,7 +63,7 @@
 	                  	
 	                  	<td>{if $item.image}<a class="CatalogImages" href="{$base_url}/catalog{$item.full_url}" image="/uploaded_files/shop_images/{$item.image}"><img src="{$template_image}camera.png"></a>{/if}</td>
 	                    <td class="itemlname"><a href="{$base_url}/catalog/{$item.full_url}">{$item.name}</a></td>
-	                    <td>{*if $item.tire_season == '1'}<img src="{$template_image}f_winter.jpg" />{elseif $item.tire_season == '2'}<img src="{$template_image}f_summer.jpg" />{elseif $item.tire_season == '3'}<img src="{$template_image}f_all.jpg" />{/if*}
+	                    <td>
 	                    {if $item.tire_season == '1'}зима{elseif $item.tire_season == '2'}лето{elseif $item.tire_season == '3'}всесезон{/if}
 	                    </td>
 	                    <td>{$item.tire_width}/{$item.tire_height} R{$item.tire_diameter}</td>
@@ -41,7 +82,5 @@
                   </form>
                 </table>
 </form>
+*}
 
-{if $other_products && ($smarty.get.tire_season == 1 || $smarty.get.tire_season == 2)}
-{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/other_tires.html"}
-{/if}

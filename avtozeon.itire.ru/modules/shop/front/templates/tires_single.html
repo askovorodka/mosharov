@@ -1,3 +1,42 @@
+
+<h1>Шины {$product.name}<br><small>Артикул: {$product.article}</small></h1>
+<div class="clearfix">
+			{if trim($product.image) != ""}
+				<img src="/images/img230x209/uploaded_files/shop_images/{$product.image}" width="230" height="209" class="pull-left">
+			{else}
+				<img src="{$template_image}nophoto.jpg" class="bigben" />
+			{/if}
+					<table class="oneprice">
+						<tbody>
+							<td class="bigprice">{$product.price|format_price} руб.</td>
+							<td class="theend">{if $product.tire_sklad <= 0}Закончились ;(<br>Последняя цена продажи{/if}</td>
+						</tbody>
+					</table>
+					<span class="muted">Бренд:</span> {$cat_parent_info.name}<br>
+					<span class="muted">Модель:</span> {$cat_content.name}<br>
+					<span class="muted">Типоразмер:</span> {$product.tire_width|format_number}/{$product.tire_height|format_number} R{$product.tire_diameter|format_number}<br>
+					<span class="muted">Шипы:</span> {if $product.tire_spike == '2'}шип{elseif $product.tire_spike == 1}нешип{/if}<br>
+					<span class="muted">Сезон:</span> {if $product.tire_season == '1'}зима{elseif $product.tire_season == '2'}лето{elseif $product.tire_season == '3'}всесезон{/if}<br>
+					<span class="muted">Индекс нагрузки:</span> {$product.tire_in}<br>
+					<span class="muted">Индекс скорости:</span> {$product.tire_is}<br>
+</div><br>
+
+				<div>
+					<span class='st_vkontakte_large' displayText='Vkontakte'></span>
+					<span class='st_odnoklassniki_large' displayText='Odnoklassniki'></span>
+					<span class='st_facebook_large' displayText='Facebook'></span>
+					<span class='st_twitter_large' displayText='Tweet'></span>
+					<span class='st_mail_ru_large' displayText='mail.ru'></span>
+					<span class='st_livejournal_large' displayText='LiveJournal'></span>
+					<span class='st_googleplus_large' displayText='Google +'></span>
+				</div><br>
+
+
+{if $product.tire_sklad > 0}
+	{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/fast_order_form.html" type="tire"}
+{/if}
+
+{*
 <h1>Шины {$product.name}</h1>
 
 {if $models}{include file="`$TEMP`models_list.html"}{/if}
@@ -36,3 +75,4 @@
 			{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/fast_order_form.html"}
 		{/if}
 </div>
+*}

@@ -1,82 +1,94 @@
-                {*<table class="filtermainlt">
-                  <tr>
-                    <td class="filtermainf">
-             	    <select class="mainselect" name="tire_manufacturer">
-             	    <option value="">Все</option>
-             	    {foreach from=$tires_manufacturer item=tire}
-             	    	{if trim($tire.name) != ""}
-                      		<option value="{$tire.id}">{$tire.name}</option>
-                      	{/if}
-                    {/foreach}
-                    </select>
-                	</td>
-                    <td>Производитель</td>
-                  </tr>
-                  <tr>
-                    <td class="filtermainf">
-             	    <select class="mainselect" name="tire_width">
-             	    <option value="">Любая</option>
-             	    {foreach from=$tires_width item=tire_width}
-             	    	{if trim($tire_width.tire_width) != ""}
-                      		<option value="{$tire_width.tire_width}">{$tire_width.tire_width}</option>
-                      	{/if}
-                    {/foreach}
-                    </select>
-                </td>
-                    <td>Ширина</td>
-                  </tr>
-                  <tr>
-                    <td class="filtermainf">
-             	    <select class="mainselect" name="tire_height">
-             	    <option value="">Любой</option>
-             	    {foreach from=$tires_height item=tire_height}
-             	    	{if $tire_height.tire_height > 0}
-                      		<option value="{$tire_height.tire_height}">{$tire_height.tire_height|format_number}</option>
-                      	{/if}
-                    {/foreach}
-                    </select>
-                </td>
-                    <td>Профиль</td>
-                  </tr>
-                  <tr>
-                    <td class="filtermainf">
-             	    <select class="mainselect" name="tire_diameter">
-             	    <option value="">Любой</option>
-             	    {foreach from=$tires_diameter item=tires_diameter}
-             	    	{if $tires_diameter.tire_diameter > 0}
-                      		<option value="{$tires_diameter.tire_diameter}">{$tires_diameter.tire_diameter|format_number}</option>
-                      	{/if}
-                    {/foreach}
-                    </select>
-                </td>
-                    <td>Диаметр</td>
-                  </tr>
-                  <tr>
-                    <td class="filtermainf">
-             	    <select class="mainselect" name="tire_season">
-             	    	<option value="">Любой</option>
-                      	<option value="0">Лето</option>
-                      	<option value="1">Зима</option>
-                      	<option value="2">Всесезон</option>
-                    </select>
-                </td>
-                    <td>Сезон</td>
-                  </tr>
-                  <tr>
-                    <td class="filtermainf">
-             	    <select class="mainselect" name="tire_spike">
-                      <option value="1">Нет</option>
-                      <option value="2">Да</option>
-                    </select>
-                </td>
-                    <td>Наличие шипов</td>
-                  </tr>
-                  <tr>
-                    <td colspan="2"><input type="checkbox" checked name="tire_sklad" value="1" id="tire_sklad"> <label for="tire_sklad">Есть на складе</label></td>
-                  </tr>
-                </table>
+				<!-- фильтр шины -->
 
+  					<div class="tab-tyres tab-pane fade {if empty($smarty.get.filter_type) || $smarty.get.filter_type == 'tire'}active in{/if}" id="tyres">
+  					<form action="{$base_url}/catalog/search/" method="GET" id="filter_tire">
+  						<input type="hidden" name="filter_type" value="tire">
+  						<div class="button-tyres"><button type="submit">Найти шины</button></div>
+  						<input type="checkbox" name="tire_season[]" id="summer" value="2" {if $smarty.get.tire_season == 2}checked{/if}>
+  						<input type="checkbox" name="tire_season[]" id="allseasons" value="3" {if $smarty.get.tire_season == 3}checked{/if}>
+  						<input type="checkbox" name="tire_season[]" id="winter" value="1" {if $smarty.get.tire_season == 1}checked{/if}>
+  						<input type="checkbox" name="tire_spike" id="swinter" value="1" {if $smarty.get.tire_spike == 1}checked{/if}>
+  						<div class="row">
+  							<div class="span2 param-main">
+  								Ширина:<br>
+			             	    <select class="input-small" name="tire_width">
+			             	    <option value="">Любая</option>
+			             	    {foreach from=$tires_width item=tire_width}
+			             	    	{if trim($tire_width.tire_width) != ""}
+			                      		<option {if $smarty.get.tire_width == $tire_width.tire_width}selected{/if} value="{$tire_width.tire_width}">{$tire_width.tire_width}</option>
+			                      	{/if}
+			                    {/foreach}
+			                    </select>
+							</div>
+							<div class="span2 param-main">
+  								Профиль:<br>
+			             	    <select class="input-small" name="tire_height">
+			             	    <option value="">Любой</option>
+			             	    {foreach from=$tires_height item=tire_height}
+			             	    	{if $tire_height.tire_height > 0}
+			                      		<option {if $smarty.get.tire_height == $tire_height.tire_height}selected{/if} value="{$tire_height.tire_height}">{$tire_height.tire_height}</option>
+			                      	{/if}
+			                    {/foreach}
+			                    </select>
+							</div>
+							<div class="span2 param-main">
+  								Диаметр:<br>
+			             	    <select class="input-small" name="tire_diameter">
+			             	    <option value="">Любой</option>
+			             	    {foreach from=$tires_diameter item=tires_diameter}
+			             	    	{if $tires_diameter.tire_diameter > 0}
+			                      		<option {if $smarty.get.tire_diameter == $tires_diameter.tire_diameter}selected{/if} value="{$tires_diameter.tire_diameter}">{$tires_diameter.tire_diameter}</option>
+			                      	{/if}
+			                    {/foreach}
+			                    </select>
+  								
+							</div>
+							<div class="span3 param-main">
+  								Производитель:<br>
+			             	    <select class="input-small" name="tire_manufacturer">
+			             	    <option value="">Все</option>
+			             	    {foreach from=$tires_manufacturer item=tire}
+			             	    	{if trim($tire.name) != ""}
+			                      		<option {if $smarty.get.tire_manufacturer == $tire.id}selected{/if} value="{$tire.id}">{$tire.name}</option>
+			                      	{/if}
+			                    {/foreach}
+			                    </select>
+  								
+							</div>
+						</div>
+						<a href="#" class="param-dop-link" data-toggle="collapse" data-target="#doptyre">Дополнительные параметры</a>
+						<div id="doptyre" class="collapse fade">
+							<div class="row">
+								{*<div class="span2 param-dop">
+  									Индекс скорости:<br>
+  									<select class="input-small">
+  										<option>Любой</option>
+  										<option>1</option>
+  										<option>2</option>
+									</select>
+								</div>
+								<div class="span2 param-dop">
+  									Индекс нагрузки:<br>
+  									<select class="input-small">
+  										<option>Любой</option>
+  										<option>1</option>
+  										<option>2</option>
+									</select>
+								</div>*}
+								<div class="span4 param-dop">
+  									Цена за шину:<br>
+  									от <input type="text" class="input-mini" name="tire_price_start" value="{$smarty.get.tire_price_start}" /> до 
+  									<input type="text" class="input-mini" name="tire_price_end" value="{$smarty.get.tire_price_end}" />
+								</div>
+							</div>
+						</div>
+					</form>
+  					</div>
+  				
+  				<!-- /фильтр шины -->
+  				
 
+{*
             <!---- FILTER TIRE ---->
             <form action="{$base_url}/shop/search/" method="GET">
             	<input type="hidden" name="filter_type" value="tire">
@@ -164,3 +176,5 @@
                 </table>
             </form>
 <!---- /FILTER TIRE ---->
+
+*}

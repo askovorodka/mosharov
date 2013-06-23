@@ -518,21 +518,15 @@ if (isset($_POST['submit_edit_cat'])) {
 	}
 
 	if ($check || $id=="1") {
-
+		
 		if (@$file_name!='') {
-			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext)) {
-				chmod(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext, 0644);
-				$details = Image::image_details(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext);
-				//print_r($details); exit();
-				$image_name='-'.$id.'.'.$ext;
-				Image::resize(BASE_PATH.'/uploaded_files/shop_images/'.$image_name,BASE_PATH.'/uploaded_files/shop_images/cat'.$image_name,295,237, false);
-				Image::resize(BASE_PATH.'/uploaded_files/shop_images/'.$image_name,BASE_PATH.'/uploaded_files/shop_images/pcat'.$image_name,139,100, false);
-				Image::resize(BASE_PATH.'/uploaded_files/shop_images/'.$image_name,BASE_PATH.'/uploaded_files/shop_images/scat'.$image_name,156,45, false);
-				Image::resize(BASE_PATH.'/uploaded_files/shop_images/'.$image_name,BASE_PATH.'/uploaded_files/shop_images/ccat'.$image_name,98,81, false);
-				Image::resize(BASE_PATH.'/uploaded_files/shop_images/'.$image_name,BASE_PATH.'/uploaded_files/shop_images/bcat'.$image_name,$details['width'],$details['height'], false);
-				unlink(BASE_PATH.'/uploaded_files/shop_images/'.'-'.$id.'.'.$ext);
+			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/shop_images/'.$id.'.'.$ext)) {
+				
+				$image = $id.'.'.$ext;
+				chmod(BASE_PATH.'/uploaded_files/shop_images/'.$image, 0777);
+				$details = Image::image_details(BASE_PATH.'/uploaded_files/shop_images/'.$image);
 			}
-			$image='cat-'.$id.'.'.$ext;
+			$image = $id.'.'.$ext;
 		}
 		else $image=$_POST['old_image'];
 
@@ -797,11 +791,8 @@ if (isset($_POST['submit_add_photo'])) {
 		else $order=$order['s_order'];
 		$result=$db->query("INSERT INTO fw_products_images(parent,title,ext,sort_order) VALUES('".$_POST['parent']."','$title','$ext','".$order."')");
 		$id=mysql_insert_id();
-		if (move_uploaded_file($tmp, BASE_PATH."/uploaded_files/shop_images/$id.$ext")) {
-			chmod(BASE_PATH."/uploaded_files/shop_images/$id.$ext",0644);
-			Image::image_resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext",BASE_PATH."/uploaded_files/shop_images/resized-$id.$ext",PRODUCT_PREVIEW_WIDTH,PRODUCT_PREVIEW_HEIGHT);
-			Image::image_resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext",BASE_PATH."/uploaded_files/shop_images/medium-$id.$ext",PRODUCT_MEDIUM_WIDTH,PRODUCT_MEDIUM_HEIGHT);
-			Image::image_resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext",BASE_PATH."/uploaded_files/shop_images/big-$id.$ext",PRODUCT_BIG_WIDTH,PRODUCT_BIG_HEIGHT);			
+		if (move_uploaded_file($tmp, BASE_PATH."/uploaded_files/product_images/$id.$ext")) {
+			chmod(BASE_PATH."/uploaded_files/shop_images/$id.$ext",0777);
 		}
 		else {
 			$result=$db->query("DELETE FROM fw_products_images WHERE id='".mysql_insert_id()."'");

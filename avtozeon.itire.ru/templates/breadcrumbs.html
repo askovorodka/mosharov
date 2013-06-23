@@ -1,11 +1,11 @@
-<div class="navigate">{if $current_url!=$default_url}
+<div class="breadcrumbs">{if $current_url!=$default_url}
 		{foreach name=nav_loop from=$navigation item=nav}
-		{if $nav.title}
+		{if $nav.title && $nav.title != ".."}
 			{if $smarty.foreach.nav_loop.last && $smarty.foreach.nav_loop.iteration==1}{$nav.title}
 			{elseif $smarty.foreach.nav_loop.last && $smarty.foreach.nav_loop.iteration>1}
-				 &mdash; {$nav.title}
+				 / {$nav.title}
 			{else}
-				{if !$smarty.foreach.nav_loop.first} &mdash; {/if}<a href="{$nav.url}">{$nav.title}</a>{/if}
+				{if !$smarty.foreach.nav_loop.first} / {/if}<a href="{$nav.url}">{$nav.title}</a>{/if}
 		{/if}
 		{/foreach}
 	{else}

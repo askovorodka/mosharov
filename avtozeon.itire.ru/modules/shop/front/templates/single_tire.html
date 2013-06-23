@@ -1,10 +1,11 @@
-<div class="modelitem">
-
-{if trim($cat_content.image) != ""}<img src="/uploaded_files/shop_images/{$cat_content.image}" class="bigben" />{else}<img src="{$template_image}nophoto.gif" class="bigben" />{/if}
-Производитель: {$cat_parent_info.name}<br />
-Модель: {$cat_content.name}<br />
-<br /><p>{$cat_content.text}</p>
+<div>
+{if trim($cat_content.image) != ""}
+	<img src="/images/img230x209/uploaded_files/shop_images/{$cat_content.image}" width="230" height="209" class="pull-left">
+{else}
+	<img src="/templates/img/big-img.jpg" width="230" height="209" class="pull-left">
+{/if}
+В данный момент наши меджеры готовят описание. В данный момент наши меджеры готовят описание. В данный момент наши меджеры готовят описание. В данный момент наши меджеры готовят описание. В данный момент наши меджеры готовят описание. В данный момент наши меджеры готовят описание. В данный момент наши меджеры готовят описание. В данный момент наши меджеры готовят описание. В данный момент наши меджеры готовят описание. В данный момент наши меджеры готовят описание. В данный момент наши меджеры готовят описание. В данный момент наши меджеры готовят описание. В данный момент наши меджеры готовят описание. В данный момент наши меджеры готовят описание. В данный момент наши меджеры готовят описание. В данный момент наши меджеры готовят описание. В данный момент наши меджеры готовят описание. В данный момент наши меджеры готовят описание. 
+</div>
+<br />
 
 {include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/tire_products.html"}
-
-</div>

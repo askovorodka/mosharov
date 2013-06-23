@@ -1,7 +1,17 @@
-<table class="catin">
-     {foreach from=$folders_list item=folder name=folder}
-            {if $smarty.foreach.folder.iteration == 0}<tr>{/if}
-                <td><a href="{$base_url}/catalog/{$folder.full_url}" title="{$folder.name|strip_tags}">{if $folder.image}<img src="{$smarty.const.SHOP_IMAGE}c{$folder.image}" style="width:98px; height:81px;" />{else}<img src="{$template_image}nophoto_98.jpg" />{/if}<br>{$folder.name|strip_tags}</a></td>
-            {if $smarty.foreach.folder.iteration % 6 == 0 && $smarty.foreach.folder.iteration > 0}</tr><tr>{/if}
-     {/foreach}
-</table>
+<div class="row">
+{foreach from=$folders_list item=folder name=folder}
+	<div class="span31">
+		<a href="{$base_url}/catalog/{$folder.full_url}" class="cat-item">
+		<div class="text-center">
+							{if $folder.image}
+								<img src="/images/img133x137/uploaded_files/shop_images/{$folder.image}" class="cat-item-img">
+							{else}
+								<img src="/templates/img/cat-img.jpg" class="cat-item-img">
+							{/if}
+		</div>
+		<div class="like-link">{$folder.name|strip_tags}</div>
+		÷ена от <b>{$folder.properties.price|format_price}</b>
+		</a>
+	</div>
+{/foreach}
+</div>

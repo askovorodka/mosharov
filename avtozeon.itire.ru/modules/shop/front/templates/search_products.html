@@ -1,7 +1,5 @@
-{include file="`$TEMP`breadcrumbs.html"}
 
-
-<h1>Результаты поиска{if $smarty.get.filter_type == 'disk'} дисков{elseif $smarty.get.filter_type == 'tire'} шин{/if}</h1>
+<h1>{if $smarty.get.filter_type == 'disk'}Диски, которые Вы искали:{elseif $smarty.get.filter_type == 'tire'}Шины, которые Вы искали:{/if}</h1>
 
 {if $products || $search_results}
 	{if $smarty.get.filter_type == 'disk'}

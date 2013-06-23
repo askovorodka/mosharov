@@ -3327,6 +3327,7 @@ table th[class*="span"],
 
 .dropdown-submenu.pull-left {
   float: none;
+  
 }
 
 .dropdown-submenu.pull-left > .dropdown-menu {
@@ -6637,6 +6638,7 @@ a.badge:focus {
 
 .pull-left {
   float: left;
+  margin-right:10px;
 }
 
 .hide {

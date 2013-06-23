@@ -1,4 +1,48 @@
-<h1>Диски {$product.name}</h1>
+
+<h1>Диски {$product.name}<br><small>Артикул: {$product.article}</small></h1>
+
+
+<div class="clearfix">
+{if trim($product.image) != ""}
+	<img src="/images/img230x209/uploaded_files/shop_images/{$product.image}" width="230" height="209" class="pull-left">
+{else}
+	<img src="{$template_image}nophoto.jpg" class="bigben" />
+{/if}
+
+					<div class="pull-left">
+						<table class="oneprice">
+							<tbody>
+								<tr><td class="bigprice">{$product.price|format_price} руб.</td>
+								{if $product.disk_sklad > 0}
+									<td><input type="text" class="span05" value="{if $product.disk_sklad > 3}4{elseif $product.disk_sklad > 1}{$product.disk_sklad}{else}1{/if}" /></td>
+									<td><a href="#oneclick" role="button" class="btn"><i class="icon-shopping-cart"></i> Купить</a></td>
+								{/if}
+							</tr>
+							</tbody>
+						</table>
+						<span class="muted">Бренд:</span> {$cat_parent_info.name}<br>
+						<span class="muted">Модель:</span> {$cat_content.name}<br>
+						<span class="muted">Ширина:</span> {$product.disk_width|format_number}<br>
+						<span class="muted">Диаметр:</span> {$product.disk_diameter|format_number}<br>
+						<span class="muted">Крепеж:</span> {$product.disk_krep|format_number}<br>
+						<span class="muted">PCD:</span> {$product.disk_pcd|format_number}<br>
+						<span class="muted">PCD (двойной):</span> {$product.disk_pcd2|format_number}<br>
+						<span class="muted">ET:</span> {$product.disk_et|format_number}<br>
+						<span class="muted">Dia:</span> {$product.disk_dia|format_number}<br>
+						<span class="muted">Цвет:</span> {$product.disk_color}<br>
+						<span class="muted">Тип диска:</span> {$disk_type.name}<br>
+						
+						<a id="ring-one" role="button" class="btn btn-info" rel="popover" data-content="&lt;input type='text' placeholder='Например: 84959876543'&gt;&lt;br&gt;&lt;button class='btn btn-block' type='button' id='close-one'&gt;Позвоните мне!&lt;/button&gt;" data-original-title="" title="">Заказать звонок</a><br><br>
+					</div>
+</div>
+
+{if $product.disk_sklad > 0}
+	{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/fast_order_form.html" type="disk"}
+{/if}
+
+
+
+{*<h1>Диски {$product.name}</h1>
 
 {if $models}{include file="`$TEMP`models_list.html"}{/if}
 
@@ -41,3 +85,4 @@
 					{/if}
 
 </div>
+*}

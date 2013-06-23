@@ -136,8 +136,9 @@ function form_check() {
 	
 	{/if}
 	{/if}
+	
 	<tr>
-		<td valign=top class=td1_left>&nbsp;Картинка:</td><td class=td1_right>{if $mode=='edit' and $cat.image!=''}<img src={$base_url}/uploaded_files/shop_images/{$cat.image}><br><input type=checkbox name=delete_image> Удалить картинку<br><br>{/if}<input type=file name=edit_cat_image style="width:500px;" class=field></td>
+		<td valign=top class=td1_left>&nbsp;Картинка:</td><td class=td1_right>{if $mode=='edit' and $cat.image!=''}<img src={$base_url}/images/img105x105/uploaded_files/shop_images/{$cat.image}><br><input type=checkbox name=delete_image> Удалить картинку<br><br>{/if}<input type=file name=edit_cat_image style="width:500px;" class=field></td>
 	</tr>
 	
 	<tr>
@@ -149,6 +150,7 @@ function form_check() {
 		</select>
 		</td>
 	</tr>
+	
 {*if $mode=='edit'}
 	<tr>
 		<td class="td1_left" valign="top">&nbsp;Свойства товаров:<br>
@@ -168,7 +170,8 @@ function form_check() {
 		</div>
 		</td>
 	</tr>
-{/if*}	
+{/if*}
+
 	</table>
 
 <table width=100% class=content_table>

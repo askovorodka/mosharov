@@ -1,7 +1,6 @@
 <?php
 ob_start();
 
-
 /*
 header("Content-Type: text/html; charset=windows-1251");
 print_r($_SERVER['DOCUMENT_ROOT']);
@@ -12,11 +11,11 @@ foreach ($_SERVER as $key=>$val)
 exit;
 */
 
-if (preg_match("/^www.(.*)/", $_SERVER['HTTP_HOST']))
+/*if (preg_match("/^www.(.*)/", $_SERVER['HTTP_HOST']))
 {
 	header("Location: http://goodrims.ru" . $_SERVER['REQUEST_URI']);
 	die();
-}
+}*/
 
 /* ---------------------- HEADERS ----------------------- */
 
@@ -46,14 +45,12 @@ require_once 'modules/shop/front/class.shop.php';
 
 $_SESSION['db_connections'] = 0;
 
-/* ------------ �������� ������������� -------------------*/
 $smarty = new Smarty;
 
 $smarty->template_dir = 'templates/';
 $smarty->compile_dir = 'lib/smarty/templates_c/';
 $smarty->cache_dir = 'lib/smarty/cache/';
 
-/* ------------ ������������ � ���� ������ -------------- */
 $db=new db(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 
 $users = new Users();
@@ -64,7 +61,6 @@ if ($user_id = $users->is_auth_user())
 define ('CAPTCHA_SALT', 'kjhfgkjhfsdkjghskjd hkjfdnkmbn ,msdnbskjh'); 
 
 
-/* -------- ������ ������������ � ������ ����� ---------- */
 
 Common::load_config('front');
 
@@ -94,20 +90,18 @@ $js[]=BASE_URL."/javascript/tools.js";
 $js[]=BASE_URL."/javascript/bootstrap/html5shiv.js";
 $js[]=BASE_URL."/javascript/bootstrap/bootstrap.min.js";
 $js[]=BASE_URL."/javascript/bootstrap/functions.js";
+$js[]=BASE_URL."/javascript/catalog.js";
 //$js[]=BASE_URL."/javascript/tools.js";
 
-/* ------------- ��������� �������� ������ -------------- */
 if (SMARTY_DEBUGGING_SITE=='true') $smarty->debugging = true;
 else $smarty->debugging = false;
 
-/* --------------��������� ������� ������� ---------------*/
 
 if(strpos(@$_SERVER["HTTP_USER_AGENT"],"MSIE"))
   $smarty->assign("browser","ie");
 else
   $smarty->assign("browser","moz");
 
-/* -------------- ����������� �� ������� ---------------*/
 
 if (get_magic_quotes_gpc()) {
   $_GET=String::strips($_GET);
@@ -118,7 +112,6 @@ if (get_magic_quotes_gpc()) {
   if (isset($_SERVER['PHP_AUTH_PW'])) $_SERVER['PHP_AUTH_PW']=String::strips($_SERVER['PHP_AUTH_PW']);
 }
 
-/* ----------------- ���������� ������ ------------------ */
 
 $n=count($url)-1;
 
@@ -163,6 +156,7 @@ $smarty->assign("base_path",BASE_PATH);
 $smarty->assign("catalog_image",BASE_URL . '/uploaded_files/shop_images/');
 $smarty->assign("module_url",$module_url);
 $smarty->assign("default_url",DEFAULT_URL);
+$smarty->assign("SHOP_DOSTAVKA_PRICE",SHOP_DOSTAVKA_PRICE);
 
 $smarty->assign("node_content",$node_content);
 $smarty->assign("template_image",'http://'.$_SERVER['HTTP_HOST'].'/templates/img/');
@@ -171,11 +165,9 @@ $smarty->assign("template_image",'http://'.$_SERVER['HTTP_HOST'].'/templates/img
 if (!empty($_SESSION['fw_user'])) $smarty->assign('user_info',$_SESSION['fw_user']);
 
 
-/*--- �������� ������ ----*/
 $capt = new captchaZDR;
 $capt->base_path = BASE_PATH;
 
-  /* ------- ��������� ������ ����������� �� ���������-------- */
 
   for ($i=0;$i<count($default_modules);$i++) {
     $new_module=array("switch_default"=>'on',"name"=>$default_modules[$i]['name'],"file"=>'modules/'.$default_modules[$i]['name'].'/front/'.$default_modules[$i]['name'].'.f_main.php');
@@ -228,7 +220,6 @@ $capt->base_path = BASE_PATH;
 
   }
 
-  /* -------------- ������ ��� ������ ������-------------- */
 
   foreach ($modules_to_load as $k=>$v) {
     $switch_default = isset($v['switch_default']) ? $v['switch_default'] : 'off' ;
@@ -245,7 +236,6 @@ $capt->base_path = BASE_PATH;
 
   }
 
-/* -------------- ���������� ������� ���� -------------- */
 $main_menu=$db->get_all("SELECT id,name,url,param_level,param_left,param_right FROM fw_tree WHERE param_level IN ('1') AND in_menu='1' and status='1' ORDER BY param_left");
 $main_menu=String::unformat_array($main_menu,'front');
 foreach ($main_menu as $key=>$val)
@@ -338,12 +328,10 @@ if (!empty($page_content['id'])){
   $smarty->assign("files_list",$files_list);
 }
 
-/*-------------------����� ���������-------------------- */
 $t_endtime= gettime ();
 $t_result=$t_endtime-$t_starttime;
 $pgt=substr($t_result,0,5);
 
-/*----------��������� ��������� ���� ��� ������--------- */
 
 if ($deny_access) {
 	$template=BASE_PATH.'/templates/access_denided.html';
@@ -358,7 +346,7 @@ elseif ($_SERVER['REQUEST_URI'] == '/last_import_time/')
 else {
   //$template=BASE_PATH.'/templates/404.html';
 	$main_template=BASE_PATH . '/templates/404.html';
-  //$navigation[]=array("url"=>"/","title"=>"������ 404. �������� �� �������");
+  //$navigation[]=array("url"=>"/","title"=>"Error 404.");
 
 }
 
@@ -366,9 +354,12 @@ $temp='';
 
 for ($i=0;$i<count($navigation);$i++)
 {
-  $_SESSION['nav'][$i] = $navigation[$i]['title'];
-  $temp.=$navigation[$i]['url']."/";
-  $navigation[$i]['url']=$temp;
+	//if (isset($navigation[$i]['title']))
+	{
+  		$_SESSION['nav'][$i] = $navigation[$i]['title'];
+  		$temp.=$navigation[$i]['url']."/";
+  		$navigation[$i]['url']=$temp;
+	}
 }
 
 
@@ -395,7 +386,6 @@ if (isset($page) or $set_pages_url) {
 }
 
 
-/* ---------------- ������ ������ ������ ---------------- */
 
 if (!$switch_off_smarty){
   if (isset($template_mode) && $template_mode=='single') $smarty_display=$template;
@@ -421,6 +411,5 @@ else {
 
 $smarty->display($smarty_display);
 
-/* ---------- ��������� ���������� � �����---------------*/
 $db->db_close();
 ?>
