@@ -1,0 +1,107 @@
+/* ------ Общие стили
+-----------------------------------------------*/
+
+
+.wrapper {
+
+width:1000px;
+}
+
+
+.blocks p {
+margin-bottom:15px;
+position:relative;
+}
+
+.btn {
+display:block;
+float:left;
+height:31px;
+line-height:31px;
+padding:0 10px;
+background:url(../gfx/bgbtn.jpg) repeat-x;
+color:#565e62;
+font-weight:bold;
+font-size:12px;
+border:1px solid #e1e0df;
+outline:none;
+cursor:pointer;
+}
+
+.text,
+.textarea {
+padding:5px 10px;
+height:27px;
+border:1px solid #ccc;
+color:#333;
+background:url(../gfx/bginput.jpg) repeat-x bottom #fff;
+position:relative;
+z-index:2;
+outline:none;
+}
+
+.text {
+width:280px;
+outline:none;
+}
+
+.textarea {
+resize:none;
+height:150px;
+width:280px;
+}
+
+.blocks label {
+float:left;
+width:120px;
+line-height:27px;
+text-align:right;
+margin-right:15px;
+color:#666;
+}
+
+.blocks label.error,
+.blocks label.ok {
+position:absolute;
+z-index:1;
+top:-4px;
+left:110px;
+padding:4px 15px 5px 340px;
+/*Сбрасываем метку*/
+width:auto;
+text-align:left;
+margin:0;
+background-repeat:no-repeat;
+background-position:320px 8px;
+}
+
+.blocks label.ok {
+background-image:url(../gfx/icook.gif);
+color:#577530;
+}
+
+.blocks label.error {
+background-image:url(../gfx/icofail.gif);
+color:#c81925;
+}
+
+.area label.ok,
+.area label.error {
+height:163px;
+padding-left:340px;
+background-position:320px 8px;
+}
+
+/* CSS3 */
+.btn,
+.text,
+.textarea,
+.blocks label.error,
+.blocks label.ok { 
+-moz-border-radius:8px;
+-webkit-border-radius:8px;
+border-radius:8px;
+}
+
+
+

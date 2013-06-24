@@ -15,7 +15,7 @@ if (preg_match("/^\?year=([0-9]{0,4})$/",$url[$n])) {
 }
 
 if (!isset($year) || $_GET['year']=='') {
-	$where="status='1'";
+	$where="status='1' and publish_date <= " . time();
 	$limit="LIMIT ".NEWS_PER_PAGE_FRONT;
 }
 else {
@@ -42,19 +42,35 @@ $navigation[]=array("url" => $module_url,"title" => $node_content['name']);
 
 SWITCH (TRUE) {
 	
-	CASE (count($url)==1):
+	CASE (count($url)==1 or (preg_match("/^page_([0-9]+)$/",$url[$n]) and count($url) == 2) ):
 	
-		$page_found=true;
 		
-		$news_list=$db->get_all("SELECT * FROM fw_news WHERE status='1' ORDER BY publish_date DESC LIMIT ".NEWS_PER_PAGE_FRONT);
+		$page_found=true;
+		if (preg_match("/^page_([0-9]+)$/",$url[$n]))
+		{
+			list(,$page)=explode("_",$url[$n]);
+			$url=array_values($url);
+		}
+		else $page = 1;
+		
+		$result=$db->query("SELECT COUNT(*) FROM fw_news WHERE status='1'");
+		$pager=Common::pager($result,NEWS_PER_PAGE_FRONT_ARCHIVE,$page);
+		
+		$smarty->assign("total_pages",$pager['total_pages']);
+		$smarty->assign("current_page",$pager['current_page']);
+		$smarty->assign("pages",$pager['pages']);
+		
+		$news_list=$db->get_all("SELECT * FROM fw_news WHERE $where ORDER BY publish_date DESC limit " . $pager['limit']);
+		
+		$page_title=$node_content['name'].' - '.'Архив';
 		
 		$smarty->assign("news_list",$news_list);
 		$template='news_list.html';
+		
 	BREAK;
 	
 	CASE (($url[$n]=='archive' && count($url)==2) || ($url[$n-1]=='archive' && preg_match("/^page_([0-9]+)$/",$url[$n]) && count($url)==3)):
 		$page_found=true;
-		$navigation[]=array("url" => "archive","title" => "Архив новостей");
 		
 		if (preg_match("/^page_([0-9]+)$/",$url[$n])) {
 			list(,$page)=explode("_",$url[$n]);
@@ -78,9 +94,10 @@ SWITCH (TRUE) {
 		$template='news_list.html';
 	BREAK;
 	
-	CASE (preg_match("/^([0-9]+)$/",$url[$n]) && $url[$n-1]=='archive' && count($url)==3):
+	//CASE (preg_match("/^([0-9]+)$/",$url[$n]) && $url[$n-1]=='archive' && count($url)==3):
+	CASE (preg_match("/^([0-9]+)$/",$url[$n]) && $url[$n-1] == $module_url && count($url)==2):
 		
-		$navigation[]=array("url" => "archive","title" => "Архив");
+		//$navigation[]=array("url" => "archive","title" => "Архив");
 		
 		$id=$url[$n];
 		$result=$db->get_single("SELECT * FROM fw_news WHERE id='$id' AND status='1'");

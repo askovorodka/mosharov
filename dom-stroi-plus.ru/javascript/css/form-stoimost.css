@@ -1,0 +1,39 @@
+
+.classform{
+color:#565e62;
+}
+
+.classbut{
+display:block;
+height:31px;
+line-height:31px;
+padding:0 10px;
+background:url(../gfx/bgbtn.jpg) repeat-x;
+color:#565e62;
+font-weight:bold;
+font-size:12px;
+border:1px solid #e1e0df;
+outline:none;
+cursor:pointer;
+}
+
+
+.classtext{ 
+padding:5px 10px;
+height:27px;
+border:1px solid #ccc;
+color:#333;
+background:url(../gfx/bginput.jpg) repeat-x bottom #fff;
+position:relative;
+z-index:2;
+outline:none;
+}
+
+.classbut,
+.classtext{ 
+-moz-border-radius:8px;
+-webkit-border-radius:8px;
+border-radius:8px;
+}
+
+

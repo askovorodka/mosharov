@@ -1,32 +1,29 @@
-<h1>Новости</h1>
+<h1>Статьи</h1>
 
 {foreach from=$news_list item=news}
+<div>
 <span class="datenews">{$news.publish_date|date_format:"%d.%m.%Y"}</span> 
-<a href="{$base_url}/{$module_url}/archive/{$news.id}" class="newscapt">{$news.title|strip_tags}</a><br>
 {if $news.image}<img style="float:left;" src="/uploaded_files/news/{$news.image}" />{/if}
+<a href="{$base_url}/{$module_url}/{$news.id}/" class="newscapt">{$news.title|strip_tags}</a><br>
 {$news.small_text|strip_tags}<br><br>
+<div style="clear:both;"></div>
+</div>
 {/foreach}
 
 <br>
 
-{if $mode=='archive'}
+
 {if $total_pages>1}
 <div class="listing">
-<li class="str">
-<ul>
-<li class="center"><a href="{$base_url}/{$module_url}/archive/page_1">&laquo;</a>
+Страницы: 
+<a href="{$base_url}/{$module_url}/page_1/" title="Предыдущая"> <<</a>
 {section name=p loop=$pages}
 	{if $pages[p]==$current_page}
-	<a class="active" href="{$base_url}/{$module_url}/archive/page_{$pages[p]}">{$pages[p]}</a>
+	<a style="font-weight:bold;" href="{$base_url}/{$module_url}/page_{$pages[p]}/">{$pages[p]}</a>
 	{else}
-	<a href="{$base_url}/{$module_url}/archive/page_{$pages[p]}">{$pages[p]}</a>
+	<a href="{$base_url}/{$module_url}/page_{$pages[p]}/">{$pages[p]}</a>
 	{/if}
 {/section}
-<a href="{$base_url}/{$module_url}/archive/page_{$total_pages}">&raquo;</a></li>
-</ul>
-</li>
+<a href="{$base_url}/{$module_url}/page_{$total_pages}/" title="Следующая">>> </a>
 </div>
-{/if}
-{else}
-<div style="margin-top : 17px;"><center><a href="{$base_url}/news/archive/">Архив новостей</a></center></div>
 {/if}

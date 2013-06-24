@@ -78,7 +78,7 @@ if (isset($_POST['submit_add_news'])) {
 		}
 	}
 	
-header("Location: index.php?mod=news&action=edit&id=".mysql_insert_id());
+header("Location: index.php?mod=news&action=edit&id=" . $id);
 die();
 	
 }
