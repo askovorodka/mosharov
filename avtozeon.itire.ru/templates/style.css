@@ -6656,3 +6656,7 @@ a.badge:focus {
 .affix {
   position: fixed;
 }
+
+
+input.error { background-color:rgb(248, 102, 102); }
+input.valid { background-color:rgb(133, 250, 133); }
