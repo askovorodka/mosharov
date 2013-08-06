@@ -22,6 +22,10 @@
 	
 </head>
 <body>
+
+<div style="position:absolute; z-index:90; border:1px solid #CD4900; background:#FFF; display:none;" id="ImageLayout"></div>
+<div id='loading-layer' style="display:none;"><div>Загрузка. Пожалуйста, подождите...</div></div>
+
 <div id="wrap">
 	<div class="container">
 		<header class="row">
@@ -36,26 +40,9 @@
 					<address class="pull-left">ул. Южнопортовая, д.22, стр.10,<br>магазин "Шинный центр"<br><a href="#">карта проезда</a></address>
 				</div>
 			</div>
-			<div class="span7">
-				<div class="well well-top">
-					<i class="icon-shopping-cart"></i> <a href="#">Корзина</a> &mdash; в вашей корзине ничего нет, покупайте смелее!<hr>
-					<div class="payment"></div>
-					<div class="grey text-center">К оплате принимем наличные рубли, карты и другие средства. <a href="#">Подробнее</a></div>
-				</div>
-				<!-- Если товар есть в корзине -->
-				<!-- <div class="well well-top">
-					<i class="icon-shopping-cart"></i> <a href="#">Корзина</a> &mdash; у вас 15 товаров на сумму <span class="blue">123 480 руб.</span><hr>
-					<ol>
-						<li><span class="grey">4 шт. Achilles ATR Sport 205/50R17 &mdash; на сумму 48 570 руб.</span></li>
-						<li><span class="grey">2 шт. BF Goodrich G-Force Profiler 215/50R17 &mdash; на сумму 48 570 руб.</span></li>
-						<li><span class="grey">2 шт. BF Goodrich G-Force Profiler 215/50R17 &mdash; на сумму 48 570 руб.</span></li>
-					</ol>
-					<div class="text-center">
-						<button class="button-shopping-cart">Перейти в корзину</button>
-					</div>
-				</div> -->
-				<!-- /Если товар есть в корзине -->
-			</div>
+			
+			<div class="span7" id="basket_block">{include file="`$TEMP`basket.html"}</div>
+			
 		</header>
 		<section>
 			<nav class="mainmenu pull-right">
@@ -80,18 +67,29 @@
 		
 		{include file="`$TEMP`breadcrumbs.html"}
 		
-		<div class="row">
-			<article class="span81">
-			
+		
+		{if !$search_results && !$products}
+			<div class="row"><article class="span81">
 				{if $content=='' or !$content}
 					{assign var="content" value=""}
 					{fetch file=$template assign="content"}
 				{/if}
 				{eval var=$content}
-			
 			</article>
 			{include file="../templates/right_menu.html"}
-		</div>
+			</div>
+		
+		{else}
+			<section>
+				{if $content=='' or !$content}
+					{assign var="content" value=""}
+					{fetch file=$template assign="content"}
+				{/if}
+				{eval var=$content}
+			</section>
+		{/if}
+		
+		
 	</div>
 	<div id="push"></div><!-- спец. пустой блок высотой с 'footer' -->
 </div>

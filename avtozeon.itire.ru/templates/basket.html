@@ -1,9 +1,18 @@
-<div {if !$basket_number}style="display:none;"{/if} id="basket_block" class="baskettop"><div><span id="basket_number">{$basket_number}</span> <a href="{$base_url}/catalog/basket/" title="Оформить заказ">Оформить</a></div></div>
-{*
-		<div style="display:{if $basket_number > 0}block{else}none{/if};" id="basket_block">
-        <div class="basketc"><a href="/katalog/basket/">Корзина</a></div>
-        <div class="basket"><p><span class="grcolor">Кол-во товара:</span> <span id="basket_number">{$basket_number}</span> шт.
-        <br /><span class="grcolor">Сумма:</span> <span id="basket_currency">{$basket_total|format_price}</span> руб.
-        <br /><a href="/katalog/basket/" title="Оформить заказ"><img src="{$template_image}b_oformzakaz.png" /></a></p></div>
-		</div>
-*}
+<div class="well well-top{if $basket_number} display_off{/if}">
+	<i class="icon-shopping-cart"></i> <a href="#">Корзина</a> &mdash; в вашей корзине ничего нет, покупайте смелее!<hr>
+	<div class="payment"></div>
+	<div class="grey text-center">К оплате принимем наличные рубли, карты и другие средства. <a href="#">Подробнее</a></div>
+</div>
+<div class="well well-top{if !$basket_number} display_off{/if}">
+	<i class="icon-shopping-cart"></i> <a href="/catalog/basket/">Корзина</a> &mdash; у вас {$basket_number} товаров на сумму <span class="blue">{$basket_total|format_price} руб.</span><hr>
+	<ol>
+		{foreach from=$smarty.session.fw_basket item=item name="for_basket"}
+			{if $smarty.foreach.for_basket.iteration < 4}
+				<li><span class="grey">{$item.number} шт. {$item.product.name|strip_tags} &mdash; на сумму {$item.total_price|format_price} руб.</span></li>
+			{/if}
+		{/foreach}
+	</ol>
+	<div class="text-center">
+		<a href="/catalog/basket/" class="button-shopping-cart">Перейти в корзину</a>
+	</div>
+</div>

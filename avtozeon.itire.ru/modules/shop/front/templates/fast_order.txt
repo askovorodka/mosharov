@@ -1,4 +1,4 @@
-<p>Вас приветствует сайт http://шины-продажа.рф</p>
+<p>Вас приветствует сайт http://avtozeon.ru</p>
 
 <p>В Вашем онлайн магазине заявка на звонок от {$date|date_format:"%d.%m.%Y в %T"}</p>
 
@@ -41,8 +41,9 @@
 
 <tr><td>Телефон:</td><td>{$phone}</td></tr>
 
-<tr><td>Комментарий:</td><td>{$comment}</td></tr>
+<tr><td>Доставка:</td><td>{$dostavka}</td></tr>
 
+{if trim($address) != ""}<tr><td>Адрес:</td><td>{$address}</td></tr>{/if}
 </table>
 
 <p>До скорых встреч!</p>

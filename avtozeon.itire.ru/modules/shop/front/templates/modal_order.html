@@ -1,0 +1,61 @@
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+<form action="/catalog/fast_order/" method="post" id="fast_order_form">			
+			
+			
+			<input type="hidden" id="layer_product_price" name="product_price" value="" />
+			<input type="hidden" name="fast_order" value="1" />
+			<input type="hidden" id="product_id" name="product_id" value="" />
+			
+			
+			<div class="modal-header text-center"><h3>Продолжим покупки?!</h3></div>
+			<div class="modal-body">
+				<p>Вы добавили в корзину:</p>
+				<p class="text-warning" id="order_product_name"></p>
+				<p class="getmore">Продолжим покупки или оформим заказ?</p>
+				<div>
+					<button class="btn btn-link btn-fin pull-left">Оформить заказ &darr;</button>
+					<button class="btn btn-large pull-right" id="send_to_basket" data-dismiss="modal" aria-hidden="true">Продолжить покупки</button>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="modal-summ">
+					Товар: <span id="order_product_price"></span> р.<br>
+					Доставка: <span id="order_price"></span> р.<br>
+					Итого: <span id="order_sum"></span> р.<br>
+				</div>
+				<div class="text-left">
+					<div class="input-prepend">
+						<span class="add-on"><i class="icon-th-list"></i></span>
+						<input class="span1" id="order_count" type="text" placeholder="Кол-во" name="product_count" /> 
+					</div><br>
+					<div class="input-prepend">
+						<span class="add-on"><i class="icon-user"></i></span>
+						<input class="span4" id="prependedInput" type="text" placeholder="ФИО" name="fio" /> 
+					</div><br>
+					<div class="input-prepend">
+						<span class="add-on"><i class="icon-bell"></i></span>
+						<input class="span4" id="prependedInput" type="text" placeholder="Телефон" name="phone" /> 
+					</div><br>
+					<div class="input-prepend">
+      				<span class="add-on"><i class="icon-globe"></i></span>
+      				<select class="span4" name="order_type" id="order_type">
+        				<option value="">Тип доставки:</option>
+        				{foreach from=$smarty.const.ORDER_TYPES|unserialize item=item key=key}
+        					<option value="{$key}"{if $key == 2} selected{/if}>{$item}</option>
+        				{/foreach}
+      				</select>
+    				</div><br>
+    				<div class="input-prepend">
+      				<span class="add-on"><i class="icon-home"></i></span>
+      				<input class="span4" id="prependedInput" type="text" placeholder="Адрес и/или ТК (если требуется доставка)" name="address" /> 
+    				</div><br>
+    				<label class="checkbox">
+      				<input type="checkbox" checked=""> <small>Мною прочитаны, и я полностью соглашаюсь с <a href="#">правилами доставки и оплаты</a>.</small>
+    				</label>
+    				<button class="btn">Заказать</button>
+    			</div>
+			</div>
+			
+			</form>
+</div>

@@ -4,13 +4,20 @@
 //ini_set('display_errors','On');
 //$_SESSION['fw_basket']=array();
 
+/*foreach ($_SESSION['fw_basket'] as $key=>$val)
+{
+	echo $key . "<br>";
+}*/
+
 if ($switch_default=='on' or $main_module=='on') {
 
 	$basket_number=0;
 	$basket_total=0;
 	for ($i=0;$i<count(@$_SESSION['fw_basket']);$i++) {
 		$basket_number+=@$_SESSION['fw_basket'][$i]['number'];
-		$basket_total+=@$_SESSION['fw_basket'][$i]['price']*@$_SESSION['fw_basket'][$i]['number'];
+		$basket_total+=@$_SESSION['fw_basket'][$i]['price'] * @$_SESSION['fw_basket'][$i]['number'];
+		@$_SESSION['fw_basket'][$i]['total_price'] = @$_SESSION['fw_basket'][$i]['price'] * @$_SESSION['fw_basket'][$i]['number'];
+		@$_SESSION['fw_basket'][$i]['product'] = $shop->getProductInfo($_SESSION['fw_basket'][$i]['id']);
 	}
 	$smarty->assign("basket_number",$basket_number);
 	//$smarty->assign("basket_total",sprintf("%.2f",$basket_total));
@@ -18,6 +25,7 @@ if ($switch_default=='on' or $main_module=='on') {
 	$smarty->assign("currency",DEFAULT_CURRENCY);
 
 }
+
 if  ($main_module=='on')
 {
 
@@ -193,16 +201,19 @@ if  ($main_module=='on')
 		exit();
 	}
 	
+	
 	//быстрый заказ
 	if (!empty($_POST['fast_order']) && $_POST['fast_order'] == 1)
 	{
+		
 		$product_id = $_POST['product_id'];
 		$product_count = $_POST['product_count'];
-		$name = $_POST['name'];
+		$name = $_POST['fio'];
 		$phone = $_POST['phone'];
-		//$dostavka = $_POST['dostavka'];
-		//$address = $_POST['address'];
-		$comment = strip_tags($_POST['comment']);
+		$dostavka = $_POST['order_type'];
+		$address = $_POST['address'];
+		//$comment = strip_tags($_POST['comment']);
+		$comment = "";
 
 		$product = $shop->getProductInfo(intval($product_id));
 
@@ -250,7 +261,7 @@ if  ($main_module=='on')
 		{
 			//делаем быстрый заказ
 			$total_price = $product['price'] * $product_count;
-			if ($dostavka == 1 || $dostavka > 2)
+			if ($dostavka > 1 and $total_price < SHOP_DOSTAVKA_LIMIT)
 			{
 				$order_price = SHOP_DOSTAVKA_PRICE;
 			}
@@ -275,7 +286,6 @@ if  ($main_module=='on')
 			'".time()."',
 			'{$dostavka}',
 			'{$order_price}', 1, '{$comment}')");
-
 			$order_id = mysql_insert_id();
 			$db->query("INSERT INTO fw_orders_products (product_id,order_id,product_count, product_price)
 		VALUES ('{$product_id}', '{$order_id}', '{$product_count}', '{$product['price']}')");
@@ -283,11 +293,14 @@ if  ($main_module=='on')
 			$smarty->assign("date", time());
 			$smarty->assign("name", $name);
 			$smarty->assign("phone", $phone);
-			$smarty->assign("comment", $comment);
-			//$smarty->assign("address", $address);
+			$smarty->assign("address", $address);
 			$smarty->assign("total_sum", $total_price + $order_price);
 			$smarty->assign("total_price", $total_price);
-			//$smarty->assign("dostavka", $dostavka);
+			
+			$order_types = unserialize(ORDER_TYPES);
+			if (!empty($dostavka))
+				$smarty->assign("dostavka", $order_types[$dostavka]);
+			
 			$smarty->assign("order_price", $order_price);
 			$smarty->assign("product_count", $product_count);
 			$smarty->assign("product", $product);
@@ -299,14 +312,37 @@ if  ($main_module=='on')
 			 $smarty->assign("company_order",$companies[$dostavka]);
 			 }*/
 
-
-			$body = $smarty->fetch($templates_path.'/fast_order.txt');
-			//Mail::send_mail("goodrims@yandex.ru","info@goodrims.ru","Быстрый заказ интернет магазине #{$order_id}",$body,'','html','standard','Windows-1251');
-			Mail::send_mail("ai@avtozeon.ru","info@goodrims.ru","Быстрый заказ интернет магазине #{$order_id}",$body,'','html','standard','Windows-1251');
-			Mail::send_mail("rifshina@mail.ru","info@goodrims.ru","Быстрый заказ интернет магазине #{$order_id}",$body,'','html','standard','Windows-1251');
 			
-			header("Location: /bistriy_zakaz_ok/");
-			die();
+			if (!empty($_SESSION['fw_basket']))
+			{
+				foreach ($_SESSION['fw_basket'] as $key=>$val)
+				{
+					if (isset($_SESSION['fw_basket'][$key]['id']) and $_SESSION['fw_basket'][$key]['id'] == $product_id)
+					{
+						//$array[] = $_SESSION[$key];
+						unset($_SESSION['fw_basket'][$key]);
+					}
+				}
+
+				$array = array();
+				$array = $_SESSION['fw_basket'];
+				unset($_SESSION['fw_basket']);
+				foreach ($array as $key=>$val)
+				{
+					$_SESSION['fw_basket'][] = $val;
+				}
+			}
+
+			
+			
+			$body = $smarty->fetch($templates_path.'/fast_order.txt');
+			
+			//Mail::send_mail("ai@avtozeon.ru","info@goodrims.ru","Быстрый заказ интернет магазине #{$order_id}",$body,'','html','standard','Windows-1251');
+			//Mail::send_mail("rifshina@mail.ru","info@goodrims.ru","Быстрый заказ интернет магазине #{$order_id}",$body,'','html','standard','Windows-1251');
+			Mail::send_mail("aschmitz@yandex.ru","fastorder@avtozeon.ru","Быстрый заказ интернет магазине avtozeon.ru #{$order_id}",$body,'','html','standard','Windows-1251');
+			
+			header("Location: /catalog/fast_order_ok/");
+			exit();
 
 		}
 
@@ -370,7 +406,7 @@ if  ($main_module=='on')
 
 
 
-		CASE ($url[$n] == 'top_products'):
+		/*CASE ($url[$n] == 'top_products'):
 
 			$page_found=true;
 			$navigation[]=array("url" => 'top_products',"title" => 'Специальные предложения');
@@ -385,8 +421,19 @@ if  ($main_module=='on')
 
 			$template='top_products.html';
 
-			BREAK;
-
+			BREAK;*/
+		
+		
+		CASE ($url[$n] == 'fast_order_ok'):
+		
+		$page_found=true;
+		$navigation[]=array("url" => 'fast_order_ok',"title" => 'Быстрый заказ успешно завершен.');
+		$page_title = "Быстрый заказ успешно завершен.";
+		
+		$template='fast_order_ok.html';
+		
+		BREAK;
+		
 
 
 
@@ -571,7 +618,7 @@ if  ($main_module=='on')
 				$error_count = false;
 
 				for ($i=0;$i<count($_SESSION['fw_basket']);$i++) {
-					if ($_SESSION['fw_basket'][$i]['id']==$product['id']) {
+					if (isset($_SESSION['fw_basket'][$i]['id']) and $_SESSION['fw_basket'][$i]['id'] == $product['id']) {
 						$number += $_SESSION['fw_basket'][$i]['number'];
 						$number_found=true;
 					}
@@ -608,7 +655,8 @@ if  ($main_module=='on')
 				//$product['price']=($product['price'] * $cur_admin['kurs'])/$cur_site['kurs'];
 
 				for ($i=0;$i<count($_SESSION['fw_basket']);$i++) {
-					if ($_SESSION['fw_basket'][$i]['id']==$product['id']) {
+					if (isset($_SESSION['fw_basket'][$i]['id']) and $_SESSION['fw_basket'][$i]['id']==$product['id'])
+					{
 						$_SESSION['fw_basket'][$i]['number']=$number;
 					}
 				}
@@ -623,11 +671,18 @@ if  ($main_module=='on')
 				for ($i=0;$i<count(@$_SESSION['fw_basket']);$i++) {
 					$basket_number+=@$_SESSION['fw_basket'][$i]['number'];
 					$basket_total+=@$_SESSION['fw_basket'][$i]['price'] * @$_SESSION['fw_basket'][$i]['number'];
+					@$_SESSION['fw_basket'][$i]['total_price'] = @$_SESSION['fw_basket'][$i]['price'] * @$_SESSION['fw_basket'][$i]['number'];
+					@$_SESSION['fw_basket'][$i]['product'] = $shop->getProductInfo(@$_SESSION['fw_basket'][$i]['id']);
 				}
 					
 				$switch_off_smarty=true;
-				$basket_total = number_format($basket_total,2,".","");
-				print "$basket_number;$basket_total";
+				//$basket_total = number_format($basket_total,2,".","");
+				//print "$basket_number;$basket_total";
+				$smarty->assign("basket_number", $basket_number);
+				$smarty->assign("basket_total", $basket_total);
+				header("Content-Type:text/html; charset=windows-1251;");
+				echo $smarty->fetch(ROOT . "templates/basket.html");
+				
 					
 			}
 			exit();
@@ -890,7 +945,7 @@ if  ($main_module=='on')
 
 					//если пользователь зареген, берем данные из таблицы
 					//if ($user_id = $users->is_auth_user())
-					if (false)
+					/*if (false)
 					{
 						$user = $users->get_user($user_id);
 					}
@@ -917,7 +972,7 @@ if  ($main_module=='on')
 						}
 					}
 					//иначе без регистрации
-					else
+					else*/
 					{
 						$user = array();
 						$user['name'] = $_POST['name'];
@@ -1299,6 +1354,58 @@ if  ($main_module=='on')
 		$page_found=true;
 		$template='search_products.html';
 
+		BREAK;
+		
+		CASE (preg_match("/^([0-9]+)$/", $url[$n]) and preg_match("/^([0-9]+)$/", $url[$n-1]) and $url[$n-2] == 'get_product_info'):
+			
+			$page_found = true;
+			$product_count = intval($url[$n]);
+			$product_id = intval($url[$n-1]);
+			
+			$product = $shop->getProductInfo($product_id);
+			
+			if (!empty($product))
+			{
+				
+
+				foreach ($product as $key=>$val)
+				{
+					$product[$key] = iconv('windows-1251', 'utf-8', $val);
+				}
+				
+				$product['sum'] = $product['price'] * $product_count;
+				$product['total_sum'] = $product['sum'];
+				$product['order_sum'] = 0;
+				
+				if ($product['sum'] < SHOP_DOSTAVKA_LIMIT)
+				{
+					$product['total_sum'] += SHOP_DOSTAVKA_PRICE;
+					$product['order_sum'] = SHOP_DOSTAVKA_PRICE;
+				}
+				
+				$product['sum'] = Common::format_number($product['sum']);
+				$product['total_sum'] = Common::format_number($product['total_sum']);
+				$product['order_sum'] = Common::format_number($product['order_sum']);
+				
+				header("Content-Type:text/json; charset=utf-8;");
+				echo json_encode($product);
+				
+			}
+			
+			exit();
+			
+		BREAK;
+		
+		CASE ($url[$n] == 'get_constants'):
+			
+			header("Content-Type:text/json; charset=utf-8;");
+			
+			echo json_encode(array(
+				'SHOP_DOSTAVKA_LIMIT' => SHOP_DOSTAVKA_LIMIT,
+				'SHOP_DOSTAVKA_PRICE' => SHOP_DOSTAVKA_PRICE
+			));
+			exit();
+			
 		BREAK;
 
 		DEFAULT:

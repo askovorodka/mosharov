@@ -1,5 +1,115 @@
-{include file="`$TEMP`breadcrumbs.html"}
 
+				<h1>Ваша корзина:</h1>
+				
+<form action="" method="post" id="form_basket_recount">
+<input type="hidden" name="basket_recount" value="1" />
+				
+                <table class="table table-hover table-cart">
+  						<thead>
+    						<tr>
+      						<th>Наименование</th>
+      						<th>Артикул</th>
+      						<th>Цена</th>
+      						<th>Сумма</th>
+      						<th>Кол-во</th>
+      						<th> </th>
+    						</tr>
+  						</thead>
+  						<tbody>
+                  {foreach from=$basket item=product name=basket_foreach}
+                  <tr>
+                  	
+                    <td class="td-main"><a href="{$product.full_url}">{$product.name|strip_tags}</a></td>
+                    <td>{$product.article}</td>
+                    <td>{$product.price|format_price} руб.</td>
+                    <td>{$product.price_number|format_price} руб.</td>
+                    <td><input type="text" class="span05" value="{$product.number}" name="edit_number[{$product.id}]" /></td>
+                    <td><a title="Удалить" role="button" class="btn" href="{$module_url}/basket/delete/{$product.id}/" onclick="return confirm('Удалить продукт из корзины');">удалить</a></td>
+                    
+                  </tr>
+                  {/foreach}
+  						
+    						<tr>
+    							<td colspan="7">
+    								<span class="font18">Доставка: <span id="dostavka_ajax">{if $total_price|format_number < $smarty.const.SHOP_DOSTAVKA_LIMIT}{$smarty.const.SHOP_DOSTAVKA_PRICE}{else}0{/if}</span> руб.<br>
+									Итого: <span id="total_ajax">{$total_price_dostavka|format_price}</span> руб.</span>
+    							</td>
+    						</tr>
+  						</tbody>
+					</table>
+</form>
+					  <div class="well">
+    					<div class="input-prepend">
+      					<span class="add-on"><i class="icon-user"></i></span>
+      					<input class="span4" id="prependedInput" size="16" type="text" placeholder="ФИО"> 
+    					</div>
+    					<br>
+    					<div class="input-prepend">
+      					<span class="add-on"><i class="icon-bell"></i></span>
+      					<input class="span4" id="prependedInput" size="16" type="text" placeholder="Телефон 84955554433"> 
+    					</div>
+    					<br>
+    					<div class="input-prepend">
+      					<span class="add-on"><i class="icon-envelope"></i></span>
+      					<input class="span4" id="prependedInput" type="text" placeholder="Email"> 
+    					</div>
+    					<br>
+    					<div class="input-prepend">
+      					<span class="add-on"><i class="icon-globe"></i></span>
+      					<select class="span4" name="order_type">
+        					<option>Тип доставки:</option>
+	        				{foreach from=$smarty.const.ORDER_TYPES|unserialize item=item key=key}
+	        					<option value="{$key}"{if $key == 2} selected{/if}>{$item}</option>
+	        				{/foreach}
+      					</select>
+    					</div>
+    					<br>
+    					<div class="input-prepend">
+      					<span class="add-on"><i class="icon-home"></i></span>
+      					<input class="span4" id="prependedInput" size="16" type="text" placeholder="Адрес и/или ТК (если требуется доставка)"> 
+    					</div>
+    					<br>
+    					<h4>Способ оплаты</h4>
+    					<div class="left26">
+    						<label class="radio">
+      						<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"
+      						checked=""> Наличные
+      						<small>(Оплата при получении товара)</small>
+    						</label>
+    						<label class="radio">
+      						<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> Безналичный расчет <small><span class="text-info">+3% к цене</span> (если требутся счет на оплату)</small>
+    						</label>
+    						<label class="radio">
+      						<input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"> Банковская карта <small><span class="text-info">+3% к цене</span></small>
+    						</label>
+    					</div>
+    					<h4>Дополнительная информация</h4>
+    					<div class="input-prepend">
+      					<span class="add-on"><i class="icon-comment"></i></span>
+      					<textarea class="span4" rows="4" id="prependedInput" size="16" type="text" placeholder="Например реквизиты для выставления счета"></textarea>
+    					</div><br>
+    					<label class="checkbox">
+      					<input type="checkbox" checked> <small>Мною прочитаны, и я полностью соглашаюсь с <a href="#">правилами доставки и оплаты</a>.</small>
+    					</label>
+    					<button class="btn left26">Утвердить заказ</button>
+  					</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{*
+{include file="`$TEMP`breadcrumbs.html"}
 <h1>Ваша корзина</h1>
 {if $basket}
 {if $error_msg}<div style="color:red;">{section loop=$error_msg name=item}{$error_msg[item]}<br />{/section}</div>{/if}
@@ -101,11 +211,14 @@
 <center>Ваша корзина пуста.</center>
 {/if}
 
+
+*}
+
 		{literal}
 		<script>
 			$(document).ready(function(){
 
-				$("select[name='dostavka']").change(function(){
+				$("select[name='order_type']").change(function(){
 					var dostavka = $(this).val();
 					$.post('http://' + location.hostname + '/catalog/', {ajax:1, dostavka : dostavka}, 
 							function(response){  
@@ -113,7 +226,7 @@
 								$("#dostavka_ajax").html(array[0]);
 								$("#total_ajax").html(array[1]);
 							});
-					$("#dostavka_caption").html( $("select[name='dostavka'] option:selected").attr("caption") );
+					//$("#dostavka_caption").html( $("select[name='order_type'] option:selected").attr("caption") );
 				});
 				
 			});

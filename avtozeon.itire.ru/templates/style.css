@@ -306,7 +306,7 @@ a:focus {
 .button-shopping-cart {
 	background-color:#4a8ec6;
 	font-size: 13px;
-	color: #ffffff;
+	color: #ffffff !important;
 	text-decoration:underline;
 	padding: 4px 15px;
 	border:0;
@@ -6658,5 +6658,6 @@ a.badge:focus {
 }
 
 
-input.error { background-color:rgb(248, 102, 102); }
-input.valid { background-color:rgb(133, 250, 133); }
+input.error, select.error { background-color:rgb(248, 102, 102); }
+input.valid, select.valid { background-color:rgb(133, 250, 133); }
+.display_off {display:none;}

@@ -1,39 +1,48 @@
 {if $type == "disk"}
 	
-	{if $product.disk_sklad > 3}
+	{*if $product.disk_sklad > 3}
 		{assign var="order_count" value="4"}
 	{elseif $product.disk_sklad > 1}
 		{assign var="order_count" value=`$product.disk_sklad`}
 	{else}
 		{assign var="order_count" value="1"}
-	{/if}
+	{/if*}
+	
+	{assign var="sklad" value=`$product.disk_sklad`}
 
 {else $type == "tire"}
 
-	{if $product.tire_sklad > 3}
+	{*if $product.tire_sklad > 3}
 		{assign var="order_count" value="4"}
 	{elseif $product.tire_sklad > 1}
 		{assign var="order_count" value=`$product.tire_sklad`}
 	{else}
 		{assign var="order_count" value="1"}
-	{/if}
+	{/if*}
+	
+	{assign var="sklad" value=`$product.tire_sklad`}
 
 {/if}
 
-<section class="well">
+<section class="well" id="single_product">
 	<form action="" method="post" id="fast_order_form">
-	<input type="hidden" name="product_id" value="{$product.id}" />
-    <input type="hidden" name="fast_order" value="1" />
+	
+			<input type="hidden" id="layer_product_price" name="product_price" value="{$product.price}" />
+			<input type="hidden" name="fast_order" value="1" />
+			<input type="hidden" id="product_id" name="product_id" value="{$product.id}" />
+			<input type="hidden" id="product_name" value="{$product.name|strip_tags|escape:'html'}" />
+			<input type="hidden" id="sklad" value="{$sklad}" />
+    
 	
 						<div class="oneform" id="oneclick">Купить в 1 клик!</div>
 						<div class="modal-summ">
-							Товар: {$product.price|format_price} р.<br>
-							Доставка: {$SHOP_DOSTAVKA_PRICE} р.<br>
-							Итого: <span id="order_price"></span> р.<br>
+							Товар: <span id="order_product_price">{$product.price|format_price}</span> р.<br>
+							Доставка: <span id="order_price">{$SHOP_DOSTAVKA_PRICE}</span> р.<br>
+							Итого: <span id="order_sum"></span> р.<br>
 						</div>
 					  	<div class="input-prepend">
 							<span class="add-on"><i class="icon-th-list"></i></span>
-							<input class="span1" id="prependedInput" type="text" placeholder="Кол-во" value="{$order_count}" name="product_count" /> 
+							<input class="span1" id="order_count" type="text" placeholder="Кол-во" value="{$order_count}" name="product_count" /> 
 						</div><br>
 						<div class="input-prepend">
 							<span class="add-on"><i class="icon-user"></i></span>
@@ -45,16 +54,16 @@
 						</div><br>
 						<div class="input-prepend">
       					<span class="add-on"><i class="icon-globe"></i></span>
-      					<select class="span4" name="order_type">
+      					<select class="span4" name="order_type" id="order_type">
         					<option>Тип доставки:</option>
-        					<option value="1">Самовывоз</option>
-        					<option value="2">Служба доставки</option>
-        					<option value="3">Транспортная компания</option>
+	        				{foreach from=$smarty.const.ORDER_TYPES|unserialize item=item key=key}
+	        					<option value="{$key}"{if $key == 2} selected{/if}>{$item}</option>
+	        				{/foreach}
       					</select>
     					</div><br>
     					<div class="input-prepend">
       					<span class="add-on"><i class="icon-home"></i></span>
-      					<input class="span4" id="prependedInput" type="text" placeholder="Адрес и/или ТК (если требуется доставка)"> 
+      					<input class="span4" id="prependedInput" type="text" placeholder="Адрес и/или ТК (если требуется доставка)" name="address" /> 
     					</div><br>
     					<label class="checkbox">
       					<input type="checkbox" checked=""> <small>Мною прочитаны, и я полностью соглашаюсь с <a href="#">правилами доставки и оплаты</a>.</small>

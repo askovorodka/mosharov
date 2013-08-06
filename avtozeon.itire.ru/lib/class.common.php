@@ -5,18 +5,7 @@ class Common {
 	
 	function format_number($number)
 	{
-		/*if (strstr(".", $number))
-			$array = explode(".", $number);
-		else
-			$array = explode(",", $number);
-		$dst = $array[count($array)-1];
-		
-		if (intval($dst) == 0)
-			return number_format($number, 0, '.', '');
-		elseif (intval($dst) < 10)
-			return number_format($number, 1, '.', '');
-		else*/ 	
-			return number_format($number, 2, '.', '');
+		return number_format($number, 2, '.', '');
 	}
 	
 	function generate_main_menu($level=0) {
