@@ -2,6 +2,7 @@ eclipse.preferences.version=1
 encoding//modules/shop/admin/templates/shop.a_edit_cat.html=cp1251
 encoding//modules/shop/admin/templates/shop.a_edit_product.html=cp1251
 encoding//modules/shop/front/templates/basket.html=cp1251
+encoding//modules/shop/front/templates/basket_final.html=cp1251
 encoding//modules/shop/front/templates/catalog1.html=cp1251
 encoding//modules/shop/front/templates/catalog2.html=cp1251
 encoding//modules/shop/front/templates/disk_filter.html=cp1251

@@ -32,26 +32,33 @@
     						<tr>
     							<td colspan="7">
     								<span class="font18">Доставка: <span id="dostavka_ajax">{if $total_price|format_number < $smarty.const.SHOP_DOSTAVKA_LIMIT}{$smarty.const.SHOP_DOSTAVKA_PRICE}{else}0{/if}</span> руб.<br>
-									Итого: <span id="total_ajax">{$total_price_dostavka|format_price}</span> руб.</span>
+									Итого: <span id="total_ajax">{$total_price|format_price}</span> руб.</span>
     							</td>
     						</tr>
   						</tbody>
 					</table>
 </form>
+
+
+
+			<form action="/catalog/basket/submit/" method="post" id="form_order">
+				<input type="hidden" name="submit_order" value="1" />
+				<input type="hidden" name="basket_order_price" value="{$total_price}" />	
+
 					  <div class="well">
     					<div class="input-prepend">
       					<span class="add-on"><i class="icon-user"></i></span>
-      					<input class="span4" id="prependedInput" size="16" type="text" placeholder="ФИО"> 
+      					<input class="span4" id="prependedInput" name="name" size="16" type="text" placeholder="ФИО" /> 
     					</div>
     					<br>
     					<div class="input-prepend">
       					<span class="add-on"><i class="icon-bell"></i></span>
-      					<input class="span4" id="prependedInput" size="16" type="text" placeholder="Телефон 84955554433"> 
+      					<input class="span4" id="prependedInput" size="16" name="phone" type="text" placeholder="Телефон 84955554433"> 
     					</div>
     					<br>
     					<div class="input-prepend">
       					<span class="add-on"><i class="icon-envelope"></i></span>
-      					<input class="span4" id="prependedInput" type="text" placeholder="Email"> 
+      					<input class="span4" id="prependedInput" type="text" name="email" placeholder="Email"> 
     					</div>
     					<br>
     					<div class="input-prepend">
@@ -66,27 +73,27 @@
     					<br>
     					<div class="input-prepend">
       					<span class="add-on"><i class="icon-home"></i></span>
-      					<input class="span4" id="prependedInput" size="16" type="text" placeholder="Адрес и/или ТК (если требуется доставка)"> 
+      					<input class="span4" name="address" id="prependedInput" size="16" type="text" placeholder="Адрес и/или ТК (если требуется доставка)"> 
     					</div>
     					<br>
     					<h4>Способ оплаты</h4>
     					<div class="left26">
     						<label class="radio">
-      						<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"
+      						<input type="radio" name="payment" id="optionsRadios1" value="1"
       						checked=""> Наличные
       						<small>(Оплата при получении товара)</small>
     						</label>
     						<label class="radio">
-      						<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> Безналичный расчет <small><span class="text-info">+3% к цене</span> (если требутся счет на оплату)</small>
+      						<input type="radio" name="payment" id="optionsRadios2" value="2"> Безналичный расчет <small><span class="text-info">+3% к цене</span> (если требутся счет на оплату)</small>
     						</label>
     						<label class="radio">
-      						<input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"> Банковская карта <small><span class="text-info">+3% к цене</span></small>
+      						<input type="radio" name="payment" id="optionsRadios3" value="3"> Банковская карта <small><span class="text-info">+3% к цене</span></small>
     						</label>
     					</div>
     					<h4>Дополнительная информация</h4>
     					<div class="input-prepend">
       					<span class="add-on"><i class="icon-comment"></i></span>
-      					<textarea class="span4" rows="4" id="prependedInput" size="16" type="text" placeholder="Например реквизиты для выставления счета"></textarea>
+      					<textarea class="span4" name="comment" rows="4" id="prependedInput" size="16" type="text" placeholder="Например реквизиты для выставления счета"></textarea>
     					</div><br>
     					<label class="checkbox">
       					<input type="checkbox" checked> <small>Мною прочитаны, и я полностью соглашаюсь с <a href="#">правилами доставки и оплаты</a>.</small>
@@ -94,7 +101,7 @@
     					<button class="btn left26">Утвердить заказ</button>
   					</div>
 
-
+			</form>
 
 
 
@@ -214,7 +221,7 @@
 
 *}
 
-		{literal}
+		{*literal}
 		<script>
 			$(document).ready(function(){
 
@@ -232,4 +239,4 @@
 			});
 
 		</script>
-		{/literal}
+		{/literal*}

@@ -46,17 +46,11 @@
 
 <tr><td>Адрес доставки:</td><td>{$user.address}</td></tr>
 
-<tr><td>Способ доставки:</td><td>{if $dostavka == 1}Доставка{elseif $dostavka == 2}Самовывоз{elseif $dostavka > 2}Доставка в транспортную компанию - {$company_dost}{/if}</td></tr>
+<tr><td>Способ доставки:</td><td>{if $dostavka == 1}Самовывоз{elseif $dostavka == 2}Доставка по Москве{elseif $dostavka > 2}Доставка транспортной компанией{*Доставка в транспортную компанию - {$company_dost}*}{/if}</td></tr>
 
 <tr><td>Способ оплаты:</td><td>{if $payment == 1}Наличные{elseif $payment == 2}Безналчиный расчет{else}Банковская карта{/if}</td></tr>
 
-<tr><td>Название компании:</td><td>{$company}</td></tr>
-
-<tr><td>ИНН:</td><td>{$inn}</td></tr>
-
-<tr><td>КПП:</td><td>{$kpp}</td></tr>
-
-<tr><td>Текст пожелания:</td><td>{$comment}</td></tr>
+<tr><td>Дополнительно:</td><td>{$comment}</td></tr>
 </table>
 
 <p>До скорых встреч!</p>

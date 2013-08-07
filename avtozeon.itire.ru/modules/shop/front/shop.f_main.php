@@ -943,55 +943,23 @@ if  ($main_module=='on')
 					$products_list='';
 					$total_number=0;
 
-					//если пользователь зареген, берем данные из таблицы
-					//if ($user_id = $users->is_auth_user())
-					/*if (false)
-					{
-						$user = $users->get_user($user_id);
-					}
-					//иначе если он хочет быть зареген, регистрируем и берем данные из таблицы
-					elseif (!empty($_POST['password']))
-					{
-						$users->setEmail($_POST['email']);
-						$users->setName($_POST['name']);
-						$users->setTel($_POST['phone']);
-						$users->setAddress($_POST['address']);
-						$users->setPassword($_POST['password']);
-
-						if (!$users->get_user_by_email($_POST['email']))
-						{
-							$user = $users->register();
-						}
-						else
-						{
-							$smarty->assign('error_register_message','ѕользователь с тами email уже зарегистрирован');
-							$error_register = true;
-							echo "ѕользователь с тами email уже зарегистрирован";
-							header("Location: /catalog/basket/");
-							die();
-						}
-					}
-					//иначе без регистрации
-					else*/
-					{
-						$user = array();
-						$user['name'] = $_POST['name'];
-						$user['mail'] = $_POST['email'];
-						$user['id'] = null;
-						$user['tel'] = $_POST['phone'];
-						$user['address'] = $_POST['address'];
-					}
+					$user = array();
+					$user['name'] = $_POST['name'];
+					$user['mail'] = $_POST['email'];
+					$user['id'] = null;
+					$user['tel'] = $_POST['phone'];
+					$user['address'] = $_POST['address'];
 
 					$name=$user['name'];
 					$company=$_POST['company'];
 					$comments=$_POST['comment'];
 					$inn = $_POST['inn'];
 					$kpp = $_POST['kpp'];
-					$dostavka = $_POST['dostavka'];
+					$dostavka = $_POST['order_type'];
 					$payment = $_POST['payment'];
 
 
-					if ($dostavka == 1 || $dostavka > 2)
+					if ($dostavka > 1)
 					{
 						$order_price = SHOP_DOSTAVKA_PRICE;
 					}
@@ -1018,7 +986,7 @@ if  ($main_module=='on')
 					}
 
 					$total_sum = $total_price;
-					if ($dostavka != 2 && $total_price < SHOP_DOSTAVKA_LIMIT)
+					if ($dostavka > 1 && $total_price < SHOP_DOSTAVKA_LIMIT)
 					$total_sum += $order_price;
 					else
 					$order_price = 0;
@@ -1100,25 +1068,31 @@ if  ($main_module=='on')
 					$smarty->assign("dostavka",$dostavka);
 
 					$smarty->assign("payment",$payment);
-					$smarty->assign("company",$company);
+					//$smarty->assign("company",$company);
 					$smarty->assign("order_price",$order_price);
 					$smarty->assign("total_sum",$total_sum);
-					$smarty->assign("inn",$inn);
-					$smarty->assign("kpp",$kpp);
+					//$smarty->assign("inn",$inn);
+					//$smarty->assign("kpp",$kpp);
 					$smarty->assign("comment",$comments);
 
 					$body=$smarty->fetch($templates_path.'/order_notice.txt');
 
-					Mail::send_mail($user['mail'],"goodrims@yandex.ru","Ќовый заказ в интернет магазине",$body,'','html','standard','Windows-1251');
+					Mail::send_mail($user['mail'],"ashmitz@yandex.ru","Ќовый заказ в интернет магазине",$body,'','html','standard','Windows-1251');
 
 					$admin_body=$smarty->fetch($templates_path.'/admin_order_notice.txt');
 
 					//Mail::send_mail("goodrims@yandex.ru",$user['mail'],"Ќовый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
-					Mail::send_mail("ai@avtozeon.ru",$user['mail'],"Ќовый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
-					Mail::send_mail("rifshina@mail.ru",$user['mail'],"Ќовый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
+					//Mail::send_mail("ai@avtozeon.ru",$user['mail'],"Ќовый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
+					//Mail::send_mail("rifshina@mail.ru",$user['mail'],"Ќовый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
+					Mail::send_mail("aschmitz@ya.ru",$user['mail'],"Ќовый заказ в интернет магазине #{$order_id}",$admin_body,'','html','standard','Windows-1251');
 					
 					//$page_found = true;
 					//$template = 'order_done.html';
+					
+					//setcookie("avtozeon_user", json_encode(array("name" => $user['name'], "phone" => $user['tel'], "email" => $user['mail'], "address" => $address )), time() + 60*60*24*30*12 );
+					//setcookie("avtozeon_user", $user['name']."|".$user['tel']."|".$user['mail']."|".$address, time() + 60*60*24*30*12 );
+				
+					
 					header("Location: /catalog/basket/final/");
 					die();
 				}

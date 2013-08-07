@@ -299,6 +299,10 @@ a:focus {
 	font-size: 13px;
 }
 
+ol li span.grey {
+	font-size: 12px !important;
+}
+
 .grey a {
 	color: #666666 !important;
 }

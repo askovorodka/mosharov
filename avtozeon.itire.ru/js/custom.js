@@ -44,11 +44,9 @@ $(document).ready(function(){
 		
 	});
 	
-	$("form#fast_order_form").submit(function(){
-		//return false;
-	});
+	alert( document.cookie );
 	
-	$("input[name='phone']", $("form#fast_order_form")).keydown(function(e){
+	$("input[name='phone']", $("form")).keydown(function(e){
 		
 		if ($.inArray(e.which, [8,46]) > -1)
 			return true;
@@ -106,7 +104,7 @@ $(document).ready(function(){
 	
 	function get_order_layer(product_id, product_name, product_price, product_count, order_type)
 	{
-		//alert(product_id + "\n" + product_name + "\n" + product_price + "\n" + product_count + "\n" + order_type);
+		
 		product_sum = parseFloat(product_price * product_count);
 		total_sum = product_sum;
 		order_price = 0.00;
@@ -177,13 +175,6 @@ $(document).ready(function(){
 	}
 	
 	
-	/*$("input#count_single", $("table.oneprice")).keydown(function(e){
-		return keydown_working(e);
-	}).keyup(function(e){
-		return keyup_working(e, this);
-	});*/
-	
-	
 	$("#order_count", $("#fast_order_form")).keydown(function(e)
 	{
 		return keydown_working(e);
@@ -208,31 +199,73 @@ $(document).ready(function(){
 	
 	
 	$("input[type='text']", $("form#form_basket_recount"))
-		//.filter(function(){ return /edit_number\[([1-9]+)\]/i.test($(this).attr("name")); })
 		.each(function(){
-			
-			//if ( /edit_number\[([1-9]+)\]/i.test( $(this).attr("name") ) )
-			{
-			
-				$(this).keydown(function(e){
+				
+			$(this).keydown(function(e){
 					
-					return keydown_working(e);
+				return keydown_working(e);
 					
-				}).keyup(function(e){
+			}).keyup(function(e){
 					
-					if (!keydown_working(e))
-						return false;
+				if (!keydown_working(e))
+					return false;
 					
-					if (/^([1-9]+)$/.test( $(this).val() ))
-					{	
-						$("form#form_basket_recount").submit();
-					}
+				if (/^([1-9]+)$/.test( $(this).val() ))
+				{	
+					$("form#form_basket_recount").submit();
+				}
 					
-				});
-			
-			}
+			});
 			
 		});
+
+	
+	function change_basket_order_type(value)
+	{
+		
+		var basket_price = $("input[name='basket_order_price']",$("form#form_order")).val();
+		basket_price = parseFloat(basket_price);
+		var order_price = 0;
+		
+		if (basket_price < parseFloat(config['SHOP_DOSTAVKA_LIMIT']) && parseInt(value) > 1)
+		{
+			basket_price += parseFloat(config['SHOP_DOSTAVKA_PRICE']);
+			order_price = parseFloat(config['SHOP_DOSTAVKA_PRICE']);
+		}
+		
+		$("span#dostavka_ajax").html(number_format(order_price, 2, '.', ''));
+		$("span#total_ajax").html(number_format(basket_price, 2, '.', ''));
+		
+	}
+	
+	$("select[name='order_type']", $("form#form_order")).change(function(){
+		change_basket_order_type( parseInt($(this).val()) );
+	});
+	
+	change_basket_order_type( $("select[name='order_type'] option:selected", $("form#form_order")).val() );
+	
+	
+	
+	$("form#form_order").validate({
+		
+		rules : {
+			name : { required : true, minlength : 4 },
+			phone : {phone_valid : true},
+			email : {email : true, required : true},
+			order_type : {required: true, number:true}
+			
+		},
+		
+		messages : {
+			name : {required:"", minlength:""},
+			phone : {phone_valid : ""},
+			email : {email : "", required : ""},
+			order_type : {required : "", number: ""}
+		}
+		
+	});
+	
+	
 	
 	
 });
