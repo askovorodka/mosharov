@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/!svn/ver/19/trunk/games/javascript/tinymce/jscripts/tiny_mce/plugins/imagemanager/classes/Authenticators
+END
+IPAuthenticator.php
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/!svn/ver/19/trunk/games/javascript/tinymce/jscripts/tiny_mce/plugins/imagemanager/classes/Authenticators/IPAuthenticator.php
+END
+SessionAuthenticator.php
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/!svn/ver/19/trunk/games/javascript/tinymce/jscripts/tiny_mce/plugins/imagemanager/classes/Authenticators/SessionAuthenticator.php
+END
+BaseAuthenticator.php
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/!svn/ver/19/trunk/games/javascript/tinymce/jscripts/tiny_mce/plugins/imagemanager/classes/Authenticators/BaseAuthenticator.php
+END

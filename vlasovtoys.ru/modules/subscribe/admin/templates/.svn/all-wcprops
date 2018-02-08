@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/19/trunk/games/modules/subscribe/admin/templates
+END
+subscribe.a_user_mail.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/19/trunk/games/modules/subscribe/admin/templates/subscribe.a_user_mail.html
+END
+subscribe.a_templates.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/19/trunk/games/modules/subscribe/admin/templates/subscribe.a_templates.html
+END
+subscribe.a_groups.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/19/trunk/games/modules/subscribe/admin/templates/subscribe.a_groups.html
+END
+subscribe.a_users.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/19/trunk/games/modules/subscribe/admin/templates/subscribe.a_users.html
+END
+subscribe.a_edit_template.html
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/19/trunk/games/modules/subscribe/admin/templates/subscribe.a_edit_template.html
+END
+subscribe.a_send.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/19/trunk/games/modules/subscribe/admin/templates/subscribe.a_send.html
+END

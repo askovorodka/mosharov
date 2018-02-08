@@ -1,0 +1,98 @@
+<html>
+<head>
+<title>Каталог продукции</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<link rel="stylesheet" type="text/css" href="templates/style.css">
+</head>
+<body>
+
+{if $cat_list}
+<table width=100% class=content_table>
+
+	<tr><th>Категории каталога</th></tr>
+
+	{foreach name=tree from=$cat_list item=entry}
+
+	{if $col==1}
+	{assign var="td" value='td1'}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value='td2'}
+	{assign var="col" value=1}
+	{/if}
+	<tr>
+		<td class={$td}_single>
+			{str_repeat str="&nbsp;" num=$entry.param_level mod="4"}<img src=templates/img/tree.gif><a href=index.php?mod=shop&action=mini_catalogue&cat={$entry.id}&{if $product_id}product_id={$product_id}{else}order_id={$order_id}{/if}>{$entry.name}</a> {if $entry.products>0}<small>[{$entry.products}]</small>{/if}
+		</td>
+	</tr>
+
+	{/foreach}
+
+	</table>
+{else}
+<br>
+[ <a href="javascript:history.back();">Назад</a> ]
+<br><br>
+{if $products_list}
+{if $product_added=='1'}
+<script language="JavaScript">
+window.opener.location.reload();
+</script>
+{/if}
+<table width=100% class=content_table>
+
+	<tr>
+	<th>Продукт</th>
+	<th width=15%>Цена</th>
+	<th width=20%>Действия</th>
+	</tr>
+
+	{foreach name=tree from=$products_list item=entry}
+
+	{if $col==1}
+	{assign var="td" value='td1'}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value='td2'}
+	{assign var="col" value=1}
+	{/if}
+	<tr>
+			<td class={$td}_left>
+				<b>{$entry.name}</b>
+			</td>
+			<td align=center class={$td}_middle>
+			<b><font color=red>{$entry.price} {$currency}</font></b>
+			</td>
+			<td align=center class={$td}_right>
+			{if $product_id!=$entry.id}[ <a href="index.php?mod=shop&action=mini_catalogue&add_product={$entry.id}&{if !$product_id}order_id={$smarty.get.order_id}{else}product_id={$product_id}{/if}">Добавить</a> ]{/if}
+			</td>
+		</tr>
+
+	{/foreach}
+
+</table>
+{else}
+<center>В этой категории нет продуктов</center>
+{/if}
+
+{if $products_list}
+<br><br>
+<center>
+Страница: <a href="?mod=shop&action=mini_catalogue&cat={$cat}&page=1&order_id={$order_id}"><<</a>
+	
+{section name=p loop=$pages}
+	{if $pages[p]==$current_page}
+	{$pages[p]}
+	{else}
+	<a href="?mod=shop&action=mini_catalogue&cat={$cat}&page={$pages[p]}&order_id={$order_id}">{$pages[p]}</a>
+	{/if}
+{/section}
+
+<a href="?mod=shop&action=mini_catalogue&cat={$cat}&page={$total_pages}&order_id={$order_id}">>></a>
+</center>
+{/if}
+
+{/if}
+	
+</body>
+</html>

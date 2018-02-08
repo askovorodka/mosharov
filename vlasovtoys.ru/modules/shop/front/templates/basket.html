@@ -1,0 +1,64 @@
+       <table class="noncatalog">
+          <tr>
+            <td class="headspan">
+                <div class="search">
+                	<form action="/catalog/search/" method="get">
+                    	<input class="search-text" type="text" placeholder="Ищу по названию" name="query" value="{$smarty.get.query}"><button type="submit" class="search-button">ПОИСК</button>
+                    </form>
+                </div>
+                <h1>Ваша корзина</h1>
+            </td>  
+          </tr>
+          <tr>
+            <td>
+            	{if $basket}
+            	<form action="" method="post">
+	            	<input type="hidden" value="Пересчитать" name="basket_recount">
+	                <table class="shoppingcart-table">
+	                    <tr>
+	                        <th>Название</th>
+	                        <th>Размеры</th>
+	                        <th>Цена</th>
+	                        <th>Кол.</th>
+	                        <th></th>
+	                    </tr>
+	                    {foreach from=$basket item=item}
+	                    <tr>
+	                        <td class="shoppingcart-table-caption"><a class="gallery1" href="/uploaded_files/shop_images/big-{$item.info.image}.{$item.info.ext}">{$item.name}</a></td>
+	                        <td class="sizes">{$item.price2}</td>
+	                        <td class="shoppingcart-price">{$item.price|format_price} <span class="small12">руб.</span></td>
+	                        <td><input type="number" name="edit_number[{$item.id}]" min="1" value="{$item.number}" class="itemsnumber"></td>
+	                        <td><a style="text-decoration:none;" href="{$module_url}/basket/delete/{$item.id}" onclick="return confirm('Удалить продукт из корзины');" class="violet-button">Удалить</a></td>
+	                    </tr>
+	                    {/foreach}
+	                    <tr>
+	                        <td></td>
+	                        <td></td>
+	                        <td colspan="3" class="allsumm">Итого: {$total_price|format_number} руб.</td>
+	                    </tr>
+	                </table>
+                </form>
+                <h3>Оформление заказа</h3>
+                <form action="/catalog/basket/submit/" method="post" id="form_basket">
+                	<input type="hidden" name="submit_order" value="1" />
+                    <div class="fieldsholder">
+                       <input type="text" placeholder="Иванов Иван" class="shoppingcart-field" id="name" name="name" required>
+                       <label for="name" class="shoopingcart-label">Как вас зовут?</label> 
+                    </div>
+                    <div class="fieldsholder">
+                       <input type="text" placeholder="926 777-66-55 info@vlasovtoys.ru" class="shoppingcart-field" id="contacts" required name="email">
+                       <label for="contacts" class="shoopingcart-label">Как с вами связаться?</label> 
+                    </div>
+                    <div class="fieldsholder">
+                       <input type="text" placeholder="г. Москва, ул. Тверская, 1" class="shoppingcart-field" id="address" name="address">
+                       <label for="address" class="shoopingcart-label">Нужна доставка - куда?</label> 
+                    </div>
+                    <button class="sendbutton" type="submit">Отправить заказ</button>
+                </form>
+                
+                {else}
+                	Корзина пуста
+                {/if}
+            </td>
+          </tr>
+        </table>

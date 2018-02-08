@@ -1,0 +1,25 @@
+<DIV id=dhtmltooltip></DIV>
+{literal}
+<script language="JavaScript">
+function confirm_delete(delete_id) {
+	if (confirm("Дейтсвительно удалить этот модуль?")) {
+		parent.location.href = "?mod=modules&action=delete&id=" + delete_id;
+	}
+}
+</script>
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/tooltips.js'></script>
+{/literal}
+
+<table width=100% class=content_table>
+	<tr><th width=30%>Модуль</th><th>Имя</th><th width=20%>Тип</th><th width=10%>Статус</th><th width=10%>Действия</th></tr>
+	{foreach from=$modules item=entry}
+	{if $entry.section=='admin_main' or $entry.section=='front_main'}{assign var="td" value='td0'}{else}{assign var="td" value='td1'}{/if}
+	<tr>
+			<td class={$td}_left>{$entry.name}</td>
+			<td class={$td}_middle><b>{$entry.title}</b></td>
+			<td class={$td}_middle>{$entry.section}</td>
+			<td align=center class={$td}_middle><a href="?mod=modules&action=change_mod_status&id={$entry.id}" title="Изменить статус"><img src=templates/img/status_{$entry.status}.gif border=0></a></td>
+			<td align=center class={$td}_right>{if $entry.section!='admin_main' and $entry.section!='front_main'}<a href="javascript:confirm_delete('{$entry.id}');" class=img_link onmouseover="ddrivetip('Удалить модуль')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>{else}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{/if}<a href=?mod=modules&action=edit&name={$entry.name} class=img_link onmouseover="ddrivetip('Редактировать модуль')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a></td>
+		</tr>
+	{/foreach}	
+	</table>

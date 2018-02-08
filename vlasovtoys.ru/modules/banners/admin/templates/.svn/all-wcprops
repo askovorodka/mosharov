@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/19/trunk/games/modules/banners/admin/templates
+END
+banners.a_groups_list.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/19/trunk/games/modules/banners/admin/templates/banners.a_groups_list.html
+END
+banners.a_edit_banner_list.html
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/19/trunk/games/modules/banners/admin/templates/banners.a_edit_banner_list.html
+END
+banners.a_edit.html
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/19/trunk/games/modules/banners/admin/templates/banners.a_edit.html
+END
+banners.a_edit_group.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/19/trunk/games/modules/banners/admin/templates/banners.a_edit_group.html
+END
+banners.a_main.html
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/19/trunk/games/modules/banners/admin/templates/banners.a_main.html
+END

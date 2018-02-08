@@ -1,0 +1,18 @@
+<table class="catalogtbl" border="0" cellspacing="0" cellpadding="0">
+		{foreach from=$folders_list item=folder name=folder}
+			{if $smarty.foreach.folder.iteration == 0}<tr>{/if}
+			<td>
+            <a href="{$base_url}/shop/{$folder.full_url}" class="catf"><div class="catf">
+            	<div id="catpct">{if $folder.image}<img src="{$smarty.const.SHOP_IMAGE}p{$folder.image}" {*width="139" height="100"*}>{/if}</div>
+            	<span id="catalogcf">{$folder.name|strip_tags}</span><br>
+            	<span id="linec">Диаметр:</span> от {$folder.properties.min_diameter}” до {$folder.properties.max_diameter}”<br>
+                <span id="linec">Ширина:</span> от {$folder.properties.min_width} до {$folder.properties.max_width}<br>
+                {if $folder.properties.avg_krep && $folder.properties.avg_pcd}
+                	<span id="linec">Крепеж х PCD:</span> {$folder.properties.avg_krep|format_number} x {$folder.properties.avg_pcd|format_number}<br>
+                {/if}
+                от <span id="price">{$folder.properties.price}</span> руб.<br>
+            </div></a>
+            </td>
+            {if $smarty.foreach.folder.iteration % 4 == 0 && $smarty.foreach.folder.iteration > 0}</tr><tr>{/if}
+         {/foreach}
+</table>

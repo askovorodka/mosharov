@@ -1,0 +1,377 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins
+END
+modifier.escape.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.escape.php
+END
+modifier.format_price.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.format_price.php
+END
+modifier.format_number.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.format_number.php
+END
+function.debug.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.debug.php
+END
+modifier.html_entities.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.html_entities.php
+END
+modifier.cat.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.cat.php
+END
+function.str_repeat.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.str_repeat.php
+END
+modifier.strip.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.strip.php
+END
+shared.escape_special_chars.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/shared.escape_special_chars.php
+END
+modifier.get_order_status.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.get_order_status.php
+END
+captcha.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/captcha.class.php
+END
+modifier.spacify.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.spacify.php
+END
+function.imagesize.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.imagesize.php
+END
+function.mailto.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.mailto.php
+END
+modifier.stripslashes.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.stripslashes.php
+END
+modifier.wordwrap.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.wordwrap.php
+END
+modifier.upper.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.upper.php
+END
+modifier.string_format.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.string_format.php
+END
+function.cycle.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.cycle.php
+END
+function.html_table.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.html_table.php
+END
+modifier.date_format.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.date_format.php
+END
+modifier.count_characters.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.count_characters.php
+END
+modifier.debug_print_var.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.debug_print_var.php
+END
+function.photoalbum.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.photoalbum.php
+END
+function.filesize.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.filesize.php
+END
+function.html_select_date.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.html_select_date.php
+END
+function.assign_debug_info.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.assign_debug_info.php
+END
+function.popup.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.popup.php
+END
+function.html_radios.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.html_radios.php
+END
+modifier.strip_tags.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.strip_tags.php
+END
+function.popup_init.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.popup_init.php
+END
+function.html_image.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.html_image.php
+END
+modifier.replace.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.replace.php
+END
+modifier.truncate.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.truncate.php
+END
+compiler.assign.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/compiler.assign.php
+END
+function.math.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.math.php
+END
+function.html_options.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.html_options.php
+END
+modifier.count_words.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.count_words.php
+END
+modifier.htmlentities.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.htmlentities.php
+END
+modifier.capitalize.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.capitalize.php
+END
+modifier.indent.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.indent.php
+END
+modifier.get_season.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.get_season.php
+END
+function.captcha.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.captcha.php
+END
+function.fetch.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.fetch.php
+END
+block.textformat.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/block.textformat.php
+END
+modifier.regex_replace.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.regex_replace.php
+END
+function.counter.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.counter.php
+END
+modifier.htmlspecialchars.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.htmlspecialchars.php
+END
+modifier.count_sentences.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.count_sentences.php
+END
+modifier.default.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.default.php
+END
+modifier.lower.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.lower.php
+END
+function.html_editor.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.html_editor.php
+END
+modifier.count_paragraphs.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.count_paragraphs.php
+END
+modifier.nl2br.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.nl2br.php
+END
+modifier.html_entity_decode.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.html_entity_decode.php
+END
+function.config_load.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.config_load.php
+END
+shared.make_timestamp.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/shared.make_timestamp.php
+END
+modifier.urlencode.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/modifier.urlencode.php
+END
+function.html_checkboxes.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.html_checkboxes.php
+END
+function.eval.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.eval.php
+END
+function.html_select_time.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/function.html_select_time.php
+END
+outputfilter.trimwhitespace.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/19/trunk/games/lib/smarty/plugins/outputfilter.trimwhitespace.php
+END

@@ -1,0 +1,17 @@
+
+<table class="noncatalog">
+	<tr>
+		<td class="headspan">
+			<div class="search">
+				<form action="/catalog/search/" method="get">
+					<input class="search-text" type="text" placeholder="Èùó ïî íàçâàíèş" name="query" value="{$smarty.get.query}"><button type="submit" class="search-button">ÏÎÈÑÊ</button>
+				</form>
+			</div>
+			<h1>{$page_content.name}</h1>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			{eval var=$page_content.text|stripslashes}            </td>
+	</tr>
+</table>

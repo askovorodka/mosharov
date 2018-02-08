@@ -1,0 +1,78 @@
+{literal}
+<DIV id=dhtmltooltip></DIV>
+<SCRIPT language=JavaScript>
+<!--
+function confirm_delete(delete_id)
+{
+if (confirm("Дейтсвительно удалить этот заказ?")) {
+parent.location.href = "index.php?mod=shop&action=delete_order&id=" + delete_id;
+}
+}
+-->
+</SCRIPT>
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/tooltips.js'></script>
+{/literal}
+
+{if $orders_list}
+	<table width=100% class=content_table>
+
+	<tr>
+	<th width=5%>ID</th>
+	<th width=10%>Дата <a href="?mod=shop&action=orders&page={$current_page}&sort=insert_date&order=asc" class=img_link><img src=templates/img/cat_up.gif border=0></a>&nbsp;<a href="?mod=shop&action=orders&page={$current_page}&sort=insert_date&order=desc" class=img_link><img src=templates/img/cat_down.gif border=0></a></th>
+	<th>Пользователь </th>
+	<th width=15%>Сумма <a href="?mod=shop&action=orders&page={$current_page}&sort=total_price&order=asc" class=img_link><img src=templates/img/cat_up.gif border=0></a>&nbsp;<a href="?mod=shop&action=orders&page={$current_page}&sort=total_price&order=desc" class=img_link><img src=templates/img/cat_down.gif border=0></a></th>
+	<th width=15%>Статус <a href="?mod=shop&action=orders&page={$current_page}&sort=status&order=asc" class=img_link><img src=templates/img/cat_up.gif border=0></a>&nbsp;<a href="?mod=shop&action=orders&page={$current_page}&sort=status&order=desc" class=img_link><img src=templates/img/cat_down.gif border=0></a></th>
+	<th width=15%>Действия</th></tr>
+
+	{foreach from=$orders_list item=entry name=tree}
+
+	{if $col==1}
+	{assign var="td" value='td1'}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value='td2'}
+	{assign var="col" value=1}
+	{/if}
+	<tr onmouseover="flatlinkOver(this)" {if $smarty.foreach.tree.iteration%2==1}onmouseout="flatlinkOut(this)"{else}onmouseout="flatlinkOut1(this)"{/if}>
+			<td class={$td}_left align=center>
+				{$entry.id}
+			</td>
+			<td class={$td}_middle align=center>
+				{$entry.insert_date|date_format:"%d.%m.%Y"}
+			</td>
+			<td class={$td}_middle>
+			<a href="?mod=shop&action=order_details&id={$entry.id}"><strong>{$entry.user_name}</strong></a>
+			</td>
+			<td class={$td}_middle align="right">
+				{$entry.total_price|string_format:"%.2f"} {$currency_site.znak}
+			</td>
+			<td class={$td}_middle align="center">
+				<font style="color: {if $entry.status_number=='0'}red{/if}{if $entry.status_number=='1'}#f7c21e{/if}{if $entry.status_number>1}#3fda2a{/if}"><strong>{$entry.status}</strong></font>
+			</td>
+			<td align=center class={$td}_right>
+				<a href="javascript:confirm_delete('{$entry.id}');" class=img_link onmouseover="ddrivetip('Удалить заказ')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
+				<a href=?mod=shop&action=order_details&id={$entry.id} class=img_link onmouseover="ddrivetip('Редактировать заказ')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>
+			</td>
+		</tr>
+
+	{/foreach}
+
+	</table>
+{if $total_pages>1}
+<br><br>
+<div class="listing">
+<li class="str">
+<ul>
+<li class="center"><a href="?mod=shop&action=orders&user={$user}&sort={$sort}&order={$order}&page=1">&laquo;</a>
+{section name=p loop=$pages}
+  {if $pages[p]==$current_page}
+  <a class="active" href="?mod=shop&action=orders&user={$user}&sort={$sort}&order={$order}&page={$pages[p]}">{$pages[p]}</a>
+  {else}
+  <a href="?mod=shop&action=orders&user={$user}&sort={$sort}&order={$order}&page={$pages[p]}">{$pages[p]}</a>
+  {/if}
+{/section}
+<a href="?mod=shop&action=orders&user={$user}&sort={$sort}&order={$order}&page={$total_pages}">&raquo;</a></li>
+</ul></li></div>{/if}	
+{else}
+<center>В магазине нет заказов</center>
+{/if}

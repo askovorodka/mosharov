@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/19/trunk/games/modules/forum/admin/templates
+END
+forum.a_posts_list.html
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/19/trunk/games/modules/forum/admin/templates/forum.a_posts_list.html
+END
+forum.a_main.html
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/19/trunk/games/modules/forum/admin/templates/forum.a_main.html
+END
+forum.a_create_thread.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/19/trunk/games/modules/forum/admin/templates/forum.a_create_thread.html
+END
+forum.a_forums_list.html
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/19/trunk/games/modules/forum/admin/templates/forum.a_forums_list.html
+END
+forum.a_users_list.html
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/19/trunk/games/modules/forum/admin/templates/forum.a_users_list.html
+END
+forum.a_edit_cat.html
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/19/trunk/games/modules/forum/admin/templates/forum.a_edit_cat.html
+END
+forum.a_edit_post.html
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/19/trunk/games/modules/forum/admin/templates/forum.a_edit_post.html
+END

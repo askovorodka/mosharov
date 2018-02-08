@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/19/trunk/games/modules/users/admin/templates
+END
+users.a_main_groups.html
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/19/trunk/games/modules/users/admin/templates/users.a_main_groups.html
+END
+users.a_edit_group.html
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/19/trunk/games/modules/users/admin/templates/users.a_edit_group.html
+END
+users.a_edit.html
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/19/trunk/games/modules/users/admin/templates/users.a_edit.html
+END
+users.a_main.html
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/19/trunk/games/modules/users/admin/templates/users.a_main.html
+END

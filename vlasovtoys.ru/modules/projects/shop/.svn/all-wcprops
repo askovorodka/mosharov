@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/19/trunk/games/modules/projects/shop
+END
+page.html
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/19/trunk/games/modules/projects/shop/page.html
+END
+install.sql
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/19/trunk/games/modules/projects/shop/install.sql
+END
+conf.php
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/19/trunk/games/modules/projects/shop/conf.php
+END

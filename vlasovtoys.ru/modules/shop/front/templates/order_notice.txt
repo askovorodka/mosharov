@@ -1,0 +1,25 @@
+
+<p>Вы сделали заказ на сайте {$site_url}</p>
+
+<p>Дата: {$date|date_format:"%d.%m.%Y в %T"}</p> 
+
+<p>Номер вашего заказа: {$order_id}</p>
+
+<p>Количество заказанных товаров: {$number}, на сумму {$total_sum|format_price} {$currency}</p> 
+
+<p><b>Список заказанных товаров</b></p>
+
+<table>
+<tr><th>№</th><th>Наименование</th><th>Количество</th><th>Стоимость за единицу</th><th>Сумма</th></tr>
+{foreach from=$products item=product name=for1}
+<tr><td>{$smarty.foreach.for1.iteration}</td><td>{$product.details.name}</td><td>{$product.count}</td><td>{$product.details.price|format_price} руб.</td><td>{$product.sum|format_price} руб.</td></tr>
+{/foreach}
+
+<tr>
+<td colspan="4" align="right">Итого:</td>
+<td>{$total_sum|format_price} руб.</td>
+</tr>
+
+</table>
+
+До скорых встреч!

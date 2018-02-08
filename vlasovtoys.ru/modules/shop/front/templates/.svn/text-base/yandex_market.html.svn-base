@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="Windows-1251"?>
+<!DOCTYPE yml_catalog SYSTEM "shops.dtd">
+<yml_catalog date="{php}print(date("Y-m-d H:s")){/php}">
+<shop>
+<name>Шины и диски</name>
+<company>{$base_url|replace:"http://":""}</company>
+<url>{$base_url}</url>
+<currencies>
+
+<currency id="RUR" rate="1"/>
+<currency id="USD" rate="CBRF"/>
+
+</currencies>
+<categories>
+{foreach from=$cat item=item}
+	{if $item.parent>1}
+		{assign var=parent value=$item.parent}
+	{else}
+		{assign var=parent value=0}
+	{/if}
+	<category id="{$item.id}"{if $parent!=0} parentId="{$parent}"{/if}>{$item.name|htmlspecialchars}</category>
+{/foreach}
+</categories>
+
+<offers>
+
+{foreach from=$products_list item=item}
+	<offer id="{$item.id}" available="true">
+		<url>{$module_url}{$item.full_url}</url>
+		<price>{math equation="x*y" x=$item.price y=$smarty.const.CURRENCY_RATE format="%.2d"}</price>
+		<currencyId>RUR</currencyId>
+		<categoryId>{if $item.parent>1}{$item.parent}{else}0{/if}</categoryId>
+		{if $item.image}<picture>{$base_url}/uploaded_files/shop_images/b{$item.image}</picture>{/if}
+		<name>{$item.name|htmlspecialchars}</name>
+		<description>{$item.description|default:$item.small_description|htmlspecialchars}</description>
+		<delivery>true</delivery>
+		<pickup>true</pickup>
+		<store>true</store>
+		<sales_notes>Заказ от 4 штуки. Меньше - по согласованию.</sales_notes>
+	</offer>
+{/foreach}
+</offers>
+</shop>
+</yml_catalog>

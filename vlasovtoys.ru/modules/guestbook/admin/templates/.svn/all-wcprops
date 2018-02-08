@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/19/trunk/games/modules/guestbook/admin/templates
+END
+guestbook.a_edit.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/19/trunk/games/modules/guestbook/admin/templates/guestbook.a_edit.html
+END
+guestbook.a_main.html
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/19/trunk/games/modules/guestbook/admin/templates/guestbook.a_main.html
+END
+guestbook.a_edit_message.html
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/19/trunk/games/modules/guestbook/admin/templates/guestbook.a_edit_message.html
+END

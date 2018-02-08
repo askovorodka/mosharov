@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/19/trunk/games/modules/regions/admin/templates
+END
+regions.a_edit.html
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/19/trunk/games/modules/regions/admin/templates/regions.a_edit.html
+END
+regions.a_edit_firm.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/19/trunk/games/modules/regions/admin/templates/regions.a_edit_firm.html
+END
+regions.a_metros_list.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/19/trunk/games/modules/regions/admin/templates/regions.a_metros_list.html
+END
+regions.a_main.html
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/19/trunk/games/modules/regions/admin/templates/regions.a_main.html
+END
+regions.a_firms_list.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/19/trunk/games/modules/regions/admin/templates/regions.a_firms_list.html
+END
+regions.a_edit_city.html
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/19/trunk/games/modules/regions/admin/templates/regions.a_edit_city.html
+END
+regions.a_citys_list.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/19/trunk/games/modules/regions/admin/templates/regions.a_citys_list.html
+END
+regions.a_edit_metro.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/19/trunk/games/modules/regions/admin/templates/regions.a_edit_metro.html
+END

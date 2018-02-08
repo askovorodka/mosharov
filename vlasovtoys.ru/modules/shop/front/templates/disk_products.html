@@ -1,0 +1,59 @@
+
+<table width="100%" border="0" cellspacing="1" cellpadding="0">
+              <tr bgcolor="#fbf3df">
+                <td colspan="10" class="tabletop"><div class="tabletop2">Для сортировки товара кликните по названию столбцов</div></td>
+              </tr>
+              <tr bgcolor="#fbf3df" class="tablecapt">
+              	<td>&nbsp;</td>
+                <td nowrap><a href="{$base_url}/{$current_url}/?sort=name&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Наименование</a>
+                {if $sort == "name"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td>
+                
+                <td nowrap><a href="{$base_url}/{$current_url}/?sort=article&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Артикул</a>
+                {if $sort == "article"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td>
+                
+                <td nowrap><a href="{$base_url}/{$current_url}/?sort=disk_width&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Ширина</a>
+                {if $sort == "disk_width"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td>
+                
+                <td nowrap><a href="{$base_url}/{$current_url}/?sort=disk_diameter&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Диаметр</a>
+                {if $sort == "disk_diameter"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td>
+                
+                <td nowrap><a href="{$base_url}/{$current_url}/?sort=disk_krep&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Крепеж</a>
+                {if $sort == "disk_krep"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td>
+                
+                <td nowrap><a href="{$base_url}/{$current_url}/?sort=disk_pcd&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">PCD</a>
+                {if $sort == "disk_pcd"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td>
+                
+                <td nowrap><a href="{$base_url}/{$current_url}/?sort=price&order={if empty($order) || $order == 'desc'}asc{else}desc{/if}">Цена</a>
+                {if $sort == "price"}{if $order == "asc"}&uarr;{else}&darr;{/if}{/if}</td>
+                
+                <td>Кол-во</td>
+                
+                <td nowrap>В корзину</td>
+                
+              </tr>
+              
+              <form action="" method="POST" id="form_order_products">
+	              {foreach from=$products_list item=item name=product}
+		              <tr bgcolor="{if $smarty.foreach.product.iteration%2}#f1f6f9{else}#fbf3df{/if}" class="tableall">
+		              	<td><a href="{$base_url}/shop{$product.full_url}" class="CatalogImages" {if $cat_content.image}image="/uploaded_files/shop_images/{$cat_content.image}"{/if}><img src="{$template_image}photo.png"></a></td>
+		                <td><a href="{$base_url}/{$current_url}/{$item.id}/">{$item.name}</a></td>
+		                <td><span class="tableart">{$item.article}</span></td>
+		                <td>{$item.disk_width}</td>
+		                <td>{$item.disk_diameter}</td>
+		                <td>{$item.disk_krep}</td>
+		                <td id="nw">{$item.disk_pcd}</td>
+		                <td id="nw">{$item.price|format_price}&nbsp;<span class="tableart">руб.</span></td>
+		                <td><input type="text" class="tableinp" name="{$item.id}" value="1"></td>
+		                {if $item.disk_sklad > 0}
+		                	<td><input type="image" name="add_order" src="{$template_image}buy.png" width="57" height="17"></td>
+		                {else}
+		                	<td id="noway">Нет в<br>наличии</td>
+		                {/if}
+		              </tr>
+	              {/foreach}
+              </form>
+
+              <tr bgcolor="#fbf3df">
+                <td colspan="10" class="tablebot"><div class="tablebot2"></div></td>
+              </tr>
+            </table>

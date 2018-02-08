@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/19/trunk/games/admin
+END
+main.php
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/19/trunk/games/admin/main.php
+END
+login.php
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/19/trunk/games/admin/login.php
+END
+_priv.php
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/19/trunk/games/admin/_priv.php
+END
+priv.php
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/19/trunk/games/admin/priv.php
+END
+index.php
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/19/trunk/games/admin/index.php
+END
+error_log
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/19/trunk/games/admin/error_log
+END
+.htaccess
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/19/trunk/games/admin/.htaccess
+END

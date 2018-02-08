@@ -1,0 +1,17 @@
+<table class="catalog">
+	<tr>
+		<td colspan="4" class="headspan">
+			<div class="search">
+                	<form action="/catalog/search/" method="get">
+                    	<input class="search-text" type="text" placeholder="Ищу по названию" name="query" value="{$smarty.get.query}"><button type="submit" class="search-button">ПОИСК</button>
+                    </form>
+			</div>
+			<h1>{if $cat_content.param_level == 0}Каталог продукции{else}{$cat_content.name}{/if}</h1>
+		</td>  
+	</tr>
+	
+	{if $products_list}
+		{include file="`$smarty.const.BASE_PATH`/modules/shop/front/templates/products_list.html"}
+	{/if}
+	
+</table>

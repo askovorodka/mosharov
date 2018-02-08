@@ -1,0 +1,41 @@
+<DIV id=dhtmltooltip></DIV>
+{literal}
+<SCRIPT LANGUAGE="JavaScript"><!--
+function confirm_delete(delete_id)
+{
+if (confirm("Дейтсвительно удалить этот шаблон?")) {
+parent.location.href = "?mod=subscribe&action=delete_template&id=" + delete_id;
+}
+}
+--></script>
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/tooltips.js'></script>
+{/literal}
+<form action="" method=post>
+<center>
+<table width=100% class=content_table>
+	<tr><th>Шаблон</th><th width=15% align=center>Действия</th></tr>
+    {if $templates_list}
+	{foreach from=$templates_list item=template name=tree}
+	{if $col==1}
+	{assign var="td" value='td1'}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value='td2'}
+	{assign var="col" value=1}
+	{/if}
+	<tr onmouseover="flatlinkOver(this)" {if $smarty.foreach.tree.iteration%2==1}onmouseout="flatlinkOut(this)"{else}onmouseout="flatlinkOut1(this)"{/if}>
+	<td class={$td}_left><a href="?mod=subscribe&action=edit_template&id={$template.id}"><strong>{$template.name}</strong></a></td>
+	<td class={$td}_right align=center><a href="javascript:confirm_delete('{$template.id}');" class=img_link onmouseover="ddrivetip('Удалить шаблон')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
+			<a href=?mod=subscribe&action=edit_template&id={$template.id} class=img_link onmouseover="ddrivetip('Редактировать шаблон')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a></td>
+	</tr>
+	{/foreach}
+    {else}
+    <tr>
+    <td colspan="2" class="td1_middle" style="height: 25px;"><center>Нет ниодного шаблона писем.</center></td></tr>
+    {/if}
+</table>
+</center>
+</form>
+
+<br><br>
+<div class="add_but" style="float: left;" onClick="location.href='index.php?mod=subscribe&action=add_template'"><div><a href="index.php?mod=subscribe&action=add_template">добавить шаблон</a></div></div>
