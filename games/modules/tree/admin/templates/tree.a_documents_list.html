@@ -4,7 +4,7 @@
 <!--
 function confirm_delete(delete_id)
 {
-if (confirm("Дейтсвительно удалить этот документ?")) {
+if (confirm("Р”РµР№С‚СЃРІРёС‚РµР»СЊРЅРѕ СѓРґР°Р»РёС‚СЊ СЌС‚РѕС‚ РґРѕРєСѓРјРµРЅС‚?")) {
 parent.location.href = "index.php?mod=tree&action=delete_document&id=" + delete_id;
 }
 }
@@ -14,7 +14,7 @@ parent.location.href = "index.php?mod=tree&action=delete_document&id=" + delete_
 {/literal}
 	<table width=100% class="content_table">
 
-	<tr><th>Название</th><th width=6%>Статус</th><th width=15%>Действия</th></tr>
+	<tr><th>РќР°Р·РІР°РЅРёРµ</th><th width=6%>РЎС‚Р°С‚СѓСЃ</th><th width=15%>Р”РµР№СЃС‚РІРёСЏ</th></tr>
 
 	{foreach name=tree from=$content item=entry}
 
@@ -39,9 +39,9 @@ parent.location.href = "index.php?mod=tree&action=delete_document&id=" + delete_
 			{if $entry.param_level!='0'}<a href="?mod=tree&action=change_document_status&id={$entry.id}"><img src=templates/img/status_{$entry.status}.gif border=0></a>{/if}
 			</td>
 			<td align=center class={$td}_right nowrap>
-				<a href="javascript:confirm_delete('{$entry.id}');" class=img_link onmouseover="ddrivetip('Удалить документ')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
-				<a href=?mod=tree&action=edit_document&id={$entry.id} class=img_link onmouseover="ddrivetip('Редактировать документ')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>
-				<a href=?mod=tree&action=move_up_document&id={$entry.id} class=img_link onmouseover="ddrivetip('Переместить документ вверх')" onmouseout=hideddrivetip()><img src=templates/img/ico_up.gif border=0></a><a href=?mod=tree&action=move_down_document&id={$entry.id} class=img_link onmouseover="ddrivetip('Переместить документ вниз')" onmouseout=hideddrivetip()><img src=templates/img/ico_down.gif border=0></a>
+				<a href="javascript:confirm_delete('{$entry.id}');" class=img_link onmouseover="ddrivetip('РЈРґР°Р»РёС‚СЊ РґРѕРєСѓРјРµРЅС‚')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
+				<a href=?mod=tree&action=edit_document&id={$entry.id} class=img_link onmouseover="ddrivetip('Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РґРѕРєСѓРјРµРЅС‚')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>
+				<a href=?mod=tree&action=move_up_document&id={$entry.id} class=img_link onmouseover="ddrivetip('РџРµСЂРµРјРµСЃС‚РёС‚СЊ РґРѕРєСѓРјРµРЅС‚ РІРІРµСЂС…')" onmouseout=hideddrivetip()><img src=templates/img/ico_up.gif border=0></a><a href=?mod=tree&action=move_down_document&id={$entry.id} class=img_link onmouseover="ddrivetip('РџРµСЂРµРјРµСЃС‚РёС‚СЊ РґРѕРєСѓРјРµРЅС‚ РІРЅРёР·')" onmouseout=hideddrivetip()><img src=templates/img/ico_down.gif border=0></a>
 			</td>
 		</tr>
 
@@ -49,4 +49,4 @@ parent.location.href = "index.php?mod=tree&action=delete_document&id=" + delete_
 
 	</table>
 	
-{if $smarty.get.parent}<p><a href="?mod=tree&action=add_document&parent={$smarty.get.parent}">[Добавить новый документ]</a></p>{/if}
+{if $smarty.get.parent}<p><a href="?mod=tree&action=add_document&parent={$smarty.get.parent}">[Р”РѕР±Р°РІРёС‚СЊ РЅРѕРІС‹Р№ РґРѕРєСѓРјРµРЅС‚]</a></p>{/if}

@@ -51,14 +51,14 @@ if(document.getElementById(name).style.display!="none") {
 {if $error}<font color=red><b>{$error}</b></font><br><br>{/if}
 <table width=100% class=content_table>
 <tr>
-<th>{if $mode=='edit'}Редактировать продукт{else}Добавить продукт{/if}</th>
+<th>{if $mode=='edit'}Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РїСЂРѕРґСѓРєС‚{else}Р”РѕР±Р°РІРёС‚СЊ РїСЂРѕРґСѓРєС‚{/if}</th>
 </tr>
 </table>
 
 
 <table width=100% class=content_table>
 <tr>
-	<td width=15% class=td1_left>Раздел:</td>
+	<td width=15% class=td1_left>Р Р°Р·РґРµР»:</td>
 	<td class=td1_right>
 		<select name=edit_parent class=field style="width:100%;">
 		{foreach from=$cat_list item=entry}
@@ -67,20 +67,20 @@ if(document.getElementById(name).style.display!="none") {
 		</select>	</td>
 </tr>
 <tr>
-	<td class=td1_left>Имя:</td><td class=td1_right><input type=text name=edit_name class=field style="width:100%;" value="{$product.name}"></td>
+	<td class=td1_left>РРјСЏ:</td><td class=td1_right><input type=text name=edit_name class=field style="width:100%;" value="{$product.name}"></td>
 </tr>
 {if $mode=='edit'}
 <tr>
-  <td class=td1_left style="border-bottom: none;">Статус:</td>
+  <td class=td1_left style="border-bottom: none;">РЎС‚Р°С‚СѓСЃ:</td>
   <td class=td1_right style="border-bottom: none;">
   
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td width="35%"><select name=edit_status style="width:200px;" class=field>
-		<option value="1" {if $product.status=='1'}selected=true{/if}>Активный</option>
-		<option value="0" {if $product.status=='0'}selected=true{/if}>Ждёт</option>
+		<option value="1" {if $product.status=='1'}selected=true{/if}>РђРєС‚РёРІРЅС‹Р№</option>
+		<option value="0" {if $product.status=='0'}selected=true{/if}>Р–РґС‘С‚</option>
 	</select>	</td>
-    {*<td width="15%" nowrap align="right">&nbsp;Цена:&nbsp;&nbsp;</td>
+    {*<td width="15%" nowrap align="right">&nbsp;Р¦РµРЅР°:&nbsp;&nbsp;</td>
     <td width="50%"><input type=text name=edit_price class=field style="width:200px;" value="{$product.price}">&nbsp;&nbsp;{$currency_admin.znak}</td>*}
   </tr>
 </table>
@@ -89,14 +89,14 @@ if(document.getElementById(name).style.display!="none") {
 </tr>
 
 <tr>
-  <td class=td1_left style="border-bottom: none;">Цена:</td>
+  <td class=td1_left style="border-bottom: none;">Р¦РµРЅР°:</td>
   <td class=td1_right style="border-bottom: none;">
   <input type=text name=edit_price class=field style="width:200px;" value="{$product.price}">&nbsp;&nbsp;{$currency_admin.znak}
   </td>
 </tr>
 
 <tr>
-  <td class=td1_left style="border-bottom: none;">Размер:</td>
+  <td class=td1_left style="border-bottom: none;">Р Р°Р·РјРµСЂ:</td>
   <td class=td1_right style="border-bottom: none;">
   <input type=text name=edit_price2 class=field style="width:200px;" value="{$product.price2}">
   </td>
@@ -114,7 +114,7 @@ if(document.getElementById(name).style.display!="none") {
     <div id="metas" style="display:none;">
 <table width=100% class=content_table>
 	<tr>
-		<td width=15% class=td2_left><b>Title:</b><br><small>(заголовок страницы)</small></td>
+		<td width=15% class=td2_left><b>Title:</b><br><small>(Р·Р°РіРѕР»РѕРІРѕРє СЃС‚СЂР°РЅРёС†С‹)</small></td>
 		<td class=td2_right><input type=text name=edit_title class=field style="width:100%;" value="{$product.title}"></td>
 	</tr>
 	<tr>
@@ -132,7 +132,7 @@ if(document.getElementById(name).style.display!="none") {
 {if $product.properties}
 <table width=100% class=content_table>
 	<tr>
-		<th bgcolor=#99CCFF onClick="show('others', this);" class="button plus" style="border-bottom: none; text-align: left; padding-left: 30px;"><b>Дополнительные свойства</b></th>
+		<th bgcolor=#99CCFF onClick="show('others', this);" class="button plus" style="border-bottom: none; text-align: left; padding-left: 30px;"><b>Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ СЃРІРѕР№СЃС‚РІР°</b></th>
 	</tr>
  </table>
     <div id="others" style="display: none;">
@@ -171,7 +171,7 @@ if(document.getElementById(name).style.display!="none") {
 {*if $mode=='edit'}
 <table width=100% class=content_table>
 	<tr>
-		<th bgcolor=#99CCFF onClick="show('soput', this);" class="button plus" style="border-bottom: none; text-align: left; padding-left: 30px;"><b>Сопутствующие товары ({foreach from=$additional_products item=entry name=kl}{/foreach}{$smarty.foreach.kl.total})</b></th>
+		<th bgcolor=#99CCFF onClick="show('soput', this);" class="button plus" style="border-bottom: none; text-align: left; padding-left: 30px;"><b>РЎРѕРїСѓС‚СЃС‚РІСѓСЋС‰РёРµ С‚РѕРІР°СЂС‹ ({foreach from=$additional_products item=entry name=kl}{/foreach}{$smarty.foreach.kl.total})</b></th>
 	</tr>
  </table>
     <div id="soput" style="display: none;">
@@ -193,7 +193,7 @@ if(document.getElementById(name).style.display!="none") {
     {/if}
     <tr>
 	<td class=td1_left><img src="templates/img/tree.gif" style="margin-left: 5px;">
-    <a href=# onclick="window.open('index.php?mod=shop&action=mini_catalogue&product_id={$product.id}','winscript','height=500,width=500,toolbar=yes,resizable=yes,scrollbars=yes,,menubar=no' ); return false" style="color: red;">Добавить сопутствующий товар</a>
+    <a href=# onclick="window.open('index.php?mod=shop&action=mini_catalogue&product_id={$product.id}','winscript','height=500,width=500,toolbar=yes,resizable=yes,scrollbars=yes,,menubar=no' ); return false" style="color: red;">Р”РѕР±Р°РІРёС‚СЊ СЃРѕРїСѓС‚СЃС‚РІСѓСЋС‰РёР№ С‚РѕРІР°СЂ</a>
 	</td><td class=td1_middle>&nbsp;</td><td class=td1_right>&nbsp;</td></tr>
 	</table>
 </div>
@@ -201,7 +201,7 @@ if(document.getElementById(name).style.display!="none") {
 
 
 <br><br>
-<center><input type=submit name={if $mode=='edit'}submit_edit_product value="Сохранить изменения"{else}submit_add_product value="Добавить продукт"{/if} class=button></center>
+<center><input type=submit name={if $mode=='edit'}submit_edit_product value="РЎРѕС…СЂР°РЅРёС‚СЊ РёР·РјРµРЅРµРЅРёСЏ"{else}submit_add_product value="Р”РѕР±Р°РІРёС‚СЊ РїСЂРѕРґСѓРєС‚"{/if} class=button></center>
 </form>
 
 
@@ -210,13 +210,13 @@ if(document.getElementById(name).style.display!="none") {
 <br><br>
 <table width=100% cellspacing=1 cellpadding=3 class=content_table>
 <tr>
-<th>Фотоальбом продукта</th>
+<th>Р¤РѕС‚РѕР°Р»СЊР±РѕРј РїСЂРѕРґСѓРєС‚Р°</th>
 </tr>
 </table>
 
 <form action="" method=post name=edit_photos>
 {if !$photos_list}
-<br><br><br><center>В альбоме нет фотографий</center><br><br>
+<br><br><br><center>Р’ Р°Р»СЊР±РѕРјРµ РЅРµС‚ С„РѕС‚РѕРіСЂР°С„РёР№</center><br><br>
 {else}
 <table width=100% cellspacing=1 cellpadding=3 class=content_table>
 <tr>
@@ -232,7 +232,7 @@ if(document.getElementById(name).style.display!="none") {
 <td valign=top width="25%">
 <input type=hidden id=order_{$entry.id} name=order_changed[{$entry.id}] value="">
 <input type=hidden id=title_{$entry.id} name=title_changed[{$entry.id}] value="">
-{* Фотка пошла *}
+{* Р¤РѕС‚РєР° РїРѕС€Р»Р° *}
 <table width=100% cellspacing=1 cellpadding=3 bgcolor=#666666>
 <tr bgcolor=#ffffff>
 <td height=120 style="padding: 2px;">
@@ -248,13 +248,13 @@ if(document.getElementById(name).style.display!="none") {
 </table>
 
 </td></tr>
-<tr><td onClick="shows('photo_{$entry.id}');" class="button" bgcolor="#3689d8" style="height: 20px; color: white; padding-left: 10px;"><small>комментарии</small></td></tr>
+<tr><td onClick="shows('photo_{$entry.id}');" class="button" bgcolor="#3689d8" style="height: 20px; color: white; padding-left: 10px;"><small>РєРѕРјРјРµРЅС‚Р°СЂРёРё</small></td></tr>
 <tr bgcolor=#ffffff class=table_content>
 <td>
 
 <table width="100%" style="height: 25px;" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><input type=checkbox name=delete_photos[] value={$entry.id} id="del_photo_{$entry.id}"> <label for="del_photo_{$entry.id}">Удалить</label></td>
+    <td><input type=checkbox name=delete_photos[] value={$entry.id} id="del_photo_{$entry.id}"> <label for="del_photo_{$entry.id}">РЈРґР°Р»РёС‚СЊ</label></td>
     <td align="right" style="padding-right: 2px;"><input type=text size="2" class=field name=edit_order[{$entry.id}] value={$entry.sort_order} onchange="document.getElementById('order_{$entry.id}').value=1;"></td>
   </tr>
 </table>
@@ -273,7 +273,7 @@ if(document.getElementById(name).style.display!="none") {
 </table>
 
 <br><br>
-<center><input type=submit name=submit_save_photos value="Сохранить изменения в фотоальбоме" class=button></center>
+<center><input type=submit name=submit_save_photos value="РЎРѕС…СЂР°РЅРёС‚СЊ РёР·РјРµРЅРµРЅРёСЏ РІ С„РѕС‚РѕР°Р»СЊР±РѕРјРµ" class=button></center>
 {/if}</form>
 <br><br>
 
@@ -281,14 +281,14 @@ if(document.getElementById(name).style.display!="none") {
 <input type=hidden name=parent value={$product.id}>
 <table width=100%  class=content_table>
 <tr>
-<th colspan="2">Добавить картинку в фотоальбом продукта</th></tr>
+<th colspan="2">Р”РѕР±Р°РІРёС‚СЊ РєР°СЂС‚РёРЅРєСѓ РІ С„РѕС‚РѕР°Р»СЊР±РѕРј РїСЂРѕРґСѓРєС‚Р°</th></tr>
 <tr>
-<td width=20% class=td1_left>Подпись к картинке:</td><td class=td1_right><textarea name="add_photo_title" class="field" style="width: 450px; height: 60px;">{$photo_title}</textarea></td>
+<td width=20% class=td1_left>РџРѕРґРїРёСЃСЊ Рє РєР°СЂС‚РёРЅРєРµ:</td><td class=td1_right><textarea name="add_photo_title" class="field" style="width: 450px; height: 60px;">{$photo_title}</textarea></td>
 </tr>
 <tr>
-<td class=td1_left style="height: 30px;">Картинка:</td><td class=td1_right><input type=file class=field name=add_new_photo style="width:450px;"><br><div style="padding-top: 5px; font-size: 10px; color: #999;">Разрешенные форматы для загрузки jpg, gif, png. Максимальный размер файла 2 Мб.</div></td>
+<td class=td1_left style="height: 30px;">РљР°СЂС‚РёРЅРєР°:</td><td class=td1_right><input type=file class=field name=add_new_photo style="width:450px;"><br><div style="padding-top: 5px; font-size: 10px; color: #999;">Р Р°Р·СЂРµС€РµРЅРЅС‹Рµ С„РѕСЂРјР°С‚С‹ РґР»СЏ Р·Р°РіСЂСѓР·РєРё jpg, gif, png. РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ С„Р°Р№Р»Р° 2 РњР±.</div></td>
 </tr></table>
-<br><br><center><input type=submit name=submit_add_photo value="Добавить фотографию"></center>
+<br><br><center><input type=submit name=submit_add_photo value="Р”РѕР±Р°РІРёС‚СЊ С„РѕС‚РѕРіСЂР°С„РёСЋ"></center>
 <br><br>
 </form>
 {/if}

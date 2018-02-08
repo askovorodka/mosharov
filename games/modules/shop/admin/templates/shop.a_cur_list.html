@@ -3,7 +3,7 @@
 <SCRIPT language=JavaScript>
 <!--
 function confirm_delete(delete_id) {
-  if (confirm("Дейтсвительно удалить эту валюту?")) parent.location.href = "?mod=shop&action=delete_cur&id=" + delete_id;
+  if (confirm("Р”РµР№С‚СЃРІРёС‚РµР»СЊРЅРѕ СѓРґР°Р»РёС‚СЊ СЌС‚Сѓ РІР°Р»СЋС‚Сѓ?")) parent.location.href = "?mod=shop&action=delete_cur&id=" + delete_id;
 }
 
 function select_all(elem, str) {
@@ -24,12 +24,12 @@ function select_all(elem, str) {
 <table width=100% class=content_table>
   <tr>
   <th>
-    Название валюты
+    РќР°Р·РІР°РЅРёРµ РІР°Р»СЋС‚С‹
   </th>
-  <th width="15%">Символ валюты</th>
-  <th width="10%">Курс, {foreach name=tr from=$cur_list item=entry}{if $smarty.foreach.tr.first}{$entry.znak}{/if}{/foreach}</th>
-  <th width="8%">Статус</th>
-  <th width="10%">Действия</th>
+  <th width="15%">РЎРёРјРІРѕР» РІР°Р»СЋС‚С‹</th>
+  <th width="10%">РљСѓСЂСЃ, {foreach name=tr from=$cur_list item=entry}{if $smarty.foreach.tr.first}{$entry.znak}{/if}{/foreach}</th>
+  <th width="8%">РЎС‚Р°С‚СѓСЃ</th>
+  <th width="10%">Р”РµР№СЃС‚РІРёСЏ</th>
   </tr>
 
   {foreach name=tree from=$cur_list item=entry}
@@ -52,11 +52,11 @@ function select_all(elem, str) {
       <b>{$entry.kurs}</b>
       </td>
       <td class={$td}_middle align=center>
-      <a href="?mod=shop&action=change_cur_status&id={$entry.id}" title="Изменить статус"><img src=templates/img/status_{$entry.status}.gif border=0></a>
+      <a href="?mod=shop&action=change_cur_status&id={$entry.id}" title="РР·РјРµРЅРёС‚СЊ СЃС‚Р°С‚СѓСЃ"><img src=templates/img/status_{$entry.status}.gif border=0></a>
       </td>
       <td align=center class={$td}_right>
-        <a href="javascript:confirm_delete('{$entry.id}');" class=img_link onmouseover="ddrivetip('Удалить валюту')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
-        <a href=?mod=shop&action=edit_cur&id={$entry.id} class=img_link onmouseover="ddrivetip('Редактировать валюту')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>
+        <a href="javascript:confirm_delete('{$entry.id}');" class=img_link onmouseover="ddrivetip('РЈРґР°Р»РёС‚СЊ РІР°Р»СЋС‚Сѓ')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
+        <a href=?mod=shop&action=edit_cur&id={$entry.id} class=img_link onmouseover="ddrivetip('Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РІР°Р»СЋС‚Сѓ')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>
       </td>
     </tr>
 
@@ -67,15 +67,15 @@ function select_all(elem, str) {
 {else}
 <table width=100% class=content_table>
   <tr>
-  <th>Название валюты</th>
-  <th width="15%">Символ валюты</th>
-  <th width="10%">Курс</th>
-  <th width="8%">Статус</th>
-  <th width="10%">Действия</th>
+  <th>РќР°Р·РІР°РЅРёРµ РІР°Р»СЋС‚С‹</th>
+  <th width="15%">РЎРёРјРІРѕР» РІР°Р»СЋС‚С‹</th>
+  <th width="10%">РљСѓСЂСЃ</th>
+  <th width="8%">РЎС‚Р°С‚СѓСЃ</th>
+  <th width="10%">Р”РµР№СЃС‚РІРёСЏ</th>
   </tr>
 <tr>
-<td colspan="5" class="td2_middle"><center>Валюты нет</center></td></tr>
+<td colspan="5" class="td2_middle"><center>Р’Р°Р»СЋС‚С‹ РЅРµС‚</center></td></tr>
 </table>
 {/if}
 <br>
-<div class="add_but" style="float: left;" onClick="location.href='?mod=shop&action=add_cur'"><div><a href="?mod=shop&action=add_cur">добавить валюту</a></div></div>
+<div class="add_but" style="float: left;" onClick="location.href='?mod=shop&action=add_cur'"><div><a href="?mod=shop&action=add_cur">РґРѕР±Р°РІРёС‚СЊ РІР°Р»СЋС‚Сѓ</a></div></div>

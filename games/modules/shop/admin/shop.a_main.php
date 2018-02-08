@@ -9,6 +9,7 @@ require_once '../lib/class.import.php';
 require_once('../lib/class.string.php');
 require_once 'order_status.php';
 
+
 $smarty->assign("currency",DEFAULT_CURRENCY);
 
 /* DB TREE VARIABLES */
@@ -24,8 +25,8 @@ $tree=new CDBTree($db, $table, $id_name, $field_names);
 $string = new String();
 
 //$id = $tree->clear();
-//$tree->insert($id, array("name" => "Øèíû", "url" => "tires"));
-//$tree->insert($id, array("name" => "Äèñêè", "url" => "disk"));
+//$tree->insert($id, array("name" => "Ð¨Ð¸Ð½Ñ‹", "url" => "tires"));
+//$tree->insert($id, array("name" => "Ð”Ð¸ÑÐºÐ¸", "url" => "disk"));
 //echo date("Y-m-d H:i:s");
 
 $cat_list=$db->get_all("SELECT *,
@@ -47,7 +48,7 @@ $smarty->assign("currency_site",$cur_site);
 $cur_admin=$db->get_single("SELECT kurs,znak FROM fw_currency WHERE id=" . CURRENCY_ADMIN);
 $cur_admin=String::unformat_array($cur_admin);
 
-$navigation[]=array("url" => BASE_URL . "/admin/?mod=shop","title" => 'Ìàãàçèí');
+$navigation[]=array("url" => BASE_URL . "/admin/?mod=shop","title" => 'ÐœÐ°Ð³Ð°Ð·Ð¸Ð½');
 //UPDATE `fw_products` SET sort_order=id-2 WHERE 1
 if (isset($_GET['action']) && $_GET['action']!='') $action=$_GET['action'];
 else $action='';
@@ -55,9 +56,9 @@ else $action='';
 //print_r($_POST);
 //exit();
 
-/*------------------------- ÂÛÏÎËÍßÅÌ ÐÀÇËÈ×ÍÛÅ ÄÅÉÑÒÂÈß ---------------------*/
+/*------------------------- Ð’Ð«ÐŸÐžÐ›ÐÐ¯Ð•Ðœ Ð ÐÐ—Ð›Ð˜Ð§ÐÐ«Ð• Ð”Ð•Ð™Ð¡Ð¢Ð’Ð˜Ð¯ ---------------------*/
 
-//èìïîðò ïðàéñ-ëèñòîâ
+//Ð¸Ð¼Ð¿Ð¾Ñ€Ñ‚ Ð¿Ñ€Ð°Ð¹Ñ-Ð»Ð¸ÑÑ‚Ð¾Ð²
 /*if (isset($_POST['submit_import']))
 {
 	//require_once('../lib/class.import.php');
@@ -75,24 +76,24 @@ else $action='';
 		$check_file_name=explode(".",$file_name);
 		$ext=strtolower($check_file_name[count($check_file_name)-1]);
 		if (!in_array($ext,$trusted_formats)) {
-			die("Ìîæíî çàãðóæàòü òîëüêî ôàéëû ñ ðàçðåøåíèå *.xls");
+			die("ÐœÐ¾Ð¶Ð½Ð¾ Ð·Ð°Ð³Ñ€ÑƒÐ¶Ð°Ñ‚ÑŒ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ñ„Ð°Ð¹Ð»Ñ‹ Ñ Ñ€Ð°Ð·Ñ€ÐµÑˆÐµÐ½Ð¸Ðµ *.xls");
 		}
 
 		if (filesize($tmp) > 5000000) {
-			die("Ðàçìåð ôàéëà íå áîëüøå 5 Ìá");
+			die("Ð Ð°Ð·Ð¼ÐµÑ€ Ñ„Ð°Ð¹Ð»Ð° Ð½Ðµ Ð±Ð¾Ð»ÑŒÑˆÐµ 5 ÐœÐ±");
 		}
 
 		$import = new Import($db, $tree, $string);
-		//ãðóçèì xls
+		//Ð³Ñ€ÑƒÐ·Ð¸Ð¼ xls
 		$xlsfile = $import->upload($_FILES['import_file']);
-		//íàçûâàåì csv ôàéë òàêæå êàê è xls
+		//Ð½Ð°Ð·Ñ‹Ð²Ð°ÐµÐ¼ csv Ñ„Ð°Ð¹Ð» Ñ‚Ð°ÐºÐ¶Ðµ ÐºÐ°Ðº Ð¸ xls
 		$tocsv = explode('.', $xlsfile);
 		$csvfile = $tocsv[0] . '.csv';
-		//êîíâåðòèðóåì xls
+		//ÐºÐ¾Ð½Ð²ÐµÑ€Ñ‚Ð¸Ñ€ÑƒÐµÐ¼ xls
 		if ($import->convert($xlsfile, $csvfile))
 		{
 
-			//åñëè âûáðàí íå òîò ôàéë
+			//ÐµÑÐ»Ð¸ Ð²Ñ‹Ð±Ñ€Ð°Ð½ Ð½Ðµ Ñ‚Ð¾Ñ‚ Ñ„Ð°Ð¹Ð»
 			if (!$import->getImportTypeByFile($csvfile))
 			{
 				header ("Location: http://" . $_SERVER['SERVER_NAME'] . "/admin/index.php?mod=shop&action=import_error");
@@ -100,7 +101,7 @@ else $action='';
 			}
 			
 
-			//ïîëó÷àåì äàííûå â ìàññèâ
+			//Ð¿Ð¾Ð»ÑƒÑ‡Ð°ÐµÐ¼ Ð´Ð°Ð½Ð½Ñ‹Ðµ Ð² Ð¼Ð°ÑÑÐ¸Ð²
 			$import->read($csvfile);
 			if ($_POST['type'] == 'tires')
 			{
@@ -161,7 +162,7 @@ if (isset($_POST['submit_sort_products']) && isset($_POST['sortArray']) ){
 		$sort= $key + 1;
 		$db->query("UPDATE fw_products SET sort_order='$sort' WHERE id='$val' ");
 	}
-		$smarty->assign("message","Ïðîäóêöèÿ îòñîðòèðîâàíà");
+		$smarty->assign("message","ÐŸÑ€Ð¾Ð´ÑƒÐºÑ†Ð¸Ñ Ð¾Ñ‚ÑÐ¾Ñ€Ñ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð°");
 }
 
 
@@ -370,16 +371,16 @@ if (isset($_POST['submit_add_cat'])) {
 	$keywords=String::secure_format($_POST['edit_cat_keywords']);
 	$description=String::secure_format($_POST['edit_cat_description']);
 
-	if ($name=='') $name="Íîâàÿ áåçûìÿííàÿ êàòåãîðèÿ";
+	if ($name=='') $name="ÐÐ¾Ð²Ð°Ñ Ð±ÐµÐ·Ñ‹Ð¼ÑÐ½Ð½Ð°Ñ ÐºÐ°Ñ‚ÐµÐ³Ð¾Ñ€Ð¸Ñ";
 
 	$check_if_exists=$db->get_all("SELECT id FROM fw_catalogue WHERE url='$url' AND param_left>(SELECT param_left FROM fw_catalogue WHERE id='$parent') AND param_right<(SELECT param_right FROM fw_catalogue WHERE id='$parent') AND param_level=(SELECT param_level FROM fw_catalogue WHERE id='$parent')");
 	if (count($check_if_exists)>0) {
-		$smarty->assign("error_message","Êàòåãîðèÿ ñ òàêèì óðëîì óæå ñóùåñòâóåò!");
+		$smarty->assign("error_message","ÐšÐ°Ñ‚ÐµÐ³Ð¾Ñ€Ð¸Ñ Ñ Ñ‚Ð°ÐºÐ¸Ð¼ ÑƒÑ€Ð»Ð¾Ð¼ ÑƒÐ¶Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚!");
 		$check=false;
 	}
 
 	if (!preg_match("/^([a-z0-9_-]+)$/",$url)) {
-		$smarty->assign("error_message","Â URL äîïóñòèìû òîëüêî ñèìâîëû ëàòèíèöû, ìèíóñ è çíàê ïîä÷¸ðêèâàíèÿ!");
+		$smarty->assign("error_message","Ð’ URL Ð´Ð¾Ð¿ÑƒÑÑ‚Ð¸Ð¼Ñ‹ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ ÑÐ¸Ð¼Ð²Ð¾Ð»Ñ‹ Ð»Ð°Ñ‚Ð¸Ð½Ð¸Ñ†Ñ‹, Ð¼Ð¸Ð½ÑƒÑ Ð¸ Ð·Ð½Ð°Ðº Ð¿Ð¾Ð´Ñ‡Ñ‘Ñ€ÐºÐ¸Ð²Ð°Ð½Ð¸Ñ!");
 		$check=false;
 	}
 
@@ -393,12 +394,12 @@ if (isset($_POST['submit_add_cat'])) {
 		$check_file_name=explode(".",$file_name);
 		$ext=strtolower($check_file_name[count($check_file_name)-1]);
 		if (!in_array($ext,$trusted_formats)) {
-			$smarty->assign("error_message","Ðàçðåøåíû êàðòèíêè ôîðìàòîâ jpg, jpeg, gif è png");
+			$smarty->assign("error_message","Ð Ð°Ð·Ñ€ÐµÑˆÐµÐ½Ñ‹ ÐºÐ°Ñ€Ñ‚Ð¸Ð½ÐºÐ¸ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚Ð¾Ð² jpg, jpeg, gif Ð¸ png");
 			$check=false;
 		}
 
 		if (filesize($tmp)>2000000) {
-			$smarty->assign("error_message","Ðàçìåð ôîòîãðàôèè íå äîëæåí ïðèâûøàòü 2Mb");
+			$smarty->assign("error_message","Ð Ð°Ð·Ð¼ÐµÑ€ Ñ„Ð¾Ñ‚Ð¾Ð³Ñ€Ð°Ñ„Ð¸Ð¸ Ð½Ðµ Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð¿Ñ€Ð¸Ð²Ñ‹ÑˆÐ°Ñ‚ÑŒ 2Mb");
 			$check=false;
 		}
 	}
@@ -417,7 +418,7 @@ if (isset($_POST['submit_add_cat'])) {
 			if (move_uploaded_file($tmp, BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext)) {
 				chmod(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext, 0644);
 				$details = Image::image_details(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext);
-				//ïðåâüþøêà
+				//Ð¿Ñ€ÐµÐ²ÑŒÑŽÑˆÐºÐ°
 				Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext,BASE_PATH.'/images/cat-'.$id.'.'.$ext,215,236);
 				Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext,BASE_PATH.'/images/pcat-'.$id.'.'.$ext,139,100);
 				Image::image_resize(BASE_PATH.'/uploaded_files/shop_images/-'.$id.'.'.$ext,BASE_PATH.'/images/bcat-'.$id.'.'.$ext,$details['width'],$details['height']);
@@ -461,18 +462,18 @@ if (isset($_POST['submit_edit_cat'])) {
 		$db->query("INSERT INTO fw_catalogue_relations (cat_id,property_id,sort_order) VALUES('$id', '$k','".intval($_POST['edit_cat_properties_sort_order'][$k])."')");
 	}
 
-	if ($name=='') $name="Íîâàÿ áåçûìÿííàÿ êàòåãîðèÿ";
+	if ($name=='') $name="ÐÐ¾Ð²Ð°Ñ Ð±ÐµÐ·Ñ‹Ð¼ÑÐ½Ð½Ð°Ñ ÐºÐ°Ñ‚ÐµÐ³Ð¾Ñ€Ð¸Ñ";
 
 	if ($url!=$old_url or $parent!=$old_parent) {
 		$check_if_exists=$db->get_all("SELECT id FROM fw_catalogue WHERE url='$url' AND param_left>(SELECT param_left FROM fw_catalogue WHERE id='$parent') AND param_right<(SELECT param_right FROM fw_catalogue WHERE id='$parent') AND param_level=(SELECT param_level FROM fw_catalogue WHERE id='$parent')");
 		if (count($check_if_exists)>0) {
-			$smarty->assign("error_message","Óçåë ñ òàêèì óðëîì óæå ñóùåñòâóåò!");
+			$smarty->assign("error_message","Ð£Ð·ÐµÐ» Ñ Ñ‚Ð°ÐºÐ¸Ð¼ ÑƒÑ€Ð»Ð¾Ð¼ ÑƒÐ¶Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚!");
 			$check=false;
 		}
 	}
 
 	if (!preg_match("/^([a-z0-9_-]+)$/",$url)) {
-		$smarty->assign("error_message","Â URL äîïóñòèìû òîëüêî ñèìâîëû ëàòèíèöû, ìèíóñ è çíàê ïîä÷¸ðêèâàíèÿ!");
+		$smarty->assign("error_message","Ð’ URL Ð´Ð¾Ð¿ÑƒÑÑ‚Ð¸Ð¼Ñ‹ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ ÑÐ¸Ð¼Ð²Ð¾Ð»Ñ‹ Ð»Ð°Ñ‚Ð¸Ð½Ð¸Ñ†Ñ‹, Ð¼Ð¸Ð½ÑƒÑ Ð¸ Ð·Ð½Ð°Ðº Ð¿Ð¾Ð´Ñ‡Ñ‘Ñ€ÐºÐ¸Ð²Ð°Ð½Ð¸Ñ!");
 		$check=false;
 	}
 
@@ -486,12 +487,12 @@ if (isset($_POST['submit_edit_cat'])) {
 		$check_file_name=explode(".",$file_name);
 		$ext=strtolower($check_file_name[count($check_file_name)-1]);
 		if (!in_array($ext,$trusted_formats)) {
-			$smarty->assign("error_message","Ðàçðåøåíû êàðòèíêè ôîðìàòîâ jpg, jpeg, gif è png");
+			$smarty->assign("error_message","Ð Ð°Ð·Ñ€ÐµÑˆÐµÐ½Ñ‹ ÐºÐ°Ñ€Ñ‚Ð¸Ð½ÐºÐ¸ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚Ð¾Ð² jpg, jpeg, gif Ð¸ png");
 			$check=false;
 		}
 
 		if (filesize($tmp)>2000000) {
-			$smarty->assign("error_message","Ðàçìåð ôîòîãðàôèè íå äîëæåí ïðèâûøàòü 2Mb");
+			$smarty->assign("error_message","Ð Ð°Ð·Ð¼ÐµÑ€ Ñ„Ð¾Ñ‚Ð¾Ð³Ñ€Ð°Ñ„Ð¸Ð¸ Ð½Ðµ Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð¿Ñ€Ð¸Ð²Ñ‹ÑˆÐ°Ñ‚ÑŒ 2Mb");
 			$check=false;
 		}
 	}
@@ -549,7 +550,7 @@ if (isset($_POST['submit_add_product'])) {
 	//$guarantie=String::secure_format($_POST['edit_guarantie']);
 	$sale=String::secure_format($_POST['edit_sale']);
 	
-	//ñâ-âà øèí/äèñêîâ
+	//ÑÐ²-Ð²Ð° ÑˆÐ¸Ð½/Ð´Ð¸ÑÐºÐ¾Ð²
 	/*$tire_width = $_POST['tire_width'];
 	$tire_height = $_POST['tire_height'];
 	$tire_diameter = $_POST['tire_diameter'];
@@ -578,7 +579,7 @@ if (isset($_POST['submit_add_product'])) {
   	$type=($_POST['edit_type']!='')?intval($_POST['edit_type']):"NULL";
 
 
-	if ($name=='') $name='Íîâûé ïðîäóêò';
+	if ($name=='') $name='ÐÐ¾Ð²Ñ‹Ð¹ Ð¿Ñ€Ð¾Ð´ÑƒÐºÑ‚';
 	if ($price=='') $price='0.00';
 
 	$db->query("INSERT INTO fw_products 
@@ -655,7 +656,7 @@ if (isset($_POST['submit_edit_product'])) {
 		WHERE id='$id'");
 	
 
-	//ðåäàêòèðóåì ôàéëû îïèñàíèÿ
+	//Ñ€ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€ÑƒÐµÐ¼ Ñ„Ð°Ð¹Ð»Ñ‹ Ð¾Ð¿Ð¸ÑÐ°Ð½Ð¸Ñ
 	/*if (isset($_POST['edit_file_title']))
 	{
 		foreach ($_POST['edit_file_title'] as $key=>$val)
@@ -664,7 +665,7 @@ if (isset($_POST['submit_edit_product'])) {
 		}
 	}*/
 	
-	//óäàëåíèå ôàéëîâ
+	//ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ðµ Ñ„Ð°Ð¹Ð»Ð¾Ð²
 	/*if (isset($_POST['del_file']))
 	{
 		foreach ($_POST['del_file'] as $key=>$val)
@@ -681,7 +682,7 @@ if (isset($_POST['submit_edit_product'])) {
 		}
 	}*/
 	
-	//ãðóçèì ôàéë îïèñàíèÿ
+	//Ð³Ñ€ÑƒÐ·Ð¸Ð¼ Ñ„Ð°Ð¹Ð» Ð¾Ð¿Ð¸ÑÐ°Ð½Ð¸Ñ
 	/*$inserts = array();
 	foreach ($_FILES['add_file']['tmp_name'] as $key=>$val)
 	{
@@ -693,17 +694,17 @@ if (isset($_POST['submit_edit_product'])) {
 		$check_file_name=explode(".",$file_name);
 		$ext=strtolower($check_file_name[count($check_file_name)-1]);
 		$new_file_name = md5($file_name . rand(0, strlen($file_name))) . '.' . $ext;
-		//$title = 'Òåõíè÷åñêèå õàðàêòåðèñòèêè';
+		//$title = 'Ð¢ÐµÑ…Ð½Ð¸Ñ‡ÐµÑÐºÐ¸Ðµ Ñ…Ð°Ñ€Ð°ÐºÑ‚ÐµÑ€Ð¸ÑÑ‚Ð¸ÐºÐ¸';
 		$title = $_POST['file_title'][$key];
 		$check = true;
 		
 		if (!in_array($ext,array('pdf','doc', 'zip', 'rar'))) {
-			$smarty->assign("error","Ðàçðåøåíû ôàéëû ôîðìàòîâ pdf, doc, zip è rar");
+			$smarty->assign("error","Ð Ð°Ð·Ñ€ÐµÑˆÐµÐ½Ñ‹ Ñ„Ð°Ð¹Ð»Ñ‹ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚Ð¾Ð² pdf, doc, zip Ð¸ rar");
 			$check=false;
 		}
 		
 		if (filesize($tmp)>10000000) {
-			$smarty->assign("error","Ðàçìåð ôàéëà íå äîëæåí ïðèâûøàòü 10Mb");
+			$smarty->assign("error","Ð Ð°Ð·Ð¼ÐµÑ€ Ñ„Ð°Ð¹Ð»Ð° Ð½Ðµ Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð¿Ñ€Ð¸Ð²Ñ‹ÑˆÐ°Ñ‚ÑŒ 10Mb");
 			$check=false;
 		}
 		
@@ -738,17 +739,17 @@ if (isset($_POST['submit_edit_product'])) {
 		$check_file_name=explode(".",$file_name);
 		$ext=strtolower($check_file_name[count($check_file_name)-1]);
 		$new_file_name = md5($file_name . rand(0, strlen($file_name))) . '.' . $ext;
-		//$title = 'Òåõíè÷åñêèå õàðàêòåðèñòèêè';
+		//$title = 'Ð¢ÐµÑ…Ð½Ð¸Ñ‡ÐµÑÐºÐ¸Ðµ Ñ…Ð°Ñ€Ð°ÐºÑ‚ÐµÑ€Ð¸ÑÑ‚Ð¸ÐºÐ¸';
 		$title = $_POST['file_title'];
 		$check = true;
 		
 		if (!in_array($ext,array('pdf','doc'))) {
-			$smarty->assign("error","Ðàçðåøåíû ôàéëû ôîðìàòîâ pdf è doc");
+			$smarty->assign("error","Ð Ð°Ð·Ñ€ÐµÑˆÐµÐ½Ñ‹ Ñ„Ð°Ð¹Ð»Ñ‹ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚Ð¾Ð² pdf Ð¸ doc");
 			$check=false;
 		}
 		
 		if (filesize($tmp)>10000000) {
-			$smarty->assign("error","Ðàçìåð ôàéëà íå äîëæåí ïðèâûøàòü 10Mb");
+			$smarty->assign("error","Ð Ð°Ð·Ð¼ÐµÑ€ Ñ„Ð°Ð¹Ð»Ð° Ð½Ðµ Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð¿Ñ€Ð¸Ð²Ñ‹ÑˆÐ°Ñ‚ÑŒ 10Mb");
 			$check=false;
 		}
 		
@@ -762,7 +763,7 @@ if (isset($_POST['submit_edit_product'])) {
 			}
 			else {
 				$result=$db->query("DELETE FROM fw_products_files WHERE id='".mysql_insert_id()."'");
-				$smarty->assign("error","Ôàéë íå áûë çàãðóæåí");
+				$smarty->assign("error","Ð¤Ð°Ð¹Ð» Ð½Ðµ Ð±Ñ‹Ð» Ð·Ð°Ð³Ñ€ÑƒÐ¶ÐµÐ½");
 			}
 		}
 		
@@ -786,12 +787,12 @@ if (isset($_POST['submit_add_photo'])) {
 	$check_file_name=explode(".",$file_name);
 	$ext=strtolower($check_file_name[count($check_file_name)-1]);
 	if (!in_array($ext,$trusted_formats)) {
-		$smarty->assign("error","Ðàçðåøåíû êàðòèíêè ôîðìàòîâ jpg, jpeg, gif è png");
+		$smarty->assign("error","Ð Ð°Ð·Ñ€ÐµÑˆÐµÐ½Ñ‹ ÐºÐ°Ñ€Ñ‚Ð¸Ð½ÐºÐ¸ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚Ð¾Ð² jpg, jpeg, gif Ð¸ png");
 		$check=false;
 	}
 
 	if (filesize($tmp)>2000000) {
-		$smarty->assign("error","Ðàçìåð ôîòîãðàôèè íå äîëæåí ïðèâûøàòü 2Mb");
+		$smarty->assign("error","Ð Ð°Ð·Ð¼ÐµÑ€ Ñ„Ð¾Ñ‚Ð¾Ð³Ñ€Ð°Ñ„Ð¸Ð¸ Ð½Ðµ Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð¿Ñ€Ð¸Ð²Ñ‹ÑˆÐ°Ñ‚ÑŒ 2Mb");
 		$check=false;
 	}
 
@@ -800,7 +801,7 @@ if (isset($_POST['submit_add_photo'])) {
 		if ($order['s_order']=='') $order=1;
 		else $order=$order['s_order'];
 		$result=$db->query("INSERT INTO fw_products_images(parent,title,ext,sort_order) VALUES('".$_POST['parent']."','$title','$ext','".$order."')");
-		$id=mysql_insert_id();
+		$id=mysqli_insert_id($db->link);
 		if (move_uploaded_file($tmp, BASE_PATH."/uploaded_files/shop_images/$id.$ext")) {
 			chmod(BASE_PATH."/uploaded_files/shop_images/$id.$ext",0644);
 			Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/resized-$id.$ext", PRODUCT_PREVIEW_WIDTH,PRODUCT_PREVIEW_HEIGHT, false, "#FFFFFF");
@@ -808,8 +809,8 @@ if (isset($_POST['submit_add_photo'])) {
 			Image::resize(BASE_PATH."/uploaded_files/shop_images/$id.$ext", BASE_PATH."/uploaded_files/shop_images/big-$id.$ext", PRODUCT_BIG_WIDTH,PRODUCT_BIG_HEIGHT, false, "#FFFFFF");
 		}
 		else {
-			$result=$db->query("DELETE FROM fw_products_images WHERE id='".mysql_insert_id()."'");
-			$smarty->assign("error","Ôàéë íå áûë çàãðóæåí");
+			$result=$db->query("DELETE FROM fw_products_images WHERE id='".mysqli_insert_id($db->link)."'");
+			$smarty->assign("error","Ð¤Ð°Ð¹Ð» Ð½Ðµ Ð±Ñ‹Ð» Ð·Ð°Ð³Ñ€ÑƒÐ¶ÐµÐ½");
 		}
 	}
 
@@ -1049,23 +1050,23 @@ if ($action=='delete_previews') {
 }
 
 
-/*--------------------------------- ÎÒÎÁÐÀÆÅÍÈÅ ------------------------------*/
+/*--------------------------------- ÐžÐ¢ÐžÐ‘Ð ÐÐ–Ð•ÐÐ˜Ð• ------------------------------*/
 
 SWITCH (TRUE) {
 	
-	//îøèáêà èìïîðòà
+	//Ð¾ÑˆÐ¸Ð±ÐºÐ° Ð¸Ð¼Ð¿Ð¾Ñ€Ñ‚Ð°
 	CASE ($action == 'import_error'):
 		
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=import_error","title" => 'Îøèáêà èìïîðòà èìïîðòà');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=import_error","title" => 'ÐžÑˆÐ¸Ð±ÐºÐ° Ð¸Ð¼Ð¿Ð¾Ñ€Ñ‚Ð° Ð¸Ð¼Ð¿Ð¾Ñ€Ñ‚Ð°');
 		$template='shop.a_import_error.html';
 		
 	BREAK;
 	
 
-	//äåòàëèçàöèÿ èìïîðòà
+	//Ð´ÐµÑ‚Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ñ Ð¸Ð¼Ð¿Ð¾Ñ€Ñ‚Ð°
 	CASE ($action == 'import_details'):
 		
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=import_details","title" => 'Äåòàëèçàöèÿ èìïîðòà');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=import_details","title" => 'Ð”ÐµÑ‚Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ñ Ð¸Ð¼Ð¿Ð¾Ñ€Ñ‚Ð°');
 		$import = new Import($db, $tree, $string);
 		$import = $import->getImportById($_GET['id']);
 		if ($import)
@@ -1078,10 +1079,10 @@ SWITCH (TRUE) {
 		
 	BREAK;
 	
-	//ëîã èìïîðòà
+	//Ð»Ð¾Ð³ Ð¸Ð¼Ð¿Ð¾Ñ€Ñ‚Ð°
 	CASE ($action == 'import_log'):
 		
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=import_log","title" => 'Ëîã èìïîðòà');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=import_log","title" => 'Ð›Ð¾Ð³ Ð¸Ð¼Ð¿Ð¾Ñ€Ñ‚Ð°');
 		$import = new Import($db, $tree, $string);
 		$imports = $import->getImports();
 		$smarty->assign('imports', $imports);
@@ -1092,14 +1093,14 @@ SWITCH (TRUE) {
 	
 	CASE ($action == 'import'):
 		
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=import","title" => 'Èìïîðò');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=import","title" => 'Ð˜Ð¼Ð¿Ð¾Ñ€Ñ‚');
 		$template='shop.a_import.html';
 		
 	BREAK;
 	
 	CASE ($action=='add_cat'):
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=add_cat","title" => 'Äîáàâèòü êàòåãîðèþ');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=add_cat","title" => 'Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ ÐºÐ°Ñ‚ÐµÐ³Ð¾Ñ€Ð¸ÑŽ');
 
 		$smarty->assign("mode","add");
 		$smarty->assign("parent",$_GET['parent']);
@@ -1123,8 +1124,8 @@ SWITCH (TRUE) {
 
 		$id=$_GET['id'];
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=catalogue","title" => 'Êàòåãîðèè');
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=edit_cat","title" => 'Ðåäàêòèðîâàòü êàòåãîðèþ');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=catalogue","title" => 'ÐšÐ°Ñ‚ÐµÐ³Ð¾Ñ€Ð¸Ð¸');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=edit_cat","title" => 'Ð ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ ÐºÐ°Ñ‚ÐµÐ³Ð¾Ñ€Ð¸ÑŽ');
 
 		$parent=$tree->getParent($id);
 
@@ -1152,7 +1153,7 @@ SWITCH (TRUE) {
 
 	CASE ($action=='products_list'):
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Òîâàðû');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Ð¢Ð¾Ð²Ð°Ñ€Ñ‹');
 
 
 		if (isset($_GET['page']) && $_GET['page']!='') 
@@ -1241,8 +1242,8 @@ SWITCH (TRUE) {
 
 	CASE ($action=='add_product'):
 		
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Ïðîäóêòû');
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=add_product","title" => 'Äîáàâèòü ïðîäóêò');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'ÐŸÑ€Ð¾Ð´ÑƒÐºÑ‚Ñ‹');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=add_product","title" => 'Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð¿Ñ€Ð¾Ð´ÑƒÐºÑ‚');
 
 		$cat_list=Common::get_nodes_list($cat_list);
         $types_list=$db->get_all("SELECT * FROM fw_products_types WHERE status='1' ORDER BY name");
@@ -1260,8 +1261,8 @@ SWITCH (TRUE) {
 
 	CASE ($action=='edit_product' && isset($_GET['id'])):
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Ñïèñîê ïðîäóêòîâ');
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=edit_product","title" => 'Ðåäàêòèðîâàòü ïðîäóêò');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=products_list","title" => 'Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð¿Ñ€Ð¾Ð´ÑƒÐºÑ‚Ð¾Ð²');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=edit_product","title" => 'Ð ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð¿Ñ€Ð¾Ð´ÑƒÐºÑ‚');
 
 		$id=$_GET['id'];
 
@@ -1327,7 +1328,7 @@ SWITCH (TRUE) {
 
 	CASE ($action=='orders'):
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=orders","title" => 'Ñïèñîê çàêàçîâ');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=orders","title" => 'Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð·Ð°ÐºÐ°Ð·Ð¾Ð²');
 
 		if (isset($_GET['page'])) $page=$_GET['page'];
 		else $page=1;
@@ -1374,7 +1375,7 @@ SWITCH (TRUE) {
 
 	CASE ($action=='order_details'):
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=orders","title" => 'Ñïèñîê çàêàçîâ');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=orders","title" => 'Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð·Ð°ÐºÐ°Ð·Ð¾Ð²');
 
 		$id=$_GET['id'];
 
@@ -1417,7 +1418,7 @@ SWITCH (TRUE) {
 		}
 
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=order_details","title" => 'Çàêàç íîìåð '.$id);
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=order_details","title" => 'Ð—Ð°ÐºÐ°Ð· Ð½Ð¾Ð¼ÐµÑ€ '.$id);
 
 		for ($i=0;$i<count($status_value);$i++) {
 			$status_list[$i]['value']=$status_value[$i];
@@ -1450,7 +1451,7 @@ SWITCH (TRUE) {
 
 	CASE ($action=='catalogue'):
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Êàòåãîðèè');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'ÐšÐ°Ñ‚ÐµÐ³Ð¾Ñ€Ð¸Ð¸');
 
 		$smarty->assign("cat_list",$cat_list);
 
@@ -1461,7 +1462,7 @@ SWITCH (TRUE) {
 		$properties_list=$db->get_all("SELECT * FROM fw_catalogue_properties ORDER BY name");
 		$properties_list=String::unformat_array($properties_list);
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Ñâîéñòâà òîâàðîâ');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Ð¡Ð²Ð¾Ð¹ÑÑ‚Ð²Ð° Ñ‚Ð¾Ð²Ð°Ñ€Ð¾Ð²');
 
 		$smarty->assign("properties_list",$properties_list);
 		$template='shop.a_products_properties.html';
@@ -1470,7 +1471,7 @@ SWITCH (TRUE) {
 
 	CASE ($action=='add_property'):
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Ñâîéñòâà òîâàðîâ');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Ð¡Ð²Ð¾Ð¹ÑÑ‚Ð²Ð° Ñ‚Ð¾Ð²Ð°Ñ€Ð¾Ð²');
 
 		$smarty->assign("mode","add");
 		$template='shop.a_products_properties.html';
@@ -1479,7 +1480,7 @@ SWITCH (TRUE) {
 
 	CASE ($action=='edit_property' && isset($_GET['id'])):
 
-		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Ðåäàêòèðîâàíèå ñâîéñòâà');
+		$navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Ð ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ ÑÐ²Ð¾Ð¹ÑÑ‚Ð²Ð°');
 
 		$id=$_GET['id'];
 
@@ -1683,7 +1684,7 @@ SWITCH (TRUE) {
 
     $types_list=$db->get_all("SELECT *, (SELECT COUNT(*) FROM fw_products WHERE product_type=fw_products_types.id) as tovars FROM fw_products_types ORDER BY name");
     $types_list=String::unformat_array($types_list);
-    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Òèïû ïðîäóêòîâ');
+    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Ð¢Ð¸Ð¿Ñ‹ Ð¿Ñ€Ð¾Ð´ÑƒÐºÑ‚Ð¾Ð²');
     $smarty->assign("types_list",$types_list);
     $template='shop.a_products_types.html';
 
@@ -1692,7 +1693,7 @@ SWITCH (TRUE) {
 
   CASE ($action=='add_type'):
 
-    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Äîáàâèòü òèï ïðîäóêòà');
+    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ñ‚Ð¸Ð¿ Ð¿Ñ€Ð¾Ð´ÑƒÐºÑ‚Ð°');
 
     $smarty->assign("mode","add");
     $template='shop.a_products_types.html';
@@ -1701,7 +1702,7 @@ SWITCH (TRUE) {
 
   CASE ($action=='edit_type' && isset($_GET['id'])):
 
-    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Ðåäàêòèðîâàòü òèï ïðîäóêòà');
+    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Ð ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ñ‚Ð¸Ð¿ Ð¿Ñ€Ð¾Ð´ÑƒÐºÑ‚Ð°');
 
     $id=$_GET['id'];
 
@@ -1720,7 +1721,7 @@ SWITCH (TRUE) {
 
   CASE ($action=='currency'):
 
-    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=currency","title" => 'Êóðñû âàëþò');
+    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop&action=currency","title" => 'ÐšÑƒÑ€ÑÑ‹ Ð²Ð°Ð»ÑŽÑ‚');
 
     $cur_list=$db->get_all("SELECT * FROM fw_currency");
     $cur_list=String::unformat_array($cur_list);
@@ -1734,7 +1735,7 @@ SWITCH (TRUE) {
 
   CASE ($action=='add_cur'):
 
-    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Êóðñ âàëþò');
+    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'ÐšÑƒÑ€Ñ Ð²Ð°Ð»ÑŽÑ‚');
 
     $smarty->assign("mode","add");
     $template='shop.a_cur_edit.html';
@@ -1743,7 +1744,7 @@ SWITCH (TRUE) {
 
   CASE ($action=='edit_cur' && isset($_GET['id'])):
 
-    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Ðåäàêòèðîâàíèå âàëþòû');
+    $navigation[]=array("url" => BASE_URL."/admin/?mod=shop","title" => 'Ð ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð²Ð°Ð»ÑŽÑ‚Ñ‹');
 
     $id=$_GET['id'];
 

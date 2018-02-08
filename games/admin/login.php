@@ -4,7 +4,6 @@ session_start();
 
 error_reporting(E_ALL);
 
-
 require_once '../conf/globals.php';
 require_once '../lib/smarty/Smarty.class.php';
 require_once '../lib/class.db.php';
@@ -13,14 +12,14 @@ require_once '../lib/class.string.php';
 
 $_SESSION['db_connections'] = 0;
 
-/* ------------ «¿√–”« ¿ ÿ¿¡ÀŒÕ»«¿“Œ–¿ --------------------*/
+/* ------------ –ó–ê–ì–†–£–ó–ö–ê –®–ê–ë–õ–û–ù–ò–ó–ê–¢–û–†–ê --------------------*/
 $smarty = new Smarty;
 
 $smarty->template_dir = 'templates/';
 $smarty->compile_dir = '../lib/smarty/admin_templates_c/';
 $smarty->cache_dir = '../lib/smarty/admin_cache/';
 
-/* ------------ œŒƒ Àﬁ◊¿≈Ã—ﬂ   ¡¿«≈ ƒ¿ÕÕ€’ -------------- */
+/* ------------ –ü–û–î–ö–õ–Æ–ß–ê–ï–ú–°–Ø –ö –ë–ê–ó–ï –î–ê–ù–ù–´–• -------------- */
 $db=new db(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 
 //$smarty->debugging=true;
@@ -45,12 +44,12 @@ if (isset($_POST['submit_login_form'])) {
 	$password = String::secure_format($_POST['password']);
 	
 	if ($login < '1') {
-		$smarty->assign("login_message",'¬‚Â‰ËÚÂ ÔÓÊ‡ÎÛÈÒÚ‡ ‚‡¯ ÎÓ„ËÌ');
+		$smarty->assign("login_message",'–í–≤–µ–¥–∏—Ç–µ –ø–æ–∂–∞–ª—É–π—Å—Ç–∞ –≤–∞—à –ª–æ–≥–∏–Ω');
 		$check=false;
 	}
 
 	if ($password < '1') {
-		$smarty->assign("login_message",'¬‚Â‰ËÚÂ ÔÓÊ‡ÎÛÈÒÚ‡ ‚‡¯ Ô‡ÓÎ¸');
+		$smarty->assign("login_message",'–í–≤–µ–¥–∏—Ç–µ –ø–æ–∂–∞–ª—É–π—Å—Ç–∞ –≤–∞—à –ø–∞—Ä–æ–ª—å');
 		$smarty->assign("temp_login",$login);
 		$check=false;
 	}
@@ -71,20 +70,20 @@ if (isset($_POST['submit_login_form'])) {
 				fu.status='1' 
 		");
 		if (!isset($content['priv'])) $content['priv']=9;
-		if (!isset($content['priv_name'])) $content['priv_name']="œÓÎ¸ÁÓ‚‡ÚÂÎ¸";
+		if (!isset($content['priv_name'])) $content['priv_name']="–ü–æ–ª—å–∑–æ–≤–∞—Ç–µ–ª—å";
 
 		$password_to_check = @$content['password'];
 		if (empty($password_to_check) || $content['priv']>=9) {
-			$smarty->assign("login_message",'“‡ÍÓ„Ó ÔÓÎ¸ÁÓ‚‡ÚÂÎˇ ÌÂ ÒÛ˘ÂÒÚ‚ÛÂÚ');
+			$smarty->assign("login_message",'–¢–∞–∫–æ–≥–æ –ø–æ–ª—å–∑–æ–≤–∞—Ç–µ–ª—è –Ω–µ —Å—É—â–µ—Å—Ç–≤—É–µ—Ç');
 		}
 		else {
 
 			if (md5($password) != $password_to_check) {
-				$smarty->assign("login_message",'ÕÂÔ‡‚ËÎ¸Ì˚È Ô‡ÓÎ¸');
+				$smarty->assign("login_message",'–ù–µ–ø—Ä–∞–≤–∏–ª—å–Ω—ã–π –ø–∞—Ä–æ–ª—å');
 				$smarty->assign("temp_login",$login);
 			}
 			else {
-				setcookie('fw_login_cookie',$login."|".md5($password),time()+LOGIN_LIFETIME,'/','');
+				setcookie('fw_login_cookie',$login."|".md5($password),time()+1000000,'/','');
 				$_SESSION['fw_user'] = $content;
 				header ("Location: ".BASE_URL."/admin/index.php");
 			}

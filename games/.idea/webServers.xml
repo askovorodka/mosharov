@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="c97469f1-f71e-4e52-aaad-b1fab1d2a3c7" name="vlasovtoys.ru" url="http://141.8.193.99">
+        <fileTransfer host="141.8.193.99" port="22" privateKey="$USER_HOME$/.ssh/id_rsa" rootFolder="/home/a0186456/" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions controlEncoding="windows-1251" dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

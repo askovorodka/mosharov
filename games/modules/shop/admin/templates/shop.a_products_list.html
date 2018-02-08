@@ -3,7 +3,7 @@
 <SCRIPT language=JavaScript>
 <!--
 function confirm_delete(delete_id) {
-	if (confirm("Дейтсвительно удалить этот продукт?")) parent.location.href = "?mod=shop&action=delete_product&id=" + delete_id;
+	if (confirm("Р”РµР№С‚СЃРІРёС‚РµР»СЊРЅРѕ СѓРґР°Р»РёС‚СЊ СЌС‚РѕС‚ РїСЂРѕРґСѓРєС‚?")) parent.location.href = "?mod=shop&action=delete_product&id=" + delete_id;
 }
 
 function select_all(elem, str) {
@@ -47,7 +47,7 @@ if(document.getElementById(name).style.display!="none") {
 <input type=hidden name=mod value=shop>
 <input type=hidden name=action value=products_list>
 <input type=hidden name=page value={$current_page}>
-Сортировать по разделу:
+РЎРѕСЂС‚РёСЂРѕРІР°С‚СЊ РїРѕ СЂР°Р·РґРµР»Сѓ:
 <select name=cat class=field onChange="document.cat_sort.submit();" style="width: 100%">
 {foreach from=$cat_list item=entry}
 <option value={$entry.id} {if $cat==$entry.id}selected=true{/if}>{$entry.full_title}</option>
@@ -62,7 +62,7 @@ if(document.getElementById(name).style.display!="none") {
 <input type=hidden name=mod value=shop>
 <input type=hidden name=action value=products_list>
 <input type=hidden name=page value={$current_page}>
-Сортировать по производителю:<br>
+РЎРѕСЂС‚РёСЂРѕРІР°С‚СЊ РїРѕ РїСЂРѕРёР·РІРѕРґРёС‚РµР»СЋ:<br>
 <select name=type class=field onChange="document.type_sort.submit();" style="width: 100%"><option selected value=*>/
 {foreach from=$type_list item=entry}
 <option value={$entry.id} {if $type==$entry.id}selected=true{/if}>{$entry.name}</option>
@@ -74,11 +74,11 @@ if(document.getElementById(name).style.display!="none") {
 <input type=hidden name=mod value=shop>
 <input type=hidden name=action value=products_list>
 <input type=hidden name=page value={$current_page}>
-Поиск:<br>
+РџРѕРёСЃРє:<br>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr valign="top">
     <td width="80%"><input type=text name=search class=field style="width:100%;" value="{$search}">&nbsp;</td>
-    <td>&nbsp;<input type=submit value="Искать"></td>
+    <td>&nbsp;<input type=submit value="РСЃРєР°С‚СЊ"></td>
   </tr>
 </table>
 </form></td>
@@ -90,12 +90,12 @@ if(document.getElementById(name).style.display!="none") {
 <table width=100% class=content_table>
 	<tr>
 	<th width="30" align="center" style="border-right: none;"><input type="checkbox" onClick="select_all(this,'del_product')" style="margin-left: 7px;"></th>
-	<th style="border-left: none;">Продукция&nbsp;&nbsp;<a href="?mod=shop&action=products_list&cat={$cat}&sort=name&{if trim($type)!=""}type={$type}&{/if}order=asc&search={$search}&page={$current_page}" class=img_link><img src=templates/img/cat_up.gif border=0 width="7" height="6"></a> <a href="?mod=shop&action=products_list&cat={$cat}&{if trim($type)!=""}type={$type}&{/if}sort=name&order=desc&search={$search}&page={$current_page}" class=img_link><img src=templates/img/cat_down.gif border=0 width="7" height="6"></a></th>
-	<th width="80">Статус <a href="?mod=shop&action=products_list&cat={$cat}&sort=status&order=asc&search={$search}&page={$current_page}" class=img_link><img src=templates/img/cat_up.gif border=0 width="7" height="6"></a>&nbsp;<a href="?mod=shop&action=products_list&cat={$cat}&sort=status&order=desc&search={$search}&page={$current_page}" class=img_link><img src=templates/img/cat_down.gif border=0 width="7" height="6"></a></th>
+	<th style="border-left: none;">РџСЂРѕРґСѓРєС†РёСЏ&nbsp;&nbsp;<a href="?mod=shop&action=products_list&cat={$cat}&sort=name&{if trim($type)!=""}type={$type}&{/if}order=asc&search={$search}&page={$current_page}" class=img_link><img src=templates/img/cat_up.gif border=0 width="7" height="6"></a> <a href="?mod=shop&action=products_list&cat={$cat}&{if trim($type)!=""}type={$type}&{/if}sort=name&order=desc&search={$search}&page={$current_page}" class=img_link><img src=templates/img/cat_down.gif border=0 width="7" height="6"></a></th>
+	<th width="80">РЎС‚Р°С‚СѓСЃ <a href="?mod=shop&action=products_list&cat={$cat}&sort=status&order=asc&search={$search}&page={$current_page}" class=img_link><img src=templates/img/cat_up.gif border=0 width="7" height="6"></a>&nbsp;<a href="?mod=shop&action=products_list&cat={$cat}&sort=status&order=desc&search={$search}&page={$current_page}" class=img_link><img src=templates/img/cat_down.gif border=0 width="7" height="6"></a></th>
 	
-	{*<th width="80">Хит продаж</th>*}
+	{*<th width="80">РҐРёС‚ РїСЂРѕРґР°Р¶</th>*}
 	
-	<th width="80">Действия</th>
+	<th width="80">Р”РµР№СЃС‚РІРёСЏ</th>
 	</tr>
 
 
@@ -111,57 +111,57 @@ if(document.getElementById(name).style.display!="none") {
 	<tr onmouseover="flatlinkOver(this)" {if $smarty.foreach.tree.iteration%2==1}onmouseout="flatlinkOut(this)"{else}onmouseout="flatlinkOut1(this)"{/if}>
 			<td class={$td}_left align="center"><input type="checkbox" name="del_product[{$entry.id}]"></td>
 			<td class={$td}_middle>
-				{if intval($entry.hit)==1}<img src="templates/img/hit.gif" width="21" height="21" border="0" alt="Хит продаж" align="right" style="margin: 5px 5px 0 10px;">{/if}<small><font color=#666666>{$entry.cat_title}</font></small><br><img src="templates/img/tree.gif"><b>{$entry.name}</b>
+				{if intval($entry.hit)==1}<img src="templates/img/hit.gif" width="21" height="21" border="0" alt="РҐРёС‚ РїСЂРѕРґР°Р¶" align="right" style="margin: 5px 5px 0 10px;">{/if}<small><font color=#666666>{$entry.cat_title}</font></small><br><img src="templates/img/tree.gif"><b>{$entry.name}</b>
 			</td>
 			<td class={$td}_middle align=center width="80">
-			<a href="?mod=shop&action=change_product_status&id={$entry.id}" title="Изменить статус"><img src=templates/img/status_{$entry.status}.gif border=0></a>
+			<a href="?mod=shop&action=change_product_status&id={$entry.id}" title="РР·РјРµРЅРёС‚СЊ СЃС‚Р°С‚СѓСЃ"><img src=templates/img/status_{$entry.status}.gif border=0></a>
 			</td>
 			{*<td align=center class={$td}_right width="80">{$entry.hit}</td>*}
 			<td align=center class={$td}_right width="80">
-				<a href="javascript:confirm_delete('{$entry.id}');" class=img_link onmouseover="ddrivetip('Удалить продукт')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
-				<a href=?mod=shop&action=edit_product&id={$entry.id} class=img_link onmouseover="ddrivetip('Редактировать продукт')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>
+				<a href="javascript:confirm_delete('{$entry.id}');" class=img_link onmouseover="ddrivetip('РЈРґР°Р»РёС‚СЊ РїСЂРѕРґСѓРєС‚')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
+				<a href=?mod=shop&action=edit_product&id={$entry.id} class=img_link onmouseover="ddrivetip('Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РїСЂРѕРґСѓРєС‚')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>
 			</td>
 		</tr>
 
 	{/foreach}
     <tr>
     <td class=td2_left style="height: 40px;" align="center"><img src="templates/img/tree.gif" style="margin-left: 5px;"></td>
-    <td class=td2_middle><a href="javascript: void(document.frm1.submit());" style="color: #FF0000; text-decoration: underline;">Удалить отмеченные</a>
-{if trim($cat)!=""}&nbsp;&nbsp;&nbsp;&nbsp;<img src="templates/img/blank.gif" width="8" height="10" border="0" alt="" style="margin-right: 10px;"><a href="javascript: void(viewSortProducts({$cat}));" style="color: #FF0000; text-decoration: underline;">Упорядочить продукцию</a>{/if}</td>
+    <td class=td2_middle><a href="javascript: void(document.frm1.submit());" style="color: #FF0000; text-decoration: underline;">РЈРґР°Р»РёС‚СЊ РѕС‚РјРµС‡РµРЅРЅС‹Рµ</a>
+{if trim($cat)!=""}&nbsp;&nbsp;&nbsp;&nbsp;<img src="templates/img/blank.gif" width="8" height="10" border="0" alt="" style="margin-right: 10px;"><a href="javascript: void(viewSortProducts({$cat}));" style="color: #FF0000; text-decoration: underline;">РЈРїРѕСЂСЏРґРѕС‡РёС‚СЊ РїСЂРѕРґСѓРєС†РёСЋ</a>{/if}</td>
 <td class=td2_middle>&nbsp;</td><td class=td2_right>&nbsp;</td></tr></table>
 </form>
 {else}
 <table width=100% class=content_table>
 	<tr>
 	<th width="30" align="center" style="border-right: none;">&nbsp;</th>
-	<th style="border-left: none;">Продукция</th>>
-	<th width="80">Статус</th>
+	<th style="border-left: none;">РџСЂРѕРґСѓРєС†РёСЏ</th>>
+	<th width="80">РЎС‚Р°С‚СѓСЃ</th>
 {*{if $cat!=''}
-	<th width="8%">Порядок</th>
+	<th width="8%">РџРѕСЂСЏРґРѕРє</th>
 {/if}*}
-	<th width="80">Действия</th>
+	<th width="80">Р”РµР№СЃС‚РІРёСЏ</th>
 	</tr>
     <tr>
     <td class="td2_left" style="height: 40px;">&nbsp;</td>
-    <td colspan="5" class="td2_right"><strong>{if !$search}В этой категории нет продуктов{else}Ничего не найдено!{/if}</strong></td></tr></table>
+    <td colspan="5" class="td2_right"><strong>{if !$search}Р’ СЌС‚РѕР№ РєР°С‚РµРіРѕСЂРёРё РЅРµС‚ РїСЂРѕРґСѓРєС‚РѕРІ{else}РќРёС‡РµРіРѕ РЅРµ РЅР°Р№РґРµРЅРѕ!{/if}</strong></td></tr></table>
 {/if}
 <table width=100% class=content_table>
 	<tr>
-		<th bgcolor=#99CCFF onClick="show('metas', this);" class="button plus" style="border-bottom: none; text-align: left; padding-left: 30px;"><b>Дополнительно</b></th>
+		<th bgcolor=#99CCFF onClick="show('metas', this);" class="button plus" style="border-bottom: none; text-align: left; padding-left: 30px;"><b>Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕ</b></th>
 	</tr>
  </table>
     <div id="metas" style="display: none;">
 <table width=100% class=content_table>
 	<tr>
-		<td width=15% class=td2_left><strong>Фотографии:</strong></td>
-		<td class=td2_right><a href=index.php?mod=shop&action=delete_previews style="text-decoration: underline;"><strong>Удалить уменьшенные копии фотографий продукции</strong></a><br>
-        <small style="color: #999;">данная процедура занимает некоторое время, просьба подождать</small></td>
+		<td width=15% class=td2_left><strong>Р¤РѕС‚РѕРіСЂР°С„РёРё:</strong></td>
+		<td class=td2_right><a href=index.php?mod=shop&action=delete_previews style="text-decoration: underline;"><strong>РЈРґР°Р»РёС‚СЊ СѓРјРµРЅСЊС€РµРЅРЅС‹Рµ РєРѕРїРёРё С„РѕС‚РѕРіСЂР°С„РёР№ РїСЂРѕРґСѓРєС†РёРё</strong></a><br>
+        <small style="color: #999;">РґР°РЅРЅР°СЏ РїСЂРѕС†РµРґСѓСЂР° Р·Р°РЅРёРјР°РµС‚ РЅРµРєРѕС‚РѕСЂРѕРµ РІСЂРµРјСЏ, РїСЂРѕСЃСЊР±Р° РїРѕРґРѕР¶РґР°С‚СЊ</small></td>
 	</tr>
 </table>
 
 </div>
 <br>
-<div class="add_but" style="float: left;" onClick="location.href='?mod=shop&action=add_product{if $cat}&cat={$cat}{/if}'"><div><a href="?mod=shop&action=add_product{if $cat}&cat={$cat}{/if}">добавить продукт</a></div></div>
+<div class="add_but" style="float: left;" onClick="location.href='?mod=shop&action=add_product{if $cat}&cat={$cat}{/if}'"><div><a href="?mod=shop&action=add_product{if $cat}&cat={$cat}{/if}">РґРѕР±Р°РІРёС‚СЊ РїСЂРѕРґСѓРєС‚</a></div></div>
 <br>
 {if $total_pages>1}
 <br><br>

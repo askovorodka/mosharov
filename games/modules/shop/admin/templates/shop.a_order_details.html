@@ -3,7 +3,7 @@
 <!--
 function confirm_delete(order_id,product_id)
 {
-if (confirm("Дейтсвительно удалить этот продукт из заказа?")) {
+if (confirm("Р”РµР№С‚СЃРІРёС‚РµР»СЊРЅРѕ СѓРґР°Р»РёС‚СЊ СЌС‚РѕС‚ РїСЂРѕРґСѓРєС‚ РёР· Р·Р°РєР°Р·Р°?")) {
 parent.location.href = "index.php?mod=shop&action=delete_from_order&order_id=" + order_id + "&product_id=" + product_id;
 }
 }
@@ -15,8 +15,8 @@ parent.location.href = "index.php?mod=shop&action=delete_from_order&order_id=" +
 <input type="hidden" name="edit_order_status" value="1">
 <input type=hidden name=id value={$smarty.get.id}>
 <table width=100% class=content_table>
-<tr><th style="text-align: left; border-right: none;">Заказ №{$smarty.get.id}</th>
-<th width=100 style="border-left: none; border-right: none; font-weight: normal;">cтатус заказа:</th>
+<tr><th style="text-align: left; border-right: none;">Р—Р°РєР°Р· в„–{$smarty.get.id}</th>
+<th width=100 style="border-left: none; border-right: none; font-weight: normal;">cС‚Р°С‚СѓСЃ Р·Р°РєР°Р·Р°:</th>
 <th width=150 style="border-left: none;"><select name=edit_status style="width: 140px;" class=field onChange="this.form.submit();">
 {foreach from=$status_list item=status}
 <option value={$status.value} {if $status.value==$user_info.status}selected{/if}>{$status.name}</option>
@@ -33,16 +33,16 @@ parent.location.href = "index.php?mod=shop&action=delete_from_order&order_id=" +
 <td width="50%" class="td1_left">
 <table width=100% border="0" cellpadding="0" cellspacing="0">
 <tr>
-<td width="70" style="height: 25px; font-size: 10px;"><strong>ф.и.о.:</strong></td><td style="border-bottom: 1px solid white;"><a href="?mod=users&action=edit_user&id={$user_info.id}"><strong>{$user_info.name}</strong></a></td>
+<td width="70" style="height: 25px; font-size: 10px;"><strong>С„.Рё.Рѕ.:</strong></td><td style="border-bottom: 1px solid white;"><a href="?mod=users&action=edit_user&id={$user_info.id}"><strong>{$user_info.name}</strong></a></td>
 </tr>
 <tr>
-<td width="70" style="height: 25px; font-size: 10px;"><strong>телефон:</strong></td><td style="border-bottom: 1px solid white;">{$user_info.tel}</td>
+<td width="70" style="height: 25px; font-size: 10px;"><strong>С‚РµР»РµС„РѕРЅ:</strong></td><td style="border-bottom: 1px solid white;">{$user_info.tel}</td>
 </tr>
 <tr>
 <td width="70" style="height: 25px; font-size: 10px;"><strong>e-mail:</strong></td><td style="border-bottom: 1px solid white;">{mailto address=$user_info.mail}</td>
 </tr>
 <tr>
-<td width="70" style="height: 25px; font-size: 10px;"><strong>адрес:</strong></td><td style="border-bottom: 1px solid white;">{$user_info.address|nl2br}</td>
+<td width="70" style="height: 25px; font-size: 10px;"><strong>Р°РґСЂРµСЃ:</strong></td><td style="border-bottom: 1px solid white;">{$user_info.address|nl2br}</td>
 </tr>
 </table>
 
@@ -51,10 +51,10 @@ parent.location.href = "index.php?mod=shop&action=delete_from_order&order_id=" +
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td valign=top style="font-size: 10px;"><strong>комментарии:</strong></td></tr>
+    <td valign=top style="font-size: 10px;"><strong>РєРѕРјРјРµРЅС‚Р°СЂРёРё:</strong></td></tr>
     <tr>
     <td valign="top" style="padding-top: 5px;"><textarea name="comment_user" style="width: 96%; height: 60px;">{$user_info.comments|nl2br}</textarea>
-    <br><input type="submit" value="Сохранить комментарии &#8594;" style="font-size: 10px;" class="hand" name="submit_edit_user_order"></td>
+    <br><input type="submit" value="РЎРѕС…СЂР°РЅРёС‚СЊ РєРѕРјРјРµРЅС‚Р°СЂРёРё &#8594;" style="font-size: 10px;" class="hand" name="submit_edit_user_order"></td>
   </tr>
 </table>
 
@@ -67,7 +67,7 @@ parent.location.href = "index.php?mod=shop&action=delete_from_order&order_id=" +
 <input type=hidden name=id value={$smarty.get.id}>
 	<table width=100% class=content_table>
 
-	<tr><th>Заказанные товары</th><th width=100>Кол-во</th><th width=15%>Цена</th><th width=100>Действия</th></tr>
+	<tr><th>Р—Р°РєР°Р·Р°РЅРЅС‹Рµ С‚РѕРІР°СЂС‹</th><th width=100>РљРѕР»-РІРѕ</th><th width=15%>Р¦РµРЅР°</th><th width=100>Р”РµР№СЃС‚РІРёСЏ</th></tr>
     {assign var=total_summ value=""}
 	{foreach from=$orders item=entry name=tree}
 
@@ -80,7 +80,7 @@ parent.location.href = "index.php?mod=shop&action=delete_from_order&order_id=" +
 	{/if}
 	<tr onmouseover="flatlinkOver(this)" {if $smarty.foreach.tree.iteration%2==1}onmouseout="flatlinkOut(this)"{else}onmouseout="flatlinkOut1(this)"{/if}>
 			<td class={$td}_left>
-            {if intval($entry.hit)==1}<img src="templates/img/hit.gif" width="21" height="21" border="0" alt="Хит продаж" align="right" style="margin: 2px 5px 0 10px;">{/if}
+            {if intval($entry.hit)==1}<img src="templates/img/hit.gif" width="21" height="21" border="0" alt="РҐРёС‚ РїСЂРѕРґР°Р¶" align="right" style="margin: 2px 5px 0 10px;">{/if}
 				<small><font color=#666666>{$entry.cat_title}</font></small><br>
 				<a href="?mod=shop&action=edit_product&id={$entry.product_id}">{$entry.name}</a>
 			</td>
@@ -98,21 +98,21 @@ parent.location.href = "index.php?mod=shop&action=delete_from_order&order_id=" +
 
 	{/foreach}
 	<tr>
-		<td class=2_left><img src="templates/img/tree.gif" style="margin-left: 5px;"><a href="javascript:void(0);" onClick="window.open('index.php?mod=shop&action=mini_catalogue&order_id={$smarty.get.id}','winscript','height=500,width=500,toolbar=yes,resizable=yes,scrollbars=yes,,menubar=no' ); return false" style="color: #390; text-decoration: underline;">Добавить продукт</a></td>
+		<td class=2_left><img src="templates/img/tree.gif" style="margin-left: 5px;"><a href="javascript:void(0);" onClick="window.open('index.php?mod=shop&action=mini_catalogue&order_id={$smarty.get.id}','winscript','height=500,width=500,toolbar=yes,resizable=yes,scrollbars=yes,,menubar=no' ); return false" style="color: #390; text-decoration: underline;">Р”РѕР±Р°РІРёС‚СЊ РїСЂРѕРґСѓРєС‚</a></td>
 		<td class=2_middle align=center>&nbsp;</td>
-		<td class=2_middle align="right">Итого: <font color=red><b>{$order_price} {$currency_site.znak}</b></font></td>
-		<td class=2_right align=center><input type=submit name=submit_number_recount style="font-size: 9px; width: 100px; cursor: hand; cursor: pointer;" value="Пересчитать"></td>
+		<td class=2_middle align="right">РС‚РѕРіРѕ: <font color=red><b>{$order_price} {$currency_site.znak}</b></font></td>
+		<td class=2_right align=center><input type=submit name=submit_number_recount style="font-size: 9px; width: 100px; cursor: hand; cursor: pointer;" value="РџРµСЂРµСЃС‡РёС‚Р°С‚СЊ"></td>
 	</tr>
 </table>
 </form>
 <br>
 <table width="98%" border="0" cellspacing="0" cellpadding="0" align="center">
   <tr>
-    <td width="50%">{if $previous_order != ""}<link rel="next" href="?mod=shop&action=order_details&id={$previous_order}" id="NextLink" /><a href="?mod=shop&action=order_details&id={$previous_order}" style="font-size: 10px; text-decoration: underline;"><span>&#8592;</span> предыдущий заказ</a>{/if}</td>
-    <td align="right">{if $next_order != ""}<link rel="prev" href="?mod=shop&action=order_details&id={$next_order}" id="PrevLink" /><a href="?mod=shop&action=order_details&id={$next_order}" style="font-size: 10px; text-decoration: underline;" rel="prev" id="PrevLink">следующий заказ <span>&#8594;</span></a>{/if}</td>
+    <td width="50%">{if $previous_order != ""}<link rel="next" href="?mod=shop&action=order_details&id={$previous_order}" id="NextLink" /><a href="?mod=shop&action=order_details&id={$previous_order}" style="font-size: 10px; text-decoration: underline;"><span>&#8592;</span> РїСЂРµРґС‹РґСѓС‰РёР№ Р·Р°РєР°Р·</a>{/if}</td>
+    <td align="right">{if $next_order != ""}<link rel="prev" href="?mod=shop&action=order_details&id={$next_order}" id="PrevLink" /><a href="?mod=shop&action=order_details&id={$next_order}" style="font-size: 10px; text-decoration: underline;" rel="prev" id="PrevLink">СЃР»РµРґСѓСЋС‰РёР№ Р·Р°РєР°Р· <span>&#8594;</span></a>{/if}</td>
   </tr>
 </table><br>
 
 {else}
-<center>В заказе нет позиций</center>
+<center>Р’ Р·Р°РєР°Р·Рµ РЅРµС‚ РїРѕР·РёС†РёР№</center>
 {/if}

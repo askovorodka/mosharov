@@ -29,13 +29,13 @@ function check_form() {
 
 <table width=100% cellpadding=3 cellspacing=1>
 	<tr bgcolor=#99CCFF>
-		<td width=20%><b>Редактировать шаблон узла</b></td>
+		<td width=20%><b>Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ С€Р°Р±Р»РѕРЅ СѓР·Р»Р°</b></td>
 	</tr>
 </table>
 
-Узел: {$node.name}
+РЈР·РµР»: {$node.name}
 <br><br>
-Элементы:<br>
+Р­Р»РµРјРµРЅС‚С‹:<br>
 
 	<input type=hidden name=edit_elements value="">
 {if $editor_style!='html'}
@@ -82,8 +82,8 @@ function check_form() {
 <textarea id=edit_elements_text class=field style="width:100%" rows=20>{$node.elements}</textarea>
 
 {/if}
-<input type=checkbox name=default_elements id="ch_load"><label for="ch_load"> Загрузить шаблон по умолчанию.</label>
+<input type=checkbox name=default_elements id="ch_load"><label for="ch_load"> Р—Р°РіСЂСѓР·РёС‚СЊ С€Р°Р±Р»РѕРЅ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ.</label>
 <input type=hidden name=submit_edit_elements value="go">
 <br><br>
-<center><input type=submit name=submit_edit_elements value="Сохранить изменения" class=button style="width:50%;"></center>
+<center><input type=submit name=submit_edit_elements value="РЎРѕС…СЂР°РЅРёС‚СЊ РёР·РјРµРЅРµРЅРёСЏ" class=button style="width:50%;"></center>
 </form>

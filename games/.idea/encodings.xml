@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/admin/index.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/admin/login.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/admin/main.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/admin/priv.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/admin/templates/main.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/index.php" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/modules/shop/admin/menu.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/shop/admin/shop.a_main.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/shop/admin/templates/move_product.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/shop/admin/templates/shop.a_cur_list.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/shop/admin/templates/shop.a_edit_cat.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/shop/admin/templates/shop.a_edit_product.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/shop/admin/templates/shop.a_files_product.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/shop/admin/templates/shop.a_main.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/shop/admin/templates/shop.a_order_details.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/shop/admin/templates/shop.a_orders.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/shop/admin/templates/shop.a_products_list.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/shop/admin/templates/shop.a_products_properties.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/shop/admin/templates/shop.a_products_types.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/shop/admin/templates/statistics.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/tree/admin/menu.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/tree/admin/templates/tree.a_documents_list.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/tree/admin/templates/tree.a_edit.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/tree/admin/templates/tree.a_edit_document.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/tree/admin/templates/tree.a_edit_elements.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/tree/admin/templates/tree.a_main.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/modules/tree/admin/tree.a_main.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../vlasovtoys/data/www/vlasovtoys.ru/admin/index.php" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/../../vlasovtoys/data/www/vlasovtoys.ru/index.php" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/../../vlasovtoys/data/www/vlasovtoys.ru/templates/left_menu_block.html" charset="windows-1251" />
+    <file url="PROJECT" charset="windows-1251" />
+  </component>
+</project>

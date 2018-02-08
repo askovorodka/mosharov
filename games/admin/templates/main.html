@@ -1,14 +1,14 @@
 <table width=100% class="content_table">
 <tr>
-<th colspan="2">Общая статистика по сайту</th></tr>
+<th colspan="2">РћР±С‰Р°СЏ СЃС‚Р°С‚РёСЃС‚РёРєР° РїРѕ СЃР°Р№С‚Сѓ</th></tr>
 <tr>
-<td width="280" class="td1_left">На сайте узлов:</td>
+<td width="280" class="td1_left">РќР° СЃР°Р№С‚Рµ СѓР·Р»РѕРІ:</td>
 <td class="td1_right">{$count_cat}</td></tr>
 <tr>
-<td width="280" class="td2_left">Документов:</td><td class="td2_right">{$count_documents}</td>
+<td width="280" class="td2_left">Р”РѕРєСѓРјРµРЅС‚РѕРІ:</td><td class="td2_right">{$count_documents}</td>
 </tr>
 <tr>
-<td width="280" class="td1_left">Пользователей:</td><td class="td1_right">{$count_users}</td>
+<td width="280" class="td1_left">РџРѕР»СЊР·РѕРІР°С‚РµР»РµР№:</td><td class="td1_right">{$count_users}</td>
 </table>
 
 {if count($last_orders)>0}
@@ -16,7 +16,7 @@
 <table width=100% class="content_table">
 <tr>
 	<th colspan="4">
-		<strong>Последние заказы</strong>
+		<strong>РџРѕСЃР»РµРґРЅРёРµ Р·Р°РєР°Р·С‹</strong>
 	</th>
 </tr>
 {foreach from=$last_orders item=item name=ns}
@@ -39,7 +39,7 @@
 <table width=100% class="content_table">
 <tr>
 	<th colspan="3">
-		<strong>Последние сообщения FAQ</strong>
+		<strong>РџРѕСЃР»РµРґРЅРёРµ СЃРѕРѕР±С‰РµРЅРёСЏ FAQ</strong>
 	</th>
 </tr>
 {foreach from=$last_faq item=item name=faq}
@@ -63,7 +63,7 @@
 
 <tr>
 	<th colspan="3">
-		<strong>Последние сообщения форума</strong>
+		<strong>РџРѕСЃР»РµРґРЅРёРµ СЃРѕРѕР±С‰РµРЅРёСЏ С„РѕСЂСѓРјР°</strong>
 	</th>
 </tr>
 {foreach from=$last_forum item=item name=fr}

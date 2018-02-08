@@ -16,12 +16,12 @@ $tree=new CDBTree($db, $table, $id_name, $field_names);
 $nodes_list=$db->get_all("SELECT * FROM fw_tree ORDER BY param_left");
 $nodes_list=String::unformat_array($nodes_list);
 
-$navigation[]=array("url" => BASE_URL."/admin/?mod=tree","title" => 'ƒÂÂ‚Ó Ò‡ÈÚ‡');
+$navigation[]=array("url" => BASE_URL."/admin/?mod=tree","title" => '–î–µ—Ä–µ–≤–æ —Å–∞–π—Ç–∞');
 
 if (isset($_GET['action']) && $_GET['action']!='') $action=$_GET['action'];
 else $action='';
 
-/*------------------------- ¬€œŒÀÕﬂ≈Ã –¿«À»◊Õ€≈ ƒ≈…—“¬»ﬂ ---------------------*/
+/*------------------------- –í–´–ü–û–õ–ù–Ø–ï–ú –†–ê–ó–õ–ò–ß–ù–´–ï –î–ï–ô–°–¢–í–ò–Ø ---------------------*/
 
 
 if (isset($_POST['submit_add_file'])) {
@@ -37,12 +37,12 @@ if (isset($_POST['submit_add_file'])) {
 	$check_file_name=explode(".",$file_name);
 	$ext=strtolower($check_file_name[count($check_file_name)-1]);
 	if (!in_array($ext,$trusted_formats)) {
-		$smarty->assign("error","–‡ÁÂ¯ÂÌ˚ Í‡ÚËÌÍË ÙÓÏ‡ÚÓ‚ jpg, jpeg, gif, xls, doc, pdf Ë png");
+		$smarty->assign("error","–†–∞–∑—Ä–µ—à–µ–Ω—ã –∫–∞—Ä—Ç–∏–Ω–∫–∏ —Ñ–æ—Ä–º–∞—Ç–æ–≤ jpg, jpeg, gif, xls, doc, pdf –∏ png");
 		$check=false;
 	}
 
 	if (filesize($tmp)>2000000) {
-		$smarty->assign("error","–‡ÁÏÂ Ù‡ÈÎ‡ ÌÂ ‰ÓÎÊÂÌ ÔË‚˚¯‡Ú¸ 2Mb");
+		$smarty->assign("error","–†–∞–∑–º–µ—Ä —Ñ–∞–π–ª–∞ –Ω–µ –¥–æ–ª–∂–µ–Ω –ø—Ä–∏–≤—ã—à–∞—Ç—å 2Mb");
 		$check=false;
 	}
 
@@ -59,7 +59,7 @@ if (isset($_POST['submit_add_file'])) {
 		}
 		else {
 			$result=$db->query("DELETE FROM fw_tree_files WHERE id='".mysql_insert_id()."'");
-			$smarty->assign("error","‘‡ÈÎ ÌÂ ·˚Î Á‡„ÛÊÂÌ");
+			$smarty->assign("error","–§–∞–π–ª –Ω–µ –±—ã–ª –∑–∞–≥—Ä—É–∂–µ–Ω");
 		}
 	}
 
@@ -103,7 +103,7 @@ if (isset($_POST['submit_save_files'])) {
 }
 
 
-//Â‰‡ÍÚËÛÂÏ ÒÚ‡ÚÛÒ „Î‡‚ÌÓ„Ó ÏÂÌ˛
+//—Ä–µ–¥–∞–∫—Ç–∏—Ä—É–µ–º —Å—Ç–∞—Ç—É—Å –≥–ª–∞–≤–Ω–æ–≥–æ –º–µ–Ω—é
 if ($action=="change_in_menu" && isset($_GET['id'])) {
   $id=intval($_GET['id']);
   $db->query("UPDATE fw_tree SET in_menu=IF(in_menu='0','1','0') WHERE id='".$id."'");
@@ -114,7 +114,7 @@ if ($action=="change_in_menu" && isset($_GET['id'])) {
 }
 
 
-//Â‰‡ÍÚËÛÂÏ ÒÚ‡ÚÛÒ ÎÂ‚Ó„Ó ÏÂÌ˛
+//—Ä–µ–¥–∞–∫—Ç–∏—Ä—É–µ–º —Å—Ç–∞—Ç—É—Å –ª–µ–≤–æ–≥–æ –º–µ–Ω—é
 if ($action=="change_in_left_menu" && isset($_GET['id'])) {
   $id=intval($_GET['id']);
   $db->query("UPDATE fw_tree SET in_left_menu=IF(in_left_menu='0','1','0') WHERE id='".$id."'");
@@ -228,7 +228,7 @@ if (isset($_POST['submit_edit_document'])) {
     $ext=strtolower($check_file_name[count($check_file_name)-1]);
 
     if (filesize($tmp)>2000000) {
-      $smarty->assign("error_message","–‡ÁÏÂ ÙÓÚÓ„‡ÙËË ÌÂ ‰ÓÎÊÂÌ ÔË‚˚¯‡Ú¸ 2Mb");
+      $smarty->assign("error_message","–†–∞–∑–º–µ—Ä —Ñ–æ—Ç–æ–≥—Ä–∞—Ñ–∏–∏ –Ω–µ –¥–æ–ª–∂–µ–Ω –ø—Ä–∏–≤—ã—à–∞—Ç—å 2Mb");
       $check=false;
     }
 
@@ -288,7 +288,7 @@ if (isset($_POST['submit_add_node'])) {
 
   $access_users='all';
 
-  if ($name=='') $name="ÕÓ‚˚È ·ÂÁ˚ÏˇÌÌ˚È ÛÁÂÎ";
+  if ($name=='') $name="–ù–æ–≤—ã–π –±–µ–∑—ã–º—è–Ω–Ω—ã–π —É–∑–µ–ª";
 
   if (isset($_POST['edit_node_supmodules'])) {
     $support_modules='';
@@ -301,12 +301,12 @@ if (isset($_POST['submit_add_node'])) {
 
   $check_if_exists=$db->get_all("SELECT id FROM fw_tree WHERE url='$url' AND param_left>(SELECT param_left FROM fw_tree WHERE id='$parent') AND param_right<(SELECT param_right FROM fw_tree WHERE id='$parent') AND param_level=(SELECT param_level FROM fw_tree WHERE id='$parent')");
   if (count($check_if_exists)>0) {
-    $smarty->assign("error_message","”ÁÂÎ Ò Ú‡ÍËÏ ÛÎÓÏ ÛÊÂ ÒÛ˘ÂÒÚ‚ÛÂÚ!");
+    $smarty->assign("error_message","–£–∑–µ–ª —Å —Ç–∞–∫–∏–º —É—Ä–ª–æ–º —É–∂–µ —Å—É—â–µ—Å—Ç–≤—É–µ—Ç!");
     $check=false;
   }
 
   if (!preg_match("/^([a-z0-9_-]+)$/",$url)) {
-    $smarty->assign("error_message","¬ URL ‰ÓÔÛÒÚËÏ˚ ÚÓÎ¸ÍÓ ÒËÏ‚ÓÎ˚ Î‡ÚËÌËˆ˚, ÏËÌÛÒ Ë ÁÌ‡Í ÔÓ‰˜∏ÍË‚‡ÌËˇ!");
+    $smarty->assign("error_message","–í URL –¥–æ–ø—É—Å—Ç–∏–º—ã —Ç–æ–ª—å–∫–æ —Å–∏–º–≤–æ–ª—ã –ª–∞—Ç–∏–Ω–∏—Ü—ã, –º–∏–Ω—É—Å –∏ –∑–Ω–∞–∫ –ø–æ–¥—á—ë—Ä–∫–∏–≤–∞–Ω–∏—è!");
     $check=false;
   }
 
@@ -385,7 +385,7 @@ if (isset($_POST['submit_edit_node'])) {
     $ext=strtolower($check_file_name[count($check_file_name)-1]);
 
     if (filesize($tmp)>2000000) {
-      $smarty->assign("error_message","–‡ÁÏÂ ÙÓÚÓ„‡ÙËË ÌÂ ‰ÓÎÊÂÌ ÔË‚˚¯‡Ú¸ 2Mb");
+      $smarty->assign("error_message","–†–∞–∑–º–µ—Ä —Ñ–æ—Ç–æ–≥—Ä–∞—Ñ–∏–∏ –Ω–µ –¥–æ–ª–∂–µ–Ω –ø—Ä–∏–≤—ã—à–∞—Ç—å 2Mb");
       $check=false;
     }
 
@@ -422,7 +422,7 @@ if (isset($_POST['submit_edit_node'])) {
   if (isset($_POST['edit_page_text'])) $text=mysql_real_escape_string($_POST['edit_page_text']);
   else $text='';
 
-  if ($name=='') $name="ÕÓ‚˚È ·ÂÁ˚ÏˇÌÌ˚È ÛÁÂÎ";
+  if ($name=='') $name="–ù–æ–≤—ã–π –±–µ–∑—ã–º—è–Ω–Ω—ã–π —É–∑–µ–ª";
 
   if (isset($_POST['edit_node_supmodules'])) {
     $support_modules='';
@@ -436,13 +436,13 @@ if (isset($_POST['submit_edit_node'])) {
   if ($url!=$old_url or $parent!=$old_parent) {
     $check_if_exists=$db->get_all("SELECT id FROM fw_tree WHERE url='$url' AND param_left>(SELECT param_left FROM fw_tree WHERE id='$parent') AND param_right<(SELECT param_right FROM fw_tree WHERE id='$parent') AND param_level=(SELECT param_level FROM fw_tree WHERE id='$parent')");
     if (count($check_if_exists)>0) {
-      $smarty->assign("error_message","”ÁÂÎ Ò Ú‡ÍËÏ ÛÎÓÏ ÛÊÂ ÒÛ˘ÂÒÚ‚ÛÂÚ!");
+      $smarty->assign("error_message","–£–∑–µ–ª —Å —Ç–∞–∫–∏–º —É—Ä–ª–æ–º —É–∂–µ —Å—É—â–µ—Å—Ç–≤—É–µ—Ç!");
       $check=false;
     }
   }
 
   if (!preg_match("/^([a-z0-9_-]+)$/",$url)) {
-    $smarty->assign("error_message","¬ URL ‰ÓÔÛÒÚËÏ˚ ÚÓÎ¸ÍÓ ÒËÏ‚ÓÎ˚ Î‡ÚËÌËˆ˚, ÏËÌÛÒ Ë ÁÌ‡Í ÔÓ‰˜∏ÍË‚‡ÌËˇ!");
+    $smarty->assign("error_message","–í URL –¥–æ–ø—É—Å—Ç–∏–º—ã —Ç–æ–ª—å–∫–æ —Å–∏–º–≤–æ–ª—ã –ª–∞—Ç–∏–Ω–∏—Ü—ã, –º–∏–Ω—É—Å –∏ –∑–Ω–∞–∫ –ø–æ–¥—á—ë—Ä–∫–∏–≤–∞–Ω–∏—è!");
     $check=false;
   }
 
@@ -652,7 +652,7 @@ if (isset($_POST['submit_edit_elements'])) {
   die();
 }
 
-/*--------------------------------- Œ“Œ¡–¿∆≈Õ»≈ ------------------------------*/
+/*--------------------------------- –û–¢–û–ë–†–ê–ñ–ï–ù–ò–ï ------------------------------*/
 
 SWITCH (TRUE) {
 
@@ -675,7 +675,7 @@ SWITCH (TRUE) {
 
   CASE ($action=='add'):
 
-    $navigation[]=array("url" => BASE_URL."/admin/?mod=tree&action=add","title" => 'ƒÓ·‡‚ËÚ¸ ÛÁÂÎ');
+    $navigation[]=array("url" => BASE_URL."/admin/?mod=tree&action=add","title" => '–î–æ–±–∞–≤–∏—Ç—å —É–∑–µ–ª');
 
     if (isset($_GET['id'])) $id = $_GET['id'];
 
@@ -712,7 +712,7 @@ SWITCH (TRUE) {
 
   CASE ($action=='edit'):
 
-    $navigation[]=array("url" => BASE_URL."/admin/?mod=tree&action=edit","title" => '–Â‰‡ÍÚËÓ‚‡Ú¸ ÛÁÂÎ');
+    $navigation[]=array("url" => BASE_URL."/admin/?mod=tree&action=edit","title" => '–†–µ–¥–∞–∫—Ç–∏—Ä–æ–≤–∞—Ç—å —É–∑–µ–ª');
 
     if (isset($_GET['id'])) $id = $_GET['id'];
 
@@ -776,7 +776,7 @@ SWITCH (TRUE) {
 
   CASE ($action=='edit_elements'):
 
-    $navigation[]=array("url" => BASE_URL."/admin/?mod=tree&action=edit","title" => '–Â‰‡ÍÚËÓ‚‡Ú¸ ¯‡·ÎÓÌ ÛÁÎ‡');
+    $navigation[]=array("url" => BASE_URL."/admin/?mod=tree&action=edit","title" => '–†–µ–¥–∞–∫—Ç–∏—Ä–æ–≤–∞—Ç—å —à–∞–±–ª–æ–Ω —É–∑–ª–∞');
 
     if (isset($_GET['id'])) $id = $_GET['id'];
 
@@ -791,7 +791,7 @@ SWITCH (TRUE) {
 
   CASE ($action=='documents_list' && isset($_GET['parent'])):
 
-    $navigation[]=array("url" => BASE_URL."/admin/?mod=tree&action=documents_list&parent=".intval($_GET['parent']),"title" => 'ƒÓÍÛÏÂÌÚ˚ ÛÁÎ‡');
+    $navigation[]=array("url" => BASE_URL."/admin/?mod=tree&action=documents_list&parent=".intval($_GET['parent']),"title" => '–î–æ–∫—É–º–µ–Ω—Ç—ã —É–∑–ª–∞');
 
     $parent = intval($_GET['parent']);
 
@@ -809,7 +809,7 @@ SWITCH (TRUE) {
 
   CASE ($action=='add_document'):
 
-    $navigation[]=array("url" => BASE_URL."/admin/?mod=tree&action=add_document","title" => 'ƒÓ·‡‚ËÚ¸ ‰ÓÍÛÏÂÌÚ');
+    $navigation[]=array("url" => BASE_URL."/admin/?mod=tree&action=add_document","title" => '–î–æ–±–∞–≤–∏—Ç—å –¥–æ–∫—É–º–µ–Ω—Ç');
 
     if (isset($_GET['parent'])) {
 
@@ -828,7 +828,7 @@ SWITCH (TRUE) {
 
   CASE ($action=='edit_document'):
 
-    $navigation[]=array("url" => BASE_URL."/admin/?mod=tree&action=edit_document","title" => '–Â‰‡ÍÚËÓ‚‡Ú¸ ‰ÓÍÛÏÂÌÚ');
+    $navigation[]=array("url" => BASE_URL."/admin/?mod=tree&action=edit_document","title" => '–†–µ–¥–∞–∫—Ç–∏—Ä–æ–≤–∞—Ç—å –¥–æ–∫—É–º–µ–Ω—Ç');
 
     if (isset($_GET['id'])) {
 

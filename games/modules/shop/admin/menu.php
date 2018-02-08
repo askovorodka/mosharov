@@ -3,48 +3,48 @@
 $sub='';
 
 /*$sub[]= array(
-      "name"=>"Ïğîèçâîäèòåëè",
+      "name"=>"ĞŸÑ€Ğ¾Ğ¸Ğ·Ğ²Ğ¾Ğ´Ğ¸Ñ‚ĞµĞ»Ğ¸",
       "link"=>"?mod=shop&action=types"
      );
 */
 $sub[]= array(
-			"name"=>"Êàòåãîğèè",
+			"name"=>"ĞšĞ°Ñ‚ĞµĞ³Ğ¾Ñ€Ğ¸Ğ¸",
 			"link"=>"?mod=shop&action=catalogue"
 	   );
 $sub[]= array(
-			"name"=>"Ïğîäóêòû",
+			"name"=>"ĞŸÑ€Ğ¾Ğ´ÑƒĞºÑ‚Ñ‹",
 			"link"=>"?mod=shop&action=products_list"
 	   );
 
 /*$sub[]= array(
-			"name"=>"Ñâîéñòâà ïğîäóêòîâ",
+			"name"=>"Ğ¡Ğ²Ğ¾Ğ¹ÑÑ‚Ğ²Ğ° Ğ¿Ñ€Ğ¾Ğ´ÑƒĞºÑ‚Ğ¾Ğ²",
 			"link"=>"?mod=shop&action=properties"
 	   );*/
 	   /*
 $sub[]= array(
-			"name"=>"Ñòàòèñòèêà",
+			"name"=>"Ğ¡Ñ‚Ğ°Ñ‚Ğ¸ÑÑ‚Ğ¸ĞºĞ°",
 			"link"=>"?mod=shop"
 	   );
 
 $sub[]= array(
-			"name"=>"Ñïèñîê çàêàçîâ",
+			"name"=>"Ğ¡Ğ¿Ğ¸ÑĞ¾Ğº Ğ·Ğ°ĞºĞ°Ğ·Ğ¾Ğ²",
 			"link"=>"?mod=shop&action=orders"
 	   );
 
 $sub[]= array(
-			"name"=>"Èìïîğò",
+			"name"=>"Ğ˜Ğ¼Ğ¿Ğ¾Ñ€Ñ‚",
 			"link"=>"?mod=shop&action=import"
 	   );
 
 $sub[]= array(
-			"name"=>"Ëîã èìïîğòà",
+			"name"=>"Ğ›Ğ¾Ğ³ Ğ¸Ğ¼Ğ¿Ğ¾Ñ€Ñ‚Ğ°",
 			"link"=>"?mod=shop&action=import_log"
 	   );
 	   */
 $main_menu[]=array(
 				"link"=>"?mod=shop",
 				"name"=>"shop",
-				"title"=>"Ìàãàçèí",
+				"title"=>"ĞœĞ°Ğ³Ğ°Ğ·Ğ¸Ğ½",
 				"ico"=>"module_3.gif",
 				"sort"=>"4",
 				"sub"=>$sub

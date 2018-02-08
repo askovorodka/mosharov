@@ -4,7 +4,7 @@
 <!--
 function confirm_delete(delete_id)
 {
-if (confirm("Дейтсвительно удалить этот заказ?")) {
+if (confirm("Р”РµР№С‚СЃРІРёС‚РµР»СЊРЅРѕ СѓРґР°Р»РёС‚СЊ СЌС‚РѕС‚ Р·Р°РєР°Р·?")) {
 parent.location.href = "index.php?mod=shop&action=delete_order&id=" + delete_id;
 }
 }
@@ -18,11 +18,11 @@ parent.location.href = "index.php?mod=shop&action=delete_order&id=" + delete_id;
 
 	<tr>
 	<th width=5%>ID</th>
-	<th width=10%>Дата <a href="?mod=shop&action=orders&page={$current_page}&sort=insert_date&order=asc" class=img_link><img src=templates/img/cat_up.gif border=0></a>&nbsp;<a href="?mod=shop&action=orders&page={$current_page}&sort=insert_date&order=desc" class=img_link><img src=templates/img/cat_down.gif border=0></a></th>
-	<th>Пользователь </th>
-	<th width=15%>Сумма <a href="?mod=shop&action=orders&page={$current_page}&sort=total_price&order=asc" class=img_link><img src=templates/img/cat_up.gif border=0></a>&nbsp;<a href="?mod=shop&action=orders&page={$current_page}&sort=total_price&order=desc" class=img_link><img src=templates/img/cat_down.gif border=0></a></th>
-	<th width=15%>Статус <a href="?mod=shop&action=orders&page={$current_page}&sort=status&order=asc" class=img_link><img src=templates/img/cat_up.gif border=0></a>&nbsp;<a href="?mod=shop&action=orders&page={$current_page}&sort=status&order=desc" class=img_link><img src=templates/img/cat_down.gif border=0></a></th>
-	<th width=15%>Действия</th></tr>
+	<th width=10%>Р”Р°С‚Р° <a href="?mod=shop&action=orders&page={$current_page}&sort=insert_date&order=asc" class=img_link><img src=templates/img/cat_up.gif border=0></a>&nbsp;<a href="?mod=shop&action=orders&page={$current_page}&sort=insert_date&order=desc" class=img_link><img src=templates/img/cat_down.gif border=0></a></th>
+	<th>РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ </th>
+	<th width=15%>РЎСѓРјРјР° <a href="?mod=shop&action=orders&page={$current_page}&sort=total_price&order=asc" class=img_link><img src=templates/img/cat_up.gif border=0></a>&nbsp;<a href="?mod=shop&action=orders&page={$current_page}&sort=total_price&order=desc" class=img_link><img src=templates/img/cat_down.gif border=0></a></th>
+	<th width=15%>РЎС‚Р°С‚СѓСЃ <a href="?mod=shop&action=orders&page={$current_page}&sort=status&order=asc" class=img_link><img src=templates/img/cat_up.gif border=0></a>&nbsp;<a href="?mod=shop&action=orders&page={$current_page}&sort=status&order=desc" class=img_link><img src=templates/img/cat_down.gif border=0></a></th>
+	<th width=15%>Р”РµР№СЃС‚РІРёСЏ</th></tr>
 
 	{foreach from=$orders_list item=entry name=tree}
 
@@ -50,8 +50,8 @@ parent.location.href = "index.php?mod=shop&action=delete_order&id=" + delete_id;
 				<font style="color: {if $entry.status_number=='0'}red{/if}{if $entry.status_number=='1'}#f7c21e{/if}{if $entry.status_number>1}#3fda2a{/if}"><strong>{$entry.status}</strong></font>
 			</td>
 			<td align=center class={$td}_right>
-				<a href="javascript:confirm_delete('{$entry.id}');" class=img_link onmouseover="ddrivetip('Удалить заказ')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
-				<a href=?mod=shop&action=order_details&id={$entry.id} class=img_link onmouseover="ddrivetip('Редактировать заказ')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>
+				<a href="javascript:confirm_delete('{$entry.id}');" class=img_link onmouseover="ddrivetip('РЈРґР°Р»РёС‚СЊ Р·Р°РєР°Р·')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
+				<a href=?mod=shop&action=order_details&id={$entry.id} class=img_link onmouseover="ddrivetip('Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ Р·Р°РєР°Р·')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>
 			</td>
 		</tr>
 
@@ -74,5 +74,5 @@ parent.location.href = "index.php?mod=shop&action=delete_order&id=" + delete_id;
 <a href="?mod=shop&action=orders&user={$user}&sort={$sort}&order={$order}&page={$total_pages}">&raquo;</a></li>
 </ul></li></div>{/if}	
 {else}
-<center>В магазине нет заказов</center>
+<center>Р’ РјР°РіР°Р·РёРЅРµ РЅРµС‚ Р·Р°РєР°Р·РѕРІ</center>
 {/if}
