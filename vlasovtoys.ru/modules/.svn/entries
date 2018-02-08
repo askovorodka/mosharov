@@ -1,109 +1,0 @@
-10
-
-dir
-19
-https://mosharov.googlecode.com/svn/trunk/games/modules
-https://mosharov.googlecode.com/svn
-
-
-
-2011-07-26T07:17:17.200206Z
-19
-andrey.schmitz@gmail.com
-
-
-svn:special svn:externals svn:needs-lock
-
-
-
-
-
-
-
-
-
-
-
-4348ae4c-d2ae-f2fc-3d50-e0a6c441ee88
-
-banners
-dir
-
-cabinet
-dir
-
-categors
-dir
-
-edit_conf
-dir
-
-ferms
-dir
-
-file_manager
-dir
-
-forms
-dir
-
-forum
-dir
-
-guestbook
-dir
-
-modules
-dir
-
-news
-dir
-
-otr
-dir
-
-page
-dir
-
-photoalbum
-dir
-
-polls
-dir
-
-projects
-dir
-
-questions
-dir
-
-regions
-dir
-
-search
-dir
-
-select_date
-dir
-
-shop
-dir
-
-site_map
-dir
-
-sites
-dir
-
-subscribe
-dir
-
-tables
-dir
-
-tree
-dir
-
-users
-dir
-
