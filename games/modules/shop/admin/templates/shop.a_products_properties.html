@@ -3,7 +3,7 @@
 <SCRIPT language=JavaScript>
 function form_check() {
 	if (document.edit_property.edit_property_name.value=='') {
-		alert("Р—Р°РїРѕР»РЅРёС‚Рµ РїРѕР¶Р°Р»СѓР№СЃС‚Р° РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ");
+		alert("Заполните пожалуйста обязательные поля");
 		return false;
 	}
 	else {
@@ -23,44 +23,44 @@ function switch_div(val) {
 <form action="" name=edit_property method=post onSubmit="return form_check();">
 <input type=hidden name={if $mode=='add'}submit_add_property{else}submit_edit_property{/if}>
 <table width=100% class=content_table>
-	<tr><th>{if $mode=='edit'}Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ СЃРІРѕР№СЃС‚РІРѕ<input type=hidden name=id value={$property.id}>{else}Р”РѕР±Р°РІРёС‚СЊ СЃРІРѕР№СЃС‚РІРѕ{/if}</th></tr>
+	<tr><th>{if $mode=='edit'}Редактировать свойство<input type=hidden name=id value={$property.id}>{else}Добавить свойство{/if}</th></tr>
 </table>
 
 <table width=100% class=content_table>
 	<tr>
-		<td width=20% class=td1_left><b>РќР°Р·РІР°РЅРёРµ СЃРІРѕР№СЃС‚РІР°:</b></td>
+		<td width=20% class=td1_left><b>Название свойства:</b></td>
 		<td class=td1_right>
 			<input type="text" name=edit_property_name style="width:100%;" class=field value="{$property.name}">
 		</td>
 	</tr>
 	<tr>
-		<td width=15% class=td1_left valign="top"><b>РўРёРї СЃРІРѕР№СЃС‚РІР°:</b></td>
+		<td width=15% class=td1_left valign="top"><b>Тип свойства:</b></td>
 		<td class=td1_right>
 		<select name=edit_property_type style="width:50%;" class=field onChange="switch_div(this.value)">
-			<option value="0" {if $property.type=='0'}selected=true{/if}>РўРµРєСЃС‚</option>
-			<option value="1" {if $property.type=='1'}selected=true{/if}>Р’Р°СЂРёР°РЅС‚С‹ РІС‹Р±РѕСЂР°</option>
-			<option value="2" {if $property.type=='2'}selected=true{/if}>Р—Р°РіРѕР»РѕРІРѕРє</option>
+			<option value="0" {if $property.type=='0'}selected=true{/if}>Текст</option>
+			<option value="1" {if $property.type=='1'}selected=true{/if}>Варианты выбора</option>
+			<option value="2" {if $property.type=='2'}selected=true{/if}>Заголовок</option>
 		</select>
 		<div id="div_1" {if $property.type!="1"}style="display: none"{/if}>
 			<p>
-				<strong>Р’Р°СЂРёР°РЅС‚С‹ РІС‹Р±РѕСЂР°:</strong> <font color="#666666"><small>(РїРѕ РѕРґРЅРѕРјСѓ РЅР° СЃС‚СЂРѕРєРµ)</small></font><br>
+				<strong>Варианты выбора:</strong> <font color="#666666"><small>(по одному на строке)</small></font><br>
 				<textarea cols="40" rows="6" name="edit_property_elements">{$property.elements}</textarea>
 			</p>
 		</div>
 		</td>
 	</tr>
 	<tr>
-		<td width=15% class=td1_left><b>РЎС‚Р°С‚СѓСЃ:</b></td>
+		<td width=15% class=td1_left><b>Статус:</b></td>
 		<td class=td1_right>
 		<select name=edit_property_status style="width:50%;" class=field>
-			<option value="1" {if $property.status=='1'}selected=true{/if}>РђРєС‚РёРІРЅС‹Р№</option>
-			<option value="0" {if $property.status=='0'}selected=true{/if}>Р–РґС‘С‚</option>
+			<option value="1" {if $property.status=='1'}selected=true{/if}>Активный</option>
+			<option value="0" {if $property.status=='0'}selected=true{/if}>Ждёт</option>
 		</select>
 		</td>
 	</tr>
 </table>
 <br>
-<center><input type=submit value={if $mode=='add'}"Р”РѕР±Р°РІРёС‚СЊ СЃРІРѕР№СЃС‚РІРѕ"{else}"РЎРѕС…СЂР°РЅРёС‚СЊ РёР·РјРµРЅРµРЅРёСЏ"{/if}></center>
+<center><input type=submit value={if $mode=='add'}"Добавить свойство"{else}"Сохранить изменения"{/if}></center>
 </form>
 {else}
 {literal}
@@ -69,7 +69,7 @@ function switch_div(val) {
 <!--
 function confirm_delete(delete_id)
 {
-if (confirm("Р”РµР№С‚СЃРІРёС‚РµР»СЊРЅРѕ СѓРґР°Р»РёС‚СЊ СЌС‚Рѕ СЃРІРѕР№СЃС‚РІРѕ? Р’РќРРњРђРќРР•: Р­С‚Рѕ СЃРІРѕР№СЃС‚РІРѕ СѓРґР°Р»РёС‚СЃСЏ Сѓ РІСЃРµС… РёРјРµСЋС‰РёС… РµРіРѕ С‚РѕРІР°СЂРѕРІ!!!")) {
+if (confirm("Дейтсвительно удалить это свойство? ВНИМАНИЕ: Это свойство удалится у всех имеющих его товаров!!!")) {
 parent.location.href = "index.php?mod=shop&action=delete_property&id=" + delete_id;
 }
 }
@@ -78,7 +78,7 @@ parent.location.href = "index.php?mod=shop&action=delete_property&id=" + delete_
 <script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/tooltips.js'></script>
 {/literal}
 <table width=100% class=content_table>
-<tr><th>РќР°Р·РІР°РЅРёРµ</th><th width=10%>РЎС‚Р°С‚СѓСЃ</th><th width=15%>Р”РµР№СЃС‚РІРёСЏ</th></tr>
+<tr><th>Название</th><th width=10%>Статус</th><th width=15%>Действия</th></tr>
 {foreach name=tree from=$properties_list item=entry}
 
 	{if $col==1}
@@ -93,11 +93,11 @@ parent.location.href = "index.php?mod=shop&action=delete_property&id=" + delete_
 			<img src=templates/img/tree.gif>{$entry.name}
 			</td>
 			<td align=center class={$td}_middle>
-			<a href="?mod=shop&action=change_property_status&id={$entry.id}" title="РР·РјРµРЅРёС‚СЊ СЃС‚Р°С‚СѓСЃ"><img src=templates/img/status_{$entry.status}.gif border=0></a>
+			<a href="?mod=shop&action=change_property_status&id={$entry.id}" title="Изменить статус"><img src=templates/img/status_{$entry.status}.gif border=0></a>
 			</td>
 			<td align=center class={$td}_right nowrap>
-				<a href="javascript:confirm_delete('{$entry.id}');" class=img_link onmouseover="ddrivetip('РЈРґР°Р»РёС‚СЊ СЃРІРѕР№СЃС‚РІРѕ')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
-				<a href=?mod=shop&action=edit_property&id={$entry.id} class=img_link onmouseover="ddrivetip('Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ СЃРІРѕР№СЃС‚РІРѕ')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>
+				<a href="javascript:confirm_delete('{$entry.id}');" class=img_link onmouseover="ddrivetip('Удалить свойство')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
+				<a href=?mod=shop&action=edit_property&id={$entry.id} class=img_link onmouseover="ddrivetip('Редактировать свойство')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>
 			</td>
 		</tr>
 
@@ -105,5 +105,5 @@ parent.location.href = "index.php?mod=shop&action=delete_property&id=" + delete_
 
 	</table>
 <br>
-<div class="add_but" style="float: left;" onClick="location.href='?mod=shop&action=add_property'"><div><a href="?mod=shop&action=add_property">РґРѕР±Р°РІРёС‚СЊ СЃРІРѕР№СЃС‚РІРѕ</a></div></div>	
+<div class="add_but" style="float: left;" onClick="location.href='?mod=shop&action=add_property'"><div><a href="?mod=shop&action=add_property">добавить свойство</a></div></div>	
 {/if}

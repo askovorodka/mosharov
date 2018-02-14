@@ -34,7 +34,7 @@ if(document.getElementById(name).style.display!="none") {
 
 function form_check() {
 	if (document.edit_cat.edit_cat_url.value=='') {
-		alert("Р—Р°РїРѕР»РЅРёС‚Рµ РїРѕР¶Р°Р»СѓР№СЃС‚Р° РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ");
+		alert("Заполните пожалуйста обязательные поля");
 		return false;
 	}
 	else {
@@ -55,12 +55,12 @@ function form_check() {
 {/if}
 <input type=hidden name=old_parent value={$parent}>
 <table width=100% class=content_table>
-	<tr><th>{if $mode=='edit'}Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РєР°С‚РµРіРѕСЂРёСЋ{else}Р”РѕР±Р°РІРёС‚СЊ РєР°С‚РµРіРѕСЂРёСЋ{/if}</th></tr>
+	<tr><th>{if $mode=='edit'}Редактировать категорию{else}Добавить категорию{/if}</th></tr>
 </table>
 
 <table width=100% class=content_table>
 	<tr>
-		<td width=20% class=td1_left>&nbsp;Р’ СЂР°Р·РґРµР»:</td>
+		<td width=20% class=td1_left>&nbsp;В раздел:</td>
 		<td class=td1_right>
 			<select name=edit_cat_parent style="width:100%;" class=field>
 			{foreach from=$cat_list item=entry}
@@ -71,17 +71,23 @@ function form_check() {
 	</tr>
 
 	<tr class=table_content>
-		<td class=td1_left>&nbsp;РќР°Р·РІР°РЅРёРµ:</td>
+		<td class=td1_left>&nbsp;Название:</td>
 		<td class=td1_right><input type=text name=edit_cat_name style="width:100%;" class=field value="{$cat.name}"></td>
 	</tr>
+	
 	<tr class=table_content>
 		<td class=td1_left><font color=red><small>*</small></font>URL:</td>
 		<td class=td1_right><input type=text name=edit_cat_url style="width:100%;" class=field value="{$cat.url}"></td>
 	</tr>
+
+	<tr class=table_content>
+		<td class=td1_left>Скидка (%):</td>
+		<td class=td1_right><input type=text name=edit_cat_sale style="width:100%;" class=field value="{$cat.sale}"></td>
+	</tr>
 	
 	{*if $cat.param_level == 1}	
 	<tr class=table_content>
-		<td class=td1_left>РџРѕРєР°Р·Р°С‚СЊ РІ РІРµСЂС…РЅРµРј РјРµРЅСЋ:</td>
+		<td class=td1_left>Показать в верхнем меню:</td>
 		<td class=td1_right><input type="checkbox" name=show_in_menu class=field value="1" {if $cat.show_in_menu}checked{/if}></td>
 	</tr>
 	{/if*}
@@ -89,7 +95,7 @@ function form_check() {
 	{if $mode=="edit"}
 	<tr>
 		<td class=td1_single valign=top colspan="2">
-			<p>&nbsp;РљСЂР°С‚РєРѕРµ РѕРїРёСЃР°РЅРёРµ:</p>
+			<p>&nbsp;Краткое описание:</p>
 	<input type=hidden name=edit_cat_text value="">
 	{if $editor_style!='html'}
 	{literal}
@@ -137,24 +143,24 @@ function form_check() {
 	{/if}
 	{/if}
 	<tr>
-		<td valign=top class=td1_left>&nbsp;РљР°СЂС‚РёРЅРєР°:</td><td class=td1_right>{if $mode=='edit' and $cat.image!=''}<img src={$base_url}/uploaded_files/shop_images/{$cat.image}><br><input type=checkbox name=delete_image> РЈРґР°Р»РёС‚СЊ РєР°СЂС‚РёРЅРєСѓ<br><br>{/if}<input type=file name=edit_cat_image style="width:500px;" class=field></td>
+		<td valign=top class=td1_left>&nbsp;Картинка:</td><td class=td1_right>{if $mode=='edit' and $cat.image!=''}<img src={$base_url}/uploaded_files/shop_images/{$cat.image}><br><input type=checkbox name=delete_image> Удалить картинку<br><br>{/if}<input type=file name=edit_cat_image style="width:500px;" class=field></td>
 	</tr>
 	
 	<tr>
-		<td width=15% class=td1_left>&nbsp;РЎС‚Р°С‚СѓСЃ:</td>
+		<td width=15% class=td1_left>&nbsp;Статус:</td>
 		<td class=td1_right>
 		<select name=edit_cat_status style="width: 500px;" class=field>
-			<option value="1" {if $cat.status=='1'}selected=true{/if}>РђРєС‚РёРІРЅС‹Р№</option>
-			<option value="0" {if $cat.status=='0'}selected=true{/if}>Р–РґС‘С‚</option>
+			<option value="1" {if $cat.status=='1'}selected=true{/if}>Активный</option>
+			<option value="0" {if $cat.status=='0'}selected=true{/if}>Ждёт</option>
 		</select>
 		</td>
 	</tr>
 {*if $mode=='edit'}
 	<tr>
-		<td class="td1_left" valign="top">&nbsp;РЎРІРѕР№СЃС‚РІР° С‚РѕРІР°СЂРѕРІ:<br>
+		<td class="td1_left" valign="top">&nbsp;Свойства товаров:<br>
 		</td>
 		<td class="td1_right">
-        &nbsp;&nbsp;<input type="checkbox" onClick="swith_all(form)" id="switch_all_id"><label for="switch_all_id"> Р’С‹РґРµР»РёС‚СЊ РІСЃРµ</label><br><br>
+        &nbsp;&nbsp;<input type="checkbox" onClick="swith_all(form)" id="switch_all_id"><label for="switch_all_id"> Выделить все</label><br><br>
 		<div id=properties_box style="width:500px; height:150px; padding: 8pt 5pt 0pt 5pt; overflow-y: scroll; background:#ffffff;">
 			<table width="100%">
 				{foreach name=tree from=$properties item=entry}
@@ -179,16 +185,16 @@ function form_check() {
     <div id="metas" style="display:{if $cat.meta_keywords!='' or $cat.meta_description!='' or $cat.title}all{else}none{/if};">
 <table width=100% class=content_table>
 	<tr>
-		<td width=15% class=td1_left><b>Title:</b><br><small>(Р·Р°РіРѕР»РѕРІРѕРє СЃС‚СЂР°РЅРёС†С‹)</small></td>
+		<td width=15% class=td1_left><b>Title:</b><br><small>(заголовок страницы)</small></td>
 		<td class=td1_right><input type=text name=edit_cat_title style="width: 500px;" class=field value="{$cat.title}">
 	</tr>
 	<tr>
-		<td width=15% class=td1_left><b>Рљeywords:</b><br><small>(РєР»СЋС‡РµРІС‹Рµ СЃР»РѕРІР°)</small></td>
+		<td width=15% class=td1_left><b>Кeywords:</b><br><small>(ключевые слова)</small></td>
 		<td class=td1_right><textarea name=edit_cat_keywords class=field rows="4" style="width: 500px;">{$cat.meta_keywords}</textarea></td>
 	</tr>
 
 	<tr>
-		<td class=td1_left><b>Description:<br><small></b>(РѕРїРёСЃР°РЅРёРµ СЃС‚СЂР°РЅРёС†С‹)</small></td>
+		<td class=td1_left><b>Description:<br><small></b>(описание страницы)</small></td>
 		<td class=td1_right><textarea name=edit_cat_description class=field rows="4" style="width: 500px;">{$cat.meta_description}</textarea></td>
 	</tr>
 </table>
@@ -196,5 +202,5 @@ function form_check() {
 </div>
 
 <br>
-<center><input type=submit name={if $mode=='add'}submit_add_cat value="Р”РѕР±Р°РІРёС‚СЊ СЂР°Р·РґРµР»"{else}submit_edit_cat value="РЎРѕС…СЂР°РЅРёС‚СЊ РёР·РјРµРЅРµРЅРёСЏ"{/if}></center>
+<center><input type=submit name={if $mode=='add'}submit_add_cat value="Добавить раздел"{else}submit_edit_cat value="Сохранить изменения"{/if}></center>
 </form>

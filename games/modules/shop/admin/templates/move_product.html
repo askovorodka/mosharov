@@ -14,7 +14,7 @@ window.close();
 {/if}
 
 
-РџРµСЂРµРјРµС‰Р°РµРј РїСЂРѕРґСѓРєС‚: <b>{$product.name}</b><br><br>
+Перемещаем продукт: <b>{$product.name}</b><br><br>
 
 
 
@@ -23,9 +23,9 @@ window.close();
 <input type=hidden name=action value=move_product>
 <input type=hidden name=product_id value={$product_id}>
 <input type=hidden name=page value={$current_page}>
-РЎРѕСЂС‚РёСЂРѕРІР°С‚СЊ РїРѕ СЂР°Р·РґРµР»Сѓ: 
+Сортировать по разделу: 
 <select name=cat class=field onChange="document.cat_sort.submit();" style="width: 100%">
-<option value="" {if !$sort_cat}selected=true{/if}>Р’СЃРµ</option>
+<option value="" {if !$sort_cat}selected=true{/if}>Все</option>
 {foreach from=$cat_list item=entry}
 <option value={$entry.id} {if $cat==$entry.id}selected=true{/if}>{$entry.full_title}</option>
 {/foreach}
@@ -35,15 +35,15 @@ window.close();
 <table width="100%" cellspacing="1" bgcolor=#cccccc>
 	<tr>
 		<td bgcolor=#79aef5 align=center style="padding: 3pt">
-			РџСЂРѕРґСѓРєС‚
+			Продукт
 		</td>
 		
 		<td width=20% bgcolor=#79aef5 align=center style="padding: 3pt">
-			РђСЂС‚РёРєСѓР»
+			Артикул
 		</td>
 		
 		<td width=20% bgcolor=#79aef5 align=center style="padding: 3pt">
-			Р”РµР№СЃС‚РІРёРµ
+			Действие
 		</td>
 
 	</tr>
@@ -58,7 +58,7 @@ window.close();
 		</td>
 		
 		<td bgcolor=#ffffff style="padding: 3pt">
-			[<a href=?mod=shop&action=move_product&product_id={$product_id}&move_to={$entry.id}>РџРµСЂРµРјРµСЃС‚РёС‚СЊ СЃСЋРґР°</a>]
+			[<a href=?mod=shop&action=move_product&product_id={$product_id}&move_to={$entry.id}>Переместить сюда</a>]
 		</td>
 	</tr>
 	{/foreach}

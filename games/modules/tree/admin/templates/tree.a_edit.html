@@ -81,7 +81,7 @@ if(document.getElementById(name).style.display!="none") {
 }
 function form_check() {
 	if (document.edit_node.edit_node_url.value=='') {
-		alert("Р—Р°РїРѕР»РЅРёС‚Рµ РїРѕР¶Р°Р»СѓР№СЃС‚Р° РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ");
+		alert("Заполните пожалуйста обязательные поля");
 		return false;
 	}
 	else {
@@ -112,13 +112,13 @@ function form_check() {
 <input type=hidden name=old_url value={$node.url}>
 <table width=100% class=content_table>
 	<tr bgcolor=#99CCFF>
-		<th>{if $mode=='edit'}Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ СѓР·РµР»{else}Р”РѕР±Р°РІРёС‚СЊ СѓР·РµР»{/if}</th>
+		<th>{if $mode=='edit'}Редактировать узел{else}Добавить узел{/if}</th>
 	</tr>
 </table>
 
 <table width=100% class=content_table>
 	<tr>
-		<td width=15% class=td1_left><b>РљР°С‚РµРіРѕСЂРёСЏ:</b></td>
+		<td width=15% class=td1_left><b>Категория:</b></td>
 		<td class=td1_right>
 		<select name=edit_node_parent style="width:100%;font-weight:bold; font-size:9pt;" class=field>
 		{foreach from=$nodes_list item=entry}
@@ -129,12 +129,12 @@ function form_check() {
 	</tr>
 
 	<tr>
-		<td width=15% class=td1_left><b>РќР°Р·РІР°РЅРёРµ:</b></td>
+		<td width=15% class=td1_left><b>Название:</b></td>
 		<td class=td1_right><input type=text name=edit_node_name style="width:100%;" class=field value="{$node.name}">
 	</tr>
 
 	<tr>
-		<td width=15% class=td1_left><b>Р—Р°РіРѕР»РѕРІРѕРє:</b></td>
+		<td width=15% class=td1_left><b>Заголовок:</b></td>
 		<td class=td1_right><input type=text name=edit_node_label style="width:100%;" class=field value="{$node.label}">
 	</tr>
 
@@ -146,7 +146,7 @@ function form_check() {
 	</tr>
 
 	<tr>
-		<td width=15% class=td1_left><b>РњРѕРґСѓР»СЊ:</b></td>
+		<td width=15% class=td1_left><b>Модуль:</b></td>
 		<td class=td1_right>
 		{if !$node.module}
 			<select name=edit_node_module style="width:50%;" class=field>
@@ -163,7 +163,7 @@ function form_check() {
 
 {if $node.module=='page'}
 <br>
-<b>РўРµРєСЃС‚:</b><br>
+<b>Текст:</b><br>
 
 <textarea name="edit_page_text" class="edit_page_text" style="width:100%; height:600px;">{$node.text|replace:"\r\n":""}</textarea>
 
@@ -217,13 +217,13 @@ function form_check() {
 <table width=100% class=content_table>
 
 	<tr bgcolor=#99CCFF>
-		<th colspan="2" onClick="show('editor', this);" class="button plus" style="border-bottom: none; text-align: left; padding-left: 30px;">Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ РЅР°СЃС‚СЂРѕР№РєРё</th>
+		<th colspan="2" onClick="show('editor', this);" class="button plus" style="border-bottom: none; text-align: left; padding-left: 30px;">Дополнительные настройки</th>
 	</tr>
 </table>
 <div id="editor" style="display: none;">
 <table width=100% class=content_table>
 <tr>
-		<td width=15% class=td1_left><b>Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ РјРѕРґСѓР»Рё:</b></td>
+		<td width=15% class=td1_left><b>Дополнительные модули:</b></td>
 		<td class=td1_right>
 		<select multiple=multiple size="4" name=edit_node_supmodules[] style="width:50%;" class=field>
 		{foreach from=$modules_support item=entry}
@@ -233,7 +233,7 @@ function form_check() {
 		</td>
 	</tr>
 	<tr>
-		<td width=15% class=td1_left><b>РЁР°Р±Р»РѕРЅ СЃС‚СЂР°РЅРёС†С‹:</b></td>
+		<td width=15% class=td1_left><b>Шаблон страницы:</b></td>
 		<td class=td1_right>
 		<select name=edit_node_template style="width:50%;" class=field>
 		{foreach from=$templates_list item="template"}
@@ -243,10 +243,10 @@ function form_check() {
 		</td>
 	</tr>
 	<tr>
-		<td width=15% class=td1_left><b>Р’ РјРµРЅСЋ:</b></td>
+		<td width=15% class=td1_left><b>В меню:</b></td>
 		<td class=td1_right><select name=edit_node_menu style="width: 50%;" class=field>
-					<option value="1">РџРѕРєР°Р·С‹РІР°С‚СЊ</option>
-					<option value="0" {if $node.in_menu=='0'}selected=true{/if}>РќРµ РїРѕРєР°Р·С‹РІР°С‚СЊ</option>
+					<option value="1">Показывать</option>
+					<option value="0" {if $node.in_menu=='0'}selected=true{/if}>Не показывать</option>
 					</select>
 		
 		</td>
@@ -254,30 +254,30 @@ function form_check() {
 	
 	{*
 	<tr>
-		<td width=15% class=td1_left><b>Р’ Р»РµРІРѕРј РјРµРЅСЋ:</b></td>
+		<td width=15% class=td1_left><b>В левом меню:</b></td>
 		<td class=td1_right><select name=edit_node_left_menu style="width: 50%;" class=field>
-					<option value="1">РџРѕРєР°Р·С‹РІР°С‚СЊ</option>
-					<option value="0" {if $node.in_left_menu=='0'}selected=true{/if}>РќРµ РїРѕРєР°Р·С‹РІР°С‚СЊ</option>
+					<option value="1">Показывать</option>
+					<option value="0" {if $node.in_left_menu=='0'}selected=true{/if}>Не показывать</option>
 					</select>
 		</td>
 	</tr>
 	*}
 	
     <tr>
-    <td class=td1_left><strong>РЎС‚Р°С‚СѓСЃ:</strong></td>
+    <td class=td1_left><strong>Статус:</strong></td>
     <td class=td1_right><select name=edit_node_status style="width: 50%;" class=field>
-					<option value="1">РђРєС‚РёРІРЅС‹Р№</option>
-					<option value="0" {if $node.status=='0'}selected=true{/if}>Р–РґС‘С‚</option>
+					<option value="1">Активный</option>
+					<option value="0" {if $node.status=='0'}selected=true{/if}>Ждёт</option>
 					</select></td>
     </tr>
 	<tr>
-		<td width=15% class=td1_left><b>РљР°СЂС‚РёРЅРєР°:</b></td>
+		<td width=15% class=td1_left><b>Картинка:</b></td>
 		<td class=td1_right>
 		<input type="hidden" name=edit_node_image_old value="{$node.image}">
 		{if $node.image==""}<input type="file" name=edit_node_image style="width:50%;" class=field>{else}
 		<div style="width: 100px; height: 100px; background: url('{$base_url}/uploaded_files/tree_images/{$node.image}') 50% 50% no-repeat; border: 1px solid #ccc;">&nbsp;</div>
 		<div>
-			<input type="checkbox" name="edit_node_image_delete" id="del_img"><label for="del_img">РЈРґР°Р»РёС‚СЊ РєР°СЂС‚РёРЅРєСѓ</label>
+			<input type="checkbox" name="edit_node_image_delete" id="del_img"><label for="del_img">Удалить картинку</label>
 		</div>
 		{/if}
 		</td>
@@ -287,15 +287,15 @@ function form_check() {
 {if $mode=="edit" && $node.module=='page'}
 <table width=100% class=content_table>
 	<tr>
-		<td width=15% class=td1_left style="border-bottom: none;"><b>РџРѕРєР°Р·С‹РІР°С‚СЊ:</b></td>
+		<td width=15% class=td1_left style="border-bottom: none;"><b>Показывать:</b></td>
 		<td class=td1_right   style="border-bottom: none;">
 			
             <table width="50%" border="0" cellspacing="0" cellpadding="0">
               <tr>
               	<td>&nbsp;<input type="checkbox" id="doc_01" onClick="shows('documents');" name="edit_node_show_documents" {if $node.show_documents=='1'}checked{/if}></td>
-               	<td nowrap><label for="doc_01">Р”РѕРєСѓРјРµРЅС‚С‹</label></td>
+               	<td nowrap><label for="doc_01">Документы</label></td>
                 <td>&nbsp;<input type="checkbox" name="edit_node_show_nodes" id="doc_02" {if $node.show_nodes=='1'}checked{/if}></td>
-              	<td nowrap><label for="doc_02">РџРѕРґСЃС‚СЂР°РЅРёС†С‹</label></td>
+              	<td nowrap><label for="doc_02">Подстраницы</label></td>
               </tr>
             </table>
 
@@ -304,9 +304,9 @@ function form_check() {
 </table>
 <div id="documents" style="display:{if $node.show_documents=='1'}all{else}none{/if};">
 <table width=100% class=content_table>
-<th colspan="2" style="background: #ccc;"><strong>РЎРїРёСЃРѕРє РґРѕРєСѓРјРµРЅС‚С‹</strong></th>
+<th colspan="2" style="background: #ccc;"><strong>Список документы</strong></th>
 	<tr>
-		<td width=15% class=td2_left><b>РЁР°Р±Р»РѕРЅ:</b></td>
+		<td width=15% class=td2_left><b>Шаблон:</b></td>
 		<td class=td2_right>
 			<select name="edit_node_documents_template" style="width:50%;" class=field>
 				{foreach from=$documents_templates item=item}
@@ -317,20 +317,20 @@ function form_check() {
 		</td>
 	</tr>
 	<tr>
-		<td width=15% class=td1_left><b>РЎРѕСЂС‚РёСЂРѕРІР°С‚СЊ РїРѕ:</b></td>
+		<td width=15% class=td1_left><b>Сортировать по:</b></td>
 		<td class=td1_right>
 		<select name=edit_node_show_documents_orderby style="width:50%;" class=field>
 			<option value="0"></option>
 			{foreach from=$documents_orderby_list item=item}
-				<option value="{$item.id}" {if $node.show_documents_orderby==$item.id}selected{/if}>{$item.name} (РІ {if $item.orderbysc=="ASC"}РїСЂСЏРјРѕРј{else}РѕР±СЂР°С‚РЅРѕРј{/if} РїРѕСЂСЏРґРєРµ)</option>
+				<option value="{$item.id}" {if $node.show_documents_orderby==$item.id}selected{/if}>{$item.name} (в {if $item.orderbysc=="ASC"}прямом{else}обратном{/if} порядке)</option>
 			{/foreach}
 		</select>
 		</td>
 	</tr>
 	<tr>
-		<td width=15% class=td2_left><b>РџРѕРєР°Р·Р°С‚СЊ:</b></td>
+		<td width=15% class=td2_left><b>Показать:</b></td>
 		<td class=td2_right>
-			<input type="text" name="edit_node_show_documents_number" value="{$node.show_documents_number}" style="width: 60px;"> РґРѕРєСѓРјРµРЅС‚РѕРІ
+			<input type="text" name="edit_node_show_documents_number" value="{$node.show_documents_number}" style="width: 60px;"> документов
 		</td>
 	</tr>
 </table></div>{/if}{if $mode=="edit"}</div>
@@ -342,16 +342,16 @@ function form_check() {
     <div id="metas" style="display:{if $node.meta_keywords!='' or $node.meta_description!='' or $node.title}all{else}none{/if};">
 <table width=100% class=content_table>
 	<tr>
-		<td width=15% class=td1_left><b>Title:</b><br><small>(Р·Р°РіРѕР»РѕРІРѕРє СЃС‚СЂР°РЅРёС†С‹)</small></td>
+		<td width=15% class=td1_left><b>Title:</b><br><small>(заголовок страницы)</small></td>
 		<td class=td1_right><input type=text name=edit_node_title style="width: 500px;" class=field value="{$node.title}">
 	</tr>
 	<tr>
-		<td width=15% class=td1_left><b>Рљeywords:</b><br><small>(РєР»СЋС‡РµРІС‹Рµ СЃР»РѕРІР°)</small></td>
+		<td width=15% class=td1_left><b>Кeywords:</b><br><small>(ключевые слова)</small></td>
 		<td class=td1_right><textarea name=edit_node_keywords class=field rows="4" style="width: 500px;">{$node.meta_keywords}</textarea></td>
 	</tr>
 
 	<tr>
-		<td class=td1_left><b>Description:<br><small></b>(РѕРїРёСЃР°РЅРёРµ СЃС‚СЂР°РЅРёС†С‹)</small></td>
+		<td class=td1_left><b>Description:<br><small></b>(описание страницы)</small></td>
 		<td class=td1_right><textarea name=edit_node_description class=field rows="4" style="width: 500px;">{$node.meta_description}</textarea></td>
 	</tr>
 </table>
@@ -359,7 +359,7 @@ function form_check() {
 </div>
 <table width=100% class=content_table>
 	<tr>
-		<th bgcolor=#99CCFF onClick="show('access', this);" class="button plus" style="text-align: left; padding-left: 30px;"><b>РџСЂР°РІР° РґРѕСЃС‚СѓРїР°</b></th>
+		<th bgcolor=#99CCFF onClick="show('access', this);" class="button plus" style="text-align: left; padding-left: 30px;"><b>Права доступа</b></th>
 	</tr>
 </table>
 
@@ -369,18 +369,18 @@ function form_check() {
 		<td width=15% class=td1_left></td>
 		<td class=td1_right>
 		<input type="hidden" name="users_list" id="users_list" value="{$users_checked}">
-		<b>РџСЂР°РІР° РґРѕСЃС‚СѓРїР° РЅР° РїСЂРѕСЃРјРѕС‚СЂ:</b><br><br>
-		<small><font color=#666666>Р•СЃР»Рё РїСЂР°РІР° РґР»СЏ С‡С‚РµРЅРёСЏ РЅР° СЂРѕРґРёС‚РµР»СЊСЃРєРёР№ СЂР°Р·РґРµР» РѕРіСЂР°РЅРёС‡РµРЅС‹, РѕРЅРё Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё СЂР°СЃРїСЂРѕСЃС‚СЂР°РЅСЏСЋС‚СЃСЏ РЅР° РґРѕС‡РµСЂРЅРёРµ СЂР°Р·РґРµР»С‹.</font></small><br><br>
-		<input type=radio name=access_to value="all" {if $access_mode=='all'}checked=true{/if} id="joi_01"> <label for="joi_01">Р”РѕСЃС‚СѓРїРµРЅ РґР»СЏ РІСЃРµС…</label><br>
-		<input type=radio name=access_to value="registered" {if $access_mode=='registered'}checked=true{/if} id="joi_02"> <label for="joi_02">РўРѕР»СЊРєРѕ РґР»СЏ Р·Р°СЂРµРіРµСЃС‚СЂРёСЂРѕРІР°РЅРЅС‹С…</label><br>
-		<input type=radio name=access_to value="list" {if $access_mode=='list'}checked=true{/if} id="joi_03"> <label for="joi_03">Р”РѕСЃС‚СѓРїРµРЅ С‚РѕР»СЊРєРѕ РґР»СЏ</label>&nbsp;<a href="javascript: void(getTreeTools({$smarty.get.id}));">СЂРµРґР°РєС‚РёСЂРѕРІР°С‚СЊ</a>&nbsp;<span id="label"></span><br>
+		<b>Права доступа на просмотр:</b><br><br>
+		<small><font color=#666666>Если права для чтения на родительский раздел ограничены, они автоматически распространяются на дочерние разделы.</font></small><br><br>
+		<input type=radio name=access_to value="all" {if $access_mode=='all'}checked=true{/if} id="joi_01"> <label for="joi_01">Доступен для всех</label><br>
+		<input type=radio name=access_to value="registered" {if $access_mode=='registered'}checked=true{/if} id="joi_02"> <label for="joi_02">Только для зарегестрированных</label><br>
+		<input type=radio name=access_to value="list" {if $access_mode=='list'}checked=true{/if} id="joi_03"> <label for="joi_03">Доступен только для</label>&nbsp;<a href="javascript: void(getTreeTools({$smarty.get.id}));">редактировать</a>&nbsp;<span id="label"></span><br>
 		</td>
 	</tr>
 </table>
 </div>
 {/if}
 <br><br>
-<center><input type=submit {if $mode=='edit'}name=submit_edit_node value="РЎРѕС…СЂР°РЅРёС‚СЊ РёР·РјРµРЅРµРЅРёСЏ"{else}name=submit_add_node value="Р”РѕР±Р°РІРёС‚СЊ СѓР·РµР»"{/if} class=button style="width:50%;"></center>
+<center><input type=submit {if $mode=='edit'}name=submit_edit_node value="Сохранить изменения"{else}name=submit_add_node value="Добавить узел"{/if} class=button style="width:50%;"></center>
 </form>
 
 
@@ -392,14 +392,14 @@ function form_check() {
 
 <table width=100% cellspacing=1 cellpadding=3 class=content_table>
 <tr>
-<th>Р¤Р°Р№Р»РѕРІС‹Р№ РєРѕРЅС‚РµРЅС‚ СЂР°Р·РґРµР»Р°</th>
+<th>Файловый контент раздела</th>
 </tr>
 </table>
 
 
 <form action="" method=post name=edit_photos>
 {if !$files_list}
-<br><br><br><center>Р’ СЂР°Р·РґРµР»Рµ РЅРµС‚ С„Р°Р№Р»РѕРІ</center><br><br>
+<br><br><br><center>В разделе нет файлов</center><br><br>
 {else}
 <table width=100% cellspacing=1 cellpadding=3 class=content_table>
 <tr>
@@ -435,13 +435,13 @@ function form_check() {
 </table>
 
 </td></tr>
-<tr><td onClick="shows('photo_{$entry.id}');" class="button" bgcolor="#3689d8" style="height: 20px; color: white; padding-left: 10px;"><small>РєРѕРјРјРµРЅС‚Р°СЂРёРё</small></td></tr>
+<tr><td onClick="shows('photo_{$entry.id}');" class="button" bgcolor="#3689d8" style="height: 20px; color: white; padding-left: 10px;"><small>комментарии</small></td></tr>
 <tr bgcolor=#ffffff class=table_content>
 <td>
 
 <table width="100%" style="height: 25px;" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><input type=checkbox name=delete_photos[] value={$entry.id} id="del_photo_{$entry.id}"> <label for="del_photo_{$entry.id}">РЈРґР°Р»РёС‚СЊ</label></td>
+    <td><input type=checkbox name=delete_photos[] value={$entry.id} id="del_photo_{$entry.id}"> <label for="del_photo_{$entry.id}">Удалить</label></td>
     <td align="right" style="padding-right: 2px;"><input type=text size="2" class=field name=edit_order[{$entry.id}] value={$entry.sort_order} onchange="document.getElementById('order_{$entry.id}').value=1;"></td>
   </tr>
 </table>
@@ -460,7 +460,7 @@ function form_check() {
 </table>
 
 <br><br>
-<center><input type=submit name=submit_save_files value="РЎРѕС…СЂР°РЅРёС‚СЊ РёР·РјРµРЅРµРЅРёСЏ РІ РєРѕРЅС‚РµРЅС‚Рµ" class=button></center>
+<center><input type=submit name=submit_save_files value="Сохранить изменения в контенте" class=button></center>
 {/if}</form>
 <br><br>
 
@@ -468,14 +468,14 @@ function form_check() {
 <input type=hidden name=parent value={$node.id}>
 <table width=100%  class=content_table>
 <tr>
-<th colspan="2">Р”РѕР±Р°РІРёС‚СЊ С„Р°Р№Р» РІ РєРѕРЅС‚РµРЅС‚ СЂР°Р·РґРµР»Р°</th></tr>
+<th colspan="2">Добавить файл в контент раздела</th></tr>
 <tr>
-<td width=20% class=td1_left>РџРѕРґРїРёСЃСЊ Рє С„Р°Р№Р»Сѓ:</td><td class=td1_right><textarea name="add_file_title" class="field" style="width: 450px; height: 60px;">{$file_title}</textarea></td>
+<td width=20% class=td1_left>Подпись к файлу:</td><td class=td1_right><textarea name="add_file_title" class="field" style="width: 450px; height: 60px;">{$file_title}</textarea></td>
 </tr>
 <tr>
-<td class=td1_left style="height: 30px;">Р¤Р°Р№Р»:</td><td class=td1_right><input type=file class=field name=add_new_file style="width:450px;"><br><div style="padding-top: 5px; font-size: 10px; color: #999;">Р Р°Р·СЂРµС€РµРЅРЅС‹Рµ С„РѕСЂРјР°С‚С‹ РґР»СЏ Р·Р°РіСЂСѓР·РєРё jpg, gif, png, pdf, doc, xls. РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ С„Р°Р№Р»Р° 2 РњР±.</div></td>
+<td class=td1_left style="height: 30px;">Файл:</td><td class=td1_right><input type=file class=field name=add_new_file style="width:450px;"><br><div style="padding-top: 5px; font-size: 10px; color: #999;">Разрешенные форматы для загрузки jpg, gif, png, pdf, doc, xls. Максимальный размер файла 2 Мб.</div></td>
 </tr></table>
-<br><br><center><input type=submit name=submit_add_file value="Р”РѕР±Р°РІРёС‚СЊ С„Р°Р№Р»"></center>
+<br><br><center><input type=submit name=submit_add_file value="Добавить файл"></center>
 <br><br>
 </form>
 {/if*}

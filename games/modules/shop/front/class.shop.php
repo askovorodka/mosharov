@@ -7,7 +7,13 @@ class Shop extends db {
 	{
 		$this->db = &$db;
 	}
-	
+
+	public function getProductImage($id){
+	    $query = "select * from fw_products_images where parent='{$id}' ORDER BY sort_order ASC ";
+	    $result = $this->db->get_single($query);
+	    return $result;
+    }
+
 	function getTopProducts($limit = 1)
 	{
 		$result = $this->db->get_all("select * from fw_products where status='1' and hit='1'");
@@ -90,6 +96,9 @@ class Shop extends db {
 			case 'price':
 				$sort_field = "order by a.price";
 				break;
+            default:
+                $sort_field = "order by a.id";
+                break;
 			
 		}
 		
@@ -103,11 +112,12 @@ class Shop extends db {
 		}
 		
 		
-		$result = $this->db->get_all("select a.*, b.image 
+		$result = $this->db->get_all("select a.*, i.id image, i.ext
 		from fw_products as a
 		left join fw_catalogue as b on a.parent = b.id 
-		where a.status = '1' " . 
-		$where . " {$sort_field} {$sort_order} ");
+		left join fw_products_images as i on a.id=i.parent
+		where a.status = '1' " .
+		$where . " GROUP BY a.id {$sort_field} {$sort_order} ");
 		
 		return $result;
 		

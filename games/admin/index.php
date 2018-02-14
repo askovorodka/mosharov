@@ -1,8 +1,6 @@
 <?php
-ob_start("ob_gzhandler");
+ob_start();
 session_start();
-
-error_reporting(E_ALL);
 
 require_once '../conf/globals.php';
 require_once '../lib/smarty/Smarty.class.php';
@@ -15,14 +13,14 @@ require_once '../lib/class.array.php';
 
 $_SESSION['db_connections'] = 0;
 
-/* ------------ –ó–ê–ì–†–£–ó–ö–ê –®–ê–ë–õ–û–ù–ò–ó–ê–¢–û–†–ê --------------------*/
+/* ------------ «¿√–”« ¿ ÿ¿¡ÀŒÕ»«¿“Œ–¿ --------------------*/
 $smarty = new Smarty;
 
 $smarty->template_dir = 'templates/';
 $smarty->compile_dir = '../lib/smarty/admin_templates_c/';
 $smarty->cache_dir = '../lib/smarty/admin_cache/';
 
-/* ------------ –ü–û–î–ö–õ–Æ–ß–ê–ï–ú–°–Ø –ö –ë–ê–ó–ï –î–ê–ù–ù–´–• -------------- */
+/* ------------ œŒƒ Àﬁ◊¿≈Ã—ﬂ   ¡¿«≈ ƒ¿ÕÕ€’ -------------- */
 $db=new db(DB_NAME, DB_HOST, DB_USER, DB_PASS);
 
 //$smarty->debugging=true;
@@ -38,9 +36,9 @@ if ($check_auth=='0' && @$_GET['action']!='edit_post') {
 $modules_list=$db->get_all("SELECT * FROM fw_modules WHERE priv>='".$_SESSION['fw_user']['priv']."' AND status='1'");
 
 
-$navigation[]=array("url" => BASE_URL."/admin/","title" => '–ì–ª–∞–≤–Ω–∞—è');
+$navigation[]=array("url" => BASE_URL."/admin/","title" => '√Î‡‚Ì‡ˇ');
 
-/* --–ü–†–û–í–ï–†–Ø–ï–ú –ë–†–ê–£–ó–ï–† –ö–õ–ò–ï–ù–¢–ê –ò –ì–†–£–ó–ò–ú –ù–£–ñ–ù–´–ô –†–ï–î–ê–ö–¢–û–† --*/
+/* --œ–Œ¬≈–ﬂ≈Ã ¡–¿”«≈–  À»≈Õ“¿ » √–”«»Ã Õ”∆Õ€… –≈ƒ¿ “Œ– --*/
 
 if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE")) {
   $smarty->assign("editor_mode","editor.js");
@@ -61,7 +59,7 @@ if (get_magic_quotes_gpc()) {
 }
 
 
-/* --------------–ü–û–î–ö–õ–Æ–ß–ê–ï–ú –ù–£–ñ–ù–´–ô –ú–û–î–£–õ–¨ ----------------*/
+/* --------------œŒƒ Àﬁ◊¿≈Ã Õ”∆Õ€… ÃŒƒ”À‹ ----------------*/
 if (isset($_GET['mod'])) {
 
   $smarty->assign("current_module",$_GET['mod']);
@@ -90,7 +88,7 @@ else {
   require_once 'main.php';
   $smarty->assign("template","main.html");
 }
-/* --------- –ì–ï–ù–ï–†–ò–†–£–ï–ú –ì–õ–ê–í–ù–û–ï –ú–ï–ù–Æ –ê–î–ú–ò–ù–ö–ò -------------*/
+/* --------- √≈Õ≈–»–”≈Ã √À¿¬ÕŒ≈ Ã≈Õﬁ ¿ƒÃ»Õ » -------------*/
 $main_menu = '';
 for ($m=0;$m<count($modules_list);$m++) {
   $menu_file='../modules/'.$modules_list[$m]['name'].'/admin/menu.php';
@@ -102,11 +100,11 @@ function cmp ($a,$b) {
   }
   usort($main_menu,"cmp");
 
-/* ----------------------–ù–ê–í–ò–ì–ê–¶–ò–Ø -----------------------*/
+/* ----------------------Õ¿¬»√¿÷»ﬂ -----------------------*/
 
 $smarty->assign("navigation",$navigation);
 
-/*-----------------------RSS –ü–û–¢–û–ö---------------------- */
+/*-----------------------RSS œŒ“Œ ---------------------- */
 
 /*if (RSS_SHOW == 'true') {
 
@@ -122,7 +120,7 @@ $smarty->assign("navigation",$navigation);
   }
 }*/
 
-/*--------- –ü–ï–†–ï–î–ê–Å–ú –°–ú–ê–†–¢–ò –†–ê–ó–õ–ò–ß–ù–´–ï –ü–ï–†–ï–ú–ï–ù–ù–´–ï ---------*/
+/*--------- œ≈–≈ƒ¿®Ã —Ã¿–“» –¿«À»◊Õ€≈ œ≈–≈Ã≈ÕÕ€≈ ---------*/
 
 $smarty->assign("main_menu",$main_menu);
 $smarty->assign("base_url",BASE_URL);

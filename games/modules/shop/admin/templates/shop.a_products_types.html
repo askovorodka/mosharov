@@ -36,29 +36,29 @@ function allCats(){
 <input type=hidden name={if $mode=='add'}submit_add_type{else}submit_edit_type{/if}>
 <input type=hidden name=type_id value={$type.id}>
 <table width=100% class=content_table>
-	<tr><th>{if $mode=='edit'}Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РїСЂРѕРёР·РІРѕРґРёС‚РµР»СЏ С‚РѕРІР°СЂР°<input type=hidden name=id value={$type.id}>{else}Р”РѕР±Р°РІРёС‚СЊ РїСЂРѕРёР·РІРѕРґРёС‚РµР»СЏ С‚РѕРІР°СЂР°{/if}</th></tr>
+	<tr><th>{if $mode=='edit'}Редактировать производителя товара<input type=hidden name=id value={$type.id}>{else}Добавить производителя товара{/if}</th></tr>
 </table>
 
 <table width=100% class=content_table>
 	<tr>
-		<td width=20% class=td1_left>РџСЂРѕРёР·РІРѕРґРёС‚РµР»СЊ:</td>
+		<td width=20% class=td1_left>Производитель:</td>
 		<td class=td1_right>
 			<input type="text" name=edit_type_name style="width:100%;" class=field value="{$type.name}">
 		</td>
 	</tr>
 	<tr>
-		<td width=15% class=td1_left>РЎС‚Р°С‚СѓСЃ:</td>
+		<td width=15% class=td1_left>Статус:</td>
 		<td class=td1_right>
 		<select name=edit_type_status style="width:50%;" class=field>
-			<option value="1" {if $type.status=='1'}selected=true{/if}>РђРєС‚РёРІРЅС‹Р№</option>
-			<option value="0" {if $type.status=='0'}selected=true{/if}>Р–РґС‘С‚</option>
+			<option value="1" {if $type.status=='1'}selected=true{/if}>Активный</option>
+			<option value="0" {if $type.status=='0'}selected=true{/if}>Ждёт</option>
 		</select>
 		</td>
 	</tr>
 {if $mode=="edit"}
 	<tr>
 		<td class=td1_single valign=top colspan="2">
-			<p>РљСЂР°С‚РєРѕРµ РѕРїРёСЃР°РЅРёРµ РїСЂРѕРёР·РІРѕРґРёС‚РµР»СЏ:</p>
+			<p>Краткое описание производителя:</p>
 <input type=hidden name=edit_type_text value="">
 {if $editor_style!='html'}
 {literal}
@@ -109,7 +109,7 @@ function allCats(){
 	</tr>
 
 	<tr>
-		<td colspan=2 class=td1_left>Р’С‹РІРѕРґРёС‚СЊ РІ РєР°С‚РµРіРѕСЂРёСЏС…: &nbsp;&nbsp;&nbsp;<input type=checkbox id=ch1 onClick="void(allCats());"><label for="ch1">РІС‹РґРµР»РёС‚СЊ РІСЃРµ</label></td>
+		<td colspan=2 class=td1_left>Выводить в категориях: &nbsp;&nbsp;&nbsp;<input type=checkbox id=ch1 onClick="void(allCats());"><label for="ch1">выделить все</label></td>
 	</tr>
 
 {foreach name=tree from=$cat_list item=entry}
@@ -132,7 +132,7 @@ function allCats(){
 
 </table>
 <br>
-<center><input type=submit value={if $mode=='add'}"Р”РѕР±Р°РІРёС‚СЊ РґР°С‚Сѓ СЂР°Р·СЂР°Р±РѕС‚РєРё"{else}"РЎРѕС…СЂР°РЅРёС‚СЊ РёР·РјРµРЅРµРЅРёСЏ"{/if}></center>
+<center><input type=submit value={if $mode=='add'}"Добавить дату разработки"{else}"Сохранить изменения"{/if}></center>
 </form>
 {else}
 {literal}
@@ -141,7 +141,7 @@ function allCats(){
 <!--
 function confirm_delete(delete_id)
 {
-if (confirm("Р”РµР№С‚СЃРІРёС‚РµР»СЊРЅРѕ СѓРґР°Р»РёС‚СЊ СЌС‚РѕРіРѕ РїСЂРѕРёР·РІРѕРґРёС‚РµР»СЏ С‚РѕРІР°СЂР°? Р’РќРРњРђРќРР•: Р­С‚Рѕ СЃРІРѕР№СЃС‚РІРѕ СѓРґР°Р»РёС‚СЃСЏ Сѓ РІСЃРµС… РёРјРµСЋС‰РёС… РµРіРѕ С‚РѕРІР°СЂРѕРІ!!!")) {
+if (confirm("Дейтсвительно удалить этого производителя товара? ВНИМАНИЕ: Это свойство удалится у всех имеющих его товаров!!!")) {
 parent.location.href = "index.php?mod=shop&action=delete_type&id=" + delete_id;
 }
 }
@@ -151,7 +151,7 @@ parent.location.href = "index.php?mod=shop&action=delete_type&id=" + delete_id;
 {/literal}
 <table width=100% class=content_table>
 <tr>
-<th>РџСЂРѕРёР·РІРѕРґРёС‚РµР»СЊ</th><th width=10%>РџСЂРѕРґСѓРєС‚РѕРІ</th><th width=10%>РЎС‚Р°С‚СѓСЃ</th><th width=15%>Р”РµР№СЃС‚РІРёСЏ</th></tr>
+<th>Производитель</th><th width=10%>Продуктов</th><th width=10%>Статус</th><th width=15%>Действия</th></tr>
 
 	{foreach name=tree from=$types_list item=entry}
 
@@ -172,8 +172,8 @@ parent.location.href = "index.php?mod=shop&action=delete_type&id=" + delete_id;
 			<img src=templates/img/status_{$entry.status}.gif border=0>
 			</td>
 			<td align=center class={$td}_right nowrap align="center">
-				<a href="javascript:confirm_delete('{$entry.id}');" class=img_link onmouseover="ddrivetip('РЈРґР°Р»РёС‚СЊ С‚РёРї')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
-				<a href=?mod=shop&action=edit_type&id={$entry.id} class=img_link onmouseover="ddrivetip('Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ С‚РёРї')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>
+				<a href="javascript:confirm_delete('{$entry.id}');" class=img_link onmouseover="ddrivetip('Удалить тип')" onmouseout=hideddrivetip()><img src=templates/img/ico_delete.gif border=0></a>
+				<a href=?mod=shop&action=edit_type&id={$entry.id} class=img_link onmouseover="ddrivetip('Редактировать тип')" onmouseout=hideddrivetip()><img src=templates/img/ico_edit.gif border=0></a>
 			</td>
 		</tr>
 
@@ -181,5 +181,5 @@ parent.location.href = "index.php?mod=shop&action=delete_type&id=" + delete_id;
 
 	</table>
 <br>
-<div class="add_but" onClick="location.href='?mod=shop&action=add_type'"><div><a href="?mod=shop&action=add_type">Р”РѕР±Р°РІРёС‚СЊ РїСЂРѕРёР·РІРѕРґРёС‚РµР»СЏ</a></div></div>
+<div class="add_but" onClick="location.href='?mod=shop&action=add_type'"><div><a href="?mod=shop&action=add_type">Добавить производителя</a></div></div>
 {/if}

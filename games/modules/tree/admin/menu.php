@@ -3,18 +3,18 @@
 $sub='';
 
 $sub[]= array(
-			"name"=>"Ğ”ĞµÑ€ĞµĞ²Ğ¾",
+			"name"=>"Äåğåâî",
 			"link"=>"?mod=tree"
 	   );
 $sub[]= array(
-			"name"=>"Ğ”Ğ¾Ğ±Ğ°Ğ²Ğ¸Ñ‚ÑŒ Ñ€Ğ°Ğ·Ğ´ĞµĞ»",
+			"name"=>"Äîáàâèòü ğàçäåë",
 			"link"=>"?mod=tree&action=add"
 	   );
 
 $main_menu[]=array(
 				"link"=>"?mod=tree",
 				"name"=>"tree",
-				"title"=>"Ğ¡Ñ‚Ñ€ÑƒĞºÑ‚ÑƒÑ€Ğ° ÑĞ°Ğ¹Ñ‚Ğ°",
+				"title"=>"Ñòğóêòóğà ñàéòà",
 				"ico"=>"module_1.gif",
 				"sort"=>"2",
 				"sub"=>$sub
