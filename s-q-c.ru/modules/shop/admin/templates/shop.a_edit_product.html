@@ -1,0 +1,446 @@
+{literal}
+<script language=JavaScript src='{/literal}{$base_url}/{literal}javascript/editor/scripts/language/russian/editor_lang.js'></script>
+<script language=JavaScript src='{/literal}{$base_url}/{literal}javascript/editor/scripts{/literal}/{$editor_mode}{literal}'></script>
+
+<script language="JavaScript">
+function check_form() {
+	document.edit_product.edit_description.value = edit_description.getHTMLBody();
+	return true;
+}
+function show(name, elem)
+{
+if(document.getElementById(name).style.display!="none") {
+		document.getElementById(name).style.display="none";
+		elem.className = "plus";
+	}
+	else {
+		document.getElementById(name).style.display="";
+		elem.className = "minus";
+	}
+}
+function shows(name)
+{
+if(document.getElementById(name).style.display!="none") {
+		document.getElementById(name).style.display="none";
+		document.getElementById('nav_' + name).style.display="";
+	}
+	else {
+		document.getElementById(name).style.display="";
+		document.getElementById('nav_' + name).style.display="none";
+	}
+}
+</script>
+{/literal}
+
+
+<form action="" method=post name=edit_product enctype="multipart/form-data" onSubmit="check_form();">
+<input type=hidden name=id value={$product.id}>
+<center>
+{if $error}<font color=red><b>{$error}</b></font><br><br>{/if}
+<table width=100% class=content_table>
+<tr>
+<th>{if $mode=='edit'}Редактировать продукт{else}Добавить продукт{/if}</th>
+</tr>
+</table>
+
+
+<table width=100% class=content_table>
+<tr>
+	<td width=15% class=td1_left>Раздел:</td>
+	<td class=td1_right>
+		<select name=edit_parent class=field style="width:100%;">
+		{foreach from=$cat_list item=entry}
+			<option value={$entry.id}{if $entry.id==$product.parent or $entry.id==$cat} selected=true{/if}>{$entry.full_title}</option>
+		{/foreach}
+		</select>	</td>
+</tr>
+<tr>
+	<td class=td1_left>Имя:</td><td class=td1_right><input type=text name=edit_name class=field style="width:100%;" value="{$product.name}"></td>
+</tr>
+
+{if $mode=='edit'}
+<tr>
+  <td class=td1_left style="border-bottom: none;">Статус:</td>
+  <td class=td1_right style="border-bottom: none;">
+  
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="35%"><select name=edit_status style="width:200px;" class=field>
+		<option value="1" {if $product.status=='1'}selected=true{/if}>Активный</option>
+		<option value="0" {if $product.status=='0'}selected=true{/if}>Ждёт</option>
+	</select>	</td>
+    {*<td width="15%" nowrap align="right">&nbsp;Цена:&nbsp;&nbsp;</td>
+    <td width="50%"><input type=text name=edit_price class=field style="width:200px;" value="{$product.price}">&nbsp;&nbsp;{$currency_admin.znak}</td>*}
+  </tr>
+</table>
+
+  </td>
+</tr>
+{/if}
+
+<tr>
+  <td class=td1_left style="border-bottom: none;">Цена:</td>
+  <td class=td1_right style="border-bottom: none;">
+  <input type=text name=edit_price class=field style="width:200px;" value="{$product.price}">&nbsp;&nbsp;{$currency_admin.znak}
+  </td>
+</tr>
+
+	<tr>
+		<td class=td1_left style="border-bottom: none;">Цена со скидкой:</td>
+		<td class=td1_right style="border-bottom: none;">
+			<input type=text name=edit_price_sale class=field style="width:200px;" value="{$product.price_sale}">&nbsp;&nbsp;{$currency_admin.znak}
+		</td>
+	</tr>
+
+	<tr>
+  <td class=td1_left style="border-bottom: none;">Артикул:</td>
+  <td class=td1_right style="border-bottom: none;">
+  <input type=text name=edit_article class=field style="width:200px;" value="{$product.article}">
+  </td>
+</tr>
+
+<tr>
+  <td class=td1_left style="border-bottom: none;">Страна производства:</td>
+  <td class=td1_right style="border-bottom: none;">
+  <input type=text name=edit_country class=field style="width:200px;" value="{$product.country}">
+  </td>
+</tr>
+
+<tr>
+  <td class=td1_left style="border-bottom: none;">Тип:</td>
+  <td class=td1_right style="border-bottom: none;">
+  <input type=text name=edit_type_name class=field style="width:200px;" value="{$product.type_name}">
+  </td>
+</tr>
+{*
+<tr>
+  <td class=td1_left style="border-bottom: none;">Скидка:</td>
+  <td class=td1_right style="border-bottom: none;">
+  <input type="checkbox" name="edit_sale" value="1" {if $product.sale == '1'}checked{/if} />
+  </td>
+</tr>
+*}
+
+{if $mode=='edit'}
+
+	{*if $product.properties*}
+<tr><td colspan="2">
+<table width=100% class=content_table>
+	<tr>
+		<th bgcolor=#99CCFF onClick="show('others', this);" class="button plus" style="border-bottom: none; text-align: left; padding-left: 30px;"><b>Дополнительные свойства</b></th>
+	</tr>
+ </table>
+    <div id="others" style="display: none;">
+<table width=100% class=content_table>
+	{foreach name=tree from=$product.properties item=entry}
+    {if $entry}
+    <tr>
+		<td width=15% class=td2_left>{$entry.1}:</td>
+		<td class=td2_right>{if $entry.2=='1'}
+		
+		
+		<div style="width:250px; height:150px; overflow: auto;">
+		{section name=element loop=$entry.3}
+			<input
+					{foreach from=$product_properties_old item=item}{if $item.property_id==$entry.0 && $item.value==$entry.3[element]}checked{/if}{/foreach}
+					type="checkbox"
+					name="edit_properties[{$entry.0}|{$entry.3[element]}]"
+					id="pt_{$entry.3[element]}" value="{$entry.3[element]}" />&nbsp;
+			<label for="pt_{$entry.3[element]}">{$entry.3[element]}</label>
+
+			{*if $entry.0 == $smarty.const.PROPERTY_COLOR_ID}
+				<div style="width:10px; height:10px; background-color: {$entry.3[element]}; float:left; clear:both;">&nbsp;</div>
+			{/if*}
+
+			<br />
+		{/section}
+		</div>
+			{elseif $entry.2=='0'}
+		<textarea name="edit_properties[{$entry.0}]" class=field style="width:100%; height:35px">{$entry.5}</textarea>
+		{else}&nbsp;{/if}</td></tr>{/if}
+		{/foreach}
+</table>
+</div>
+</td></tr>
+{*/if*}
+
+
+{/if}
+
+	<tr>
+<td class=td1_single colspan=2>
+
+<input type=hidden name=edit_description value="">
+<p><font color=red>*</font> Описание товара:</p>
+{literal}
+<script language="JavaScript">
+				var edit_description = new InnovaEditor("edit_description");
+
+				edit_description.btnStyles=true;
+
+				edit_description.width="100%";
+				edit_description.height="400";
+
+				edit_description.css="style.css";
+				edit_description.cmdAssetManager="modalDialogShow('{/literal}{$base_url}/{literal}javascript/editor/assetmanager/assetmanager.php?lang=russian',640,465)";
+
+				edit_description.features=["FullScreen","Search",
+						"Cut","Copy","Paste","PasteWord","PasteText","|","Undo","Redo","|",
+						"ForeColor","BackColor","|","Bookmark","Hyperlink",
+						"XHTMLSource","Numbering","Bullets","|","Indent","Outdent","|","Image","|",
+						"Table","Guidelines","Absolute","|","Characters","Line",
+						"Clean","ClearAll","BRK",
+						"Paragraph","FontSize","|",
+						"Bold","Italic",
+						"Underline","Strikethrough","|","Superscript","Subscript","|",
+						"JustifyLeft","JustifyCenter","JustifyRight","JustifyFull"];
+
+
+				edit_description.RENDER('{/literal}{$product.description|replace:"\r\n":""}{literal}');
+</script>
+{/literal}
+</td>
+</tr>
+
+</table>
+
+
+<table width=100% class=content_table>
+	<tr>
+		<th bgcolor=#99CCFF onClick="show('metas', this);" class="button plus" style="border-bottom: none; text-align: left; padding-left: 30px;"><b>Metas</b></th>
+	</tr>
+ </table>
+    <div id="metas" style="display:none;">
+<table width=100% class=content_table>
+	<tr>
+		<td width=15% class=td2_left><b>Title:</b><br><small>(заголовок страницы)</small></td>
+		<td class=td2_right><input type=text name=edit_title class=field style="width:100%;" value="{$product.title}"></td>
+	</tr>
+	<tr>
+		<td width=15% class=td2_left><b>Keywords:</b><br><small>(meta keywords)</small></td>
+		<td class=td2_right><input type=text name=edit_meta_keywords class=field style="width:100%;" value="{$product.meta_keywords}"></td>
+	</tr>
+	<tr>
+		<td width=15% class=td2_left><b>Description:</b><br><small>(meta description)</small></td>
+		<td class=td2_right><input type=text name=edit_meta_description class=field style="width:100%;" value="{$product.meta_description}"></td>
+	</tr>
+</table>
+</div>
+
+
+{*
+{if $mode=='edit'}
+<table width=100% class=content_table>
+	<tr>
+		<th bgcolor=#99CCFF onClick="show('soput', this);" class="button plus" style="border-bottom: none; text-align: left; padding-left: 30px;"><b>Сопутствующие товары ({foreach from=$additional_products item=entry name=kl}{/foreach}{$smarty.foreach.kl.total})</b></th>
+	</tr>
+ </table>
+    <div id="soput" style="display: none;">
+<table width=100% class=content_table>
+	{if $additional_products}
+    {foreach from=$additional_products item=entry}
+    {if $col==1}
+	{assign var="td" value="td1"}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value="td2"}
+	{assign var="col" value=1}
+	{/if}
+    <tr>
+	<td class={$td}_left width="75%"><a href=index.php?mod=shop&action=edit_product&id={$entry.id}>{$entry.name}</a></td>
+    <td class="{$td}_middle" width="15%%"><font color=red><b>{$entry.price} {$currency}</b></font></td>
+	<td class="{$td}_right" align="center"><a href=index.php?mod=shop&action=delete_additional_product&id={$entry.id}&from={$product.id}><img src=templates/img/ico_delete.gif border=0></a></td></tr>
+	{/foreach}
+    {/if}
+    <tr>
+	<td class=td1_left><img src="templates/img/tree.gif" style="margin-left: 5px;">
+    <a href=# onclick="window.open('index.php?mod=shop&action=mini_catalogue&product_id={$product.id}','winscript','height=500,width=500,toolbar=yes,resizable=yes,scrollbars=yes,,menubar=no' ); return false" style="color: red;">Добавить сопутствующий товар</a>
+	</td><td class=td1_middle>&nbsp;</td><td class=td1_right>&nbsp;</td></tr>
+	</table>
+</div>
+{/if}
+*}
+
+<br><br>
+<center><input type=submit name={if $mode=='edit'}submit_edit_product value="Сохранить изменения"{else}submit_add_product value="Добавить продукт"{/if} class=button></center>
+	<br><br>
+</form>
+
+
+
+{if $mode=='edit'}
+<table width=100% cellspacing=1 cellpadding=3 class=content_table>
+	<tr>
+		<th>Размеры и цвета продукта</th>
+	</tr>
+
+	<tr><td>
+	<div id="sizes">
+
+		{if !empty($product_properties)}
+		<table width="100%" class=content_table>
+			{foreach from=$product_properties item=property name=forProperty}
+
+			{if $col==1}
+				{assign var="td" value='td1'}
+				{assign var="col" value=0}
+			{else}
+				{assign var="td" value='td2'}
+			{	assign var="col" value=1}
+			{/if}
+
+
+			<tr>
+				<td class={$td}_left width="4%">Размер:</td>
+				<td class={$td}_left width="3%">{$property.value}</td>
+				<td class={$td}_left width="3%">
+					{if !empty($property.size_brand)}
+						{foreach from=$property.size_brand item=sbrand}
+							{$sbrand.value}
+						{/foreach}
+					{else}
+						&mdash;
+					{/if}
+				</td>
+				<td class={$td}_left width="2%"><a href="?mod=shop&action=change_property_status&id={$property.id}" title="Изменить статус свойства"><img src="templates/img/status_{$property.status}.gif" border="0"></a></td>
+				<td class={$td}_left width="3%">Цвета:</td>
+				<td class={$td}_left width="50%">
+					{if !empty($property.colors)}
+						{foreach from=$property.colors item=color}
+							<a href="?mod=shop&action=change_property_status&id={$color.id}" title="color:{$color.value}, статус:{if $color.status == 1}Вкл{else}Выкл{/if}"
+							   style="display: inline-block; width:25px; height: 20px; margin: 0 3px;border:1px solid {if $color.status == 1}LawnGreen{else}red{/if};">
+								<div style="width:25px; height:20px; background-color:{$color.value}; text-align: center; vertical-align: middle; font-weight: bold;">{if $color.status == 1}+{else}-{/if}</div>
+							</a>
+						{/foreach}
+					{/if}
+				</td>
+				<td class={$td}_left width="25%">
+					<form action="" method="post" class="addColor">
+						<input type="hidden" name="product_id" value="{$product.id}" />
+						<input type="hidden" name="parent_id" value="{$property.id}">
+						Цвет [р.{$property.value}]: {*<input type="text" name="property_color" style="width: 55px;" value="" />*}
+						<select name="property_color" style="width:100px;"><option selected value="">выберите цвет{foreach from=$colors item=color}<option value="{$color.color}" style="background-color: {$color.color};">{if !empty($color.name)}{$color.name}{else}{$color.color}{/if}</option> {/foreach}</select>
+						<button type="submit">Добавить цвет</button>
+						&nbsp;<a href="?mod=shop&action=delete_size&id={$property.id}" onclick="return confirm('Удалить размер и все его цвета ?');">удалить размер</a>
+					</form>
+				</td>
+			</tr>
+			{/foreach}
+		</table>
+		{/if}
+
+		<br />
+		<form action="" method="post">
+			<input type="hidden" name="product_id" value="{$product.id}" />
+			Размер: <input type="text" name="property_size" value="" style="width: 100px;" placeholder="Размер" />
+			<input type="text" name="property_size_brand" value="" style="width: 150px;" placeholder="Размер производителя" />
+			<button type="submit">Добавить размер</button>
+		</form>
+		<br />
+
+		<table width=100% class=content_table>
+		</table>
+	</div>
+
+	</td></tr>
+</table>
+
+{literal}
+<script type="text/javascript">
+	var onReady = function(event){
+		$("form.addColor").submit(function(){
+			var selectColor = $("select[name=property_color]", $(this)).val();
+			if (!selectColor){
+				return false;
+			}
+		});
+	}
+	document.addEventListener('DOMContentLoaded', onReady, false);
+</script>
+{/literal}
+
+<br><br>
+<table width=100% cellspacing=1 cellpadding=3 class=content_table>
+<tr>
+<th>Фотоальбом продукта</th>
+</tr>
+</table>
+
+<form action="" method=post name=edit_photos>
+{if !$photos_list}
+<br><br><br><center>В альбоме нет фотографий</center><br><br>
+{else}
+<table width=100% cellspacing=1 cellpadding=3 class=content_table>
+<tr>
+<td class=td1_single valign=top>
+
+
+
+<table width={if $photos_count=='1'}25{/if}{if $photos_count=='2'}50{/if}{if $photos_count=='3'}75{/if}{if $photos_count>3}100{/if}% cellspacing=1 cellpadding=3>
+<tr>
+{assign var="i" value=0}
+{foreach from=$photos_list item=entry name=tp}
+{if $i==4}{assign var="i" value=0}</tr><tr>{/if}
+<td valign=top width="25%">
+<input type=hidden id=order_{$entry.id} name=order_changed[{$entry.id}] value="">
+<input type=hidden id=title_{$entry.id} name=title_changed[{$entry.id}] value="">
+{* Фотка пошла *}
+<table width=100% cellspacing=1 cellpadding=3 bgcolor=#666666>
+<tr bgcolor=#ffffff>
+<td height=120 style="padding: 2px;">
+
+<div id="photo_{$entry.id}" style="display: none; height: 120px;">
+<textarea class=field style="width:100%; height: 118px;" name=edit_title[{$entry.id}] onchange="document.getElementById('title_{$entry.id}').value=1;">{$entry.title}</textarea>
+</div>
+
+<table width="100%" style="height: 120px;" border="0" cellspacing="0" cellpadding="0" id="nav_photo_{$entry.id}">
+  <tr>
+    <td align="center"><img src=../uploaded_files/shop_images/100x100-{$entry.id}.{$entry.ext} border="0" width="100" height="100" alt=""></td>
+  </tr>
+</table>
+
+</td></tr>
+<tr><td onClick="shows('photo_{$entry.id}');" class="button" bgcolor="#3689d8" style="height: 20px; color: white; padding-left: 10px;"><small>комментарии</small></td></tr>
+<tr bgcolor=#ffffff class=table_content>
+<td>
+
+<table width="100%" style="height: 25px;" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><input type=checkbox name=delete_photos[] value={$entry.id} id="del_photo_{$entry.id}"> <label for="del_photo_{$entry.id}">Удалить</label></td>
+    <td align="right" style="padding-right: 2px;"><input type=text size="2" class=field name=edit_order[{$entry.id}] value={$entry.sort_order} onchange="document.getElementById('order_{$entry.id}').value=1;"></td>
+  </tr>
+</table>
+
+</td></tr>
+</table>
+
+</td>
+{math equation="x + y" x=$i y=1 assign="i"}
+{/foreach}
+</tr>
+</table>
+
+
+</td></tr>
+</table>
+
+<br><br>
+<center><input type=submit name=submit_save_photos value="Сохранить изменения в фотоальбоме" class=button></center>
+{/if}</form>
+<br><br>
+
+<form action="" method=post name=add_photos enctype="multipart/form-data">
+<input type=hidden name=parent value={$product.id}>
+<table width=100%  class=content_table>
+<tr>
+<th colspan="2">Добавить картинку в фотоальбом продукта</th></tr>
+<tr>
+<td width=20% class=td1_left>Подпись к картинке:</td><td class=td1_right><textarea name="add_photo_title" class="field" style="width: 450px; height: 60px;">{$photo_title}</textarea></td>
+</tr>
+<tr>
+<td class=td1_left style="height: 30px;">Картинка:</td><td class=td1_right><input type=file class=field name=add_new_photo style="width:450px;"><br><div style="padding-top: 5px; font-size: 10px; color: #999;">Разрешенные форматы для загрузки jpg, gif, png. Максимальный размер файла 2 Мб.</div></td>
+</tr></table>
+<br><br><center><input type=submit name=submit_add_photo value="Добавить фотографию"></center>
+<br><br>
+</form>
+{/if}

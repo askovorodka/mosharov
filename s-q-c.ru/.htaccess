@@ -1,0 +1,27 @@
+php_flag display_errors off
+#php_value session.use_only_cookies 1
+php_value session.use_trans_sid 0
+#подключение журнала ошибок
+php_value error_log /home/a0031953/domains/s-q-c.ru/err.log
+
+RewriteEngine on
+Options +FollowSymlinks
+RewriteBase /
+
+#RewriteCond %{REQUEST_URI} ^/$ [OR]
+#RewriteCond %{REQUEST_URI} ^$ [NC]
+#RewriteRule ^(.*)$ http://s-q-c.ru/home/ [R=301,L]
+DirectoryIndex index.php
+
+RewriteCond 	%{REQUEST_FILENAME} !-f
+RewriteRule     ^(.*)/video/(.*)$			/video/$2	[L]
+
+RewriteCond 	%{REQUEST_FILENAME} !-f
+RewriteRule     ^(.*)/insertfiles/(.*)$		/insertfiles/$2	[L]
+
+RewriteRule     ^images/([^/]+)/(.*)$		/images.php?type=$1&image=$2	[L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^(.*)$ /index.php [L,QSA]

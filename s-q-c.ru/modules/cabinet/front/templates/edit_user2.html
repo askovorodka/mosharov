@@ -1,0 +1,154 @@
+{literal}
+<style>input, textarea {font-size : 11px;}</style>
+{/literal}
+{literal}
+<script language="JavaScript">
+function validate(form){
+  var i;
+  var str = '';
+  var status = true;
+  var bad_field;
+  var fields = new Array();
+  var prompts = new Array();
+
+  fields[fields.length] = 'name';
+  prompts[prompts.length] = 'Ф.И.О :';
+
+  fields[fields.length] = 'place';
+  prompts[prompts.length] = 'Город :';
+
+  fields[fields.length] = 'site';
+  prompts[prompts.length] = 'Адрес :';
+
+  fields[fields.length] = 'mail';
+  prompts[prompts.length] = 'E-mail :';
+
+  fields[fields.length] = 'tel';
+  prompts[prompts.length] = 'Контактный телефон :';
+
+  for (i = 0; i < fields.length; i++){
+    var field = form[fields[i]];
+    if (trim(field.value) == '' || trim(field.value)==0){
+      	if (str != ''){
+        	str += '\n';
+      	}
+      	else{
+       	 	bad_field = field;
+      	}
+      	str += prompts[i];
+  	}
+
+    if(form['mail'].value!=""){
+      	var goodEmail = form['mail'].value.match(/\b(^([\.0-9a-zA-Z_-]+@[0-9a-zA-Z_\.-]+(\.[a-zA-Z]{2,4}){1,2})$)\b/gi);
+      	if(!goodEmail){
+        	alert("Неверный формат email !");
+        	return false;
+      	}
+    }
+  }
+
+    if (str != ''){
+    	str +='\n';
+    	alert("Не заполнены необходимые поля:\n" + str);
+    	return false;
+    }
+
+  form.submit();
+
+}
+
+function trim(s){return s.replace(/(^\s+)|(\s+$)/g,"");}
+</script>
+{/literal}
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td valign="top">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr valign="top">
+<td width="9"><img src="templates/img/r_03.gif" width="9" height="10" border="0" alt=""></td>
+<td ><img src="templates/img/blank.gif" width="1" height="1" border="0" alt=""></td>
+<td width="9"><img src="templates/img/r_04.gif" width="9" height="10" border="0" alt=""></td></tr>
+</table>
+</td></tr>
+<tr>
+<td valign="top" >
+<table width="100%" border="0" cellspacing="0" cellpadding="0" id="nav">
+<td valign="top" style="padding-top: 11px;">
+
+{if $registration_success=='1'}
+Благодарим за регистрацию!<br><br>
+На указанный Вами почтовый адрес было выслано письмо с Вашими регистрационными данными. Теперь Вы можете войти в свой личный кабинет.
+{else}
+
+
+<center>
+<form action="" method=post name=edit_form onSubmit="return validate(this);" enctype="multipart/form-data">
+{if $error_message}<font color=red>{$error_message}</font><br><br>{/if}
+
+{if $mode=='edit'}
+<input type=hidden name=old_password value="{$temp.password}">
+<input type=hidden name=old_mail value="{$temp.mail}">
+<input type=hidden name=old_avatar value="{$temp.avatar}">
+<input type=hidden name=old_photo value="{$temp.photo}">
+{/if}
+</center>
+<!--------------------------------------------------------------------------->
+
+<p>После регистрации Вы получите письмо на указанный Вами E-mail с Вашим логином и паролем.</p>
+<h5 style="color : #666666; margin-top : 8px;"><font style="color : #FF0024;">*</font> - обязательно для заполнения</h5>
+<table width="450" cellspacing="0" cellpadding="0" border="0" style="margin-top : 35px;">
+<tr>
+<td width="235" align="right"><h5 style="color : #666666;">Ф.И.О.<font style="color : #FF0024;">*</font></h5></td><td width="7"></td><td><input type="text" name="name" value="{$temp.name}" class="field" /></td>
+</tr>
+<tr>
+<td width="235" align="right"><h5 style="color : #666666;">Город<font style="color : #FF0024;">*</font></h5></td><td width="7"></td><td><input type="text" name="place" value="{$temp.place}" class="field" /></td>
+</tr>
+<tr>
+<td width="235" align="right"><h5 style="color : #666666;">Адрес<font style="color : #FF0024;">*</font></h5></td><td width="7"></td><td><input type="text" name="site" value="{$temp.site}" class="field" /></td>
+</tr>
+<tr>
+<td width="235" align="right"><h5 style="color : #666666;">E-mail<font style="color : #FF0024;">*</font></h5></td><td width="7"></td><td><input type="text" name="mail" value="{$temp.mail}" class="field" /></td>
+</tr>
+<tr>
+<td width="235" align="right"><h5 style="color : #666666;">Контактный телефон<font style="color : #FF0024;">*</font></h5></td><td width="7"></td><td><input type="text" name="tel" value="{$temp.tel}" class="field" /></td>
+</tr>
+<tr valign="top">
+<td width="235" align="right"><h5 style="color : #666666; margin-top : 3px;">Дополнительно</h5></td><td width="7"></td><td><textarea name="about" class="field" style="height : 94px;">{$temp.about}</textarea></td>
+</tr>
+<tr valign="top">
+<td colspan="3" align="right" style="padding : 7px 68px 0px 0px;"><input type="submit" style="background : url(templates/img/send.gif) no-repeat; width : 78px; height : 19px; border : 0px; cursor : pointer;" name="{if $mode=='edit'}submit_edit_user{else}submit_user_register{/if}" value="" class="button" />
+</td>
+</tr>
+</table>
+<br />
+<br />
+<font class="font10" style="color : #666666;"><font style="color : #FF0024;"><strong>! </strong></font>Личные сведения, полученные в распоряжение интернет-магазина medolina.ru при регистрации или каким-либо иным образом, не будут без разрешения пользователей передаваться третьим организациям и лицам, за исключением ситуаций, когда этого требует закон или судебное решение.</font>
+<!--------------------------------------------------------------------------->
+
+</form>
+{if $mode=='edit'}
+<br><br>
+<a href={$base_url}/shop/basket/>Перейти в корзину покупателя</a>
+{/if}
+</center>
+{/if}
+
+
+</td></tr>
+</table>
+
+
+</td></tr>
+<tr>
+<td valign="top">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr valign="top">
+<td width="9"><img src="templates/img/r_02.gif" width="9" height="10" border="0" alt=""></td>
+<td ><img src="templates/img/blank.gif" width="1" height="1" border="0" alt=""></td>
+<td width="9"><img src="templates/img/r_01.gif" width="9" height="10" border="0" alt=""></td></tr>
+</table>
+
+</td></tr>
+</table>

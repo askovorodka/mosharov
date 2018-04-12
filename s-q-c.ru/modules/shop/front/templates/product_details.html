@@ -1,0 +1,153 @@
+{if $product}
+<form action="{$base_url}/catalog/basket/add/" method="post" id="basket_add">
+	<input name="product_count" value="1" type="hidden" />
+	<input name="product_id" value="{$product.id}" type="hidden" />
+	<input type="hidden" name="property_size" value="" />
+	<input type="hidden" name="property_size_brand" value="" />
+	<input type="hidden" name="property_color" value="" />
+
+	<div class="item">
+	{if $images}
+	<div class="item__photos">
+		<div class="item__photos_main{if !empty($product.price_sale)} sale{/if}" id="item__photos_main">
+			<img id="item__photos_main_picture"
+				 data-big="{$base_url}/uploaded_files/shop_images/{$photo.id}.{$photo.ext}"
+				 src="{$base_url}/uploaded_files/shop_images/medium-{$photo.id}.{$photo.ext}"/>
+		</div>
+		<div class="item__photos__another">
+			{foreach from=$images item=image}
+			<div class="item__photos__another_photo"><img
+					src="{$base_url}/uploaded_files/shop_images/85x85-{$image.id}.{$image.ext}"
+					data-image="{$base_url}/uploaded_files/shop_images/medium-{$image.id}.{$image.ext}"
+					data-big="{$base_url}/uploaded_files/shop_images/{$image.id}.{$image.ext}"
+					class="js-item__photos__another_photo"/></div>
+			{/foreach}
+		</div>
+	</div>
+	{/if}
+	<div class="item__info">
+		<div class="item__info__about">
+			<h2>{$product.name}</h2>
+			Бренд: {if !empty($product.brand) && !empty($product.brand.value)}{$product.brand.value}{else}&nbsp;{/if}<br>
+			Тип: {$product.type_name}<br>
+			Артикул: {$product.article}<br>
+
+			<div class="item__info__about_price">
+				{if !empty($product.price_sale)}
+				    <span class="item__info__about_price--old">{$product.price} руб.</span> <span class="longline g-text-base-size">—</span> {$product.price_sale} руб.
+				{else}
+				    {$product.price} руб.
+				{/if}
+			</div>
+
+		</div>
+		
+		{if !empty($properties.sizes) && !empty($properties.colors)}
+			<div class="item__info__selecter">
+				<div>Цвет <span class="longline g-text-light-gray"> — </span><span id="item_selected-color">не выбран</span><span class="longline g-text-light-gray"> — </span></div>
+				<div>
+					{foreach from=$properties.colors item=color key=key}
+					<div class="color" data-color="{$key}" data-caption="{foreach from=$colors item=curColor}{if $curColor.color == $key}{if !empty($curColor.name)}{$curColor.name}{/if}{/if}{/foreach}" style="background:{$key};"></div>
+					{/foreach}
+				</div>
+			</div>
+
+			<div class="item__info__selecter">
+				<div>Размер <span class="longline g-text-light-gray"> — </span></div>
+				<div>
+				    <select name="sizetype" id="item-sizetype">
+				        <option value="rus">Российский размер (RUS)</option>
+				        <option value="manufacturer">Размер производителя</option>
+				    </select>
+				</div>
+				<div><span class="longline g-text-light-gray"> — </span></div>
+				<div id="current-item-sizes">
+					{foreach from=$properties.sizes item=size key=key}
+					<div class="size js-sizes-rus" data-size="{$key}">{$key}</div>
+					{/foreach}
+				</div>
+			</div>
+		{/if}
+
+		<div class="item__info__to-cart">
+			<div class="form_button form_button--yellow inbasket">Добавить в корзину</div>Есть вопросы? Звоните: 8 (925) 329-320-9
+		</div>
+		{if !empty($product.description)}
+		<div class="text">
+			{$product.description}
+		</div>
+		{/if}
+	</div>
+</div>
+</form>
+
+{literal}
+<script type="text/javascript">
+
+	var properties = {/literal}{if $propertiesJSON}{$propertiesJSON}{else}{literal}{}{/literal}{/if}{literal};
+
+	var Ready = function(){
+
+		$(".color").click(function(){
+			if ($(this).hasClass("selected")){
+				$(".color").removeClass("selected");
+				return;
+			}
+			else {
+				$(".color").removeClass("selected");
+				$(this).addClass("selected");
+				$("input[name=property_color]",$(this).closest('form')).val($(this).data('color'));
+			}
+		});
+
+		$(".size").click(function(){
+			if ($(this).hasClass("selected")){
+				$(".size").removeClass("selected");
+				return;
+			}
+			else {
+				$(".size").removeClass("selected");
+				$(this).addClass("selected");
+				if ($(this).hasClass('js-sizes-rus')) {
+					$("input[name=property_size]",$(this).closest('form')).val($(this).data('size'))
+				} else {
+					$("input[name=property_size_brand]",$(this).closest('form')).val($(this).data('size'))
+				}
+			}
+		});
+
+		$(".inbasket").click(function(){
+			$(this).closest('form').submit();
+		});
+
+		var images = $("img").filter(function(){
+			return $(this).data('big') || $(this).data('image');
+		});
+		var img = [];
+
+		if (images)
+		{
+			$(images).each(function(){
+				if ($(this).data('image')){
+					var _img = new Image();
+					_img.src = $(this).data('image');
+					img.push(_img);
+				}
+				if ($(this).data('big')){
+
+					var _img = new Image();
+					_img.src = $(this).data('big');
+					img.push(_img);
+				}
+			});
+		}
+		
+	};
+	document.addEventListener("DOMContentLoaded", Ready, false);
+</script>
+{/literal}
+
+
+{else}
+<center>Такого продукта не существует.</center>
+{/if}

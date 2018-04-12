@@ -1,0 +1,2 @@
+php_value default_charset "cp1251"
+RewriteEngine off

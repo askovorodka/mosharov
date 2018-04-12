@@ -1,0 +1,88 @@
+{literal}
+<DIV id=dhtmltooltip></DIV>
+<script language=JavaScript src='{/literal}{$base_url}{literal}/javascript/tooltips.js'></script>
+{/literal}
+
+<table width=100% class=content_table>
+    <tr><th>Цвет</th>
+        <th>Код цвета</th>
+        <th>Название цвета</th>
+        <th width=10%>Дата создания</th>
+    {foreach from=$colors item=item}
+    {if $col==1}
+    {assign var="td" value='td1'}
+    {assign var="col" value=0}
+    {else}
+    {assign var="td" value='td2'}
+    {assign var="col" value=1}
+    {/if}
+    <tr><td class={$td}_left><div style="display: block; width:100%; height: 20px; background-color: {$item.color};"></div></td>
+        <td class={$td}_middle>{$item.color}</td>
+        <td class={$td}_middle>{$item.name}</td>
+        <td style="width: 120px;" class={$td}_middle align=center>
+            <a href="?mod=shop&action=delete_color&color={$item.id}" class="img_link" onclick="return confirm('Удалить цвет ?');"><img src="templates/img/ico_delete.gif" border="0"></a>
+        </td></tr>
+    {/foreach}
+</table>
+
+<br>
+<form action="" method="post" id="addColorForm">
+    <input type="hidden" name="add_color" value="1" />
+    <table width=100% class=content_table>
+        <tr class=table_content>
+            <td class=td1_left>&nbsp;Цвет:</td>
+            <td class=td1_right><input type=text id="color" name=color style="width:20%;" class=field value="" /></td>
+
+            <td class=td1_left>&nbsp;Название цвета:</td>
+            <td class=td1_right><input type=text id="color_name" name=color_name style="width:20%;" class=field value="" /></td>
+
+        </tr>
+    </table>
+    <br>
+    <div class="add_but" id="addColor"><div>
+        <a href="">Добавить цвет</a>
+    </div>
+
+</form>
+{literal}
+<script type="text/javascript">
+
+    $('#color').ColorPicker({
+        color: '#0000ff',
+        onShow: function (colpkr) {
+            $(colpkr).fadeIn(500);
+            return false;
+        },
+        onHide: function (colpkr) {
+            $(colpkr).fadeOut(500);
+            return false;
+        },
+        onChange: function (hsb, hex, rgb) {
+            $('#color').val('#' + hex);
+        }
+    });
+
+    var onSubmit = function(){
+        var color = document.getElementById('color').value;
+        if (!$.trim(color)){
+            alert('Введите код цвета');
+            return false;
+        }
+
+        addForm.submit();
+
+    };
+    var onClick = function(e){
+        e.preventDefault();
+        return onSubmit();
+    };
+    var addButton = document.getElementById('addColor'),
+            addForm = document.getElementById('addColorForm');
+
+    addButton.addEventListener('click', onClick, false);
+    addForm.addEventListener('submit', function(e){e.preventDefault();}, false);
+
+
+
+</script>
+{/literal}

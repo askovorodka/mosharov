@@ -1,0 +1,80 @@
+
+<form method="post" action="/cabinet/save/">
+<div class="cabinet">
+	<div class="form_line form_line--yellow cabinet__yellow">
+		<div class="cart_motivator">
+			<span class="g-text-verybig">Ваши данные для входа в ЛК!</span><br>
+			В качестве меры защиты аккаунта email поменять нельзя, но все остальные данные можно легко изменить.
+		</div>
+		<div class="form_line">
+			<div class="form_input form_input--fake">{$profile.mail}</div> к сожалению email поменять нельзя
+		</div>
+		<div class="form_line">
+			<label for="cart_password"><input id="cart_password" name="cart_password" type="password" class="form_input form_input--white" placeholder="Пароль"/> но вы можете изменить пароль</label>
+		</div>
+	</div>
+</div>
+
+<div class="text">
+
+		<div class="form_line">
+			<span class="g-text-bigger">Раз заполнил и забыл:</span>
+		</div>
+		<div class="form_line">
+			<label for="cart_name"><input id="cart_name" type="text" name="cart_name" value="{$profile.name}" class="form_input" placeholder="Например, Иван"/> ваше имя <span class="g-text-gray">сделает наше общение приятнее!</span></label>
+		</div>
+		<div class="form_line">
+			<label for="cart_lastname"><input id="cart_lastname" type="text" name="cart_lastname" value="{$profile.lastname}" class="form_input" placeholder="Например, Иванов"/> фамилия <span class="g-text-gray">поможет правильно доставить заказ</span></label>
+		</div>
+		<div class="form_line">
+			<label for="cart_phone"><input id="cart_phone" name="cart_phone" value="{$profile.phone_1}" type="text" class="form_input" placeholder="(123) 456-78-90"/> телефон <span class="g-text-gray">нам нужен для утверждения заказов</span></label>
+		</div>
+		<!--<div class="form_line">
+			<label for="cart_address"><input id="cart_address" name="cart_address" value="{$profile.address}" type="text" class="form_input" placeholder="г. Владивосток, Пиратская гавань, прич. 9"/> если ввести адрес доставки мы будем знать куда едем</label>
+		</div>
+		<div class="form_line">
+			<label for="cart_delivery1" class="g-pointer"><input id="cart_delivery1" name="cart_delivery" {if $profile.delivery == 2 || empty($profile.delivery)} checked{/if} value="2" type="radio"/> доставка курьером <span class="g-text-light-gray">(по Москве)</span></label><br>
+			<label for="cart_delivery2" class="g-pointer"><input id="cart_delivery2" name="cart_delivery" {if $profile.delivery == 1} checked{/if} value="1" type="radio"/> доставка Почтой России</label>
+		</div>-->
+		<div class="form_line">
+    <label for="cart_city"><input id="cart_city" {if !empty($profile)} value="{$profile.city}"{/if} name="cart_city" type="text" class="form_input" placeholder="Москва"/> город <span class="g-text-gray">в который мы повезём ваше добро?</span></label>
+</div>
+<div class="form_line">
+    <label for="cart_street"><input id="cart_street" {if !empty($profile)} value="{$profile.street}"{/if} name="cart_street" type="text" class="form_input" placeholder="ул. Красная площадь"/> название улицы</label>
+</div>
+<div class="form_line">
+    <label for="cart_house"><input id="cart_house" {if !empty($profile)} value="{$profile.house}"{/if} name="cart_house" type="text" class="form_input" placeholder="20Б"/> и номер дома</label>
+</div>
+<div class="form_line">
+    <label for="cart_index"><input id="cart_index" {if !empty($profile)} value="{$profile.post_index}"{/if} name="cart_index" type="text" class="form_input" placeholder="123456"/> почтовый индекс - заполнится автоматически</label>
+</div>
+		
+		<div class="form_line">
+			<textarea class="form_input form_textarea" placeholder="Сообщение" name="cart_info">{$profile.info}</textarea>
+		</div>
+		<div class="form_line">
+			<button class="form_button form_button--yellow">Изменить данные</button>
+		</div>
+</div>
+</form>
+
+{if !empty($orders)}
+<div class="cart_ready g-text-verybig">Посмотрите, что вы заказывали:</div>
+
+	{foreach from=$orders item=order}
+		<div class="text">
+			<div class="cabinet__history">
+				<div class="cabinet__history_date">{$order.insert_date|date_format:"%d.%m.%Y"}</div>
+				{if !empty($order.items)}
+				<div class="cabinet__history_items">
+					{foreach from=$order.items item=item}
+						{$item.product.name} <span class="g-text-gray">— {$item.product_count} шт.</span><br>
+					{/foreach}
+				</div>
+				{/if}
+				<div class="cabinet__history_price">{$order.total_price} руб.</div>
+			</div>
+		</div>
+	{/foreach}
+
+{/if}

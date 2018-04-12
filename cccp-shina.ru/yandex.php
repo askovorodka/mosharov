@@ -10,7 +10,7 @@ error_reporting(E_ALL);
 ini_set('display_errors','On');
 
 /**
- * пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ xml пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+ * ????? ???????? ??????? ? xml ???????
  */
 		//ini_set('memory_limit', '300M');
 		
@@ -172,11 +172,11 @@ ini_set('display_errors','On');
 				
 				$sales_notes = $dom->createElement('sales_notes');
 				if ($product['tire_sklad'] > 3 || $product['disk_sklad'] > 3)
-					$text = $dom->createTextNode("Р—Р°РєР°Р· РѕС‚ 4. РњРµРЅРµРµ РїРѕ СЃРѕРіР»Р°СЃРѕРІР°РЅРёСЋ.");
+					$text = $dom->createTextNode("Заказ от 4. Менее по согласованию.");
 				elseif ($product['tire_sklad'] > 0)
-					$text = $dom->createTextNode("Р—Р°РєР°Р· РѕС‚ " . $product['tire_sklad'] . " С€С‚СѓРє.");
+					$text = $dom->createTextNode("Заказ от " . $product['tire_sklad'] . " штук.");
 				elseif ($product['disk_sklad'] > 0)
-					$text = $dom->createTextNode("Р—Р°РєР°Р· РѕС‚ " . $product['disk_sklad'] . " С€С‚СѓРє.");
+					$text = $dom->createTextNode("Заказ от " . $product['disk_sklad'] . " штук.");
 				//$text = $dom->createTextNode(iconv('windows-1251','utf-8',YANDEX_XML_SALES));
 				$sales_notes->appendChild($text);
 				$offer->appendChild($sales_notes);

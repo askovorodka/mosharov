@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+    <title>Template</title>
+    <link href="/css/styles.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="/js/libs/html5shiv.min.js"></script>
+      <script src="/js/libs/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+  <div class="auth g-hidden">
+    <div class="auth__form">
+      <img src="/img/logo.png" width="97" height="29">
+      <input type="text" name="username" class="form_input" placeholder="Электронная почта" />
+      <input type="password" name="password" class="form_input" placeholder="Пароль" />
+      <div class="form_button g-full-width">Войти</div>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header__logo" title="Style Quality Comfort - Стиль, Качество, Комфорт"></a>
+      <nav class="header__menu">
+        <a href="#" class="header__menu-link">Пальто</a>
+        <a href="#" class="header__menu-link">Куртки</a>
+        <a href="#" class="header__menu-link">Брюки</a>
+        <a href="#" class="header__menu-link">Жилеты</a>
+        <a href="#" class="header__menu-link">Толстовки</a>
+        <a href="#" class="header__menu-link">Трикотаж</a>
+        <a href="#" class="header__menu-link">Акции</a>
+      </nav>
+      <div class="header__cart">
+        <a href="#" class="header__cart__holder" title="Перейти в корзину">
+          <div class="icon icon-shopping-cart"></div>
+          У вас <span class="orange">12</span> товаров на <span class="orange">156 000</span> руб.
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="tools">
+        <div class="tools__search">
+          <div class="icon-search tools__search__icon"></div>
+          <input type="text" placeholder="Ищу по артикулу и названию" name="search"/>
+        </div>
+        <div class="tools__second-menu">
+          <a href="#">О магазине</a>
+          <a href="#">Доставка и оплата</a>
+          <a href="#">Контакты</a>
+          <div class="tools__second-menu__wishlist"><a href="#">На потом: 12</a></div>
+          <a href="#">Личный кабинет</a>
+        </div>
+    </div>
+
+    <div class="breadcrumbs">
+      <a href="#">Главная</a><span class="g-text-light-gray breadcrumbs_arrow">→</span> Контакты
+    </div>
+
+    <div class="text">
+      <h1>Наши координаты</h1>
+      <p>Мы будем рады побеседовать с вами, для этого воспользуйтесь контактной информацией или формой обратной связи</p>
+      <p><span class="g-text-light-gray">Мы находимся:</span> г. Москва, ул. Тверская, дом 10.<br/>
+        <span class="g-text-light-gray">Тел:</span> 495 565 75 25<br/>
+        <span class="g-text-light-gray">Email:</span> <a href="#">hello@s-q-c.ru</a></p>
+    </div>
+
+    <div class="text">
+      <form class="form">
+        <div class="form_line">
+          <label for="contacts_name"><input id="contacts_name" type="text" class="form_input" placeholder="Ваше имя"/> Чтобы мы могли сказать вам: “Здравствуйте!”</label>
+        </div>
+        <div class="form_line">
+          <label for="contacts_info"><input id="contacts_info" type="text" class="form_input" placeholder="Номер телефона или email"/> Предпочитаете услышать или увидеть?</label>
+        </div>
+        <div class="form_line">
+          <textarea class="form_input form_textarea" placeholder="Сообщение"></textarea>
+        </div>
+        <div class="form_line">
+          <button class="form_button form_button--yellow">Отправить сообщение</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__menu">
+        <a href="#">О магазине</a>
+        <a href="#">Доставка и оплата</a>
+        <a href="#">Возврат товара</a>
+        <a href="#">Контакты</a>
+      </div>
+      <div class="footer__info">
+        <span class="footer__info-item"><span class="g-text-light-gray">Мы находимся:</span></span> г. Москва, ул. Тверская, дом 10.</span>
+        <span class="footer__info-item"><span class="g-text-light-gray">Тел:</span> 495 565 75 25</span>
+        <span class="footer__info-item"><span class="g-text-light-gray">Email:</span> <a href="#">hello@s-q-c.ru</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/libs/jquery.min.js"></script>
+  <script src="/js/scripts.js"></script>
+  </body>
+</html>

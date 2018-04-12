@@ -1,0 +1,33 @@
+<div class="tools">
+    <div class="tools__search">
+        <form action="{$base_url}/catalog/" method="get">
+            <div class="icon-search tools__search__icon"></div>
+            <input type="text" name="search_product" placeholder="Ищу по артикулу и названию" value="{$search_string}"/>
+        </form>
+    </div>
+    <div class="tools__second-menu">
+        {foreach from=$main_menu item=menu name=for1}
+            {if $smarty.foreach.for1.last && !empty($order_later_count)}
+                <div class="tools__second-menu__wishlist"><a href="/catalog/order_later/" title="Товары отложенные на потом">На потом: {$order_later_count}</a></div>
+            {/if}
+            <a href="{$base_url}/{$menu.url}/" {if $current_url == $menu.url}class="tools__second-menu__wishlist"{/if} title="{$menu.name}">{$menu.name}</a>
+        {/foreach}
+		<a href="#" id="lk">Войти</a>
+		<a href="/cabinet/logout/" id="logout" class="g-hidden" style="color: red;">Выход</a>
+    </div>
+</div>
+
+{literal}
+<script type="text/javascript">
+    var onReady = function(e){
+        $(document).on('click','.tools__search__icon',function(){
+            var form = $(this).closest('form');
+            var search = $("input[type=text]",$(form)).val();
+            if ($.trim(search)){
+                $(form).submit();
+            }
+        });
+    }
+    document.addEventListener('DOMContentLoaded', onReady, false);
+</script>
+{/literal}

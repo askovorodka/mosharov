@@ -1,0 +1,16 @@
+<div class="breadcrumbs">
+    {if $current_url != $default_url}
+        {foreach name=nav_loop from=$navigation item=nav}
+            {if $smarty.foreach.nav_loop.last && $smarty.foreach.nav_loop.iteration==1}
+                {$nav.title}
+            {elseif $smarty.foreach.nav_loop.last && $smarty.foreach.nav_loop.iteration>1}
+                <span class="g-text-light-gray breadcrumbs_arrow">&rarr;</span> {$nav.title}
+            {else}
+                {if !$smarty.foreach.nav_loop.first} <span class="g-text-light-gray breadcrumbs_arrow">&rarr;</span> {/if}
+                <a href="{$nav.url}">{$nav.title}</a>
+            {/if}
+        {/foreach}
+    {else}
+        {$page_content.name}
+    {/if}
+</div>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="windows-1251">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+    <title>Template</title>
+    <link href="css/styles.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="js/libs/html5shiv.min.js"></script>
+      <script src="js/libs/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+
+  <div class="auth g-hidden">
+    <div class="auth__form">
+      <img src="img/logo.png" width="97" height="29">
+      <input type="text" name="username" class="form_input" placeholder="Электронная почта" />
+      <input type="password" name="password" class="form_input" placeholder="Пароль" />
+      <div class="form_button g-full-width">Войти</div>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="container">
+      <a href="/" class="header__logo" title="Style Quality Comfort - Стиль, Качество, Комфорт"></a>
+      <nav class="header__menu">
+        <a href="#" class="header__menu-link">Пальто фвафывафывафыва</a>
+        <a href="#" class="header__menu-link">Куртки</a>
+        <a href="#" class="header__menu-link">Брюки</a>
+        <a href="#" class="header__menu-link">Жилеты</a>
+        <a href="#" class="header__menu-link">Толстовки</a>
+        <a href="#" class="header__menu-link">Трикотаж</a>
+        <a href="#" class="header__menu-link">Акции</a>
+      </nav>
+      <div class="header__cart">
+        <a href="#" class="header__cart__holder" title="Перейти в корзину">
+          <div class="icon icon-shopping-cart"></div>
+          У вас <span class="orange">12</span> товаров на <span class="orange">156 000</span> руб.
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="tools">
+        <div class="tools__search">
+          <div class="icon-search tools__search__icon"></div>
+          <input type="text" placeholder="Ищу по артикулу и названию" name="search"/>
+        </div>
+        <div class="tools__second-menu">
+          <a href="#">О магазине</a>
+          <a href="#">Доставка и оплата</a>
+          <a href="#">Контакты</a>
+          <div class="tools__second-menu__wishlist"><a href="#">На потом: 12</a></div>
+          <a href="#">Личный кабинет</a>
+        </div>
+    </div>
+
+    <div class="breadcrumbs">
+      <a href="#">Главная</a><span class="g-text-light-gray breadcrumbs_arrow">→</span> Толстовки
+    </div>
+
+    <div class="filters">
+      <div class="filters__items">
+        <div class="filters__items__item">
+          <div class="filters__items__item_title">Бренд:</div>
+          <div class="size">noname</div>
+          <div class="size selected">Bruno Banani</div>
+          <div class="size">DKNY</div>
+          <div class="size">Victoria's secret</div>
+        </div>
+        <div class="filters__items__item">
+          <div class="filters__items__item_title">Размер:</div>
+          <div class="size">8</div>
+          <div class="size">46</div>
+          <div class="size">48</div>
+          <div class="size selected">54</div>
+          <div class="size selected">56</div>
+          <div class="size">56</div>
+          <div class="size">60</div>
+          <div class="size">62</div>
+        </div>
+        <div class="filters__items__item">
+          <div class="filters__items__item_title">Цвет:</div>
+          <div class="color" style="background: #000;"></div>
+          <div class="color selected" style="background: #45b759;"></div>
+          <div class="color" style="background: #e14d43;"></div>
+          <div class="color" style="background: #d1d3da;"></div>
+        </div>
+        <div class="filters__items__item">
+          <div class="filters__items__item_title">Цена:</div>
+          <div class="clearfix">
+            <input id="filters__items__item_input_from" class="filters__items__item_input form_input g-pull-left" data-val="0" type="text" value="0"/>
+            <input id="filters__items__item_input_to" class="filters__items__item_input form_input g-pull-right" data-val="15000" type="text" value="15000"/>
+          </div>
+          <div class="filters__items__item_range" id="filters__items__item_range">
+            <div class="filters__items__item_range_active" id="filters__items__item_range_active"></div>
+            <div class="icon-range filters__items__item_range_toggler" id="filters__items__item_range--first"></div>
+            <div class="icon-range filters__items__item_range_toggler" id="filters__items__item_range--second"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="catalog">
+      <div class="catalog__item">
+        <a href="#" class="catalog__item_pic sale"><img src="/img/pict_item_cat.jpg"/></a>
+        <div class="catalog__item__info">
+          <div class="catalog__item__info_plus">
+            <div class="catalog__item__info_plus_sizes">
+              <div class="size size--small">8</div>
+              <div class="size size--small">46</div>
+              <div class="size size--small">48</div>
+              <div class="size size--small">54</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">60</div>
+              <div class="size size--small">62</div>
+            </div>
+            Пиджак Big Boss jacket
+          </div>
+          <span class="catalog__item__info_price">24 490 руб.</span>
+          <div class="catalog__item__info_button form_button form_button--middle form_button--yellow-light">на потом</div>
+        </div>
+      </div>
+      <div class="catalog__item">
+        <a href="#" class="catalog__item_pic"><img src="/img/pict_item_cat.jpg"/></a>
+        <div class="catalog__item__info">
+          <div class="catalog__item__info_plus">
+            <div class="catalog__item__info_plus_sizes">
+              <div class="size size--small">8</div>
+              <div class="size size--small">46</div>
+              <div class="size size--small">48</div>
+              <div class="size size--small">54</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">60</div>
+              <div class="size size--small">62</div>
+            </div>
+            Пиджак Big Boss jacket
+          </div>
+          <span class="catalog__item__info_price">24 490 руб.</span>
+          <div class="catalog__item__info_button form_button form_button--middle form_button--yellow-light">на потом</div>
+        </div>
+      </div>
+      <div class="catalog__item">
+        <a href="#" class="catalog__item_pic"><img src="/img/pict_item_cat.jpg"/></a>
+        <div class="catalog__item__info">
+          <div class="catalog__item__info_plus">
+            <div class="catalog__item__info_plus_sizes">
+              <div class="size size--small">8</div>
+              <div class="size size--small">46</div>
+              <div class="size size--small">48</div>
+              <div class="size size--small">54</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">60</div>
+              <div class="size size--small">62</div>
+            </div>
+            Пиджак Big Boss jacket
+          </div>
+          <span class="catalog__item__info_price">24 490 руб.</span>
+          <div class="catalog__item__info_button form_button form_button--middle form_button--orange">удалить</div>
+        </div>
+      </div>
+      <div class="catalog__item">
+        <a href="#" class="catalog__item_pic"><img src="/img/pict_item_cat.jpg"/></a>
+        <div class="catalog__item__info">
+          <div class="catalog__item__info_plus">
+            <div class="catalog__item__info_plus_sizes">
+              <div class="size size--small">8</div>
+              <div class="size size--small">46</div>
+              <div class="size size--small">48</div>
+              <div class="size size--small">54</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">60</div>
+              <div class="size size--small">62</div>
+            </div>
+            Пиджак Big Boss jacket
+          </div>
+          <span class="catalog__item__info_price">24 490 руб.</span>
+          <div class="catalog__item__info_button form_button form_button--middle form_button--yellow-light">на потом</div>
+        </div>
+      </div>
+      <div class="catalog__item">
+        <a href="#" class="catalog__item_pic"><img src="/img/pict_item_cat.jpg"/></a>
+        <div class="catalog__item__info">
+          <div class="catalog__item__info_plus">
+            <div class="catalog__item__info_plus_sizes">
+              <div class="size size--small">8</div>
+              <div class="size size--small">46</div>
+              <div class="size size--small">48</div>
+              <div class="size size--small">54</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">60</div>
+              <div class="size size--small">62</div>
+            </div>
+            Пиджак Big Boss jacket
+          </div>
+          <span class="catalog__item__info_price">24 490 руб.</span>
+          <div class="catalog__item__info_button form_button form_button--middle form_button--yellow-light">на потом</div>
+        </div>
+      </div>
+      <div class="catalog__item">
+        <a href="#" class="catalog__item_pic"><img src="/img/pict_item_cat.jpg"/></a>
+        <div class="catalog__item__info">
+          <div class="catalog__item__info_plus">
+            <div class="catalog__item__info_plus_sizes">
+              <div class="size size--small">8</div>
+              <div class="size size--small">46</div>
+              <div class="size size--small">48</div>
+              <div class="size size--small">54</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">60</div>
+              <div class="size size--small">62</div>
+            </div>
+            Пиджак Big Boss jacket
+          </div>
+          <span class="catalog__item__info_price">24 490 руб.</span>
+          <div class="catalog__item__info_button form_button form_button--middle form_button--yellow-light">на потом</div>
+        </div>
+      </div>
+      <div class="catalog__item">
+        <a href="#" class="catalog__item_pic"><img src="/img/pict_item_cat.jpg"/></a>
+        <div class="catalog__item__info">
+          <div class="catalog__item__info_plus">
+            <div class="catalog__item__info_plus_sizes">
+              <div class="size size--small">8</div>
+              <div class="size size--small">46</div>
+              <div class="size size--small">48</div>
+              <div class="size size--small">54</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">60</div>
+              <div class="size size--small">62</div>
+            </div>
+            Пиджак Big Boss jacket
+          </div>
+          <span class="catalog__item__info_price">24 490 руб.</span>
+          <div class="catalog__item__info_button form_button form_button--middle form_button--yellow-light">на потом</div>
+        </div>
+      </div>
+      <div class="catalog__item">
+        <a href="#" class="catalog__item_pic"><img src="/img/pict_item_cat.jpg"/></a>
+        <div class="catalog__item__info">
+          <div class="catalog__item__info_plus">
+            <div class="catalog__item__info_plus_sizes">
+              <div class="size size--small">8</div>
+              <div class="size size--small">46</div>
+              <div class="size size--small">48</div>
+              <div class="size size--small">54</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">60</div>
+              <div class="size size--small">62</div>
+            </div>
+            Пиджак Big Boss jacket
+          </div>
+          <span class="catalog__item__info_price">24 490 руб.</span>
+          <div class="catalog__item__info_button form_button form_button--middle form_button--yellow-light">на потом</div>
+        </div>
+      </div>
+      <div class="catalog__item">
+        <a href="#" class="catalog__item_pic"><img src="/img/pict_item_cat.jpg"/></a>
+        <div class="catalog__item__info">
+          <div class="catalog__item__info_plus">
+            <div class="catalog__item__info_plus_sizes">
+              <div class="size size--small">8</div>
+              <div class="size size--small">46</div>
+              <div class="size size--small">48</div>
+              <div class="size size--small">54</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">60</div>
+              <div class="size size--small">62</div>
+            </div>
+            Пиджак Big Boss jacket
+          </div>
+          <span class="catalog__item__info_price">24 490 руб.</span>
+          <div class="catalog__item__info_button form_button form_button--middle form_button--yellow-light">на потом</div>
+        </div>
+      </div>
+      <div class="catalog__item">
+        <a href="#" class="catalog__item_pic"><img src="/img/pict_item_cat.jpg"/></a>
+        <div class="catalog__item__info">
+          <div class="catalog__item__info_plus">
+            <div class="catalog__item__info_plus_sizes">
+              <div class="size size--small">8</div>
+              <div class="size size--small">46</div>
+              <div class="size size--small">48</div>
+              <div class="size size--small">54</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">60</div>
+              <div class="size size--small">62</div>
+            </div>
+            Пиджак Big Boss jacket
+          </div>
+          <span class="catalog__item__info_price">24 490 руб.</span>
+          <div class="catalog__item__info_button form_button form_button--middle form_button--yellow-light">на потом</div>
+        </div>
+      </div>
+      <div class="catalog__item">
+        <a href="#" class="catalog__item_pic"><img src="/img/pict_item_cat.jpg"/></a>
+        <div class="catalog__item__info">
+          <div class="catalog__item__info_plus">
+            <div class="catalog__item__info_plus_sizes">
+              <div class="size size--small">8</div>
+              <div class="size size--small">46</div>
+              <div class="size size--small">48</div>
+              <div class="size size--small">54</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">60</div>
+              <div class="size size--small">62</div>
+            </div>
+            Пиджак Big Boss jacket
+          </div>
+          <span class="catalog__item__info_price">24 490 руб.</span>
+          <div class="catalog__item__info_button form_button form_button--middle form_button--yellow-light">на потом</div>
+        </div>
+      </div>
+      <div class="catalog__item">
+        <a href="#" class="catalog__item_pic"><img src="/img/pict_item_cat.jpg"/></a>
+        <div class="catalog__item__info">
+          <div class="catalog__item__info_plus">
+            <div class="catalog__item__info_plus_sizes">
+              <div class="size size--small">8</div>
+              <div class="size size--small">46</div>
+              <div class="size size--small">48</div>
+              <div class="size size--small">54</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">56</div>
+              <div class="size size--small">60</div>
+              <div class="size size--small">62</div>
+            </div>
+            Пиджак Big Boss jacket
+          </div>
+          <span class="catalog__item__info_price">24 490 руб.</span>
+          <div class="catalog__item__info_button form_button form_button--middle form_button--yellow-light">на потом</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text">
+      <h2>Толстовки</h2>
+      <p>Первые стихи Блок написал в пять лет. В 10 лет Александр Блок написал два номера журнала «Корабль». С 1894 по 1897 год он вместе с братьями писал рукописный журнал «Вестник». С детства Александр Блок каждое лето проводил в подмосковном имении деда Шахматово. В 8 км находилось имение друга Бекетова, великого русского химика Дмитрия Менделеева Боблово. В 16 лет Блок увлёкся театром. В Петербурге Александр Блок записался в театральный кружок. Однако после первого успеха ролей в театре ему больше не давали.</p>
+    </div>
+
+  </div>
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__menu">
+        <a href="#">О магазине</a>
+        <a href="#">Доставка и оплата</a>
+        <a href="#">Возврат товара</a>
+        <a href="#">Контакты</a>
+      </div>
+      <div class="footer__info">
+        <span class="footer__info-item"><span class="g-text-light-gray">Мы находимся:</span></span> г. Москва, ул. Тверская, дом 10.</span>
+        <span class="footer__info-item"><span class="g-text-light-gray">Тел:</span> 495 565 75 25</span>
+        <span class="footer__info-item"><span class="g-text-light-gray">Email:</span> <a href="#">hello@s-q-c.ru</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/libs/jquery.min.js"></script>
+  <script src="js/scripts.js"></script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+<header class="header">
+    <div class="container">
+        <a href="/" class="header__logo" title="Style Quality Comfort - Стиль, Качество, Комфорт"></a>
+        <nav class="header__menu">
+            {foreach from=$shop_menu item=menu}
+                <a href="{$base_url}/catalog/{$menu.url}/" title="{$menu.name}" class="header__menu-link">{$menu.name}</a>
+            {/foreach}
+        </nav>
+        <div class="header__cart basket">
+            <a href="/catalog/basket/" class="header__cart__holder" title="Перейти в корзину">
+                <div class="icon icon-shopping-cart"></div>
+                У вас <span id="basket_number" class="orange">{$basket_number}</span> товаров на <span id="basket_currency" class="orange">{$basket_total}</span> руб.
+            </a>
+        </div>
+    </div>
+</header>

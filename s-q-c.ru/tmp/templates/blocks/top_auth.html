@@ -1,0 +1,28 @@
+<div class="auth g-hidden" id="auth">
+
+    <div class="auth__form">
+        <img src="{$template_image}logo_black.png" width="97" height="29">
+
+        <div class="auth_block">
+            <input type="text" id="auth_username" name="username" class="form_input" placeholder="Электронная почта" />
+            <input type="password" name="password" id="auth_password" class="form_input" placeholder="Пароль" />
+            <div class="form_button g-full-width" id="auth_send">Войти</div>
+            <a href="/cabinet/restore/" class="restore_password">Восстановить пароль</a>
+        </div>
+
+    </div>
+
+</div>
+
+{literal}
+<script type="text/javascript">
+
+    var onReady = function(e){
+
+
+    }
+
+    document.addEventListener('DOMContentLoaded', onReady, false);
+
+</script>
+{/literal}

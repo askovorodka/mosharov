@@ -1,0 +1,23 @@
+<center>{if $error_message}<font color=red>{$error_message}</font><br><br>{/if}</center>
+
+<form method="post" action="">
+  <input type="hidden" name="submit_form_login" value="1" />
+  <div class="cabinet">
+    <div class="form_line form_line--yellow cabinet__yellow">
+      <div class="cart_motivator">
+        <span class="g-text-bigger">Ваши данные для входа в ЛК!</span><br>В личном кабинете вы сможете посмотреть историю заказов, накопить скидку и изменить данные для доставки.
+      </div>
+      <div class="form_line">
+        <label for="cart_password"><input id="cart_email" name="email" type="text" class="form_input form_input--white" placeholder="Email"/> Email</label>
+      </div>
+      <div class="form_line">
+        <label for="cart_password"><input id="cart_password" name="password" type="password" class="form_input form_input--white" placeholder="Пароль"/> Пароль</label>
+      </div>
+
+    </div>
+    <div class="form_line">
+      <button class="form_button form_button--yellow">Войти</button>
+    </div>
+
+  </div>
+</form>

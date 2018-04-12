@@ -1,0 +1,171 @@
+{literal}
+<SCRIPT language=JavaScript>
+<!--
+function confirm_delete(order_id,product_id)
+{
+if (confirm("Дейтсвительно удалить этот продукт из заказа?")) {
+parent.location.href = "index.php?mod=shop&action=delete_from_order&order_id=" + order_id + "&product_id=" + product_id;
+}
+}
+-->
+</SCRIPT>
+
+{/literal}
+<form name=change_status method=post>
+<input type="hidden" name="edit_order_status" value="1">
+<input type=hidden name=id value={$smarty.get.id}>
+<table width=100% class=content_table>
+<tr><th style="text-align: left; border-right: none;">Заказ №{$smarty.get.id}</th>
+<th width=100 style="border-left: none; border-right: none; font-weight: normal;">cтатус заказа:</th>
+<th width=150 style="border-left: none;"><select name=edit_status style="width: 140px;" class=field onChange="this.form.submit();">
+{foreach from=$status_list item=status}
+<option value={$status.value} {if $status.value==$user_info.status}selected{/if}>{$status.name}</option>
+{/foreach}
+</select>
+</th></tr>
+<table>
+</form>
+
+<form action="" method="post">
+<input type="hidden" name="order_id" value="{$smarty.get.id}">
+<table width=100% class=content_table>
+<tr valign="top">
+<td width="80%" class="td1_left">
+<table width=100% border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td width="250" style="height: 25px; font-size: 10px;"><strong>ф.и.о.:</strong></td>
+	<td style="border-bottom: 1px solid white;">
+		{if !empty($user_info.user)}
+			<a href="?mod=users&action=edit_user&id={$user_info.id}"><strong>{$user_info.name}</strong></a>
+		{else}
+			{$user_info.name}
+		{/if}
+	</td>
+</tr>
+<tr>
+<td width="250" style="height: 25px; font-size: 10px;"><strong>телефон:</strong></td><td style="border-bottom: 1px solid white;">{$user_info.phone}</td>
+</tr>
+<tr>
+<td width="250" style="height: 25px; font-size: 10px;"><strong>e-mail:</strong></td><td style="border-bottom: 1px solid white;">{mailto address=$user_info.email}</td>
+</tr>
+<tr>
+<td width="250" style="height: 25px; font-size: 10px;"><strong>адрес:</strong></td><td style="border-bottom: 1px solid white;">{$user_info.address}</td>
+</tr>
+<tr>
+<td width="250" style="height: 25px; font-size: 10px;"><strong>способ доставки:</strong></td><td style="border-bottom: 1px solid white;">
+	{if $user_info.delivery == 2}Доставка{else}Самовывоз{/if}</td>
+</tr>
+<tr>
+<td width="250" style="height: 25px; font-size: 10px;"><strong>комментарий:</strong></td><td style="border-bottom: 1px solid white;">{$user_info.comment|nl2br}</td>
+</tr>
+
+</table>
+
+</td>
+<td width="50%" class="td1_right">
+
+{*<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td valign=top style="font-size: 10px;"><strong>комментарии:</strong></td></tr>
+    <tr>
+    <td valign="top" style="padding-top: 5px;"><textarea name="comment_user" style="width: 96%; height: 60px;">{$user_info.comment|nl2br}</textarea>
+    <br><input type="submit" value="Сохранить комментарии &#8594;" style="font-size: 10px;" class="hand" name="submit_edit_user_order"></td>
+  </tr>
+</table>
+*}
+</td></tr>
+</table>
+</form>
+<br>
+{if $orders}
+<form action="" method=post>
+<input type=hidden name=id value={$smarty.get.id}>
+	<table width=100% class=content_table>
+
+	<tr><th>Заказанные товары</th>
+		<th width=100>Кол-во</th>
+		<th width="200">Св-ва товара</th>
+		<th width=15%>Цена за ед.</th>
+		<th width=15%>Цена общая</th>
+		<th width=100>Действия</th></tr>
+    {assign var=total_summ value=""}
+	{foreach from=$orders item=entry name=tree}
+
+	{if $col==1}
+	{assign var="td" value='td1'}
+	{assign var="col" value=0}
+	{else}
+	{assign var="td" value='td2'}
+	{assign var="col" value=1}
+	{/if}
+	<tr onmouseover="flatlinkOver(this)" {if $smarty.foreach.tree.iteration%2==1}onmouseout="flatlinkOut(this)"{else}onmouseout="flatlinkOut1(this)"{/if}>
+			<td class={$td}_left>
+            {if intval($entry.hit)==1}<img src="templates/img/hit.gif" width="21" height="21" border="0" alt="Хит продаж" align="right" style="margin: 2px 5px 0 10px;">{/if}
+				<small><font color=#666666>{$entry.cat_title}</font></small><br>
+				<a href="?mod=shop&action=edit_product&id={$entry.product_id}">{$entry.name}</a>
+			</td>
+			<td class={$td}_middle align=center>{$entry.product_count}
+				{*<input type=text name=edit_number[{$entry.product_id}] value="{$entry.product_count}" class=field style="width:100%;" />*}
+			</td>
+			<td class={$td}_middle>
+				{if !empty($entry.properties)}
+					{foreach from=$entry.properties item=property key=key name=forP}
+						{if $key == "color"}
+							Цвет: <span style="background-color: {$property}; display: inline-block; width: 10px; height: 10px;"></span>
+						{/if}
+
+						{if $key == "size"}
+						Размер: {$property}
+						{/if}
+						{if !$smarty.foreach.forP.last}, {/if}
+					{/foreach}
+				{/if}
+			</td>
+			<td class={$td}_middle align="right">
+				{$entry.product_price|format_number} руб.
+			</td>
+			
+			<td class={$td}_middle align="right">
+				{$entry.total_summ|format_number} руб.
+			</td>
+			<td class={$td}_right align=center>
+				<a href="javascript:confirm_delete('{$entry.id}','{$entry.product_id}');" class=img_link><img src=templates/img/ico_delete.gif border=0 /></a>
+			</td>
+		</tr>
+	{/foreach}
+
+	<tr>
+		<td class=2_left>Стоимость доставки: {$user_info.order_price} руб. </td>
+		<td class=2_middle align=left></td>
+		<td class=2_middle align="right">Итого: <font color=red><b>{$user_info.total_price|format_number} {$currency_site.znak}</b></font></td>
+		<td class=2_right align=center>{*<input type=submit name=submit_number_recount style="font-size: 9px; width: 100px; cursor: hand; cursor: pointer;" value="Пересчитать">*}</td>
+	</tr>
+
+		{if !empty($user_info.promo_sale)}
+		<tr>
+			<td class="2_left">В заказе использован промокод: {$user_info.code}</td>
+		</tr>
+		<tr>
+			<td class="2_left">Скидка по промокоду: {$user_info.promo_sale} ({$user_info.percent}%)</td>
+		</tr>
+		{/if}
+
+		{if !empty($user_info.register_sale)}
+		<tr>
+			<td class="2_left">Скидка авторизованному: {$user_info.register_sale} (5%)</td>
+		</tr>
+		{/if}
+
+	</table>
+</form>
+<br>
+<table width="98%" border="0" cellspacing="0" cellpadding="0" align="center">
+  <tr>
+    <td width="50%">{if $previous_order != ""}<link rel="next" href="?mod=shop&action=order_details&id={$previous_order}" id="NextLink" /><a href="?mod=shop&action=order_details&id={$previous_order}" style="font-size: 10px; text-decoration: underline;"><span>&#8592;</span> предыдущий заказ</a>{/if}</td>
+    <td align="right">{if $next_order != ""}<link rel="prev" href="?mod=shop&action=order_details&id={$next_order}" id="PrevLink" /><a href="?mod=shop&action=order_details&id={$next_order}" style="font-size: 10px; text-decoration: underline;" rel="prev" id="PrevLink">следующий заказ <span>&#8594;</span></a>{/if}</td>
+  </tr>
+</table><br>
+
+{else}
+<center>В заказе нет позиций</center>
+{/if}

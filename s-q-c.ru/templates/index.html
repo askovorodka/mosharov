@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+    <title>{$page_title}</title>
+    <meta name="Keywords" content="{$meta_keywords}">
+    <meta name="Description" content="{$meta_description}">
+    <meta name="yandex-verification" content="e0abba0524cdba93" />
+    <link href="/templates/css/styles.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="/templates/js/libs/html5shiv.min.js"></script>
+      <script src="/templates/js/libs/respond.min.js"></script>
+    <![endif]-->
+  </head>
+<body>
+
+{include file="`$smarty.const.TPL_PATH`blocks/top_auth.html"}
+{include file="`$smarty.const.TPL_PATH`blocks/top_header.html"}
+
+<div class="container">
+
+  {include file="`$smarty.const.TPL_PATH`blocks/top_search.html"}
+
+  {if $current_url != 'home'}
+    {include file="`$smarty.const.TPL_PATH`blocks/breadcrumbs.html"}
+  {/if}
+
+  {*if $current_url == 'home'}
+    {include file="`$smarty.const.TPL_PATH`blocks/banners.html"}
+  {/if*}
+
+  {if $content=='' or !$content}
+  {assign var="content" value=""}
+  {fetch file=$template assign="content"}
+  {/if}
+  {eval var=$content}
+
+
+</div>
+
+<script src="/templates/js/libs/jquery.min.js"></script>
+<script src="/templates/js/scripts.js"></script>
+{include file="`$smarty.const.TPL_PATH`blocks/footer.html"}
+
+{literal}
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter36614000 = new Ya.Metrika({
+                    id:36614000,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/36614000" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<!-- BEGIN JIVOSITE CODE -->
+<script type='text/javascript'>
+(function(){ var widget_id = 'I2c1yQANsb'; var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);})();
+</script>
+<!-- END JIVOSITE CODE -->
+{/literal}
+</body>
+</html>

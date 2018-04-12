@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<!DOCTYPE yml_catalog SYSTEM "shops.dtd">
+<yml_catalog date="{php}print(date("Y-m-d H:s")){/php}">
+<shop>
+    <name>S-Q-C.ru торговые мароки "МАРИ ФАЙН" и "АННА ФОРТУНА"</name>
+    <company>{$base_url|replace:"http://":""}</company>
+    <url>{$base_url}</url>
+    <currencies>
+
+        <currency id="RUR" rate="1"/>
+        <currency id="USD" rate="CBRF"/>
+
+    </currencies>
+    <categories>
+        {foreach from=$cat item=category}
+        {if $category.parent>1}
+        {assign var=parent value=$category.parent}
+        {else}
+        {assign var=parent value=0}
+        {/if}
+        <category id="{$category.id}"{if $parent!=0} parentId="{$parent}"{/if}>{$category.name}</category>
+        {/foreach}
+    </categories>
+
+    <offers>
+
+        {foreach from=$products_list item=item}
+        <offer id="{$item.id}" available="true" type="vendor.model">
+            <url>{$module_url}/{$item.full_url}</url>
+            <price>{$item.price}</price>
+            <currencyId>RUR</currencyId>
+            <vendor>{$item.brand}</vendor>
+            <categoryId>{if $item.parent>1}{$item.parent}{else}0{/if}</categoryId>
+            {if $item.image}<picture>{$base_url}/uploaded_files/shop_images/{$item.image}</picture>{/if}
+            <model>{$item.name}</model>
+            <description>{$item.small_description|default:$item.description|strip_tags}</description>
+            <delivery>true</delivery>
+            {if !empty($item.article)}<vendorCode>{$item.article}</vendorCode>{/if}
+
+            {if !empty($item.properties.colorsNames)}
+                {foreach from=$item.properties.colorsNames item=itemColor key=colorKey}
+                    <param name="Цвет">{$itemColor}</param>
+                {/foreach}
+            {/if}
+
+            {if !empty($item.properties.sizes)}
+                {foreach from=$item.properties.sizes item=itemSize key=sizeKey}
+                    <param name="Размер" unit="RU">{$sizeKey}</param>
+                {/foreach}
+            {/if}
+
+        </offer>
+        {/foreach}
+    </offers>
+</shop>
+</yml_catalog>

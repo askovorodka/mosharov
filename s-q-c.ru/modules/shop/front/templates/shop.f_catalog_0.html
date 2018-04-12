@@ -1,0 +1,11 @@
+<div class="catalog filters__items__item">
+	<h1>Каталог продукции</h1>
+    {if $folders_list}
+    	{foreach from=$folders_list item=folder}
+			<div class="size">
+		    <a title="{$folder.name}" href="{$base_url}/{$folder.full_url}/">{$folder.name|strip_tags}</a><br>
+		    {if $folder.image}<a title="{$folder.name}" href="{$base_url}/{$folder.full_url}/"><img src="/uploaded_files/category_images/medium-{$folder.image}" width="149" height="144" class="pozimg"></a>{/if}
+		    </div>
+		{/foreach}
+	{/if}
+</div>

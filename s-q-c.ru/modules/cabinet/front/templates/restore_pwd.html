@@ -1,0 +1,13 @@
+<h2>Восстановление пароля</h2>
+
+{if !empty($message)}
+<div style="color: forestgreen;">{$message}</div>
+{/if}
+
+<form id="restore_password_form" method="POST" action="">
+  <div class="form_line">
+    <label for="cart_name">
+      <input id="cart_name" name="email" type="text" class="form_input" placeholder="Email" value="{$email}"> <span class="g-text-gray">Новый пароль будет выслан вам на почту</span></label>
+  </div>
+<input type="submit" value="Отправить" name="submit_restore">
+</form>

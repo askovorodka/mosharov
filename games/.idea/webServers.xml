@@ -10,6 +10,14 @@
           <option name="port" value="22" />
         </fileTransfer>
       </webServer>
+      <webServer id="5391d43e-20cc-430b-9915-9e9d93574bf9" name="s-q-c.ru" url="http://s-q-c.ru">
+        <fileTransfer host="s-q-c.ru" port="21" rootFolder="/domains/s-q-c.ru/public_html">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

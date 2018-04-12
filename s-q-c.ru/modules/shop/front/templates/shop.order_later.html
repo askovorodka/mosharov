@@ -1,0 +1,43 @@
+<div class="catalog">
+    {if !empty($products_list)}
+    {foreach from=$products_list item=item key=key}
+    <div class="catalog__item" id="catalog__item-{$item.id}">
+        {if $item.image}
+        <a href="{$base_url}/{$item.full_url}/" class="catalog__item_pic{if $item.price_sale} sale{/if}"><img src="/uploaded_files/shop_images/small-{$item.image}.{$item.ext}" /></a>
+        {/if}
+        <div class="catalog__item__info">
+            <div class="catalog__item__info_plus">
+                <div class="catalog__item__info_plus_sizes">
+                    {if !empty($item.sizes)}
+                    {foreach from=$item.sizes item=size}
+                    <div class="size size--small">{$size.value}</div>
+                    {/foreach}
+                    {/if}
+                </div>
+                {$item.name|strip_tags}
+            </div>
+            <span class="catalog__item__info_price">{if !empty($item.price_sale)}{$item.price_sale}{else}{$item.price}{/if} руб.</span>
+            <div data-href="" class="catalog__item__info_button form_button form_button--middle form_button--orange" data-product_id="{$item.id}">удалить</div>
+        </div>
+    </div>
+    {/foreach}
+    {else}
+    <center>” вас пока нет отложенных товаров :(</center>
+    {/if}
+
+</div>
+
+{literal}
+<script type="text/javascript">
+    var onReady = function(e){
+        $(document).on('click', '.catalog__item__info_button', function(event){
+            var product_id = parseInt($(this).data('product_id'));
+            var url = location.protocol + '//' + location.hostname + '/catalog/order_later/delete/' + product_id + '/';
+            if (true){
+                location.href = url;
+            }
+        });
+    }
+    document.addEventListener('DOMContentLoaded', onReady, false);
+</script>
+{/literal}

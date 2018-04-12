@@ -1,0 +1,85 @@
+<p>В вашем онлайн магазине http://{$smarty.server.SERVER_NAME} сделан заказ</p>
+
+<p>Дата: {$date|date_format:"%d.%m.%Y в %T"}</p> 
+
+<p>Номер заказа: {$order_id}</p>
+
+<p>Имя пользователя: {$name} {$lastname}</p>
+
+<p>Email пользователя: {$email}</p>
+<p>Телефон пользователя: {$phone}</p>
+<p>Пользователь заказал {$number} товаров на сумму {$order_total} {$currency}.</p> 
+
+<p><b>Список заказанных товаров</b></p>
+
+<table cellpadding="3">
+<tr><th>№</th>
+<th>Наименование</th>
+<th>Количество</th>
+<th>Св-ва товара</th>
+<th>Стоимость за единицу</th>
+<th>Сумма</th></tr>
+{foreach from=$products item=product name=for1}
+<tr><td>{$smarty.foreach.for1.iteration}</td>
+<td>{$product.details.name}</td>
+<td>{$product.count}</td>
+<td>
+				{if !empty($product.properties)}
+					{foreach from=$product.properties item=property key=key name=forP}
+					
+						{if $key == "name"}
+							Цвет: {$property}
+						{/if}
+
+						{if $key == "size"}
+						Размер: {$property}(РФ)
+						{/if}
+						
+						{if $key == "size_brand"}
+						Размер: {$property}(Бренд)
+						{/if}
+						{if !$smarty.foreach.for1.last}, {/if}
+					{/foreach}
+				{/if}
+</td>
+<td>{$product.price} руб.</td>
+<td>{$product.sum} руб.</td></tr>
+{/foreach}
+
+{if !empty($promoSale)}
+<tr>
+<td colspan="4" align="right">Скидка по промо-коду:</td>
+<td>{$promoSale} руб.</td>
+</tr>
+{/if}
+
+{if !empty($registerSale)}
+<tr>
+<td colspan="4" align="right">Скидка авторизованному пользователю:</td>
+<td>{$registerSale} руб.</td>
+</tr>
+{/if}
+
+<tr>
+<td colspan="4" align="right">Доставка:</td>
+<td>{$delivery}</td>
+</tr>
+
+<tr>
+<td colspan="4" align="right">Итого:</td>
+<td>{$order_total} руб.</td>
+</tr>
+{if !empty($email)}
+	<tr>
+	<td colspan="4" align="right">Со скидкой:</td>
+	<td>{$order_total} руб.</td>
+	</tr>
+{/if}
+</table>
+
+<p>Адрес указанный при заказе: {$address}</p>
+<p>Комментарий пользователя: {$comment}</p>
+
+<p></p>
+<p>Список заказов в панели управления: {$base_url}/admin/index.php?mod=shop&action=orders</p>
+<p>Детализация данного заказа в панели управления: {$base_url}/admin/index.php?mod=shop&action=order_details&id={$order_id}</p>

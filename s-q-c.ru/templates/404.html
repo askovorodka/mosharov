@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+  <title>404 Error</title>
+  <meta name="Keywords" content="{$meta_keywords}">
+  <meta name="Description" content="{$meta_description}">
+  <link href="/templates/css/styles.css" rel="stylesheet">
+  <!--[if lt IE 9]>
+  <script src="/templates/js/libs/html5shiv.min.js"></script>
+  <script src="/templates/js/libs/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+
+{include file="`$smarty.const.TPL_PATH`blocks/top_auth.html"}
+{include file="`$smarty.const.TPL_PATH`blocks/top_header.html"}
+
+<div class="container">
+
+  {include file="`$smarty.const.TPL_PATH`blocks/top_search.html"}
+
+  {if $current_url != 'home'}
+  {include file="`$smarty.const.TPL_PATH`blocks/breadcrumbs.html"}
+  {/if}
+
+  {if $current_url == 'home'}
+  {include file="`$smarty.const.TPL_PATH`blocks/banners.html"}
+  {/if}
+
+  <center>Error 404. Page not found</center>
+
+
+</div>
+
+{include file="`$smarty.const.TPL_PATH`blocks/footer.html"}
+<script src="/templates/js/libs/jquery.min.js"></script>
+<script src="/templates/js/scripts.js"></script>
+</body>
+</html>

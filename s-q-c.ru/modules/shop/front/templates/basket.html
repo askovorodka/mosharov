@@ -1,0 +1,339 @@
+{if $basket}
+<form action="" method="post" id="basket_form_products">
+  <input type="hidden" name="basket_recount" value="1" />
+
+  <div class="cart cart__items">
+    <div class="cart__items_summ">Общая сумма вашего заказа — <span id="cart_summary_title">{$total_price}</span> руб.</div>
+    {foreach from=$basket item=item}
+    <div class="cart__items__item">
+      <div class="cart__items__item_image">
+        <img src="/uploaded_files/shop_images/50x50-{$item.image}">
+        <div class="cart__items__item_image--big">
+          <img src="/uploaded_files/shop_images/85x85-{$item.image}">
+        </div>
+      </div>
+      <div class="cart__items__item_info">
+        {if !empty($item.properties.size)}
+          <div class="cart__items__item_sizes">Размер: <div class="size size--gray">{$item.properties.size}</div></div>
+        {/if}
+        {if !empty($item.properties.color)}
+          <div class="cart__items__item_colors">Цвет: <div class="color" style="background:{$item.properties.color};"></div></div>
+        {/if}
+        <div class="cart__items__item_numbers"><label for="cart_howmuch">Кол-во: <input class="form_input form_input--small" name="edit_number[{$item.sessionKey}]" data-value="{$item.number}" type="text" id="cart_howmuch" value="{$item.number}"/></label></div>
+        <div class="cart__items__item_price">— &nbsp; {$item.price_number} руб.</div>
+        <div class="cart__items__item_remove"><a href="{$module_url}/basket/delete/{$item.sessionKey}" onClick="return confirm('Удалить продукт из корзины');"><div class="icon icon-trash"></div></a></div>
+      </div>
+      <div class="cart__items__item_title"><a href="{$base_url}/{$item.full_url}/" title="{$item.name}">{$item.name}</a></div>
+    </div>
+    {/foreach}
+  </div>
+
+</form>
+
+<form action="/catalog/basket/submit" method="post" id="basket_form">
+  <input type="hidden" name="submit_order" value="1" />
+  {include file="`$smarty.const.TPL_SHOP_PATH`basket_promo_block.html"}
+  <div class="cart_ready g-text-verybig">Готовы оформить заказ?</div>
+  <div class="text">
+    {include file="`$smarty.const.TPL_SHOP_PATH`basket_delivery_details_block.html"}
+    {if empty($user)}
+      {include file="`$smarty.const.TPL_SHOP_PATH`basket_login_block.html"}
+    {/if}
+    {include file="`$smarty.const.TPL_SHOP_PATH`basket_submit_block.html"}
+  </div>
+</form>
+
+{literal}
+<script type="text/javascript">
+  window.cartItems = [{/literal}{foreach from=$basket item=item}{literal}{'orderitem_name': "{/literal}{$item.name} (Размер: {$item.properties.size}){literal}",
+   'orderitem_quantity': "{/literal}{$item.number}{literal}",
+   'orderitem_cost': "{/literal}{$item.price_number/$item.number}{literal}"
+  },
+  {/literal}{/foreach}{literal}];
+  var deliveryCoast = {/literal}{$smarty.const.DELIVERY_COAST}{literal};
+  var totalPrice = +('{/literal}{$total_price}{literal}'.replace(',','.')),
+      totalPriceOrig = totalPrice;
+
+  var changeDelivery = function ()
+  {
+    if (!parseInt(deliveryCoast)){
+      return false;
+    }
+    if (!parseInt(totalPrice)){
+      return false;
+    }
+    var
+            summaryBlock = document.getElementById("cart_summary"),
+            summaryInfoBlock = document.getElementById('summary_info_block'),
+            summaryTitle = document.getElementById('cart_summary_title'),
+
+    deliveryCoast = new Number(deliveryCoast);
+    totalPrice = new Number(totalPrice);
+    //post
+    var delivery = $("input[name=delivery]:checked").val();
+    if (delivery == 1)
+    {
+      summaryBlock.innerHTML = totalPrice.toFixed(2);
+      summaryInfoBlock.innerHTML = totalPrice.toFixed(2);
+      summaryTitle.innerHTML = totalPrice.toFixed(2);
+    }
+    else
+    {
+      var sum = totalPrice + deliveryCoast;
+      summaryBlock.innerHTML = sum.toFixed(2);
+      summaryInfoBlock.innerHTML = sum.toFixed(2);
+      summaryTitle.innerHTML = sum.toFixed(2);
+    }
+
+  }
+
+  var Ready = function(){
+    $("input[name^=edit_number]").keyup(function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      if (parseInt($(this).val()) != $(this).val()){
+        alert('Введите число');
+        $(this).focus();
+        return false;
+      }
+
+      if (!parseInt($(this).val())) {
+        alert('Кол-во должно быть более 0');
+        return false;
+      }
+
+      if ($(this).val() != $(this).data('value')) {
+        //$(this).closest('form').submit();
+        $("#basket_form_products").submit();
+      }
+
+    }).focus(function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      $(this).select();
+    });
+
+    $(document).on('submit', 'form#basket_form', function(e){
+      try{
+        var
+                name = this.cart_name,
+                phone=this.cart_phone,
+                address = this.cart_address,
+                message = this.cart_message,
+                email = this.cart_email,
+                emailExist =false,
+                errors=[];
+
+        if (typeof email !== 'undefined' && $.trim(email.value))
+        {
+
+          var response = $.ajax({
+            type: 'post',
+            async:false,
+            url: '/catalog/checkemail/',
+            data: {'email': email.value}
+          }).responseText;
+
+          response = $.parseJSON(response);
+
+          if (typeof  response.status !== 'undefined' && response.status == 'success'){
+            alert('Пользователь с таким Email уже существует. Авторизуйтесь.');
+            return false;
+          }
+        }
+
+
+        if (!name.value.replace(/(\s{1,})/ig,'').length){
+          errors.push('Введите ваше имя');
+        }
+
+        if (!/^([0-9\s\(\)\-]{5,})$/.test(phone.value)){
+          errors.push('Введите телефон');
+        }
+
+        if (!address.value.replace(/(\s{1,})/ig,'').length){
+          errors.push('Введите адрес доставки');
+        }
+
+        if (errors.length)
+        {
+          alert(errors.join('\n'));
+          e.preventDefault();
+        }
+
+      }
+      catch(error)
+      {
+        console.log(error);
+        e.preventDefault();
+      }
+
+
+    });
+
+    var delivery = document.getElementsByName('delivery');
+    for(var i=0; i<delivery.length; i++)
+    {
+      delivery[i].addEventListener('change', changeDelivery, false);
+    }
+
+    //$("input[type=radio][name=delivery]:checked").click();
+    changeDelivery();
+
+  };
+  document.addEventListener("DOMContentLoaded", Ready, false);
+
+</script>
+<script type="text/javascript" src="https://api-maps.yandex.ru/2.1/?lang=ru-RU"></script>
+<script src="https://delivery.yandex.ru/widget/loader?resource_id=11119&sid=8062&key=7a260d4d1458cf32bcc155cc4d1af21c"></script>
+<script type="text/javascript">
+    window.cart = {
+      quantity: document.getElementById('basket_number').innerHTML, //общее количество товаров
+      weight: 1,
+      cost: document.getElementById('cart_summary').innerHTML
+    }
+</script>
+<script type="text/javascript">
+  ydwidget.ready(function(){
+    ydwidget.initCartWidget({
+      // Получить указанный пользователем город.
+      'getCity': function () {
+        var city = yd$('#cart_city').val();
+        if (city) {
+          return {value: city};
+        } else {
+          return false;
+        }
+      },
+      // id элемента-контейнера.
+      'el': 'ydwidget',
+      // Oбщее количество товаров в корзине.
+      'totalItemsQuantity': function () { return cart.quantity },
+      // Общий вес товаров в корзине.
+      'weight': function () { return cart.weight },
+      // Общая стоимость товаров в корзине.
+      'cost': function () { return cart.cost },
+	  //флаг отправки заказа через единый склад. Влияет на расчет стоимости в предлагаемых вариантах доставки, для записи поля в заказ данное поле так же нужно передать в объекте order (поле delivery_to_yd_warehouse).
+	  'to_yd_warehouse': 1,
+	  // Объявленная ценность заказа. В данном случае она равна общей стоимости заказа. Влияет на расчет стоимости в предлагаемых вариантах доставки.
+	  'assessed_value': cart.cost,
+	  // Обработка смены варианта доставки.
+	  'onDeliveryChange': function (delivery) {
+          // Если выбран вариант доставки, выводится его описание и виджет закрывается, иначе
+          //произошел сброс варианта, очищаем описание
+          if (delivery) {
+		  yd$('#delivery_description').text(ydwidget.cartWidget.view.helper.getDeliveryDescription(delivery));
+		  yd$('#cart_delivery').val(ydwidget.cartWidget.view.helper.getDeliveryDescription(delivery));
+		  
+            ydwidget.cartWidget.close();
+          } else {
+            yd$('#delivery_description').text('')
+          }
+        },
+	  //необходимые для создания заказа поля
+      //возможно указывать и другие поля, см. объект Order в документации
+	 
+	  'order': {
+          //имя, фамилия, телефон, улица, дом, индекс
+          'recipient_first_name': function () { return yd$('#cart_name').val() },
+		  'recipient_last_name': function () { return yd$('#cart_lastname').val() },
+          'recipient_phone': function () { return yd$('#cart_phone').val() },
+          'deliverypoint_street': function () { return yd$('#cart_street').val() },
+          'deliverypoint_house': function () { return yd$('#cart_house').val() },
+          'deliverypoint_index': function () { return yd$('#cart_index').val() },
+		  //объявленная ценность заказа
+		  'order_assessed_value': cart.cost,
+		  //флаг отправки заказа через единый склад.
+		  'delivery_to_yd_warehouse': 1,
+          //товарные позиции в заказе
+          //возможно указывать и другие поля, см. объект OrderItem в документации
+          'order_items': function () {
+          var items = cartItems;
+          return items;
+        }
+        },
+		// id элемента для вывода ошибок валидации.
+		'errorsEl': 'cart_errors',
+		// Автодополнение.
+		'autocomplete': ['city', 'street', 'index'],
+		'cityEl': '#cart_city',
+		'streetEl': '#cart_street',
+		'houseEl': '#cart_house',
+		'indexEl': '#cart_index',
+		
+		// Запустить сабмит формы, когда валидация успешно прошла и заказ создан в cookie,
+		//либо createOrderFlag вернул false.
+		'runOrderCreation': function () {
+		
+		var addrIndex = yd$('#cart_index').val();
+		var addrCity = yd$('#cart_city').val();
+		var addrStreet = yd$('#cart_street').val();
+		var addrHouse = yd$('#cart_house').val();
+	
+		var address = (addrIndex ? addrIndex + ', ' : '') + (addrCity ? addrCity + ', ' : '') + (addrStreet ? addrStreet + ', ' : '') + (addrHouse ? addrHouse + ', ' : '');
+	
+		yd$('#cart_address').val(address);
+	
+		if (!yd$('#cart_name').val() || !yd$('#cart_lastname').val()) {
+			alert('Укажите имя и фамилию');
+			return;
+		}
+	
+		if (!yd$('#cart_phone').val()) {
+			alert('Для согласования заказа нам нужен ваш номер телефона.');
+			return;
+		}
+		
+		if (!address) {
+			alert('Пожалуйста, заполните поля адреса доставки');
+			return;
+		}
+		
+		if (!yd$('#delivery_description').text()) {
+			alert('Пожалуйста, выберите себе доставку');
+			return;
+		}
+		
+		yd$('form#basket_form').submit()
+		}
+    })
+  })
+</script>
+{/literal}
+
+{else}
+<center>Ваша корзина пуста.</center>
+{/if}
+
+
+
+{*
+<form action="" method="post" id="basket_form">
+<input type="hidden" name="basket_recount" value="1" />
+<table class="basketin">
+  <tr class="basketintop">
+    <td class="basketintopl">Наименование товара</td>
+    <td>Цена</td>
+    <td>Количество</td>
+    <td class="basketintopr">&nbsp;</td>
+  </tr>
+  {foreach from=$basket item=item}
+  <tr class="basketlist">
+    <td class="basketcapt"><a href="{$base_url}/{$item.full_url}/" title="{$item.name}">{$item.name}</a>
+    {if $item.properties}<br /><small>{foreach from=$item.properties item=pr key=key}{$key}:{$pr}<br />{/foreach}</small>{/if}
+    </td>
+    <td class="basketnw">{$item.price_number} <span class="basketval">руб.</span></td>
+    <td class="basketnw"><input type="text" value="{$item.number}" name="edit_number[{$item.id}]"> <span class="basketint">шт.</span></td>
+    <td><a href="{$module_url}/basket/delete/{$item.id}" onClick="return confirm('Удалить продукт из корзины');"><img src="{$template_image}delete.gif" width="14" height="14" title="Удалить" alt="Удалить"></a></td>
+  </tr>
+  {/foreach}
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2" class="basketall">Итого: {$total_price} <span class="basketallval">руб.</span><br><a href="#" onClick="$('#basket_form').submit();">пересчитать</a></td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</form>
+
+<a title="Оформить заказ" href="/catalog/basket/step1/"><img src="{$template_image}but_oform.png" class="basketoform" /></a>
+*}

@@ -1,0 +1,35 @@
+{include file="`$smarty.const.TPL_SHOP_PATH`top_filter.html"}
+<div class="catalog">
+	{if !empty($products_list)}
+		{foreach from=$products_list item=item key=key}
+			<div class="catalog__item" id="catalog__item-{$item.id}">
+				{if $item.image}
+					<a href="{$base_url}/{$item.full_url}/" class="catalog__item_pic{if $item.price_sale} sale{/if}"><img src="/uploaded_files/shop_images/small-{$item.image}.{$item.ext}" /></a>
+				{/if}
+				<div class="catalog__item__info">
+					<div class="catalog__item__info_plus">
+						<div class="catalog__item__info_plus_sizes">
+							{if !empty($item.sizes)}
+								{foreach from=$item.sizes item=size}
+									<div class="size size--small">{$size.value}</div>
+								{/foreach}
+							{/if}
+						</div>
+						{$item.name|strip_tags}
+					</div>
+					<span class="catalog__item__info_price">{if !empty($item.price_sale)}{$item.price_sale}{else}{$item.price}{/if} руб.</span>
+					{if !empty($order_later_array) && in_array($item.id, $order_later_array)}
+					<div data-href="" class="catalog__item__info_button form_button later_btn form_button--middle form_button--orange" data-product_id="{$item.id}">удалить</div>
+					{else}
+					<div data-product_id="{$item.id}" class="catalog__item__info_button form_button form_button--middle form_button--yellow-light">на потом</div>
+					{/if}
+				</div>
+			</div>
+		{/foreach}
+	{/if}
+</div>
+
+<div class="text">
+	<h2>{$cat_content.name|strip_tags}</h2>
+	{$cat_content.text}
+</div>

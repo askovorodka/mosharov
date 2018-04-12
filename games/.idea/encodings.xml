@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/../cccp-shina.ru/yandex.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/admin/index.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/admin/login.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/admin/main.php" charset="UTF-8" />
@@ -30,7 +31,7 @@
     <file url="file://$PROJECT_DIR$/modules/tree/admin/tree.a_main.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../vlasovtoys/data/www/vlasovtoys.ru/admin/index.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/../../vlasovtoys/data/www/vlasovtoys.ru/index.php" charset="windows-1251" />
-    <file url="file://$PROJECT_DIR$/../../vlasovtoys/data/www/vlasovtoys.ru/templates/left_menu_block.html" charset="windows-1251" />
+    <file url="remoteDeploymentFS://&lt;5391d43e-20cc-430b-9915-9e9d93574bf9&gt;/yandex.php" charset="windows-1251" />
     <file url="PROJECT" charset="windows-1251" />
   </component>
 </project>

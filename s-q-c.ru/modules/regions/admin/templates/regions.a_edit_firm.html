@@ -1,0 +1,115 @@
+{literal}
+<script language=JavaScript src='{/literal}{$base_url}/{literal}javascript/editor/scripts/language/russian/editor_lang.js'></script>
+<script language=JavaScript src='{/literal}{$base_url}/{literal}javascript/editor/scripts{/literal}/{$editor_mode}{literal}'></script>
+
+<script language="JavaScript">
+function check_form() {
+  {/literal}
+  {if $editor_style!='html'}
+  {literal}
+    //document.edit_firm.edit_description.value = edit_description.getHTMLBody();
+  {/literal}
+  {else}
+  {literal}
+    //document.edit_firm.edit_description.value = document.getElementById('description').value;
+  {/literal}
+  {/if}
+  {literal}
+  return true;
+}
+</script>
+{/literal}
+
+
+<form action="" method=post name=edit_firm onSubmit="return check_form();" enctype="multipart/form-data">
+<input type=hidden name=id value={$firm.id}>
+<input type=hidden name=old_logo value={$firm.logo}>
+<center>
+{if $error}<font color=red><b>{$error}</b></font><br><br>{/if}
+<table width=100% cellspacing=1 cellpadding=3 class=content_table>
+<tr>
+<th>{if $mode=='edit'}Редактировать компанию{else}Добавить компанию{/if}</th>
+</tr>
+</table>
+
+
+<table width=100% cellspacing=1 cellpadding=3 class=content_table>
+
+<tr>
+    <td width=20% class=td1_left><b>Регион:</b></td>
+    <td class=td1_right>
+      <select name=edit_reg_parent style="width:100%;" class=field>
+      {foreach from=$reg_list item=entry}
+      {if $entry.param_level > 0}<option value={$entry.id}{if $entry.id==$firm.reg_id} selected=true{/if}>{$entry.name}</option>{/if}
+      {/foreach}
+      </select>
+    </td>
+</tr>
+
+<tr>
+  <td width=15% class=td1_left>Город:</td>
+  <td class=td1_right>
+    <select name=edit_parent class=field style="width:100%;">
+    {foreach from=$citys_list item=entry}
+      <option value={$entry.id}{if $entry.id==$firm.city_id or $entry.id==$city} selected=true{/if}>{$entry.name}</option>
+    {/foreach}
+    </select>
+  </td>
+</tr>
+<tr>
+  <td class=td1_left>Наименование фирмы:</td><td class=td1_right><input type=text name=edit_name class=field style="width:100%;" value="{$firm.name}"></td>
+</tr>
+
+<tr>
+  <td class=td1_left>Адрес:</td><td class=td1_right><input type=text name=edit_address class=field style="width:100%;" value="{$firm.address}"></td>
+</tr>
+
+<tr>
+  <td class=td1_left>E-mail:</td><td class=td1_right><input type=text name=edit_email class=field style="width:100%;" value="{$firm.email}"></td>
+</tr>
+
+<tr>
+  <td class=td1_left>Телефон/Факс:</td><td class=td1_right><input type=text name=edit_phone class=field style="width:100%;" value="{$firm.phone}"></td>
+</tr>
+
+<tr>
+  <td class=td1_left>Сайт:</td><td class=td1_right><input type=text name=edit_site class=field style="width:100%;" value="{$firm.site}"></td>
+</tr>
+
+<tr>
+<td width=20% valign=top class=td1_left>Логотип:</td><td class=td1_right>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr valign="top">
+    {if $mode=='edit' and $firm.logo!=''}<td width="120"><div style="width: 100px; height: 100px; border: 1px solid #ccc; background: url('{$base_url}/uploaded_files/firms/{$firm.logo}') white 50% 50% no-repeat;">&nbsp;</div></td>{/if}
+    <td>{if $mode=='edit' and $firm.logo!=''}<input type=checkbox name=delete_logo id="del"> <label for="del">удалить логотип</label><br><br>новый логотип<br>{/if}<input type=file name=edit_firm_logo style="width: 250px;" class=field></td>
+  </tr>
+</table>
+
+</td></tr>
+
+{if $mode=='edit'}
+<tr>
+  <td class=td1_left>Статус:</td>
+  <td class=td1_right>
+  <select name=edit_status style="width:40%;" class=field>
+    <option value="1" {if $firm.status=='1'}selected=true{/if}>Активный</option>
+    <option value="0" {if $firm.status=='0'}selected=true{/if}>Ждёт</option>
+  </select>
+  </td>
+</tr>
+{/if}
+{if count($metros_list)>0}
+	<tr><td colspan=2 class=td1_left><b>Станции метро:</b><p>
+		{if $metros_list}
+			{foreach from=$metros_list item=item}
+				<input type=checkbox name=METRO[{$item.id}] {foreach from=$rel_list item=item2} {if $item.id==$item2.metro_id}checked{/if} {/foreach}>{$item.name}<br>
+			{/foreach}
+		{/if}
+	</td></tr>
+{/if}
+</table>
+
+<br><br>
+<center><input type=submit name={if $mode=='edit'}submit_edit_firm value="Сохранить изменения"{else}submit_add_firm value="Добавить компанию"{/if} class=button></center>
+</form>
