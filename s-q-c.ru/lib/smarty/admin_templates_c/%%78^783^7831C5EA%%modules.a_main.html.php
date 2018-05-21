@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.11, created on 2016-03-20 14:15:39
+<?php /* Smarty version 2.6.11, created on 2018-04-10 20:54:20
          compiled from /home/a0031953/domains/s-q-c.ru/public_html//modules/modules/admin/templates/modules.a_main.html */ ?>
 <DIV id=dhtmltooltip></DIV>
 <?php echo '

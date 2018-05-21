@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.11, created on 2016-02-27 23:17:50
+<?php /* Smarty version 2.6.11, created on 2018-04-06 08:41:57
          compiled from /home/a0031953/domains/s-q-c.ru/public_html/conf/../modules/shop/front/templates/basket_login_block.html */ ?>
 <div class="form_line form_line--yellow">
     <div class="cart_motivator">

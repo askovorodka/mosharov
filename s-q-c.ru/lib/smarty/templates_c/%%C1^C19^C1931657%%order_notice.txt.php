@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.11, created on 2016-07-21 01:22:26
+<?php /* Smarty version 2.6.11, created on 2018-04-06 08:47:56
          compiled from /home/a0031953/domains/s-q-c.ru/public_html//modules/shop/front/templates/order_notice.txt */ ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

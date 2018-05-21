@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.11, created on 2016-08-03 00:38:52
+<?php /* Smarty version 2.6.11, created on 2018-04-06 08:41:57
          compiled from /home/a0031953/domains/s-q-c.ru/public_html/conf/../modules/shop/front/templates/basket_promo_block.html */ ?>
 <div class="cart__items__after">
     <div class="cart__summ g-pull-right">

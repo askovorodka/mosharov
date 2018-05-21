@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.11, created on 2016-04-25 23:44:53
+<?php /* Smarty version 2.6.11, created on 2018-04-06 08:41:57
          compiled from /home/a0031953/domains/s-q-c.ru/public_html/conf/../modules/shop/front/templates/basket_submit_block.html */ ?>
 <div class="form_line">
     <textarea class="form_input form_textarea" name="cart_message" placeholder="Сообщение"><?php if (! empty ( $this->_tpl_vars['user']['info'] )):  echo $this->_tpl_vars['user']['info'];  endif; ?></textarea>

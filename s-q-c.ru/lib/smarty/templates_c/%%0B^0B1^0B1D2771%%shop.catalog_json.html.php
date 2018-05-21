@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.11, created on 2016-03-16 12:41:33
+<?php /* Smarty version 2.6.11, created on 2018-04-05 12:47:20
          compiled from /home/a0031953/domains/s-q-c.ru/public_html//modules/shop/front/templates/shop.catalog_json.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'strip_tags', '/home/a0031953/domains/s-q-c.ru/public_html//modules/shop/front/templates/shop.catalog_json.html', 16, false),)), $this); ?>

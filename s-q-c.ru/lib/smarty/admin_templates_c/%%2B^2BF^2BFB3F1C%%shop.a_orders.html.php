@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.11, created on 2016-02-29 14:08:08
+<?php /* Smarty version 2.6.11, created on 2018-04-07 17:22:48
          compiled from /home/a0031953/domains/s-q-c.ru/public_html//modules/shop/admin/templates/shop.a_orders.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'date_format', '/home/a0031953/domains/s-q-c.ru/public_html//modules/shop/admin/templates/shop.a_orders.html', 41, false),array('modifier', 'format_number', '/home/a0031953/domains/s-q-c.ru/public_html//modules/shop/admin/templates/shop.a_orders.html', 47, false),)), $this); ?>

@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.11, created on 2016-04-01 12:33:18
+<?php /* Smarty version 2.6.11, created on 2018-04-05 12:40:13
          compiled from /home/a0031953/domains/s-q-c.ru/public_html/conf/../modules/shop/front/templates/top_filter.html */ ?>
 <div class="filters">
     <form id="filter">

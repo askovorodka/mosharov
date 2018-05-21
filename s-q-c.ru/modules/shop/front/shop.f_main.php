@@ -70,14 +70,23 @@ if  ($main_module=='on')
 		$n=count($url)-1;
 	}
 
-	if (preg_match("/(\?|\&)ymclid=([0-9a-z]+)$/",$url[$n],$match))
+	if (preg_match("/^([a-z_0-9]+)(\?|\&)([a-z0-9]+)=(.*?)$/",$url[$n],$match))
     {
+        //unset($url[$n]);
+        //unset($current_url_pages[count($current_url_pages)-1]);
+        //$n=count($url)-1;
+		$url[$n] = $match[1];
+    }
+
+    if (preg_match("/(\?|\&)([a-z0-9]+)=(.*?)$/",$url[$n],$match))
+    {
+
         unset($url[$n]);
         unset($current_url_pages[count($current_url_pages)-1]);
         $n=count($url)-1;
     }
 
-	if (isset($type) && $type=='all')
+    if (isset($type) && $type=='all')
 		unset($type);
 
 	$cur_site=$db->get_single("SELECT kurs,znak FROM fw_currency WHERE id=".CURRENCY_SITE);
@@ -235,6 +244,7 @@ if  ($main_module=='on')
                                             if ($dbColor['color'] == $color['value']) {
                                                 $curColor[] = mb_convert_encoding($dbColor['name'], 'utf-8', 'cp1251');
                                                 $colorNames[] = $dbColor['name'];
+                                                $productProperties[$key]['colors'][$key2]['name'] = $dbColor['name'];
                                             }
                                         }
 
@@ -257,11 +267,11 @@ if  ($main_module=='on')
                             }
                         }
 
-
                         //$smarty->assign('propertiesJSON', json_encode_cyr($returnProperties));
                         //$smarty->assign('properties', $returnProperties);
                         //$smarty->assign('colors', $dbColors);
                         $products_list[$a]['properties'] = $returnProperties;
+                        $products_list[$a]['sizes'] = $productProperties;
                     }
 
                 }
@@ -270,9 +280,6 @@ if  ($main_module=='on')
                 unset($cat_list[0]);
                 $smarty->assign("cat",$cat_list);
             }
-
-            //print_r($products_list);
-            //die;
 
             header("Content-type: text/xml; charset=Windows-1251");
             $page_found=true;
@@ -1524,7 +1531,11 @@ if  ($main_module=='on')
 												}
 
 												if (!in_array($property['value'], $returnProperties['colors'][$color['value']])){
-													$returnProperties['colors'][$color['value']][] = $property['value'];
+													//$returnProperties['colors'][$color['value']][] = $property['value'];
+                                                    $returnProperties['colors'][$color['value']][] = array(
+                                                    	'value'	=> $property['value'],
+														'id'	=> $color['id']
+													);
 												}
 
 												//$returnProperties[$property['value']][] = (string)$color['value'];

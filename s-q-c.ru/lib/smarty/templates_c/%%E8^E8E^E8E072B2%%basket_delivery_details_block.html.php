@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.11, created on 2016-04-28 00:07:56
+<?php /* Smarty version 2.6.11, created on 2018-04-06 08:41:57
          compiled from /home/a0031953/domains/s-q-c.ru/public_html/conf/../modules/shop/front/templates/basket_delivery_details_block.html */ ?>
 <div class="form_line">
     <span class="g-text-big"><span id="summary_info_block"><?php echo $this->_tpl_vars['total_price']; ?>

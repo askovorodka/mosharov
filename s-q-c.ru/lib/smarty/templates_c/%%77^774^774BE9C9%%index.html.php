@@ -1,7 +1,7 @@
-<?php /* Smarty version 2.6.11, created on 2016-04-28 14:52:35
+<?php /* Smarty version 2.6.11, created on 2018-03-19 14:52:57
          compiled from index.html */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('function', 'fetch', 'index.html', 36, false),array('function', 'eval', 'index.html', 38, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('function', 'fetch', 'index.html', 37, false),array('function', 'eval', 'index.html', 39, false),)), $this); ?>
 <!DOCTYPE html>
 <html lang="ru">
   <head>
@@ -15,6 +15,7 @@ smarty_core_load_plugins(array('plugins' => array(array('function', 'fetch', 'in
 ">
     <meta name="Description" content="<?php echo $this->_tpl_vars['meta_description']; ?>
 ">
+    <meta name="yandex-verification" content="e0abba0524cdba93" />
     <link href="/templates/css/styles.css" rel="stylesheet">
     <!--[if lt IE 9]>
       <script src="/templates/js/libs/html5shiv.min.js"></script>

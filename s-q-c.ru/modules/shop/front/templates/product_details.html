@@ -43,14 +43,6 @@
 		</div>
 		
 		{if !empty($properties.sizes) && !empty($properties.colors)}
-			<div class="item__info__selecter">
-				<div>÷вет <span class="longline g-text-light-gray"> Ч </span><span id="item_selected-color">не выбран</span><span class="longline g-text-light-gray"> Ч </span></div>
-				<div>
-					{foreach from=$properties.colors item=color key=key}
-					<div class="color" data-color="{$key}" data-caption="{foreach from=$colors item=curColor}{if $curColor.color == $key}{if !empty($curColor.name)}{$curColor.name}{/if}{/if}{/foreach}" style="background:{$key};"></div>
-					{/foreach}
-				</div>
-			</div>
 
 			<div class="item__info__selecter">
 				<div>–азмер <span class="longline g-text-light-gray"> Ч </span></div>
@@ -64,6 +56,15 @@
 				<div id="current-item-sizes">
 					{foreach from=$properties.sizes item=size key=key}
 					<div class="size js-sizes-rus" data-size="{$key}">{$key}</div>
+					{/foreach}
+				</div>
+			</div>
+			
+			<div class="item__info__selecter">
+				<div>÷вет <span class="longline g-text-light-gray"> Ч </span><span id="item_selected-color">не выбран</span><span class="longline g-text-light-gray"> Ч </span></div>
+				<div>
+					{foreach from=$properties.colors item=color key=key}
+					<div class="color" data-color="{$key}" data-caption="{foreach from=$colors item=curColor}{if $curColor.color == $key}{if !empty($curColor.name)}{$curColor.name}{/if}{/if}{/foreach}" style="background:{$key};"></div>
 					{/foreach}
 				</div>
 			</div>
@@ -85,10 +86,13 @@
 <script type="text/javascript">
 
 	var properties = {/literal}{if $propertiesJSON}{$propertiesJSON}{else}{literal}{}{/literal}{/if}{literal};
+	var itemColor, itemSize, itemSizeBrand;
 
 	var Ready = function(){
 
 		$(".color").click(function(){
+			itemColor = undefined;
+		
 			if ($(this).hasClass("selected")){
 				$(".color").removeClass("selected");
 				return;
@@ -96,11 +100,18 @@
 			else {
 				$(".color").removeClass("selected");
 				$(this).addClass("selected");
-				$("input[name=property_color]",$(this).closest('form')).val($(this).data('color'));
+				
+				itemColor = $(this).data('color');
+				
+				//$("input[name=property_color]",$(this).closest('form')).val($(this).data('color'));
 			}
 		});
 
 		$(".size").click(function(){
+			itemColor = undefined;
+			itemSize = undefined;
+			itemSizeBrand = undefined;
+		
 			if ($(this).hasClass("selected")){
 				$(".size").removeClass("selected");
 				return;
@@ -108,15 +119,60 @@
 			else {
 				$(".size").removeClass("selected");
 				$(this).addClass("selected");
+				
 				if ($(this).hasClass('js-sizes-rus')) {
-					$("input[name=property_size]",$(this).closest('form')).val($(this).data('size'))
+					itemSize = $(this).data('size');
+					//$("input[name=property_size]",$(this).closest('form')).val($(this).data('size'))
 				} else {
-					$("input[name=property_size_brand]",$(this).closest('form')).val($(this).data('size'))
+					itemSizeBrand = $(this).data('size');
+					//$("input[name=property_size_brand]",$(this).closest('form')).val($(this).data('size'))
 				}
 			}
 		});
 
-		$(".inbasket").click(function(){
+		setTimeout(function(){
+            if (/size=([^\&|$]+)/.test(location.href))
+            {
+                var size = location.href.match(/size=([^\&|$]+)/)[1];
+                $(".js-sizes-rus").filter(function(){
+                    if ($(this).data('size') == size) {
+                        $(this).click();
+                        console.log($(this).data('size'));
+                    }
+                });
+            }
+
+    	}, 500);
+
+        setTimeout(function(){
+            if (/color=([^\&|$]+)/.test(location.href))
+            {
+                var color = location.href.match(/color=([^\&|$]+)/)[1];
+                $(".color").filter(function(){
+                    if ($(this).data('color').replace('#','') == color) {
+                        $(this).click();
+                        console.log($(this).data('color'));
+                    }
+                });
+            }
+
+        }, 500);
+
+        $(".inbasket").click(function(){
+			if ( itemColor && (itemSize || itemSizeBrand) ) {
+				$("input[name=property_color]",$(this).closest('form')).val(itemColor);
+				
+				if (itemSize) {
+					$("input[name=property_size]",$(this).closest('form')).val(itemSize);
+				} else {
+					$("input[name=property_size_brand]",$(this).closest('form')).val(itemSizeBrand)
+				}
+				
+			} else {
+				alert('¬ыберите размер и цвет товара');
+				return;
+			}
+		
 			$(this).closest('form').submit();
 		});
 

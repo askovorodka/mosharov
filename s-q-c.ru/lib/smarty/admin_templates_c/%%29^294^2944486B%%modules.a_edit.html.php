@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.11, created on 2016-03-30 09:45:58
+<?php /* Smarty version 2.6.11, created on 2018-04-10 20:54:35
          compiled from /home/a0031953/domains/s-q-c.ru/public_html//modules/modules/admin/templates/modules.a_edit.html */ ?>
 
 <form action="" method=post>

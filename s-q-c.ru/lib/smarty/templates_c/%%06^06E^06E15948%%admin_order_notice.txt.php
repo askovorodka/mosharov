@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.11, created on 2016-08-28 04:31:24
+<?php /* Smarty version 2.6.11, created on 2018-04-06 08:47:56
          compiled from /home/a0031953/domains/s-q-c.ru/public_html//modules/shop/front/templates/admin_order_notice.txt */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'date_format', '/home/a0031953/domains/s-q-c.ru/public_html//modules/shop/front/templates/admin_order_notice.txt', 3, false),)), $this); ?>

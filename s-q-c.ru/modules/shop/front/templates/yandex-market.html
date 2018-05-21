@@ -25,31 +25,41 @@
     <offers>
 
         {foreach from=$products_list item=item}
-        <offer id="{$item.id}" available="true" type="vendor.model">
-            <url>{$module_url}/{$item.full_url}</url>
-            <price>{$item.price}</price>
-            <currencyId>RUR</currencyId>
-            <vendor>{$item.brand}</vendor>
-            <categoryId>{if $item.parent>1}{$item.parent}{else}0{/if}</categoryId>
-            {if $item.image}<picture>{$base_url}/uploaded_files/shop_images/{$item.image}</picture>{/if}
-            <model>{$item.name}</model>
-            <description>{$item.small_description|default:$item.description|strip_tags}</description>
-            <delivery>true</delivery>
-            {if !empty($item.article)}<vendorCode>{$item.article}</vendorCode>{/if}
+            {if !empty($item.sizes)}
+                {foreach from=$item.sizes item=size}
+                    {if !empty($size.colors)}
+                        {foreach from=$size.colors item=color}
+                            <offer id="{$item.id}{$size.value}{$color.id}" available="true" type="vendor.model" group_id="{$item.id}">
+                                <url>{$module_url}/{$item.full_url}/?size={$size.value}&color={$color.value|replace:'#':''}</url>
+                                <price>{if !empty($item.price_sale)}{$item.price_sale}{else}{$item.price}{/if}</price>
+                                <currencyId>RUR</currencyId>
+                                <vendor>{$item.brand}</vendor>
+                                <categoryId>{if $item.parent>1}{$item.parent}{else}0{/if}</categoryId>
+                                {if $item.image}<picture>{$base_url}/uploaded_files/shop_images/{$item.image}</picture>{/if}
+                                <model>{$item.name}</model>
+                                <description>{$item.small_description|default:$item.description|strip_tags}</description>
+                                <delivery>true</delivery>
+                                {if !empty($item.article)}<vendorCode>{$item.article}</vendorCode>{/if}
 
-            {if !empty($item.properties.colorsNames)}
-                {foreach from=$item.properties.colorsNames item=itemColor key=colorKey}
-                    <param name="Цвет">{$itemColor}</param>
+                                <param name="Цвет">{$color.name}</param>
+                                <param name="Размер" unit="RU">{$size.value}</param>
+
+                                {*if !empty($item.properties.colorsNames)}
+                                    {foreach from=$item.properties.colorsNames item=itemColor key=colorKey}
+                                        <param name="Цвет">{$itemColor}</param>
+                                    {/foreach}
+                                {/if}
+                                {if !empty($item.properties.sizes)}
+                                    {foreach from=$item.properties.sizes item=itemSize key=sizeKey}
+                                        <param name="Размер" unit="RU">{$sizeKey}</param>
+                                    {/foreach}
+                                {/if*}
+
+                            </offer>
+                        {/foreach}
+                    {/if}
                 {/foreach}
             {/if}
-
-            {if !empty($item.properties.sizes)}
-                {foreach from=$item.properties.sizes item=itemSize key=sizeKey}
-                    <param name="Размер" unit="RU">{$sizeKey}</param>
-                {/foreach}
-            {/if}
-
-        </offer>
         {/foreach}
     </offers>
 </shop>
